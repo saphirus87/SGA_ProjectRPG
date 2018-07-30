@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns:atg="http://atg.xbox.com" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{8e114980-c1a3-4ada-ad7c-83caadf5daeb}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="DXUT">
+      <UniqueIdentifier>{a43c5c25-0e86-4a20-b64a-883785ff74fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application">
+      <UniqueIdentifier>{ca8e0244-b574-4fa6-a726-10d7dc34472d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{4df8ad70-a45c-499a-8eb2-fcaa37ac7bd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI">
+      <UniqueIdentifier>{488f0fae-7419-45df-9f84-e5bb64452581}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Components">
+      <UniqueIdentifier>{8e2c71c0-6e44-44e5-8f05-02903ed1de1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Components\ComAircraft">
+      <UniqueIdentifier>{a243d60c-cd4d-4e92-8f95-2be7ee2f54f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Components\ComUI">
+      <UniqueIdentifier>{8ac43ade-4369-4a35-b0d7-1c41469277e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Animation">
+      <UniqueIdentifier>{5bf6dff1-09a2-450e-9bb2-130f6cd568d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject">
+      <UniqueIdentifier>{c89937d3-0975-4b4b-b03f-fd0b40ade953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject\Components">
+      <UniqueIdentifier>{559ec399-2794-4402-aaeb-20555d92042f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\System">
+      <UniqueIdentifier>{1a01f503-b0ae-4f06-afc7-c44e0e294b8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer">
+      <UniqueIdentifier>{7f7cd776-a401-4ed9-983b-53cec1fc9577}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Renderer\Shaders">
+      <UniqueIdentifier>{2c3d4c8c-5d1a-459a-a05a-a4e4b608a44e}</UniqueIdentifier>
+      <Extensions>fx;fxh;hlsl</Extensions>
+    </Filter>
+    <Filter Include="Application\Scenes">
+      <UniqueIdentifier>{22cd326b-8a91-4491-b49f-a334acb112e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Components\ComGrid">
+      <UniqueIdentifier>{b96ff032-befa-48c0-99c0-d5debb2f7a41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Animation\Ase">
+      <UniqueIdentifier>{32351ff7-3088-4722-8c00-98c4d4d9a53b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Animation\Xfile">
+      <UniqueIdentifier>{98303f35-30de-4674-9e81-2217cf86dc56}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DXUT\Optional\directx.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <ClInclude Include="DXUT\Core\DXUTenum.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Core\DXUTmisc.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClCompile Include="DXUT\Core\DXUTenum.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Core\DXUTmisc.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClInclude Include="DXUT\Optional\DXUTcamera.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Optional\DXUTgui.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Optional\DXUTres.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Optional\DXUTsettingsdlg.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Optional\SDKmesh.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Optional\SDKmisc.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClCompile Include="DXUT\Optional\DXUTcamera.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Optional\DXUTgui.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Optional\DXUTres.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Optional\DXUTsettingsdlg.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Optional\SDKmesh.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Optional\SDKmisc.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <None Include="Resources\shader\PostEffect\PP_ColorBloomH.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\PostEffect\PP_ColorBloomV.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\PostEffect\PP_ColorBrightPass.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\PostEffect\pp_colorcombine.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\PostEffect\PP_ColorCombine4.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\PostEffect\PP_ColorDownFilter4.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\PostEffect\PP_ColorEdgeDetect.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\PostEffect\PP_ColorGBlurH.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\PostEffect\PP_ColorGBlurV.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\PostEffect\PP_ColorInverse.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\PostEffect\PP_ColorMonochrome.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\PostEffect\PP_ColorToneMap.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\PostEffect\PP_ColorUpFilter4.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\PostEffect\PP_DofCombine.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\PostEffect\PP_NormalEdgeDetect.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\PostEffect\PP_NormalMap.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\PostEffect\PP_PositionMap.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\PostEffect\Scene.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\BumpMapping.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\BumpMappingSGA.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\BumpSpecMappingSGA.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\ShaderLighting.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\ShaderLightingTexture.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\ShaderPC.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\ShaderPNT.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\ShaderPT.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\TextureMapping.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\ShaderRambert.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\ParallaxOcclusionMapping.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+    <None Include="Resources\shader\skinnedmesh.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="FlowerEngine.cpp" />
+    <ClCompile Include="DXUT\Core\stdafx.cpp" />
+    <ClCompile Include="Engine\GlobalDefinition.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComUI.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComUIButton.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComUIImage.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComUIText.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Vector.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ComAircraft.cpp">
+      <Filter>Application\Components\ComAircraft</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ComAircraftControl.cpp">
+      <Filter>Application\Components\ComAircraft</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ComAircraftEnermyAI.cpp">
+      <Filter>Application\Components\ComAircraft</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ComFollowTarget.cpp">
+      <Filter>Application\Components\ComAircraft</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ComMissile.cpp">
+      <Filter>Application\Components\ComAircraft</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ComShooting.cpp">
+      <Filter>Application\Components\ComAircraft</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ComUIPanelDialog.cpp">
+      <Filter>Application\Components\ComUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\FactoryGameObject.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComMeshSphere.cpp">
+      <Filter>Engine\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComCollider.cpp">
+      <Filter>Engine\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComGrid.cpp">
+      <Filter>Engine\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComLight.cpp">
+      <Filter>Engine\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComParticle.cpp">
+      <Filter>Engine\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Component.cpp">
+      <Filter>Engine\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComRenderCubePN.cpp">
+      <Filter>Engine\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComTransform.cpp">
+      <Filter>Engine\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameObject.cpp">
+      <Filter>Engine\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\AppClock.cpp">
+      <Filter>Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\AppTimer.cpp">
+      <Filter>Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Camera.cpp">
+      <Filter>Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input.cpp">
+      <Filter>Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Keyboard.cpp">
+      <Filter>Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Mouse.cpp">
+      <Filter>Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Debug.cpp">
+      <Filter>Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Assets.cpp">
+      <Filter>Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Time.cpp">
+      <Filter>Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scene.cpp">
+      <Filter>Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SceneManager.cpp">
+      <Filter>Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SceneGrid.cpp">
+      <Filter>Application\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ComTestCubeControl.cpp">
+      <Filter>Application\Components\ComGrid</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Shader.cpp">
+      <Filter>Engine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComPostProcess.cpp">
+      <Filter>Engine\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SceneAircraft.cpp">
+      <Filter>Application\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComRenderPOM.cpp">
+      <Filter>Engine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ScenePicking.cpp">
+      <Filter>Application\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ComTestPicking.cpp">
+      <Filter>Application\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Ray.cpp">
+      <Filter>Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\AseLoader.cpp">
+      <Filter>Engine\Animation\Ase</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComAseAnimation.cpp">
+      <Filter>Engine\Animation\Ase</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComRenderAse.cpp">
+      <Filter>Engine\Animation\Ase</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\AllocateHierarchy.cpp">
+      <Filter>Engine\Animation\Xfile</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComRenderSkinnedMesh.cpp">
+      <Filter>Engine\Animation\Xfile</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FlowerEngine.fx">
+      <Filter>Engine\Renderer\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CLInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </CLInclude>
+    <ResourceCompile Include="FlowerEngine.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+    <ClInclude Include="DXUT\Core\stdafx.h" />
+    <ClInclude Include="Engine\GlobalDefinition.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComUIText.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComUI.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComUIButton.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComUIImage.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Vector.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComAircraft.h">
+      <Filter>Application\Components\ComAircraft</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComAircraftControl.h">
+      <Filter>Application\Components\ComAircraft</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComAircraftEnermyAI.h">
+      <Filter>Application\Components\ComAircraft</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComFollowTarget.h">
+      <Filter>Application\Components\ComAircraft</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComMissile.h">
+      <Filter>Application\Components\ComAircraft</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComShooting.h">
+      <Filter>Application\Components\ComAircraft</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComUIPanelDialog.h">
+      <Filter>Application\Components\ComUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\FactoryGameObject.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComMeshSphere.h">
+      <Filter>Engine\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComCollider.h">
+      <Filter>Engine\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComGrid.h">
+      <Filter>Engine\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComLight.h">
+      <Filter>Engine\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComParticle.h">
+      <Filter>Engine\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component.h">
+      <Filter>Engine\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComRenderCubePN.h">
+      <Filter>Engine\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComTransform.h">
+      <Filter>Engine\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameObject.h">
+      <Filter>Engine\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\AppClock.h">
+      <Filter>Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\AppTimer.h">
+      <Filter>Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Camera.h">
+      <Filter>Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input.h">
+      <Filter>Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Keyboard.h">
+      <Filter>Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Mouse.h">
+      <Filter>Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Debug.h">
+      <Filter>Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Assets.h">
+      <Filter>Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\DPObserver.h">
+      <Filter>Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Time.h">
+      <Filter>Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\TimeSource.h">
+      <Filter>Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\TimeSourceWin32.h">
+      <Filter>Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scene.h">
+      <Filter>Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SceneManager.h">
+      <Filter>Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SceneGrid.h">
+      <Filter>Application\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComTestCubeControl.h">
+      <Filter>Application\Components\ComGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Shader.h">
+      <Filter>Engine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComPostProcess.h">
+      <Filter>Engine\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SceneAircraft.h">
+      <Filter>Application\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComRenderPOM.h">
+      <Filter>Engine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ScenePicking.h">
+      <Filter>Application\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComTestPicking.h">
+      <Filter>Application\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Ray.h">
+      <Filter>Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Asciitok.h">
+      <Filter>Engine\Animation\Ase</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\AseLoader.h">
+      <Filter>Engine\Animation\Ase</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComAseAnimation.h">
+      <Filter>Engine\Animation\Ase</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComRenderAse.h">
+      <Filter>Engine\Animation\Ase</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\AllocateHierarchy.h">
+      <Filter>Engine\Animation\Xfile</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComRenderSkinnedMesh.h">
+      <Filter>Engine\Animation\Xfile</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="game-controller.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="dxut\optional\icon1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
