@@ -100,7 +100,7 @@ private:
 	// 뼈대 행렬들
 	Matrix4x4* m_pBoneMatrices;
 
-	// 메모리를 한 번만 Clear하면 되기 때문에 사용하는 변수
-	static bool IsCleared;
+	// 이 컴포넌트를 사용하는 객체수 (Clone된)
+	int m_iReference;
 };
 

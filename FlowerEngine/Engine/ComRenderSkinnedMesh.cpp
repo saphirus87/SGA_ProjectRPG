@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "ComRenderSkinnedMesh.h"
 
-bool ComRenderSkinnedMesh::IsCleared = false;
 
 ComRenderSkinnedMesh::ComRenderSkinnedMesh(CString szName) :
 	Component(szName),
@@ -16,20 +15,22 @@ ComRenderSkinnedMesh::ComRenderSkinnedMesh(CString szName) :
 	m_fPassedBlendTime(0),
 	m_pBoneMatrices(NULL),
 	m_pAllocateHierarchy(NULL),
-	pDevice9(GetD3D9Device())
+	pDevice9(GetD3D9Device()),
+	m_iReference(0)
 {
 }
 
 ComRenderSkinnedMesh::~ComRenderSkinnedMesh()
 {
-	if (IsCleared == false)
+	if (m_iReference < 1)
 	{
 		D3DXFrameDestroy(m_pRootFrame, m_pAllocateHierarchy);
 		D3DXFrameDestroy(m_pSubRootFrame, m_pAllocateHierarchy);
 		SAFE_DELETE_ARRAY(m_pBoneMatrices);
 		SAFE_DELETE(m_pAllocateHierarchy);
-		IsCleared = true;
 	}
+	else
+		--m_iReference;
 }
 
 void ComRenderSkinnedMesh::Load(CString szFolderPath, CString szFileName)
@@ -70,6 +71,8 @@ void ComRenderSkinnedMesh::Clone(ComRenderSkinnedMesh* pExist)
 		pAC->GetMaxNumTracks(),
 		pAC->GetMaxNumEvents(),
 		&m_pAniControl);
+
+	++m_iReference;
 }
 
 void ComRenderSkinnedMesh::Awake()
@@ -241,6 +244,7 @@ void ComRenderSkinnedMesh::RenderMeshContainer(MeshContainer* pMeshContainer)
 
 	LPD3DXBONECOMBINATION pBoneComb = (LPD3DXBONECOMBINATION)pMeshContainer->pBoneCombinationBuf->GetBufferPointer();
 
+	UINT iBoneID = 0;
 	// 매쉬 컨테이너의 속성(attribute) 수만큼
 	for (int iAttribute = 0; iAttribute < pMeshContainer->NumAttributeGroups; ++iAttribute)
 	{
@@ -248,9 +252,12 @@ void ComRenderSkinnedMesh::RenderMeshContainer(MeshContainer* pMeshContainer)
 		// 1. 월드 행렬 준비 (first calculate all the world matrices)
 		for (int iPaletteEntry = 0; iPaletteEntry < pMeshContainer->NumPaletteEntries; ++iPaletteEntry)
 		{
-			int iBoneID = pBoneComb[iAttribute].BoneId[iPaletteEntry];
-			Matrix4x4 matTemp = pMeshContainer->pBoneOffsetMatrices[iBoneID] * *pMeshContainer->ppBoneMatrixPtrs[iBoneID] * gameObject->transform->GetWorldMatrix();
-			m_pBoneMatrices[iPaletteEntry] = matTemp;
+			iBoneID = pBoneComb[iAttribute].BoneId[iPaletteEntry];
+			if (iBoneID != UINT_MAX)
+			{
+				Matrix4x4 matTemp = pMeshContainer->pBoneOffsetMatrices[iBoneID] * *pMeshContainer->ppBoneMatrixPtrs[iBoneID] * gameObject->transform->GetWorldMatrix();
+				m_pBoneMatrices[iPaletteEntry] = matTemp;
+			}
 		}
 
 		// 2. 정점 셰이더를 위한 뼈대 수 설정 (Set CurNumBones to select the correct vertex shader for the number of bones)
