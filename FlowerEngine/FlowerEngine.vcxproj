@@ -390,6 +390,7 @@
     <ClInclude Include="Application\ComAircraftControl.h" />
     <ClInclude Include="Application\ComAircraftEnermyAI.h" />
     <ClInclude Include="Application\ComFollowTarget.h" />
+    <ClInclude Include="Application\ComHuman01.h" />
     <ClInclude Include="Application\ComMissile.h" />
     <ClInclude Include="Application\ComShooting.h" />
     <ClInclude Include="Application\ComTestCubeControl.h" />
@@ -405,6 +406,7 @@
     <ClCompile Include="Application\ComAircraftControl.cpp" />
     <ClCompile Include="Application\ComAircraftEnermyAI.cpp" />
     <ClCompile Include="Application\ComFollowTarget.cpp" />
+    <ClCompile Include="Application\ComHuman01.cpp" />
     <ClCompile Include="Application\ComMissile.cpp" />
     <ClCompile Include="Application\ComShooting.cpp" />
     <ClCompile Include="Application\ComTestCubeControl.cpp" />

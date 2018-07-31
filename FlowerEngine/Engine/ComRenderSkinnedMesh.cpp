@@ -114,6 +114,11 @@ void ComRenderSkinnedMesh::SeparateFrame(XFrame pFrame, CString szName, Animatio
 {
 }
 
+void ComRenderSkinnedMesh::PlayAnimation(int iIndex, bool isBlend)
+{
+	PlayAnimation(m_pAniControl, iIndex, isBlend);
+}
+
 void ComRenderSkinnedMesh::PlayAnimation(AnimationController pAniControl, int iIndex, bool isBlend)
 {
 	// 애니메이션 세트 가져오기

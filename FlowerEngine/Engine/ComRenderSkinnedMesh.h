@@ -45,6 +45,8 @@ public:
 		AnimationController& pAniControlDest, // 목표
 		AnimationController& pAniControlSrc); // 원본
 
+	void PlayAnimation(int iIndex, bool isBlend = true);
+
 	// 애니메이션을 실행합니다.
 	void PlayAnimation(AnimationController pAniControl, int iIndex, bool isBlend);
 

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SceneGrid.h"
 #include "../Application/ComTestCubeControl.h"
+#include "../Application/ComHuman01.h"
 
 SceneGrid::SceneGrid(CString szName) : Scene(szName)
 {
@@ -71,6 +72,7 @@ void SceneGrid::Init()
 	GameObject* pGOChrX = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 3));
 	GameObject* pGOChrX2 = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 4));
 	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/", "human_01.X", Vector3(0, 0, 5));
+	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
 
 	// Ä«¸Þ¶ó
 	Camera::GetInstance()->SetTarget(&pGOChrX->transform->GetPosition());

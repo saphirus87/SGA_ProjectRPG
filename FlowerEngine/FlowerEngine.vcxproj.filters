@@ -348,6 +348,7 @@
     <ClCompile Include="Engine\ComRenderSkinnedMesh.cpp">
       <Filter>Engine\Animation\Xfile</Filter>
     </ClCompile>
+    <ClCompile Include="Application\ComHuman01.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -518,6 +519,7 @@
     <ClInclude Include="Engine\ComRenderSkinnedMesh.h">
       <Filter>Engine\Animation\Xfile</Filter>
     </ClInclude>
+    <ClInclude Include="Application\ComHuman01.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="game-controller.ico">
