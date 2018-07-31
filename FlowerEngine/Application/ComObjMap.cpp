@@ -63,13 +63,23 @@ bool ComObjMap::GetHeight(float & height, const D3DXVECTOR3 & pos)
 	D3DXVECTOR3 rayDir(0, -1, 0);
 	float distance = 0.0f;
 
-	for (int i = 0; i < m_surfaceVertices.size(); i += 3)
+	for (int i = 0; i < m_surfaceVertices.size(); i += 12)
 	{
-		D3DXVECTOR3 v1 = m_surfaceVertices[i];
-		D3DXVECTOR3 v2 = m_surfaceVertices[i + 1];
-		D3DXVECTOR3 v3 = m_surfaceVertices[i + 2];
+		D3DXVECTOR3 v1 = m_surfaceVertices[i + 10];
+		D3DXVECTOR3 v2 = m_surfaceVertices[i + 4];
+		D3DXVECTOR3 v3 = m_surfaceVertices[i + 11];
+
+		D3DXVECTOR3 v4 = m_surfaceVertices[i + 1];
+		D3DXVECTOR3 v5 = m_surfaceVertices[i + 2];
+		D3DXVECTOR3 v6 = m_surfaceVertices[i + 4];
 
 		if (D3DXIntersectTri(&v1, &v2, &v3, &rayPos, &rayDir, NULL, NULL, &distance))
+		{
+			height = rayPos.y - distance;
+			return true;
+		}
+
+		if (D3DXIntersectTri(&v4, &v5, &v6, &rayPos, &rayDir, NULL, NULL, &distance))
 		{
 			height = rayPos.y - distance;
 			return true;
