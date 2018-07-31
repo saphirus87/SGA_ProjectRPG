@@ -146,6 +146,11 @@ void ComRenderSkinnedMesh::PlayAnimation(AnimationController pAniControl, int iI
 	SAFE_RELEASE(pNextAnimSet);
 }
 
+Matrix4x4 * ComRenderSkinnedMesh::GetMatrixByName(LPCSTR szName, OUT Matrix4x4* pMatOut)
+{
+	return FindMatrixByName(m_pRootFrame, szName, pMatOut);
+}
+
 void ComRenderSkinnedMesh::SetupBoneMatrixPointers(XFrame pFrame)
 {
 	if (pFrame->pMeshContainer != NULL)
@@ -289,4 +294,42 @@ void ComRenderSkinnedMesh::RenderMeshContainer(MeshContainer* pMeshContainer)
 		m_pEffect->EndPass();
 		m_pEffect->End();
 	}
+}
+
+Matrix4x4* ComRenderSkinnedMesh::FindMatrixByName(XFrame pFrame, LPCSTR szName, OUT Matrix4x4* pMatOut)
+{
+	if (pFrame->pFrameFirstChild != NULL)
+	{
+		CString strDebug(pFrame->pFrameFirstChild->Name);
+		strDebug.Append(L"\r\n");
+		OutputDebugString(strDebug);
+		if (CompareStr(pFrame->pFrameFirstChild->Name, szName))
+		{
+			Matrix4x4 pFindMatrix = pFrame->TransformationMatrix;
+			pMatOut = &pFindMatrix;
+		}
+	}
+	if (pFrame->pFrameSibling != NULL)
+	{
+		CString strDebug(pFrame->pFrameSibling->Name);
+		strDebug.Append(L"\r\n");
+		OutputDebugString(strDebug);
+		if (CompareStr(pFrame->pFrameSibling->Name, szName))
+		{
+			Matrix4x4 pFindMatrix = pFrame->TransformationMatrix;
+			pMatOut = &pFindMatrix;
+		}
+	}
+
+	if (pFrame->pFrameSibling != NULL)
+	{
+		FindMatrixByName(pFrame->pFrameSibling, szName, pMatOut);
+	}
+
+	if (pFrame->pFrameFirstChild != NULL)
+	{
+		FindMatrixByName(pFrame->pFrameFirstChild, szName, pMatOut);
+	}
+
+	return NULL;
 }

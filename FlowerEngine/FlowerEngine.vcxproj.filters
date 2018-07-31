@@ -366,6 +366,7 @@
     <ClCompile Include="Application\ComUndead01.cpp">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\ComXMesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -548,6 +549,7 @@
     <ClInclude Include="Application\ComUndead01.h">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\ComXMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="game-controller.ico">
