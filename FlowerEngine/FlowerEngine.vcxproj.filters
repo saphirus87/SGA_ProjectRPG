@@ -60,6 +60,9 @@
     <Filter Include="Application\Components\ComMap">
       <UniqueIdentifier>{5503416c-4973-401d-9c70-d62f9f5e4298}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Components\ComCharactor">
+      <UniqueIdentifier>{f68f5142-bfc2-49b7-9684-bc0082ee1d3d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -357,6 +360,12 @@
     <ClCompile Include="Application\ObjLoader.cpp">
       <Filter>Application\Components\ComMap</Filter>
     </ClCompile>
+    <ClCompile Include="Application\ComHuman01.cpp">
+      <Filter>Application\Components\ComCharactor</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ComUndead01.cpp">
+      <Filter>Application\Components\ComCharactor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -532,6 +541,12 @@
     </ClInclude>
     <ClInclude Include="Application\ObjLoader.h">
       <Filter>Application\Components\ComMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComHuman01.h">
+      <Filter>Application\Components\ComCharactor</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComUndead01.h">
+      <Filter>Application\Components\ComCharactor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
