@@ -69,9 +69,15 @@ void SceneGrid::Init()
 	GameObject* pGOParticle = factory.CreateGameObject("Particle");
 	pGOParticle->AddComponent(new ComParticle("ComParticle"));
 
+	// Obj Map 테스트
+	GameObject* pObjMap = factory.CreateObjMap("ObjMap", "./Resources/obj/Map/TestMap/", "tempMap2.obj", "");
+	pObjMap->transform->SetPosition(-3, -5, -3);
+	pObjMap->transform->SetScale(0.5f, 0.5f, 0.5f);
+
+	// 맵 생성 후 캐릭터 생성
 	GameObject* pGOChrX = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 3));
 	GameObject* pGOChrX2 = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 4));
-	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/", "human_01.X", Vector3(0, 0, 5));
+	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/", "human_01.X", Vector3(0, 3, 5));
 	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
 
 	// 카메라
@@ -86,8 +92,4 @@ void SceneGrid::Init()
 	pPostEffect->transform->SetPosition(0, 0, -2);
 	pPostEffect->AddComponent(comPostProcess);
 
-	// Obj Map 테스트
-	GameObject* pObjMap = factory.CreateObjMap("ObjMap", "./Resources/obj/Map/TestMap/", "tempMap2.obj", "");
-	pObjMap->transform->SetPosition(-3, -5, -3);
-	pObjMap->transform->SetScale(0.5f, 0.5f, 0.5f);
 }
