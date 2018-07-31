@@ -83,4 +83,9 @@ void SceneGrid::Init()
 	GameObject* pPostEffect = factory.CreateGameObject("PostEffect");
 	pPostEffect->transform->SetPosition(0, 0, -2);
 	pPostEffect->AddComponent(comPostProcess);
+
+	// Obj Map Å×½ºÆ®
+	GameObject* pObjMap = factory.CreateObjMap("ObjMap", "./Resources/obj/Map/TestMap/", "tempMap2.obj", "");
+	pObjMap->transform->SetPosition(-3, -5, -3);
+	pObjMap->transform->SetScale(0.5f, 0.5f, 0.5f);
 }

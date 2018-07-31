@@ -57,6 +57,9 @@
     <Filter Include="Engine\Animation\Xfile">
       <UniqueIdentifier>{98303f35-30de-4674-9e81-2217cf86dc56}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Components\ComMap">
+      <UniqueIdentifier>{5503416c-4973-401d-9c70-d62f9f5e4298}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -348,6 +351,12 @@
     <ClCompile Include="Engine\ComRenderSkinnedMesh.cpp">
       <Filter>Engine\Animation\Xfile</Filter>
     </ClCompile>
+    <ClCompile Include="Application\ComObjMap.cpp">
+      <Filter>Application\Components\ComMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ObjLoader.cpp">
+      <Filter>Application\Components\ComMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -517,6 +526,12 @@
     </ClInclude>
     <ClInclude Include="Engine\ComRenderSkinnedMesh.h">
       <Filter>Engine\Animation\Xfile</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComObjMap.h">
+      <Filter>Application\Components\ComMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ObjLoader.h">
+      <Filter>Application\Components\ComMap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
