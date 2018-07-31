@@ -392,10 +392,12 @@
     <ClInclude Include="Application\ComFollowTarget.h" />
     <ClInclude Include="Application\ComHuman01.h" />
     <ClInclude Include="Application\ComMissile.h" />
+    <ClInclude Include="Application\ComObjMap.h" />
     <ClInclude Include="Application\ComShooting.h" />
     <ClInclude Include="Application\ComTestCubeControl.h" />
     <ClInclude Include="Application\ComTestPicking.h" />
     <ClInclude Include="Application\ComUIPanelDialog.h" />
+    <ClInclude Include="Application\ObjLoader.h" />
     <ClInclude Include="Application\SceneAircraft.h" />
     <ClInclude Include="Application\SceneGrid.h" />
     <ClInclude Include="Application\ScenePicking.h" />
@@ -408,10 +410,12 @@
     <ClCompile Include="Application\ComFollowTarget.cpp" />
     <ClCompile Include="Application\ComHuman01.cpp" />
     <ClCompile Include="Application\ComMissile.cpp" />
+    <ClCompile Include="Application\ComObjMap.cpp" />
     <ClCompile Include="Application\ComShooting.cpp" />
     <ClCompile Include="Application\ComTestCubeControl.cpp" />
     <ClCompile Include="Application\ComTestPicking.cpp" />
     <ClCompile Include="Application\ComUIPanelDialog.cpp" />
+    <ClCompile Include="Application\ObjLoader.cpp" />
     <ClCompile Include="Application\SceneAircraft.cpp" />
     <ClCompile Include="Application\SceneGrid.cpp" />
     <ClCompile Include="Application\ScenePicking.cpp" />

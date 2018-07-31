@@ -10,6 +10,7 @@
 #include "ComLight.h"
 #include "../Application/ComMissile.h"
 #include "ComMeshSphere.h"
+#include "../Application/ComObjMap.h"
 
 FactoryGameObject::FactoryGameObject()
 {
@@ -247,6 +248,16 @@ GameObject * FactoryGameObject::CreateFromXFile(CString szName, CString szFolder
 	}
 	else
 		pComSkinnedMesh->Load(szFolderPath, szFileName);
+
+	return pGO;
+}
+
+GameObject * FactoryGameObject::CreateObjMap(CString szName, CString szFolderPath, CString szFileName, CString szSurfaceFileName)
+{
+	GameObject* pGO = new GameObject(szName);
+	ComObjMap* pComObjMap = new ComObjMap("ComObjMap");
+	pComObjMap->SetFilename(szFolderPath, szFileName, szSurfaceFileName);
+	pGO->AddComponent(pComObjMap);
 
 	return pGO;
 }
