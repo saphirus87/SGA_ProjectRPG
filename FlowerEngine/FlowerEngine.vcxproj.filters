@@ -366,6 +366,9 @@
     <ClCompile Include="Application\ComUndead01.cpp">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClCompile>
+    <ClCompile Include="Application\ComTroll01.cpp">
+      <Filter>Application\Components\ComCharactor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -546,6 +549,9 @@
       <Filter>Application\Components\ComCharactor</Filter>
     </ClInclude>
     <ClInclude Include="Application\ComUndead01.h">
+      <Filter>Application\Components\ComCharactor</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComTroll01.h">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClInclude>
   </ItemGroup>

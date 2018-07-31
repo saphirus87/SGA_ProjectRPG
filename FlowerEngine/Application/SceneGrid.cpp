@@ -3,6 +3,7 @@
 #include "../Application/ComTestCubeControl.h"
 #include "../Application/ComHuman01.h"
 #include "../Application/ComUndead01.h"
+#include "../Application/ComTroll01.h"
 
 SceneGrid::SceneGrid(CString szName) : Scene(szName)
 {
@@ -82,6 +83,8 @@ void SceneGrid::Init()
 	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
 	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(0, 15, 6));
 	pGOChrX4->AddComponent(new ComUndead01("ComUndead01"));
+	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(0, 11, 7));
+	pGOChrX4->AddComponent(new ComTroll01("ComTroll01"));
 
 	// Ä«¸Þ¶ó
 	Camera::GetInstance()->SetTarget(&pGOChrX3->transform->GetPosition());

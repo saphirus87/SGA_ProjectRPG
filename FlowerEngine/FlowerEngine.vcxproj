@@ -396,6 +396,7 @@
     <ClInclude Include="Application\ComShooting.h" />
     <ClInclude Include="Application\ComTestCubeControl.h" />
     <ClInclude Include="Application\ComTestPicking.h" />
+    <ClInclude Include="Application\ComTroll01.h" />
     <ClInclude Include="Application\ComUIPanelDialog.h" />
     <ClInclude Include="Application\ComUndead01.h" />
     <ClInclude Include="Application\ObjLoader.h" />
@@ -415,6 +416,7 @@
     <ClCompile Include="Application\ComShooting.cpp" />
     <ClCompile Include="Application\ComTestCubeControl.cpp" />
     <ClCompile Include="Application\ComTestPicking.cpp" />
+    <ClCompile Include="Application\ComTroll01.cpp" />
     <ClCompile Include="Application\ComUIPanelDialog.cpp" />
     <ClCompile Include="Application\ComUndead01.cpp" />
     <ClCompile Include="Application\ObjLoader.cpp" />
