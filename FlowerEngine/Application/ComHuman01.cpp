@@ -29,8 +29,11 @@ void ComHuman01::Update()
 
 	Vector3 pos = gameObject->transform->GetPosition();
 	float fHeight = 0.f;
-	pos.y = m_pMap->GetHeight(fHeight, pos);
-	gameObject->transform->SetPosition(pos);
+	if (m_pMap->GetHeight(fHeight, pos) == true)
+	{
+		pos.y = fHeight;
+		gameObject->transform->SetPosition(pos);
+	}
 }
 
 void ComHuman01::Render()

@@ -5,7 +5,8 @@
 const int TOKEN_SIZE = 128;
 
 ComObjMap::ComObjMap(CString szName) :
-	Component(szName)
+	Component(szName),
+	m_rayDistance(2.f)
 {
 	pDevice9 = GetD3D9Device();
 	m_pEffect = Shaders::GetInstance()->GetShader(SHADER_PATH + "/ShaderLightingTexture.fx");
