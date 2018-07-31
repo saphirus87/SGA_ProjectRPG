@@ -7,7 +7,6 @@ ComUndead01::ComUndead01(CString szName)
 {
 }
 
-
 ComUndead01::~ComUndead01()
 {
 }
