@@ -18,6 +18,7 @@ public:
 
 private:
 	Device9 pDevice9;
+	Shader m_pEffect;
 	Mesh m_pMesh;
 	vector<MTLTEX> m_vecMtrl;
 	// ÀçÁú ¼ö

@@ -5,7 +5,8 @@
 ComRenderXMesh::ComRenderXMesh(CString szName) : 
 	Component(szName),
 	m_pMesh(NULL),
-	m_iNumMaterials(0)
+	m_iNumMaterials(0),
+	m_pEffect(NULL)
 {
 	pDevice9 = GetD3D9Device();
 	D3DXMatrixIdentity(&matFrame);
@@ -20,6 +21,7 @@ ComRenderXMesh::~ComRenderXMesh()
 
 void ComRenderXMesh::Awake()
 {
+	m_pEffect = Shaders::GetInstance()->GetShader(SHADER_PATH + "/ShaderPT.fx");
 }
 
 void ComRenderXMesh::Update()
@@ -33,14 +35,29 @@ void ComRenderXMesh::Render()
 	matFinal._11 = 1.0f;
 	matFinal._22 = 1.0f;
 	matFinal._33 = 1.0f;
-	pDevice9->SetTransform(D3DTS_WORLD, &matFinal);
+	
+	m_pEffect->SetMatrix("gWorldMatrix", &matFinal);
+	m_pEffect->SetMatrix("gViewMatrix", &Camera::GetInstance()->GetViewMatrix());
+	m_pEffect->SetMatrix("gProjMatrix", &Camera::GetInstance()->GetProjMatrix());
+
+	
+	UINT pass;
+	m_pEffect->Begin(&pass, NULL);
+	m_pEffect->BeginPass(0);
+
+	//pDevice9->SetTransform(D3DTS_WORLD, &matFinal);
 	for (DWORD i = 0; i < m_iNumMaterials; ++i)
 	{
+		m_pEffect->SetTexture("DiffuseMap_Tex", m_vecMtrl[i].pTexture);
+		m_pEffect->CommitChanges();
 		// ¼ÎÀÌ´õ ÇÊ¿ä
-		pDevice9->SetMaterial(&m_vecMtrl[i].material);
-		pDevice9->SetTexture(0, m_vecMtrl[i].pTexture);
+		//pDevice9->SetMaterial(&m_vecMtrl[i].material);
+		//pDevice9->SetTexture(0, m_vecMtrl[i].pTexture);
 		m_pMesh->DrawSubset(i);
 	}
+
+	m_pEffect->EndPass();
+	m_pEffect->End();
 }
 
 void ComRenderXMesh::Load(CString szFolderPath, CString szFileName)
