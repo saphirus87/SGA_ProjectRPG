@@ -17,6 +17,7 @@ ComRenderXMesh::ComRenderXMesh(CString szName) :
 ComRenderXMesh::~ComRenderXMesh()
 {
 	SAFE_RELEASE(m_pMesh);
+	m_vecMtrl.clear();
 }
 
 void ComRenderXMesh::Awake()
@@ -75,6 +76,16 @@ void ComRenderXMesh::Load(CString szFolderPath, CString szFileName)
 	}
 
 	pBuffer->Release();
+}
+
+void ComRenderXMesh::Clone(ComRenderXMesh* pComRenderXMesh)
+{
+	Mesh pMesh = pComRenderXMesh->m_pMesh;
+	pMesh->CloneMeshFVF(pMesh->GetOptions(), pMesh->GetFVF(), pDevice9, &m_pMesh);
+	m_iNumMaterials = pComRenderXMesh->m_iNumMaterials;
+	m_vecMtrl.resize(pComRenderXMesh->m_iNumMaterials);
+	for (DWORD i = 0; i < m_iNumMaterials; ++i)
+		m_vecMtrl[i] = pComRenderXMesh->m_vecMtrl[i];
 }
 
 void ComRenderXMesh::SetFrameMatrix(Matrix4x4 * pMatFrame, Matrix4x4 * pMatParent)

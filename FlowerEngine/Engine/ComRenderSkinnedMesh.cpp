@@ -191,6 +191,9 @@ void ComRenderSkinnedMesh::SetupBoneMatrixPointersOnMesh(XMeshContainer pMeshCon
 		{
 			// 1. 영향을 주는 뼈대를 매쉬컨테이너의 스킨정보에서 루트 뼈대부터 이름으로 찾는다. (Influence : 영향, 영향력, 영향을 주다)
 			pFrameInfluence = (Frame*)D3DXFrameFind(m_pRootFrame, pMeshContainer->pSkinInfo->GetBoneName(i));
+			CString strDebug(pFrameInfluence->Name);
+			strDebug.Append(L"\r\n");
+			OutputDebugString(strDebug);
 			
 			// 2. 설정할 매쉬 컨테이너의 뼈대 행렬 포인터에 최종 행렬을 설정한다.
 			pMeshContainer->ppBoneMatrixPtrs[i] = &pFrameInfluence->CombinedTM;
@@ -227,10 +230,6 @@ void ComRenderSkinnedMesh::UpdateAnimation(AnimationController pAniControl)
 void ComRenderSkinnedMesh::UpdateFrameMatrices(XFrame pFrame, XFrame pParent)
 {
 	Frame* frame = (Frame*)pFrame;
-
-	//CString strDebug(frame->Name);
-	//strDebug.Append(L"\r\n");
-	//OutputDebugString(strDebug);
 
 	// 부모가 있다면
 	if (pParent != NULL)

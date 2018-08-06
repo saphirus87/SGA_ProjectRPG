@@ -78,14 +78,7 @@ void SceneGrid::Init()
 	//pObjMap->transform->SetScale(0.5f, 0.5f, 0.5f);
 
 	// 오브젝트들 생성
-	GameObject* pGOEquipment = new GameObject("Equipment_shoulder");
-	ComRenderXMesh* pMesh = new ComRenderXMesh("ComRenderXMesh");
-	pMesh->Load("Resources/character/Equipment/", "shoulder_01.X");
-	pGOEquipment->AddComponent(pMesh);
-	// z, x, y축
-	pGOEquipment->transform->SetPosition(3, 10, -8);
-	pGOEquipment->transform->SetScale(100, 100, 100);
-	//pGOEquipment->transform->SetRotation(0, D3DXToRadian(-90), 0);
+	GameObject* pGOEquipmentShoulder = factory.CreateEquipmentShoulder("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", Vector3(3, 10, -8));	// z, x, y축
 
 	// 맵 생성 후 캐릭터 생성
 	GameObject* pGOChrX = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 3));
@@ -99,7 +92,7 @@ void SceneGrid::Init()
 	pGOChrX5->AddComponent(new ComTroll01("ComTroll01"));
 
 	// 카메라
-	Camera::GetInstance()->SetTarget(&pGOChrX4->transform->GetPosition());
+	Camera::GetInstance()->SetTarget(&pGOChrX3->transform->GetPosition());
 
 	// 포스트 이펙트 게임오브젝트를 렌더링에서 빼기 위해
 	ComPostProcess* comPostProcess = new ComPostProcess("ComPostProcess");
