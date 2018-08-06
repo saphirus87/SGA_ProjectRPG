@@ -3,6 +3,7 @@
 #include "../Application/ComTestCubeControl.h"
 #include "../Application/ComHuman01.h"
 #include "../Application/ComUndead01.h"
+#include "../Application/ComTroll01.h"
 
 SceneGrid::SceneGrid(CString szName) : Scene(szName)
 {
@@ -85,11 +86,13 @@ void SceneGrid::Init()
 	// 맵 생성 후 캐릭터 생성
 	GameObject* pGOChrX = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 3));
 	GameObject* pGOChrX2 = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 4));
-	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/", "human_01.X", Vector3(0, 10, 5));
+	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(0, 10, 5));
 	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
 	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(0, 15, 6));
 	pGOChrX4->AddComponent(new ComUndead01("ComUndead01"));
-		
+	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(0, 15, 7));
+	pGOChrX5->AddComponent(new ComTroll01("ComTroll01"));
+
 	// 카메라
 	Camera::GetInstance()->SetTarget(&pGOEquipment->transform->GetPosition());
 
