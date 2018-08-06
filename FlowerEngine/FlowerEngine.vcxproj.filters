@@ -357,9 +357,6 @@
     <ClCompile Include="Application\ComObjMap.cpp">
       <Filter>Application\Components\ComMap</Filter>
     </ClCompile>
-    <ClCompile Include="Application\ObjLoader.cpp">
-      <Filter>Application\Components\ComMap</Filter>
-    </ClCompile>
     <ClCompile Include="Application\ComHuman01.cpp">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClCompile>
@@ -546,9 +543,6 @@
       <Filter>Engine\Animation\Xfile</Filter>
     </ClInclude>
     <ClInclude Include="Application\ComObjMap.h">
-      <Filter>Application\Components\ComMap</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\ObjLoader.h">
       <Filter>Application\Components\ComMap</Filter>
     </ClInclude>
     <ClInclude Include="Application\ComHuman01.h">

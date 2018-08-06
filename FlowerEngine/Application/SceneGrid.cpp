@@ -73,7 +73,7 @@ void SceneGrid::Init()
 	pGOParticle->AddComponent(new ComParticle("ComParticle"));
 
 	// Obj Map Å×½ºÆ®
-	GameObject* pObjMap = factory.CreateObjMap("ObjMap", "./Resources/obj/Map/TestMap/", "tempMap2.obj", "tempMap2.obj");
+	GameObject* pObjMap = factory.CreateObjMap("ObjMap", "./Resources/obj/Map/TestMap/", "tempMap2.obj");
 //	pObjMap->transform->SetPosition(-3, -5, -3);
 	//pObjMap->transform->SetScale(0.5f, 0.5f, 0.5f);
 
