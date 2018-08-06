@@ -41,7 +41,7 @@ void ComHuman01::Update()
 
 	Matrix4x4 pFindMatrix;
 	//pFindMatrix = m_pAnimation->GetMatrixByName("character_human_male_humanmale_hd_bone_47"); // 47 오른손
-	pFindMatrix = m_pAnimation->GetMatrixByName("character_human_male_humanmale_hd_bone_28"); // 47 손
+	pFindMatrix = m_pAnimation->GetMatrixByName("character_human_male_humanmale_hd_bone_28"); // 어깨
 	//pFindMatrix = m_pAnimation->GetMatrixByName("UpperChest");
 
 	if (pFindMatrix != NULL)

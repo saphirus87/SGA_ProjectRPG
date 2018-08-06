@@ -31,10 +31,20 @@ void ComRenderXMesh::Update()
 void ComRenderXMesh::Render()
 {
 	// 현재 행렬 * Combined Matrix * parent Obj Matrix
-	Matrix4x4 matFinal = gameObject->transform->GetWorldMatrix() * matFrame * matParent;
-	matFinal._11 = 1.0f;
-	matFinal._22 = 1.0f;
-	matFinal._33 = 1.0f;
+	// 현재 행렬은 즉 scale, rot, transfomation
+	//Matrix4x4 matFinal = /*gameObject->transform->GetWorldMatrix() **/ matFrame * matParent;
+
+	Matrix4x4 matRotY;
+	D3DXMatrixIdentity(&matRotY);
+	float fRotY = gameObject->transform->GetRotation().y;
+	float fDegreeY = D3DXToDegree(fRotY);
+	D3DXMatrixRotationY(&matRotY, fRotY);
+
+	// matFrame의 스케일 값이 1 이하인듯
+	matFrame._11 = 1.0f;
+	matFrame._22 = 1.0f;
+	matFrame._33 = 1.0f;
+	Matrix4x4 matFinal = matRotY * matFrame * matParent;
 	
 	m_pEffect->SetMatrix("gWorldMatrix", &matFinal);
 	m_pEffect->SetMatrix("gViewMatrix", &Camera::GetInstance()->GetViewMatrix());

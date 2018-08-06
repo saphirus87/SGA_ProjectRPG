@@ -81,7 +81,7 @@ void SceneGrid::Init()
 	ComRenderXMesh* pMesh = new ComRenderXMesh("ComRenderXMesh");
 	pMesh->Load("Resources/character/Equipment/", "shoulder_01.X");
 	pGOEquipment->AddComponent(pMesh);
-	//pGOEquipment->transform->SetPosition(0, 1, 0);
+	pGOEquipment->transform->SetRotation(0, D3DXToRadian(90), 0);
 
 	// 맵 생성 후 캐릭터 생성
 	GameObject* pGOChrX = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 3));

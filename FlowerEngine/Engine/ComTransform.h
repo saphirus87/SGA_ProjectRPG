@@ -54,8 +54,6 @@ public:
 	// 로컬 행령를 반환합니다.
 	inline Matrix4x4& GetLocalMatrix() { return m_matLocal; }
 
-	bool IsAutoUpdate;
-
 private:
 	Vector3 m_position;	// 위치		x, y, z
 	Vector3 m_rotAngle;	// 회전각도	x, y, z

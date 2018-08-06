@@ -6,8 +6,7 @@ ComTransform::ComTransform(CString szName) :
 	Component(szName),
 	m_position(Vector3(0, 0, 0)),
 	m_scale(Vector3(1, 1, 1)),
-	m_rotAngle(Vector3(0, 0, 0)),
-	IsAutoUpdate(true)
+	m_rotAngle(Vector3(0, 0, 0))
 {
 	D3DXMatrixIdentity(&m_matLocal);
 	D3DXMatrixIdentity(&m_matWorld);
@@ -82,9 +81,6 @@ Matrix4x4 & ComTransform::GetWorldMatrix()
 
 void ComTransform::Update()
 {
-	if (IsAutoUpdate == false)
-		return;
-
 	D3DXMatrixTranslation(&matT, m_position.x, m_position.y, m_position.z);
 	D3DXMatrixRotationX(&matRotX, m_rotAngle.x);
 	D3DXMatrixRotationY(&matRotY, m_rotAngle.y);
