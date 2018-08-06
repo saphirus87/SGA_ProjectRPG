@@ -366,9 +366,11 @@
     <ClCompile Include="Application\ComUndead01.cpp">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\ComXMesh.cpp" />
     <ClCompile Include="Application\ComTroll01.cpp">
       <Filter>Application\Components\ComCharactor</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComRenderXMesh.cpp">
+      <Filter>Engine\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -552,9 +554,11 @@
     <ClInclude Include="Application\ComUndead01.h">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\ComXMesh.h" />
     <ClInclude Include="Application\ComTroll01.h">
       <Filter>Application\Components\ComCharactor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComRenderXMesh.h">
+      <Filter>Engine\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

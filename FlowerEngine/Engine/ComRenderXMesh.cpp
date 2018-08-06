@@ -1,8 +1,8 @@
 #include "stdafx.h"
-#include "ComXMesh.h"
+#include "ComRenderXMesh.h"
 
 
-ComXMesh::ComXMesh(CString szName) : 
+ComRenderXMesh::ComRenderXMesh(CString szName) : 
 	Component(szName),
 	m_pMesh(NULL),
 	m_iNumMaterials(0)
@@ -12,20 +12,20 @@ ComXMesh::ComXMesh(CString szName) :
 }
 
 
-ComXMesh::~ComXMesh()
+ComRenderXMesh::~ComRenderXMesh()
 {
 	SAFE_RELEASE(m_pMesh);
 }
 
-void ComXMesh::Awake()
+void ComRenderXMesh::Awake()
 {
 }
 
-void ComXMesh::Update()
+void ComRenderXMesh::Update()
 {
 }
 
-void ComXMesh::Render()
+void ComRenderXMesh::Render()
 {
 	Matrix4x4 matFinal = matWorld * gameObject->transform->GetWorldMatrix();
 	pDevice9->SetTransform(D3DTS_WORLD, &matFinal);
@@ -38,7 +38,7 @@ void ComXMesh::Render()
 	}
 }
 
-void ComXMesh::Load(CString szFolderPath, CString szFileName)
+void ComRenderXMesh::Load(CString szFolderPath, CString szFileName)
 {
 	LPD3DXBUFFER pBuffer;
 

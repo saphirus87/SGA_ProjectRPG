@@ -465,7 +465,7 @@
     <ClCompile Include="Engine\ComUIButton.cpp" />
     <ClCompile Include="Engine\ComUIImage.cpp" />
     <ClCompile Include="Engine\ComUIText.cpp" />
-    <ClCompile Include="Engine\ComXMesh.cpp" />
+    <ClCompile Include="Engine\ComRenderXMesh.cpp" />
     <ClCompile Include="Engine\Debug.cpp" />
     <ClCompile Include="Engine\FactoryGameObject.cpp" />
     <ClCompile Include="Engine\GameObject.cpp" />
@@ -509,7 +509,7 @@
     <ClInclude Include="Engine\ComUIButton.h" />
     <ClInclude Include="Engine\ComUIImage.h" />
     <ClInclude Include="Engine\ComUIText.h" />
-    <ClInclude Include="Engine\ComXMesh.h" />
+    <ClInclude Include="Engine\ComRenderXMesh.h" />
     <ClInclude Include="Engine\Debug.h" />
     <ClInclude Include="Engine\DPObserver.h" />
     <ClInclude Include="Engine\FactoryGameObject.h" />

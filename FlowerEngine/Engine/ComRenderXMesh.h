@@ -1,10 +1,10 @@
 #pragma once
 #include "Component.h"
-class ComXMesh : public Component
+class ComRenderXMesh : public Component
 {
 public:
-	ComXMesh(CString szName);
-	~ComXMesh();
+	ComRenderXMesh(CString szName);
+	~ComRenderXMesh();
 
 	// Component을(를) 통해 상속됨
 	virtual void Awake() override;
