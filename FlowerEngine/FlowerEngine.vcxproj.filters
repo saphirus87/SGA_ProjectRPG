@@ -372,6 +372,9 @@
     <ClCompile Include="Engine\ComRenderXMesh.cpp">
       <Filter>Engine\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Application\ComChrControl.cpp">
+      <Filter>Application\Components\ComCharactor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -559,6 +562,9 @@
     </ClInclude>
     <ClInclude Include="Engine\ComRenderXMesh.h">
       <Filter>Engine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComChrControl.h">
+      <Filter>Application\Components\ComCharactor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
