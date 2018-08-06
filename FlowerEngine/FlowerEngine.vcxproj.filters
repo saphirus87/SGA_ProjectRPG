@@ -367,6 +367,9 @@
       <Filter>Application\Components\ComCharactor</Filter>
     </ClCompile>
     <ClCompile Include="Engine\ComXMesh.cpp" />
+    <ClCompile Include="Application\ComTroll01.cpp">
+      <Filter>Application\Components\ComCharactor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -550,6 +553,9 @@
       <Filter>Application\Components\ComCharactor</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ComXMesh.h" />
+    <ClInclude Include="Application\ComTroll01.h">
+      <Filter>Application\Components\ComCharactor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="game-controller.ico">
