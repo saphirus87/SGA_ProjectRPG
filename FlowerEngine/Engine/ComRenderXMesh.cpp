@@ -27,8 +27,8 @@ void ComRenderXMesh::Update()
 
 void ComRenderXMesh::Render()
 {
-	Matrix4x4 matFinal = matWorld * gameObject->transform->GetWorldMatrix();
-	pDevice9->SetTransform(D3DTS_WORLD, &matFinal);
+	//Matrix4x4 matFinal = matWorld * gameObject->transform->GetWorldMatrix();
+	pDevice9->SetTransform(D3DTS_WORLD, &gameObject->transform->GetWorldMatrix());
 	for (DWORD i = 0; i < m_iNumMaterials; ++i)
 	{
 		// ¼ÎÀÌ´õ ÇÊ¿ä

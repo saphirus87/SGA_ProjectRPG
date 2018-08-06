@@ -102,7 +102,7 @@ void ComRenderSkinnedMesh::Render()
 	// 2. 애니메이션 업데이트와 전환시 부드럽게하기 위해 블랜딩(Blending)
 	UpdateAnimation(m_pAniControl);
 
-	// 3. 뼈대의 최종 월드 행렬(Combined) 계산
+	// 3. 뼈대의 움직임 적용을 위한 뼈대의 최종 월드 행렬(Combined) 계산
 	UpdateFrameMatrices(m_pRootFrame, NULL);
 
 	// 4. 루트 뼈대 부터 메쉬 컨테이너가 있다면 렌더링
@@ -149,9 +149,15 @@ void ComRenderSkinnedMesh::PlayAnimation(AnimationController pAniControl, int iI
 	SAFE_RELEASE(pNextAnimSet);
 }
 
-Matrix4x4 * ComRenderSkinnedMesh::GetMatrixByName(LPCSTR szName, OUT Matrix4x4* pMatOut)
+Matrix4x4 * ComRenderSkinnedMesh::GetMatrixByName(LPCSTR szName)
 {
-	return FindMatrixByName(m_pRootFrame, szName, pMatOut);
+	FindMatrixByName(m_pRootFrame, szName);
+
+	XFrame pFrame = D3DXFrameFind(m_pRootFrame, szName);
+	if (pFrame != NULL)
+		return &((Frame*)pFrame)->CombinedTM;
+
+	return NULL;
 }
 
 void ComRenderSkinnedMesh::SetupBoneMatrixPointers(XFrame pFrame)
@@ -299,7 +305,7 @@ void ComRenderSkinnedMesh::RenderMeshContainer(MeshContainer* pMeshContainer)
 	}
 }
 
-Matrix4x4* ComRenderSkinnedMesh::FindMatrixByName(XFrame pFrame, LPCSTR szName, OUT Matrix4x4* pMatOut)
+Matrix4x4* ComRenderSkinnedMesh::FindMatrixByName(XFrame pFrame, LPCSTR szName)
 {
 	if (pFrame->pFrameFirstChild != NULL)
 	{
@@ -309,7 +315,6 @@ Matrix4x4* ComRenderSkinnedMesh::FindMatrixByName(XFrame pFrame, LPCSTR szName, 
 		if (CompareStr(pFrame->pFrameFirstChild->Name, szName))
 		{
 			Matrix4x4 pFindMatrix = pFrame->TransformationMatrix;
-			pMatOut = &pFindMatrix;
 		}
 	}
 	if (pFrame->pFrameSibling != NULL)
@@ -320,18 +325,17 @@ Matrix4x4* ComRenderSkinnedMesh::FindMatrixByName(XFrame pFrame, LPCSTR szName, 
 		if (CompareStr(pFrame->pFrameSibling->Name, szName))
 		{
 			Matrix4x4 pFindMatrix = pFrame->TransformationMatrix;
-			pMatOut = &pFindMatrix;
 		}
 	}
 
 	if (pFrame->pFrameSibling != NULL)
 	{
-		FindMatrixByName(pFrame->pFrameSibling, szName, pMatOut);
+		FindMatrixByName(pFrame->pFrameSibling, szName);
 	}
 
 	if (pFrame->pFrameFirstChild != NULL)
 	{
-		FindMatrixByName(pFrame->pFrameFirstChild, szName, pMatOut);
+		FindMatrixByName(pFrame->pFrameFirstChild, szName);
 	}
 
 	return NULL;

@@ -18,17 +18,7 @@ void ComHuman01::Awake()
 	GameObject* pObjMap = GameObject::Find("ObjMap");
 	m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
 
-
-	GameObject* pEquip = GameObject::Find("Equipment_shoulder");
 	//static_cast<ComTransform*>(pEquip->GetComponent("ComTransform"))->IsAutoUpdate = false;
-
-	Matrix4x4 pFindMatrix;
-	D3DXMatrixIdentity(&pFindMatrix);
-	m_pAnimation->GetMatrixByName("character_scourge_male_scourgemale_hd_bone_140", &pFindMatrix);
-	if (pFindMatrix != NULL)
-	{
-		static_cast<ComRenderXMesh*>(pEquip->GetComponent("ComRenderXMesh"))->matWorld = pFindMatrix;
-	}
 }
 
 void ComHuman01::Update()
@@ -46,6 +36,18 @@ void ComHuman01::Update()
 		pos.y = fHeight;
 		gameObject->transform->SetPosition(pos);
 	}
+
+	GameObject* pEquip = GameObject::Find("Equipment_shoulder");
+
+	Matrix4x4* pFindMatrix = NULL;
+	pFindMatrix = m_pAnimation->GetMatrixByName("shoulder_left");
+	if (pFindMatrix != NULL)
+	{
+		pEquip->transform->SetWorldMatrix(pFindMatrix);
+		//static_cast<ComRenderXMesh*>(pEquip->GetComponent("ComRenderXMesh"))->matWorld = *pFindMatrix;
+	}
+
+	Camera::GetInstance()->SetTarget(&pEquip->transform->GetPosition());
 }
 
 void ComHuman01::Render()

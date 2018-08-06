@@ -50,7 +50,7 @@ public:
 	// 애니메이션을 실행합니다.
 	void PlayAnimation(AnimationController pAniControl, int iIndex, bool isBlend);
 
-	Matrix4x4* GetMatrixByName(LPCSTR szName, OUT Matrix4x4* pMatOut);
+	Matrix4x4* GetMatrixByName(LPCSTR szName);
 
 private:
 	// 루트 뼈대 부터 행렬 포인터들 지정 (재귀호출)
@@ -72,7 +72,7 @@ private:
 	void RenderMeshContainer(MeshContainer* pMeshContainer);
 
 	// 이름으로 뼈대를 찾습니다.
-	Matrix4x4* FindMatrixByName(XFrame pFrame, LPCSTR szName, OUT Matrix4x4* pMatOut);
+	Matrix4x4* FindMatrixByName(XFrame pFrame, LPCSTR szName);
 
 private:
 	// DirectX 디바이스
