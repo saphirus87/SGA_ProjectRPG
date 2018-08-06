@@ -47,8 +47,8 @@ void ComHuman01::Update()
 	if (pFindMatrix != NULL)
 	{
 		ComRenderXMesh* pRenderXMesh = static_cast<ComRenderXMesh*>(pEquip->GetComponent("ComRenderXMesh"));
-		pRenderXMesh->matFrame = pFindMatrix;
-		pRenderXMesh->matParent = gameObject->transform->GetWorldMatrix();
+		pRenderXMesh->m_matFrame = pFindMatrix;
+		pRenderXMesh->m_matParent = gameObject->transform->GetWorldMatrix();
 	}
 
 //	Camera::GetInstance()->SetTarget(&equippos);

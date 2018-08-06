@@ -9,8 +9,8 @@ ComRenderXMesh::ComRenderXMesh(CString szName) :
 	m_pEffect(NULL)
 {
 	pDevice9 = GetD3D9Device();
-	D3DXMatrixIdentity(&matFrame);
-	D3DXMatrixIdentity(&matParent);
+	D3DXMatrixIdentity(&m_matFrame);
+	D3DXMatrixIdentity(&m_matParent);
 }
 
 
@@ -30,39 +30,21 @@ void ComRenderXMesh::Update()
 
 void ComRenderXMesh::Render()
 {
-	// 현재 행렬 * Combined Matrix * parent Obj Matrix
-	// 현재 행렬은 즉 scale, rot, transfomation
-	//Matrix4x4 matFinal = /*gameObject->transform->GetWorldMatrix() **/ matFrame * matParent;
-
-	Matrix4x4 matRotY;
-	D3DXMatrixIdentity(&matRotY);
-	float fRotY = gameObject->transform->GetRotation().y;
-	float fDegreeY = D3DXToDegree(fRotY);
-	D3DXMatrixRotationY(&matRotY, fRotY);
-
-	// matFrame의 스케일 값이 1 이하인듯
-	matFrame._11 = 1.0f;
-	matFrame._22 = 1.0f;
-	matFrame._33 = 1.0f;
-	Matrix4x4 matFinal = matRotY * matFrame * matParent;
+	// 현재 행렬 * Combined Matrix * parent Obj Matrix (현재 행렬은 즉 scale, rot, transfomation)
+	Matrix4x4 matFinal = gameObject->transform->GetWorldMatrix() * m_matFrame * m_matParent;
 	
 	m_pEffect->SetMatrix("gWorldMatrix", &matFinal);
 	m_pEffect->SetMatrix("gViewMatrix", &Camera::GetInstance()->GetViewMatrix());
 	m_pEffect->SetMatrix("gProjMatrix", &Camera::GetInstance()->GetProjMatrix());
-
-	
+		
 	UINT pass;
 	m_pEffect->Begin(&pass, NULL);
 	m_pEffect->BeginPass(0);
 
-	//pDevice9->SetTransform(D3DTS_WORLD, &matFinal);
 	for (DWORD i = 0; i < m_iNumMaterials; ++i)
 	{
 		m_pEffect->SetTexture("DiffuseMap_Tex", m_vecMtrl[i].pTexture);
 		m_pEffect->CommitChanges();
-		// 셰이더 필요
-		//pDevice9->SetMaterial(&m_vecMtrl[i].material);
-		//pDevice9->SetTexture(0, m_vecMtrl[i].pTexture);
 		m_pMesh->DrawSubset(i);
 	}
 
@@ -93,4 +75,9 @@ void ComRenderXMesh::Load(CString szFolderPath, CString szFileName)
 	}
 
 	pBuffer->Release();
+}
+
+void ComRenderXMesh::SetFrameMatrix(Matrix4x4 * pMatFrame, Matrix4x4 * pMatParent)
+{
+
 }
