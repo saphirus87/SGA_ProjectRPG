@@ -13,7 +13,8 @@ public:
 
 	void Load(CString szFolderPath, CString szFileName);
 
-	Matrix4x4 matWorld;
+	Matrix4x4 matFrame;
+	Matrix4x4 matParent;
 
 private:
 	Device9 pDevice9;

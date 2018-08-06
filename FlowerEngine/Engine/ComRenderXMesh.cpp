@@ -8,7 +8,8 @@ ComRenderXMesh::ComRenderXMesh(CString szName) :
 	m_iNumMaterials(0)
 {
 	pDevice9 = GetD3D9Device();
-	D3DXMatrixIdentity(&matWorld);
+	D3DXMatrixIdentity(&matFrame);
+	D3DXMatrixIdentity(&matParent);
 }
 
 
@@ -27,8 +28,12 @@ void ComRenderXMesh::Update()
 
 void ComRenderXMesh::Render()
 {
-	//Matrix4x4 matFinal = matWorld * gameObject->transform->GetWorldMatrix();
-	pDevice9->SetTransform(D3DTS_WORLD, &gameObject->transform->GetWorldMatrix());
+	// 현재 행렬 * Combined Matrix * parent Obj Matrix
+	Matrix4x4 matFinal = gameObject->transform->GetWorldMatrix() * matFrame * matParent;
+	matFinal._11 = 1.0f;
+	matFinal._22 = 1.0f;
+	matFinal._33 = 1.0f;
+	pDevice9->SetTransform(D3DTS_WORLD, &matFinal);
 	for (DWORD i = 0; i < m_iNumMaterials; ++i)
 	{
 		// 셰이더 필요

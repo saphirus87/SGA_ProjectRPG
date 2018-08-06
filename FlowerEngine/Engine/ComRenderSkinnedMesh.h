@@ -50,7 +50,7 @@ public:
 	// 애니메이션을 실행합니다.
 	void PlayAnimation(AnimationController pAniControl, int iIndex, bool isBlend);
 
-	Matrix4x4* GetMatrixByName(LPCSTR szName);
+	Matrix4x4& GetMatrixByName(LPCSTR szName);
 
 private:
 	// 루트 뼈대 부터 행렬 포인터들 지정 (재귀호출)

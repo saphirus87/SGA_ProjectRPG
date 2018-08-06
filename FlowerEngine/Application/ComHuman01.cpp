@@ -39,15 +39,19 @@ void ComHuman01::Update()
 
 	GameObject* pEquip = GameObject::Find("Equipment_shoulder");
 
-	Matrix4x4* pFindMatrix = NULL;
-	pFindMatrix = m_pAnimation->GetMatrixByName("shoulder_left");
+	Matrix4x4 pFindMatrix;
+	//pFindMatrix = m_pAnimation->GetMatrixByName("character_human_male_humanmale_hd_bone_47"); // 47 오른손
+	pFindMatrix = m_pAnimation->GetMatrixByName("character_human_male_humanmale_hd_bone_28"); // 47 손
+	//pFindMatrix = m_pAnimation->GetMatrixByName("UpperChest");
+
 	if (pFindMatrix != NULL)
 	{
-		pEquip->transform->SetWorldMatrix(pFindMatrix);
-		//static_cast<ComRenderXMesh*>(pEquip->GetComponent("ComRenderXMesh"))->matWorld = *pFindMatrix;
+		ComRenderXMesh* pRenderXMesh = static_cast<ComRenderXMesh*>(pEquip->GetComponent("ComRenderXMesh"));
+		pRenderXMesh->matFrame = pFindMatrix;
+		pRenderXMesh->matParent = gameObject->transform->GetWorldMatrix();
 	}
 
-	Camera::GetInstance()->SetTarget(&pEquip->transform->GetPosition());
+//	Camera::GetInstance()->SetTarget(&equippos);
 }
 
 void ComHuman01::Render()

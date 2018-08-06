@@ -42,7 +42,7 @@ public:
 	static float Distance(GameObject* pGO1, GameObject* pGO2);
 	static float Distance(GameObject* pGO1, Vector3* pVec);
 
-	// 월드 행렬을 설정합니다.
+	// 월드 행렬을 설정합니다. 이 함수는 사용하면 안됌. Matrix를 따로 두어서 parent matrix를 곱하는 형태로 사용되어야 함.
 	inline void SetWorldMatrix(Matrix4x4* pMatrixWorld) { m_matWorld = *pMatrixWorld; }
 
 	// 월드 행렬을 반환합니다.
