@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SavedCharacter version="1.0">
+    <model>
+        <file name="creature/overfiend/overfiend.m2"/>
+        <CharDetails>
+            <skinColor value="0"/>
+            <faceType value="0"/>
+            <hairColor value="0"/>
+            <hairStyle value="0"/>
+            <facialHair value="0"/>
+            <eyeGlowType value="1"/>
+            <showUnderwear value="1"/>
+            <showEars value="1"/>
+            <showHair value="1"/>
+            <showFacialHair value="1"/>
+            <showFeet value="1"/>
+            <isDemonHunter value="0"/>
+            <DHTatooStyle value="0"/>
+            <DHTatooColor value="0"/>
+            <DHHornStyle value="0"/>
+            <DHBlindFolds value="0"/>
+        </CharDetails>
+    </model>
+    <equipment>
+        <item>
+            <slot value="9"/>
+            <id value="-1"/>
+            <displayId value="-1"/>
+            <level value="0"/>
+        </item>
+        <item>
+            <slot value="10"/>
+            <id value="-1"/>
+            <displayId value="-1"/>
+            <level value="0"/>
+        </item>
+    </equipment>
+</SavedCharacter>
