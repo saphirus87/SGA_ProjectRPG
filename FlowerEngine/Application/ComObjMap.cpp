@@ -18,6 +18,18 @@ ComObjMap::~ComObjMap()
 {
 	SAFE_RELEASE(m_pVB);
 	SAFE_RELEASE(m_pIB);
+
+	for (size_t i = 0; i < m_pBoundingSphere.size(); ++i)
+		SAFE_DELETE(m_pBoundingSphere[i]);
+	m_pBoundingSphere.clear();
+
+	for (auto & mtrl : m_mtltexList)
+		SAFE_DELETE(mtrl.second);
+
+	m_mtltexList.clear();
+
+	m_vertices.clear();
+	m_surfaceIndices.clear();
 }
 
 void ComObjMap::Awake()
@@ -30,6 +42,7 @@ void ComObjMap::Awake()
 
 	for (int i = 0; i < m_vertices.size(); i += 12)
 	{
+		// 코드 정리 필요
 		m_pBoundingSphere.push_back(new BoundingSphere(
 			m_vertices[i].p, radius));
 	}
