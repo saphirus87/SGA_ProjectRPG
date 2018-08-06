@@ -17,6 +17,18 @@ void ComHuman01::Awake()
 	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 	GameObject* pObjMap = GameObject::Find("ObjMap");
 	m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
+
+
+	GameObject* pEquip = GameObject::Find("Equipment_shoulder");
+	//static_cast<ComTransform*>(pEquip->GetComponent("ComTransform"))->IsAutoUpdate = false;
+
+	Matrix4x4 pFindMatrix;
+	D3DXMatrixIdentity(&pFindMatrix);
+	m_pAnimation->GetMatrixByName("character_scourge_male_scourgemale_hd_bone_140", &pFindMatrix);
+	if (pFindMatrix != NULL)
+	{
+		static_cast<ComRenderXMesh*>(pEquip->GetComponent("ComRenderXMesh"))->matWorld = pFindMatrix;
+	}
 }
 
 void ComHuman01::Update()

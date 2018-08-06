@@ -106,6 +106,9 @@ private:
 
 	// 뼈대 행렬들
 	Matrix4x4* m_pBoneMatrices;
+	
+	// 뼈대 행렬들
+	multimap<CString, Matrix4x4> m_mapBoneMatrices;
 
 	// 이 컴포넌트를 사용하는 객체수 (Clone된)
 	int m_iReference;

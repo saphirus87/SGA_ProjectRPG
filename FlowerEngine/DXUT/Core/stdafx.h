@@ -327,7 +327,7 @@ LONG      WINAPI DXUTGetWindowHeight();
 RECT      WINAPI DXUTGetWindowClientRectAtModeChange(); // Useful for returning to windowed mode with the same resolution as before toggle to full screen mode
 RECT      WINAPI DXUTGetFullsceenClientRectAtModeChange(); // Useful for returning to full screen mode with the same resolution as before toggle to windowed mode
 double    WINAPI DXUTGetTime();
-float     WINAPI DXUTGetElapsedTime();
+float     WINAPI GetElapsedTime();
 bool      WINAPI DXUTIsWindowed();
 bool	  WINAPI DXUTIsInGammaCorrectMode();
 float     WINAPI DXUTGetFPS();

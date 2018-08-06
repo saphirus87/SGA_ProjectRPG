@@ -27,6 +27,7 @@ ComRenderSkinnedMesh::~ComRenderSkinnedMesh()
 		D3DXFrameDestroy(m_pRootFrame, m_pAllocateHierarchy);
 		D3DXFrameDestroy(m_pSubRootFrame, m_pAllocateHierarchy);
 		SAFE_DELETE_ARRAY(m_pBoneMatrices);
+		m_mapBoneMatrices.clear();
 		SAFE_DELETE(m_pAllocateHierarchy);
 	}
 	else
@@ -61,6 +62,8 @@ void ComRenderSkinnedMesh::Clone(ComRenderSkinnedMesh* pExist)
 	m_pAllocateHierarchy = pExist->m_pAllocateHierarchy;
 	m_pRootFrame = pExist->m_pRootFrame;
 	m_pBoneMatrices = pExist->m_pBoneMatrices;
+	m_mapBoneMatrices = pExist->m_mapBoneMatrices;
+
 	m_pEffect = pExist->m_pEffect;
 
 	// 존재하는 애니메이션 컨트롤러(pExist->m_pAniControl)를 이 컴포넌트의 애니메이션 컨트롤러(m_pAniControl)로 복제
@@ -96,10 +99,10 @@ void ComRenderSkinnedMesh::Render()
 	m_pEffect->SetMatrix("mView", &Camera::GetInstance()->GetViewMatrix());
 	m_pEffect->SetMatrix("mProj", &Camera::GetInstance()->GetProjMatrix());
 
-	// 2. 애니메이션 전환시 부드럽게하기 위해 (Blend)
+	// 2. 애니메이션 업데이트와 전환시 부드럽게하기 위해 블랜딩(Blending)
 	UpdateAnimation(m_pAniControl);
 
-	// 3. 뼈대의 최종 월드 행렬 계산
+	// 3. 뼈대의 최종 월드 행렬(Combined) 계산
 	UpdateFrameMatrices(m_pRootFrame, NULL);
 
 	// 4. 루트 뼈대 부터 메쉬 컨테이너가 있다면 렌더링
@@ -188,7 +191,7 @@ void ComRenderSkinnedMesh::SetupBoneMatrixPointersOnMesh(XMeshContainer pMeshCon
 
 void ComRenderSkinnedMesh::UpdateAnimation(AnimationController pAniControl)
 {
-	float fDeltaTime = DXUTGetElapsedTime();
+	float fDeltaTime = GetElapsedTime();
 
 	pAniControl->AdvanceTime(fDeltaTime, NULL);
 
@@ -259,7 +262,7 @@ void ComRenderSkinnedMesh::RenderMeshContainer(MeshContainer* pMeshContainer)
 	for (int iAttribute = 0; iAttribute < pMeshContainer->NumAttributeGroups; ++iAttribute)
 	{
 		/// I. 정점 셰이더를 위한
-		// 1. 월드 행렬 준비 (first calculate all the world matrices)
+		// 1. 스킨드 매쉬 월드 행렬 준비 (first calculate all the world matrices)
 		for (int iPaletteEntry = 0; iPaletteEntry < pMeshContainer->NumPaletteEntries; ++iPaletteEntry)
 		{
 			iBoneID = pBoneComb[iAttribute].BoneId[iPaletteEntry];

@@ -696,7 +696,7 @@ LONG WINAPI DXUTGetWindowHeight() { RECT rc = DXUTGetWindowClientRect(); return 
 RECT WINAPI DXUTGetWindowClientRectAtModeChange() { RECT rc = { 0, 0, GetDXUTState().GetWindowBackBufferWidthAtModeChange(), GetDXUTState().GetWindowBackBufferHeightAtModeChange() }; return rc; }
 RECT WINAPI DXUTGetFullsceenClientRectAtModeChange() { RECT rc = { 0, 0, GetDXUTState().GetFullScreenBackBufferWidthAtModeChange(), GetDXUTState().GetFullScreenBackBufferHeightAtModeChange() }; return rc; }
 double WINAPI DXUTGetTime() { return GetDXUTState().GetTime(); }
-float WINAPI DXUTGetElapsedTime() { return GetDXUTState().GetElapsedTime(); }
+float WINAPI GetElapsedTime() { return GetDXUTState().GetElapsedTime(); }
 float WINAPI DXUTGetFPS() { return GetDXUTState().GetFPS(); }
 LPCWSTR WINAPI DXUTGetWindowTitle() { return GetDXUTState().GetWindowTitle(); }
 LPCWSTR WINAPI DXUTGetDeviceStats() { return GetDXUTState().GetDeviceStats(); }
@@ -1363,7 +1363,7 @@ LRESULT CALLBACK DXUTStaticWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 		{
 			HRESULT hr;
 			double fTime = DXUTGetTime();
-			float fElapsedTime = DXUTGetElapsedTime();
+			float fElapsedTime = GetElapsedTime();
 
 			if (DXUTIsCurrentDeviceD3D9())
 			{
@@ -5111,7 +5111,7 @@ HRESULT WINAPI DXUTKillTimer(UINT nIDEvent)
 //--------------------------------------------------------------------------------------
 void DXUTHandleTimers()
 {
-	float fElapsedTime = DXUTGetElapsedTime();
+	float fElapsedTime = GetElapsedTime();
 
 	CGrowableArray <DXUT_TIMER>* pTimerList = GetDXUTState().GetTimerList();
 	if (pTimerList == NULL)
