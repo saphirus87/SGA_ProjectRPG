@@ -127,6 +127,12 @@ enum eCellType
 	eCellType_CubeGoal	// 목표 지점에 도착한 큐브
 };
 
+enum eAni
+{
+	eAni_Stand = 1,
+	eAni_Walk = 0
+};
+
 struct KEYBOARD_STATE
 {
 	Vector3	deltaPos;

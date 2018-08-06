@@ -25,7 +25,7 @@ void ComUndead01::Awake()
 	m_pAnimation->GetMatrixByName("character_scourge_male_scourgemale_hd_bone_140", &pFindMatrix);
 	if (pFindMatrix != NULL)
 	{
-		static_cast<ComXMesh*>(pEquip->GetComponent("ComXMesh"))->matWorld = pFindMatrix;
+		static_cast<ComRenderXMesh*>(pEquip->GetComponent("ComRenderXMesh"))->matWorld = pFindMatrix;
 	}
 }
 
@@ -43,11 +43,11 @@ void ComUndead01::Update()
 	//Test Code
 	if (Input::KeyDown('1'))
 	{
-		m_pAnimation->PlayAnimation(0);
+		m_pAnimation->PlayAnimation(eAni_Stand);
 	}
 	if (Input::KeyDown('2'))
 	{
-		m_pAnimation->PlayAnimation(1);
+		m_pAnimation->PlayAnimation(eAni_Walk);
 	}
 }
 

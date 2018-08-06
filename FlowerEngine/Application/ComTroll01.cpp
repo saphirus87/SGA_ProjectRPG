@@ -32,11 +32,11 @@ void ComTroll01::Update()
 	//Test Code
 	if (Input::KeyDown('1'))
 	{
-		m_pAnimation->PlayAnimation(0);
+		m_pAnimation->PlayAnimation(eAni_Stand);
 	}
 	if (Input::KeyDown('2'))
 	{
-		m_pAnimation->PlayAnimation(1);
+		m_pAnimation->PlayAnimation(eAni_Walk);
 	}
 }
 

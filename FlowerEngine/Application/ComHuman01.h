@@ -1,12 +1,6 @@
 #pragma once
 #include "stdafx.h"
 
-enum eAniHuman
-{
-	eAni_Stand = 1,
-	eAni_Walk = 0
-};
-
 class ComObjMap;
 
 class ComHuman01 : public Component

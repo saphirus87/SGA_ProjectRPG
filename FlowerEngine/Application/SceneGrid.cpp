@@ -78,7 +78,7 @@ void SceneGrid::Init()
 
 	// 오브젝트들 생성
 	GameObject* pGOEquipment = new GameObject("Equipment_shoulder");
-	ComXMesh* pMesh = new ComXMesh("ComXMesh");
+	ComRenderXMesh* pMesh = new ComRenderXMesh("ComRenderXMesh");
 	pMesh->Load("Resources/character/Equipment/", "shoulder_01.X");
 	pGOEquipment->AddComponent(pMesh);
 	pGOEquipment->transform->SetPosition(0, 1, 0);
