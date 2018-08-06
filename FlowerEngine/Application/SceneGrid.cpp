@@ -3,6 +3,7 @@
 #include "../Application/ComTestCubeControl.h"
 #include "../Application/ComHuman01.h"
 #include "../Application/ComUndead01.h"
+#include "../Application/ComChrControl.h"
 #include "../Application/ComTroll01.h"
 
 SceneGrid::SceneGrid(CString szName) : Scene(szName)
@@ -93,11 +94,12 @@ void SceneGrid::Init()
 	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
 	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(0, 15, 6));
 	pGOChrX4->AddComponent(new ComUndead01("ComUndead01"));
+	pGOChrX4->AddComponent(new ComChrControl("ComChrControl"));
 	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(0, 15, 7));
 	pGOChrX5->AddComponent(new ComTroll01("ComTroll01"));
 
 	// 카메라
-	Camera::GetInstance()->SetTarget(&pGOChrX3->transform->GetPosition());
+	Camera::GetInstance()->SetTarget(&pGOChrX4->transform->GetPosition());
 
 	// 포스트 이펙트 게임오브젝트를 렌더링에서 빼기 위해
 	ComPostProcess* comPostProcess = new ComPostProcess("ComPostProcess");
