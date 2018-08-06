@@ -252,11 +252,11 @@ GameObject * FactoryGameObject::CreateFromXFile(CString szName, CString szFolder
 	return pGO;
 }
 
-GameObject * FactoryGameObject::CreateObjMap(CString szName, CString szFolderPath, CString szFileName, CString szSurfaceFileName)
+GameObject * FactoryGameObject::CreateObjMap(CString szName, CString szFolderPath, CString szFileName)
 {
 	GameObject* pGO = new GameObject(szName);
 	ComObjMap* pComObjMap = new ComObjMap("ComObjMap");
-	pComObjMap->SetFilename(szFolderPath, szFileName, szSurfaceFileName);
+	pComObjMap->SetFilename(szFolderPath, szFileName);
 	pGO->AddComponent(pComObjMap);
 
 	return pGO;

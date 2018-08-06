@@ -1,27 +1,34 @@
 #pragma once
 #include "stdafx.h"
 
+// юс╫ц
+const float radius = 2.5f;
+
 class ComObjMap : public Component
 {
 private:
-	Device9 pDevice9;
+	vector<D3DXVECTOR3> m_surfaceVertices;
 
 	float m_rayDistance;
 
 	CString m_filePath;
 	CString m_mapFilename;
-	CString m_surfaceFilename;
 
-	LPD3DXMESH m_pMesh;
-	vector<MTLTEX*> m_mtltexList;
+	Device9 pDevice9;
 
-	vector<D3DXVECTOR3> m_vertices;
-	vector<D3DXVECTOR3> m_surfaceVertices;
-
-	size_t m_dimension;
-	D3DXVECTOR3 m_size;
+	vector<VERTEX_PNT> m_vertices;
+	vector<DWORD> m_surfaceIndices;
+	map<CString, MTLTEX*> m_mtltexList;
 
 	LPD3DXEFFECT m_pEffect;
+	float m_InverseUV;
+
+	// frustum culling
+private:
+	vector<BoundingSphere*> m_pBoundingSphere;
+
+	LPDIRECT3DVERTEXBUFFER9 m_pVB;
+	LPDIRECT3DINDEXBUFFER9 m_pIB;
 
 public:
 	ComObjMap(CString szName);
@@ -34,13 +41,17 @@ public:
 
 	bool GetHeight(float & height, const D3DXVECTOR3 & pos);
 	bool CalcPickedPosition(D3DXVECTOR3 &out, WORD screenX, WORD screenY);
-
 	void SetRayDistance(float rayDistance) { m_rayDistance = rayDistance; }
-
-	void SetFilename(CString szFolderPath, CString szMapFilename, CString szSurfaceFileName)
+	void SetFilename(CString szFolderPath, CString szMapFilename)
 	{
-		m_filePath = szFolderPath; m_mapFilename = szMapFilename; m_surfaceFilename = szSurfaceFileName;
+		m_filePath = szFolderPath; m_mapFilename = szMapFilename;
 	}
-	void SetDimension(size_t dimension) { m_dimension = dimension; }
+
+	// Map Load
+	void LoadMap();
+	void LoadMtlLib(LPCTSTR fullPath);
+
+	// frustum culling
+	void UpdateIndexBuffer();
 };
 
