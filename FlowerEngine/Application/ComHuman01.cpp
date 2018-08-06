@@ -42,16 +42,12 @@ void ComHuman01::Update()
 	Matrix4x4 pFindMatrix;
 	//pFindMatrix = m_pAnimation->GetMatrixByName("character_human_male_humanmale_hd_bone_47"); // 47 ¿À¸¥¼Õ
 	pFindMatrix = m_pAnimation->GetMatrixByName("character_human_male_humanmale_hd_bone_28"); // ¾î±ú
-	//pFindMatrix = m_pAnimation->GetMatrixByName("UpperChest");
 
 	if (pFindMatrix != NULL)
 	{
 		ComRenderXMesh* pRenderXMesh = static_cast<ComRenderXMesh*>(pEquip->GetComponent("ComRenderXMesh"));
-		pRenderXMesh->m_matFrame = pFindMatrix;
-		pRenderXMesh->m_matParent = gameObject->transform->GetWorldMatrix();
+		pRenderXMesh->SetFrameMatrix(&pFindMatrix, &gameObject->transform->GetWorldMatrix());
 	}
-
-//	Camera::GetInstance()->SetTarget(&equippos);
 }
 
 void ComHuman01::Render()

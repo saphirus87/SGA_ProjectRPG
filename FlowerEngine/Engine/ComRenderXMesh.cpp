@@ -79,5 +79,6 @@ void ComRenderXMesh::Load(CString szFolderPath, CString szFileName)
 
 void ComRenderXMesh::SetFrameMatrix(Matrix4x4 * pMatFrame, Matrix4x4 * pMatParent)
 {
-
+	m_matFrame = *pMatFrame;
+	m_matParent = *pMatParent;
 }
