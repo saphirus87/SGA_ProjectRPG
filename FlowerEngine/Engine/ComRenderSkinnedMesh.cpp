@@ -153,9 +153,7 @@ Matrix4x4& ComRenderSkinnedMesh::GetMatrixByName(LPCSTR szName)
 {
 	Frame* pFrame = (Frame*)D3DXFrameFind(m_pRootFrame, szName);
 	if (pFrame != NULL)
-	{
 		return (pFrame)->CombinedTM;
-	}
 
 	Matrix4x4 matIdentity;
 	D3DXMatrixIdentity(&matIdentity);

@@ -3,8 +3,12 @@
 #include "ComObjMap.h"
 
 ComHuman01::ComHuman01(CString szName) : 
-	Component(szName)
+	Component(szName),
+	m_pSholderRight(NULL),
+	m_pSholderLeft(NULL)
 {
+	D3DXMatrixIdentity(&m_matSholderRight);
+	D3DXMatrixIdentity(&m_matSholderLeft);
 }
 
 
@@ -18,7 +22,13 @@ void ComHuman01::Awake()
 	GameObject* pObjMap = GameObject::Find("ObjMap");
 	m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
 
-	//static_cast<ComTransform*>(pEquip->GetComponent("ComTransform"))->IsAutoUpdate = false;
+	// ¾î±ú ·»´õ¸µ ÄÄÆ÷³ÍÆ® ¹Ì¸® Ã£¾ÆµÒ
+	GameObject* pEquipShouldRight = GameObject::Find("Equipment_shoulder_Right");
+	if (pEquipShouldRight)
+		m_pSholderRight = (ComRenderXMesh*)pEquipShouldRight->GetComponent("ComRenderXMesh");
+	GameObject* pEquipShouldLeft = GameObject::Find("Equipment_shoulder_Left");
+	if (pEquipShouldLeft)
+		m_pSholderLeft = (ComRenderXMesh*)pEquipShouldLeft->GetComponent("ComRenderXMesh");
 }
 
 void ComHuman01::Update()
@@ -37,25 +47,11 @@ void ComHuman01::Update()
 		gameObject->transform->SetPosition(pos);
 	}
 
-	GameObject* pEquipShouldRight = GameObject::Find("Equipment_shoulder_Right");
-	Matrix4x4 pFindMatrix;
-	pFindMatrix = m_pAnimation->GetMatrixByName("Shoulder_Right");
-
-	if (pFindMatrix != NULL)
-	{
-		ComRenderXMesh* pRenderXMesh = static_cast<ComRenderXMesh*>(pEquipShouldRight->GetComponent("ComRenderXMesh"));
-		pRenderXMesh->SetFrameMatrix(&pFindMatrix, &gameObject->transform->GetWorldMatrix());
-	}
-
-	GameObject* pEquipShouldLeft = GameObject::Find("Equipment_shoulder_Left");
-	pFindMatrix = m_pAnimation->GetMatrixByName("Shoulder_Left");
-
-	if (pFindMatrix != NULL)
-	{
-		ComRenderXMesh* pRenderXMesh = static_cast<ComRenderXMesh*>(pEquipShouldLeft->GetComponent("ComRenderXMesh"));
-		pRenderXMesh->SetFrameMatrix(&pFindMatrix, &gameObject->transform->GetWorldMatrix());
-	}
-
+	// ¾î±ú ¹æ¾î±¸
+	m_matSholderRight = m_pAnimation->GetMatrixByName("Shoulder_Right");
+	m_matSholderLeft = m_pAnimation->GetMatrixByName("Shoulder_Left");
+	m_pSholderRight->SetFrameMatrix(&m_matSholderRight, &gameObject->transform->GetWorldMatrix());
+	m_pSholderLeft->SetFrameMatrix(&m_matSholderLeft, &gameObject->transform->GetWorldMatrix());
 }
 
 void ComHuman01::Render()

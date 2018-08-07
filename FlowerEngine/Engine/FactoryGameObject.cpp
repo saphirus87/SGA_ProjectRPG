@@ -11,6 +11,7 @@
 #include "../Application/ComMissile.h"
 #include "ComMeshSphere.h"
 #include "../Application/ComObjMap.h"
+#include "../Application/ComEquipmentShoulder.h"
 
 FactoryGameObject::FactoryGameObject()
 {
@@ -265,6 +266,9 @@ GameObject * FactoryGameObject::CreateObjMap(CString szName, CString szFolderPat
 GameObject * FactoryGameObject::CreateEquipmentShoulder(CString szName, CString szFolderPath, CString szFileName, Vector3& pos, GameObject* goPrefab, bool IsMirrored)
 {
 	GameObject* pGOEquipment = new GameObject(szName);
+
+	ComEquipmentShoulder* pEquipShoulder = new ComEquipmentShoulder("ComEquipmentShoulder");
+	pGOEquipment->AddComponent(pEquipShoulder);
 
 	ComRenderXMesh* pMesh = new ComRenderXMesh("ComRenderXMesh");
 	pMesh->IsMirrored = IsMirrored;
