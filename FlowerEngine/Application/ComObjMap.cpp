@@ -19,10 +19,6 @@ ComObjMap::~ComObjMap()
 	SAFE_RELEASE(m_pVB);
 	SAFE_RELEASE(m_pIB);
 
-	for (size_t i = 0; i < m_pBoundingSphere.size(); ++i)
-		SAFE_DELETE(m_pBoundingSphere[i]);
-	m_pBoundingSphere.clear();
-
 	for (auto & mtrl : m_mtltexList)
 		SAFE_DELETE(mtrl.second);
 
@@ -38,13 +34,6 @@ void ComObjMap::Awake()
 	{
 		m_InverseUV = 5.0f;
 		LoadMap();
-	}
-
-	for (int i = 0; i < m_vertices.size(); i += 12)
-	{
-		// 코드 정리 필요
-		m_pBoundingSphere.push_back(new BoundingSphere(
-			m_vertices[i].p, radius));
 	}
 }
 
@@ -291,18 +280,15 @@ void ComObjMap::UpdateIndexBuffer()
 {
 	if (!m_surfaceIndices.empty()) m_surfaceIndices.clear();
 
-	int sphereNum = 0;
-	for (auto p : m_pBoundingSphere)
+	for (int i = 0; i < m_vertices.size(); i += 12)
 	{
-		if (Camera::GetInstance()->FrustumCulling(&p->center, p->radius))
+		if (Camera::GetInstance()->FrustumCulling(&m_vertices[i].p, radius))
 		{
-			for (int i = 0; i < 12; i++)
+			for (int j = 0; j < 12; j++)
 			{
-				m_surfaceIndices.push_back(sphereNum * 12 + i);
+				m_surfaceIndices.push_back(i + j);
 			}
 		}
-
-		sphereNum++;
 	}
 
 	if (m_pIB != NULL) SAFE_RELEASE(m_pIB);

@@ -9,26 +9,20 @@ class ComObjMap : public Component
 private:
 	vector<D3DXVECTOR3> m_surfaceVertices;
 
+	Device9 pDevice9;
 	float m_rayDistance;
 
 	CString m_filePath;
 	CString m_mapFilename;
 
-	Device9 pDevice9;
-
 	vector<VERTEX_PNT> m_vertices;
 	vector<DWORD> m_surfaceIndices;
 	map<CString, MTLTEX*> m_mtltexList;
+	LPDIRECT3DVERTEXBUFFER9 m_pVB;
+	LPDIRECT3DINDEXBUFFER9 m_pIB;
 
 	LPD3DXEFFECT m_pEffect;
 	float m_InverseUV;
-
-	// frustum culling
-private:
-	vector<BoundingSphere*> m_pBoundingSphere;
-
-	LPDIRECT3DVERTEXBUFFER9 m_pVB;
-	LPDIRECT3DINDEXBUFFER9 m_pIB;
 
 public:
 	ComObjMap(CString szName);
