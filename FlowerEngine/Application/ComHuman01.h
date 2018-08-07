@@ -1,3 +1,11 @@
+/*
+송현국
+H.P		: 010-3592-5921
+E-Mail	: hkn10004@naver.com
+
+설명 :
+캐릭터중 인간입니다.
+*/
 #pragma once
 #include "stdafx.h"
 

@@ -63,6 +63,12 @@
     <Filter Include="Application\Components\ComCharactor">
       <UniqueIdentifier>{f68f5142-bfc2-49b7-9684-bc0082ee1d3d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Datas">
+      <UniqueIdentifier>{f85aa53f-dafd-441c-9752-dd29f6fea7e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Components\ComEquipment">
+      <UniqueIdentifier>{e7a116d3-9bc8-4d37-8132-bffb081d7195}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -372,6 +378,15 @@
     <ClCompile Include="Application\ComChrControl.cpp">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClCompile>
+    <ClCompile Include="Application\ComEquipmentShoulder.cpp">
+      <Filter>Application\Components\ComEquipment</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ItemInfo.cpp">
+      <Filter>Application\Datas</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\StatusInfo.cpp">
+      <Filter>Application\Datas</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -559,6 +574,15 @@
     </ClInclude>
     <ClInclude Include="Application\ComChrControl.h">
       <Filter>Application\Components\ComCharactor</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComEquipmentShoulder.h">
+      <Filter>Application\Components\ComEquipment</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ItemInfo.h">
+      <Filter>Application\Datas</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\StatusInfo.h">
+      <Filter>Application\Datas</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

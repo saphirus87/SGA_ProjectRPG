@@ -390,6 +390,7 @@
     <ClInclude Include="Application\ComAircraftControl.h" />
     <ClInclude Include="Application\ComAircraftEnermyAI.h" />
     <ClInclude Include="Application\ComChrControl.h" />
+    <ClInclude Include="Application\ComEquipmentShoulder.h" />
     <ClInclude Include="Application\ComFollowTarget.h" />
     <ClInclude Include="Application\ComHuman01.h" />
     <ClInclude Include="Application\ComMissile.h" />
@@ -400,9 +401,11 @@
     <ClInclude Include="Application\ComTroll01.h" />
     <ClInclude Include="Application\ComUIPanelDialog.h" />
     <ClInclude Include="Application\ComUndead01.h" />
+    <ClInclude Include="Application\ItemInfo.h" />
     <ClInclude Include="Application\SceneAircraft.h" />
     <ClInclude Include="Application\SceneGrid.h" />
     <ClInclude Include="Application\ScenePicking.h" />
+    <ClInclude Include="Application\StatusInfo.h" />
     <ClInclude Include="DXUT\Core\stdafx.h" />
     <ClInclude Include="DXUT\Core\DXUTenum.h" />
     <ClInclude Include="DXUT\Core\DXUTmisc.h" />
@@ -410,6 +413,7 @@
     <ClCompile Include="Application\ComAircraftControl.cpp" />
     <ClCompile Include="Application\ComAircraftEnermyAI.cpp" />
     <ClCompile Include="Application\ComChrControl.cpp" />
+    <ClCompile Include="Application\ComEquipmentShoulder.cpp" />
     <ClCompile Include="Application\ComFollowTarget.cpp" />
     <ClCompile Include="Application\ComHuman01.cpp" />
     <ClCompile Include="Application\ComMissile.cpp" />
@@ -420,9 +424,11 @@
     <ClCompile Include="Application\ComTroll01.cpp" />
     <ClCompile Include="Application\ComUIPanelDialog.cpp" />
     <ClCompile Include="Application\ComUndead01.cpp" />
+    <ClCompile Include="Application\ItemInfo.cpp" />
     <ClCompile Include="Application\SceneAircraft.cpp" />
     <ClCompile Include="Application\SceneGrid.cpp" />
     <ClCompile Include="Application\ScenePicking.cpp" />
+    <ClCompile Include="Application\StatusInfo.cpp" />
     <ClCompile Include="DXUT\Core\stdafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
