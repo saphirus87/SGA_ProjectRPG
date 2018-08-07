@@ -94,6 +94,7 @@ void SceneGrid::Init()
 	pGOChrX4->AddComponent(new ComEquipmentShoulder("ComEquipmentShoulder"));
 	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(0, 15, 7));
 	pGOChrX5->AddComponent(new ComTroll01("ComTroll01"));
+	pGOChrX5->AddComponent(new ComEquipmentShoulder("ComEquipmentShoulder"));
 
 	// Ä«¸Þ¶ó
 	Camera::GetInstance()->SetTarget(&pGOChrX3->transform->GetPosition());
