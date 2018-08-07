@@ -37,23 +37,22 @@ void ComHuman01::Update()
 		gameObject->transform->SetPosition(pos);
 	}
 
-	GameObject* pEquip = GameObject::Find("Equipment_shoulder");
-
+	GameObject* pEquipShouldRight = GameObject::Find("Equipment_shoulder_Right");
 	Matrix4x4 pFindMatrix;
-	//pFindMatrix = m_pAnimation->GetMatrixByName("character_human_male_humanmale_hd_bone_47"); // 47 ¿À¸¥¼Õ
-	pFindMatrix = m_pAnimation->GetMatrixByName("character_human_male_humanmale_hd_bone_28"); // ¿ÞÂÊ ¾î±ú
+	pFindMatrix = m_pAnimation->GetMatrixByName("Shoulder_Right");
 
 	if (pFindMatrix != NULL)
 	{
-		ComRenderXMesh* pRenderXMesh = static_cast<ComRenderXMesh*>(pEquip->GetComponent("Shoulder_Left"));
+		ComRenderXMesh* pRenderXMesh = static_cast<ComRenderXMesh*>(pEquipShouldRight->GetComponent("ComRenderXMesh"));
 		pRenderXMesh->SetFrameMatrix(&pFindMatrix, &gameObject->transform->GetWorldMatrix());
 	}
 
-	pFindMatrix = m_pAnimation->GetMatrixByName("character_human_male_humanmale_hd_bone_88"); // ¿À¸¥ÂÊ ¾î±ú ?
+	GameObject* pEquipShouldLeft = GameObject::Find("Equipment_shoulder_Left");
+	pFindMatrix = m_pAnimation->GetMatrixByName("Shoulder_Left");
 
 	if (pFindMatrix != NULL)
 	{
-		ComRenderXMesh* pRenderXMesh = static_cast<ComRenderXMesh*>(pEquip->GetComponent("Shoulder_Right"));
+		ComRenderXMesh* pRenderXMesh = static_cast<ComRenderXMesh*>(pEquipShouldLeft->GetComponent("ComRenderXMesh"));
 		pRenderXMesh->SetFrameMatrix(&pFindMatrix, &gameObject->transform->GetWorldMatrix());
 	}
 

@@ -21,6 +21,6 @@ public:
 	GameObject* CreateUIButton(GameObject* pParent, CString szName, CString szFileName, float fPosX = 0.0f, float fPosY = 0.0f);
 	GameObject* CreateFromXFile(CString szName, CString szFolderPath, CString szFileName, Vector3& pos);
 	GameObject* CreateObjMap(CString szName, CString szFolderPath, CString szFileName);
-	GameObject* CreateEquipmentShoulder(CString szName, CString szFolderPath, CString szFileName, Vector3& pos);
+	GameObject* CreateEquipmentShoulder(CString szName, CString szFolderPath, CString szFileName, Vector3& pos, GameObject* goPrefab, bool IsMirrored = false);
 };
 

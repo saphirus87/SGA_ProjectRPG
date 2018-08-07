@@ -78,11 +78,12 @@ void SceneGrid::Init()
 	//pObjMap->transform->SetScale(0.5f, 0.5f, 0.5f);
 
 	// 오브젝트들 생성
-	GameObject* pGOEquipmentShoulder = factory.CreateEquipmentShoulder("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", Vector3(3, 10, -8));	// z, x, y축
+	GameObject* pGOEquipmentShoulderRight = factory.CreateEquipmentShoulder("Equipment_shoulder_Right", "Resources/character/Equipment/", "shoulder_01.X", Vector3(3, 10, -8), NULL);	// .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
+	GameObject* pGOEquipmentShoulderLeft = factory.CreateEquipmentShoulder("Equipment_shoulder_Left", "Resources/character/Equipment/", "shoulder_01.X", Vector3(3, -10, -8), pGOEquipmentShoulderRight, true);	// .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
 
 	// 맵 생성 후 캐릭터 생성
-	GameObject* pGOChrX = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 3));
-	GameObject* pGOChrX2 = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 4));
+	//GameObject* pGOChrX = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 3));
+	//GameObject* pGOChrX2 = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 4));
 	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(0, 0, 5));
 	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
 	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(0, 15, 6));

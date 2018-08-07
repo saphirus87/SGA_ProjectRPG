@@ -262,24 +262,28 @@ GameObject * FactoryGameObject::CreateObjMap(CString szName, CString szFolderPat
 	return pGO;
 }
 
-GameObject * FactoryGameObject::CreateEquipmentShoulder(CString szName, CString szFolderPath, CString szFileName, Vector3& pos)
+GameObject * FactoryGameObject::CreateEquipmentShoulder(CString szName, CString szFolderPath, CString szFileName, Vector3& pos, GameObject* goPrefab, bool IsMirrored)
 {
 	GameObject* pGOEquipment = new GameObject(szName);
 
-	ComRenderXMesh* pMesh = new ComRenderXMesh("Shoulder_Left");
-	pMesh->Load(szFolderPath, szFileName);
-	pGOEquipment->AddComponent(pMesh);
-	// z, x, y축
-	pGOEquipment->transform->SetPosition(pos);
-	pGOEquipment->transform->SetScale(100, 100, 100);
-	//pGOEquipment->transform->SetRotation(0, D3DXToRadian(-90), 0);
+	ComRenderXMesh* pMesh = new ComRenderXMesh("ComRenderXMesh");
+	pMesh->IsMirrored = IsMirrored;
+	if (goPrefab == NULL)
+	{
+		pMesh->Load(szFolderPath, szFileName);
+	}
+	else
+	{
+		pMesh->Clone((ComRenderXMesh*)goPrefab->GetComponent("ComRenderXMesh"));
+	}
 
-	ComRenderXMesh* pMeshRight = new ComRenderXMesh("Shoulder_Right");
-	pMeshRight->Clone(pMesh);
-	pGOEquipment->AddComponent(pMeshRight);
-	// z, x, y축
-	pos.y *= -1.0f;
-	//pGOEquipment->transform->SetRotation(0, D3DXToRadian(-90), 0);
+	if (IsMirrored == false)
+		pGOEquipment->transform->SetScale(100, 100, 100); // .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
+	else
+		pGOEquipment->transform->SetScale(100, -100, 100); // .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
+
+	pGOEquipment->AddComponent(pMesh);
+	pGOEquipment->transform->SetPosition(pos);
 	
 	return pGOEquipment;
 }

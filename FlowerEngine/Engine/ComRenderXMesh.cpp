@@ -6,7 +6,8 @@ ComRenderXMesh::ComRenderXMesh(CString szName) :
 	Component(szName),
 	m_pMesh(NULL),
 	m_iNumMaterials(0),
-	m_pEffect(NULL)
+	m_pEffect(NULL),
+	IsMirrored(false)
 {
 	pDevice9 = GetD3D9Device();
 	D3DXMatrixIdentity(&m_matFrame);
@@ -46,7 +47,13 @@ void ComRenderXMesh::Render()
 	{
 		m_pEffect->SetTexture("DiffuseMap_Tex", m_vecMtrl[i].pTexture);
 		m_pEffect->CommitChanges();
+		if (IsMirrored)
+			pDevice9->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
+		else
+			pDevice9->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
 		m_pMesh->DrawSubset(i);
+		pDevice9->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	}
 
 	m_pEffect->EndPass();

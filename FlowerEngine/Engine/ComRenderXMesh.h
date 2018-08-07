@@ -19,6 +19,10 @@ public:
 	
 	// 뼈대 행렬과 부모행렬을 설정합니다.
 	void SetFrameMatrix(Matrix4x4* pMatFrame, Matrix4x4* pMatParent);
+
+	// 반전(Mirrored, Flip) 여부
+	bool IsMirrored;
+
 private:
 	Device9 pDevice9;
 	Shader m_pEffect;
