@@ -91,6 +91,7 @@ void SceneGrid::Init()
 	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(0, 15, 6));
 	pGOChrX4->AddComponent(new ComUndead01("ComUndead01"));
 	pGOChrX4->AddComponent(new ComChrControl("ComChrControl"));
+	pGOChrX4->AddComponent(new ComEquipmentShoulder("ComEquipmentShoulder"));
 	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(0, 15, 7));
 	pGOChrX5->AddComponent(new ComTroll01("ComTroll01"));
 
