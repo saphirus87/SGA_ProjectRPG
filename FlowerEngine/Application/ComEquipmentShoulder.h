@@ -15,5 +15,14 @@ public:
 	virtual void Render() override;
 
 	EquipmentShoulder* pDataSholder;
+
+private:
+	ComRenderSkinnedMesh * m_pAnimation;
+
+	// พ๎ฑ๚ ภๅย๘ ฐüทร
+	ComRenderXMesh* m_pSholderRight;
+	ComRenderXMesh* m_pSholderLeft;
+	Matrix4x4 m_matSholderRight;
+	Matrix4x4 m_matSholderLeft;
 };
 

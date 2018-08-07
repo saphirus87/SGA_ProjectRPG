@@ -267,9 +267,6 @@ GameObject * FactoryGameObject::CreateEquipmentShoulder(CString szName, CString 
 {
 	GameObject* pGOEquipment = new GameObject(szName);
 
-	ComEquipmentShoulder* pEquipShoulder = new ComEquipmentShoulder("ComEquipmentShoulder");
-	pGOEquipment->AddComponent(pEquipShoulder);
-
 	ComRenderXMesh* pMesh = new ComRenderXMesh("ComRenderXMesh");
 	pMesh->IsMirrored = IsMirrored;
 	if (goPrefab == NULL)

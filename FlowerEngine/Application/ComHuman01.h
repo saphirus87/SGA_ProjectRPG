@@ -10,6 +10,7 @@ E-Mail	: hkn10004@naver.com
 #include "stdafx.h"
 
 class ComObjMap;
+class ComEquipmentShoulder;
 
 class ComHuman01 : public Component
 {
@@ -25,11 +26,5 @@ public:
 private:
 	ComRenderSkinnedMesh * m_pAnimation;
 	ComObjMap* m_pMap;
-
-	// พ๎ฑ๚ ภๅย๘ ฐüทร
-	ComRenderXMesh* m_pSholderRight;
-	ComRenderXMesh* m_pSholderLeft;
-	Matrix4x4 m_matSholderRight;
-	Matrix4x4 m_matSholderLeft;
 };
 
