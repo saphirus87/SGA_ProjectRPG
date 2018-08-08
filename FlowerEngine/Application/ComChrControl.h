@@ -22,5 +22,6 @@ private:
 
 	Vector3* m_pos;					// 캐릭터 위치
 	Vector3 m_vecForward;			// 앞 방향 벡터
-	bool m_isMoving;				// 움직임 여부
+	bool m_isMoving;				// 움직임 변경여부
+	bool m_isRotating;				// 방향 변경여부
 };

@@ -130,7 +130,11 @@ enum eCellType
 enum eAni
 {
 	eAni_Stand = 1,
-	eAni_Walk = 0
+	eAni_Walk = 0,
+	eAni_WalkBackwards = 2,
+	eAni_Run = 3, 
+	eAni_RotateLeft = 4, 
+	eAni_RotateRight = 5
 };
 
 struct KEYBOARD_STATE
