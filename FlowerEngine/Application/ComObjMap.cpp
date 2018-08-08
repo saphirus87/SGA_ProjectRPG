@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ComObjMap.h"
+#include "QuadTree.h"
 
 const int TOKEN_SIZE = 128;
 
@@ -16,6 +17,8 @@ ComObjMap::ComObjMap(CString szName) :
 
 ComObjMap::~ComObjMap()
 {
+	SAFE_DELETE(m_pQuadTree);
+
 	SAFE_RELEASE(m_pVB);
 	SAFE_RELEASE(m_pIB);
 
@@ -26,6 +29,7 @@ ComObjMap::~ComObjMap()
 
 	m_vertices.clear();
 	m_surfaceIndices.clear();
+	m_testIndices.clear();
 }
 
 void ComObjMap::Awake()
@@ -34,12 +38,67 @@ void ComObjMap::Awake()
 	{
 		m_InverseUV = 5.0f;
 		LoadMap();
+
+		// QuadTree Culling에 사용할 인덱스 값 생성(추후 정리 필요)
+		/*for (int i = 0; i < mapSize * mapSize; ++i)
+		{
+			if (i / mapSize == 128)
+			{
+				if (i % mapSize == 0) m_vecQuadIdx.push_back(2 + ((i / mapSize - 1) * (mapSize - 1)) * 12);
+				else m_vecQuadIdx.push_back(8 + ((i / mapSize - 1) * (mapSize - 1) + (i % mapSize) - 1) * 12);
+
+				if (i % mapSize == 0) m_vecQuadIdx.push_back(2 + ((i / mapSize) - 1) * (12 * (mapSize - 1)));
+				else m_vecQuadIdx.push_back(8 + ((i - mapSize - (i / mapSize)) * 12));
+			}
+			else
+			{
+				if (i % mapSize == 0) m_vecQuadIdx.push_back(1 + ((i / mapSize) * (mapSize - 1)) * 12);
+				else m_vecQuadIdx.push_back(4 + ((i / mapSize) * (mapSize - 1) + (i % mapSize) - 1) * 12);
+
+				if (i % mapSize == 0) m_vecQuadIdx.push_back(1 + (i / mapSize) * (12 * (mapSize - 1)));
+				else m_vecQuadIdx.push_back(4 + ((i - (i / mapSize) - 1) * 12));
+			}
+		}*/
+
+		for (int i = 0; i < mapSize; ++i)
+		{
+			for (int j = 0; j < mapSize; ++j)
+			{
+				if (i == 128)
+				{
+					int xIndex = 0;
+					int zIndex = 0;
+
+					//xIndex = 
+
+					if (j == 0) m_vecQuadIdx.push_back(2 + ((i - 1) * (mapSize - 1)) * 12);
+					else m_vecQuadIdx.push_back(8 + ((i - 1) * (mapSize - 1) + j - 1) * 12);
+				}
+				else
+				{
+					if (j == 0) m_vecQuadIdx.push_back(1 + (i * (mapSize - 1)) * 12);
+					else m_vecQuadIdx.push_back(4 + (i * (mapSize - 1) + j - 1) * 12);
+				}
+			}
+		}
+
+		m_pQuadTree = new QuadTree(mapSize, mapSize);
+		m_pQuadTree->SetMapVertex(&m_vertices);
+		m_pQuadTree->SetIndex(&m_vecQuadIdx);
+		m_pQuadTree->Build();
+		m_pIndex = new DWORD;
 	}
 }
 
 void ComObjMap::Update()
 {
-	/*if (Input::m_pKeyboard->KeyDown(VK_SPACE))*/ UpdateIndexBuffer();
+	/*if (Input::m_pKeyboard->KeyDown(VK_SPACE)) UpdateIndexBuffer();*/
+
+	if (Input::m_pKeyboard->KeyDown(VK_SPACE))
+	{
+		//UpdateIndexBuffer();
+		UpdateIndexBufferQuadTree();
+	}
 }
 
 void ComObjMap::Render()
@@ -300,5 +359,23 @@ void ComObjMap::UpdateIndexBuffer()
 	DWORD* pIndex;
 	m_pIB->Lock(0, 0, (LPVOID*)&pIndex, 0);
 	memcpy(pIndex, &m_surfaceIndices[0], m_surfaceIndices.size() * sizeof(DWORD));
+	m_pIB->Unlock();
+}
+
+void ComObjMap::UpdateIndexBufferQuadTree()
+{
+	if (!m_testIndices.empty()) m_testIndices.clear();
+
+	m_TriangleNum = m_pQuadTree->GenerateIndex(m_testIndices);
+
+	if (m_pIB != NULL) SAFE_RELEASE(m_pIB);
+
+	if (m_TriangleNum <= 0) return;
+
+	pDevice9->CreateIndexBuffer(m_testIndices.size() * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);
+
+	DWORD* pIndex;
+	m_pIB->Lock(0, 0, (LPVOID*)&pIndex, 0);
+	memcpy(pIndex, &m_testIndices[0], m_testIndices.size() * sizeof(DWORD));
 	m_pIB->Unlock();
 }

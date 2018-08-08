@@ -2,13 +2,18 @@
 #include "stdafx.h"
 
 // 임시
-const float radius = 2.5f;
+const float radius = 6.5f;
+
+// 상수
+const UINT mapSize = 129;
+
+class QuadTree;
 
 class ComObjMap : public Component
 {
 private:
 	vector<D3DXVECTOR3> m_surfaceVertices;
-
+	
 	Device9 pDevice9;
 	float m_rayDistance;
 
@@ -23,6 +28,17 @@ private:
 
 	LPD3DXEFFECT m_pEffect;
 	float m_InverseUV;
+
+	// QuadTree culling
+private:
+	vector<DWORD> m_vecQuadIdx;	// 임시 사용 정리 필요
+	QuadTree* m_pQuadTree;
+
+	UINT m_TriangleNum;
+	LPDWORD m_pIndex;
+
+	vector<DWORD> m_testIndices;	// 임시 테스트 후 삭제
+	
 
 public:
 	ComObjMap(CString szName);
@@ -47,5 +63,8 @@ public:
 
 	// frustum culling
 	void UpdateIndexBuffer();
+
+	// QuadTree Culling
+	void UpdateIndexBufferQuadTree();
 };
 
