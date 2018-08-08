@@ -1,47 +1,54 @@
 #pragma once
 
-class Normal;
-class Clock;
+class StateStand;
+class Character;
 
-class ClockState
+class State
 {
 public:
-	ClockState(){}
-	virtual ~ClockState() {}
+	State();
+	virtual ~State();
 
-	virtual void normal(Clock* clock) = 0;
-	virtual void alarm(Clock* clock) = 0;
+	virtual void Stand(Character* character) = 0;
+	virtual void Walk(Character* character) = 0;
 };
 
-
-class Clock
+class Character
 {
 private:
-	ClockState * stateClock;
+	State * stateClock;
 
 public:
-	Clock();
-	~Clock() {}
+	Character();
+	~Character();
 
-	void SetState(ClockState* state) {
-		this->stateClock = state;
-	}
-	void normal() {
-		stateClock->normal(this);
-	}
-	void alarm() {
-		stateClock->alarm(this);
-	}
+	void SetState(State* state);
+	void Stand();
+	void Walk();
 };
-class Normal : public ClockState
+
+class StateStand : public State
 {
 private:
-	Clock * clock;
+	Character * character;
 
 public:
-	Normal();
-	~Normal() {}
+	StateStand();
+	~StateStand();
 
-	void normal(Clock* clock) override;
-	void alarm(Clock* clock) override;
+	void Stand(Character* character) override;
+	void Walk(Character* character) override;
+};
+
+class StateWalk : public State
+{
+private:
+	Character * character;
+
+public:
+	StateWalk();
+	~StateWalk();
+
+	void Stand(Character* character) override;
+	void Walk(Character* character) override;
 };
