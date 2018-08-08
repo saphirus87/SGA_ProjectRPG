@@ -43,12 +43,12 @@ void ComEquipmentShoulder::Awake()
 
 void ComEquipmentShoulder::Update()
 {
-	m_pRenderRight->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Shoulder_Right"), &gameObject->transform->GetWorldMatrix());
-	m_pRenderLeft->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Shoulder_Left"), &gameObject->transform->GetWorldMatrix());
 }
 
 void ComEquipmentShoulder::Render()
 {
+	m_pRenderRight->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Shoulder_Right"), &gameObject->transform->GetWorldMatrix());
+	m_pRenderLeft->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Shoulder_Left"), &gameObject->transform->GetWorldMatrix());
 }
 
 void ComEquipmentShoulder::SetOffsetPos(Vector3 vOffsetPosR)
