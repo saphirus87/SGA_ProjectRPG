@@ -9,7 +9,6 @@ E-Mail	: hkn10004@naver.com
 #pragma once
 #include "stdafx.h"
 
-class ComObjMap;
 class ComEquipmentShoulder;
 
 class ComHuman01 : public Component
@@ -25,6 +24,5 @@ public:
 
 private:
 	ComRenderSkinnedMesh * m_pAnimation;
-	ComObjMap* m_pMap;
 };
 

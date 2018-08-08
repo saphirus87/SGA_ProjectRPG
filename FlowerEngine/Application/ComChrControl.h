@@ -1,6 +1,8 @@
 #pragma once
 #include "stdafx.h"
 
+class ComObjMap;
+
 class ComChrControl : public Component
 {
 public:
@@ -16,6 +18,7 @@ private:
 	void Move();
 
 private:
+	ComObjMap * m_pMap;
 
 	CTimer* m_pTimer;
 

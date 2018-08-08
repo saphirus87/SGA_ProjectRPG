@@ -1,8 +1,6 @@
 #pragma once
 #include "stdafx.h"
 
-class ComObjMap;
-
 class ComUndead01 : public Component
 {
 public:
@@ -16,6 +14,5 @@ public:
 
 private:
 	ComRenderSkinnedMesh * m_pAnimation;
-	ComObjMap* m_pMap;
 };
 

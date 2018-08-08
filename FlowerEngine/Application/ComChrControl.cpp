@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #include "ComChrControl.h"
+#include "ComObjMap.h"
 
 ComChrControl::ComChrControl(CString szName)
 	:Component(szName), 
 	m_isMoving(false), 
-	m_pos(NULL)
+	m_pos(NULL),
+	m_pMap(NULL)
 {
 }
 
@@ -14,6 +16,10 @@ ComChrControl::~ComChrControl()
 
 void ComChrControl::Awake()
 {
+	GameObject* pObjMap = GameObject::Find("ObjMap");
+	if (pObjMap != NULL)
+		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
+
 	m_pos = &gameObject->transform->GetPosition();
 	m_pTimer = new CTimer(CClock::GetInstance());
 	m_pTimer->Start();
@@ -21,8 +27,15 @@ void ComChrControl::Awake()
 
 void ComChrControl::Update()
 {
-	Move();
+	Vector3 pos = gameObject->transform->GetPosition();
+	float fHeight = 0.f;
+	if (m_pMap != NULL && m_pMap->GetHeight(fHeight, pos) == true)
+	{
+		pos.y = fHeight;
+		gameObject->transform->SetPosition(pos);
+	}
 
+	Move();
 }
 
 void ComChrControl::Render()
