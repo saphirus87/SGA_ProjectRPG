@@ -404,6 +404,7 @@
     <ClInclude Include="Application\ComUIPanelDialog.h" />
     <ClInclude Include="Application\ComUndead01.h" />
     <ClInclude Include="Application\ItemInfo.h" />
+    <ClInclude Include="Application\QuadTree.h" />
     <ClInclude Include="Application\SceneAircraft.h" />
     <ClInclude Include="Application\SceneGrid.h" />
     <ClInclude Include="Application\ScenePicking.h" />
@@ -429,6 +430,7 @@
     <ClCompile Include="Application\ComUIPanelDialog.cpp" />
     <ClCompile Include="Application\ComUndead01.cpp" />
     <ClCompile Include="Application\ItemInfo.cpp" />
+    <ClCompile Include="Application\QuadTree.cpp" />
     <ClCompile Include="Application\SceneAircraft.cpp" />
     <ClCompile Include="Application\SceneGrid.cpp" />
     <ClCompile Include="Application\ScenePicking.cpp" />
