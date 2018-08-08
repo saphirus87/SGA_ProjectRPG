@@ -5,6 +5,7 @@
 ComChrControl::ComChrControl(CString szName)
 	:Component(szName), 
 	m_isMoving(false), 
+	m_isRotating(false), 
 	m_pos(NULL),
 	m_pMap(NULL)
 {
@@ -44,10 +45,12 @@ void ComChrControl::Move()
 {
 	if (Input::KeyPress('A') || Input::KeyPress(VK_LEFT))
 	{
+		m_isRotating = true;
 		gameObject->transform->RotateY(-0.1f);
 	}
 	if (Input::KeyPress('D') || Input::KeyPress(VK_RIGHT))
 	{
+		m_isRotating = true;
 		gameObject->transform->RotateY(0.1f);
 	}
 
