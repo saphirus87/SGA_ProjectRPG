@@ -5,14 +5,13 @@
 ComEquipmentShoulder::ComEquipmentShoulder(CString szName) :
 	Component(szName),
 	pDataSholder(NULL),
-	m_pSholderRight(NULL),
-	m_pSholderLeft(NULL),
-	m_pAnimation(NULL)
+	m_pRenderRight(NULL),
+	m_pRenderLeft(NULL),
+	m_pAnimation(NULL),
+	m_pGOShoulderRight(NULL),
+	m_pGOShoulderLeft(NULL)
 {
-	D3DXMatrixIdentity(&m_matSholderRight);
-	D3DXMatrixIdentity(&m_matSholderLeft);
 }
-
 
 ComEquipmentShoulder::~ComEquipmentShoulder()
 {
@@ -25,24 +24,36 @@ void ComEquipmentShoulder::Awake()
 
 	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 
+	SetOffsetPos();
+
+	// 오브젝트들 생성
+	FactoryGameObject factory;
+	m_pGOShoulderRight = factory.CreateEquipmentShoulder("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", m_vOffsetPosR);	// .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
+	m_pGOShoulderLeft = factory.CreateEquipmentShoulder("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", m_vOffsetPosL, true);	// .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
+
 	// 어깨 렌더링 컴포넌트 미리 찾아둠
-	GameObject* pEquipShouldRight = GameObject::Find("Equipment_shoulder_Right");
-	if (pEquipShouldRight)
-		m_pSholderRight = (ComRenderXMesh*)pEquipShouldRight->GetComponent("ComRenderXMesh");
-	GameObject* pEquipShouldLeft = GameObject::Find("Equipment_shoulder_Left");
-	if (pEquipShouldLeft)
-		m_pSholderLeft = (ComRenderXMesh*)pEquipShouldLeft->GetComponent("ComRenderXMesh");
+	m_pRenderRight = (ComRenderXMesh*)m_pGOShoulderRight->GetComponent("ComRenderXMesh");
+	m_pRenderLeft = (ComRenderXMesh*)m_pGOShoulderLeft->GetComponent("ComRenderXMesh");
 }
 
 void ComEquipmentShoulder::Update()
 {
-	// 어깨 방어구
-	m_matSholderRight = m_pAnimation->GetMatrixByName("Shoulder_Right");
-	m_matSholderLeft = m_pAnimation->GetMatrixByName("Shoulder_Left");
-	m_pSholderRight->SetFrameMatrix(&m_matSholderRight, &gameObject->transform->GetWorldMatrix());
-	m_pSholderLeft->SetFrameMatrix(&m_matSholderLeft, &gameObject->transform->GetWorldMatrix());
+	m_pRenderRight->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Shoulder_Right"), &gameObject->transform->GetWorldMatrix());
+	m_pRenderLeft->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Shoulder_Left"), &gameObject->transform->GetWorldMatrix());
 }
 
 void ComEquipmentShoulder::Render()
 {
+}
+
+void ComEquipmentShoulder::SetOffsetPos(Vector3 vOffsetPosR)
+{
+	m_vOffsetPosR = vOffsetPosR;
+	m_vOffsetPosL = m_vOffsetPosR;
+	m_vOffsetPosL.y *= -1;
+	
+	if (m_pGOShoulderRight)
+		m_pGOShoulderRight->transform->SetPosition(m_vOffsetPosR);
+	if (m_pGOShoulderLeft)
+		m_pGOShoulderLeft->transform->SetPosition(m_vOffsetPosL);
 }

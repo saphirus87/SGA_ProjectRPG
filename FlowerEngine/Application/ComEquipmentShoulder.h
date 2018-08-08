@@ -14,15 +14,22 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
+	// 어깨방어구 장착뼈가 Export되지 않으므로 보정값을 설정하여 위치를 보정해 줍니다.
+	// .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
+	void SetOffsetPos(Vector3 vOffsetPosR = Vector3(3, 10, -8));
+
 	EquipmentShoulder* pDataSholder;
 
 private:
 	ComRenderSkinnedMesh * m_pAnimation;
 
+	Vector3 m_vOffsetPosR;
+	Vector3 m_vOffsetPosL;
+
 	// 어깨 장착 관련
-	ComRenderXMesh* m_pSholderRight;
-	ComRenderXMesh* m_pSholderLeft;
-	Matrix4x4 m_matSholderRight;
-	Matrix4x4 m_matSholderLeft;
+	GameObject* m_pGOShoulderRight;
+	GameObject* m_pGOShoulderLeft;
+	ComRenderXMesh* m_pRenderRight;
+	ComRenderXMesh* m_pRenderLeft;
 };
 

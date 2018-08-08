@@ -234,6 +234,7 @@ GameObject * FactoryGameObject::CreateUIButton(GameObject* pParent, CString szNa
 
 GameObject * FactoryGameObject::CreateFromXFile(CString szName, CString szFolderPath, CString szFileName, Vector3 & pos)
 {
+	// PROTOTYPE PATTERN 이미 있는 오브젝트 검사
 	GameObject* pGOExist = GameObject::Find(szName);
 
 	GameObject* pGO = new GameObject(szName);
@@ -263,21 +264,22 @@ GameObject * FactoryGameObject::CreateObjMap(CString szName, CString szFolderPat
 	return pGO;
 }
 
-GameObject * FactoryGameObject::CreateEquipmentShoulder(CString szName, CString szFolderPath, CString szFileName, Vector3& pos, GameObject* goPrefab, bool IsMirrored)
+GameObject * FactoryGameObject::CreateEquipmentShoulder(CString szName, CString szFolderPath, CString szFileName, Vector3& pos, bool IsMirrored)
 {
+	// PROTOTYPE PATTERN 이미 있는 오브젝트 검사
+	GameObject* pGOExist = GameObject::Find(szName);
+	
 	GameObject* pGOEquipment = new GameObject(szName);
-
 	ComRenderXMesh* pMesh = new ComRenderXMesh("ComRenderXMesh");
 	pMesh->IsMirrored = IsMirrored;
-	if (goPrefab == NULL)
-	{
-		pMesh->Load(szFolderPath, szFileName);
-	}
-	else
-	{
-		pMesh->Clone((ComRenderXMesh*)goPrefab->GetComponent("ComRenderXMesh"));
-	}
 
+	// 이미 존재하는 게임 오브젝트라면 복제(Clone) 하여 메쉬를 공유하여 사용합니다.
+	if (pGOExist == NULL)
+		pMesh->Load(szFolderPath, szFileName);
+	else
+		pMesh->Clone((ComRenderXMesh*)pGOExist->GetComponent("ComRenderXMesh"));
+	
+	// 크기를 100으로 맞춰주는 이유는 .X File Export시 본 크기가 0.01인듯함.
 	if (IsMirrored == false)
 		pGOEquipment->transform->SetScale(100, 100, 100); // .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
 	else
