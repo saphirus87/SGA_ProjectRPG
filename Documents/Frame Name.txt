@@ -27,7 +27,7 @@ character_human_male_humanmale_hd_bone_27	// 왼쪽 어깨뼈 [이름수정]Shoulder_Left
 character_human_male_humanmale_hd_bone_33	// 왼쪽 팔꿈치뼈
 character_human_male_humanmale_hd_bone_34	// 왼쪽 어깨 아래뼈
 character_human_male_humanmale_hd_bone_35	// 왼쪽 팔꿈치뼈 have child
-character_human_male_humanmale_hd_bone_41	// 왼쪽 손목뼈 (물건잡기)
+character_human_male_humanmale_hd_bone_41	// 왼쪽 손목뼈 (물건잡기) [이름수정]Weapon_Left
 character_human_male_humanmale_hd_bone_94	// 왼손 중앙손가락뼈 시작
 character_human_male_humanmale_hd_bone_126	// 왼손 중앙손가락뼈
 character_human_male_humanmale_hd_bone_95	// 왼손 새끼손가락뼈 시작
@@ -44,7 +44,7 @@ character_human_male_humanmale_hd_bone_22	// 오른쪽 쇄골뼈 시작
 character_human_male_humanmale_hd_bone_28	// 오른쪽 어깨뼈 [이름수정]Shoulder_Right
 character_human_male_humanmale_hd_bone_36	// 오른쪽 팔꿈치뼈 have child
 character_human_male_humanmale_hd_bone_45	// 오른쪽 팔꿈치 아래뼈
-character_human_male_humanmale_hd_bone_46	// 오른쪽 손목뼈 (물건잡기)
+character_human_male_humanmale_hd_bone_46	// 오른쪽 손목뼈 (물건잡기) [이름수정]Weapon_Right
 character_human_male_humanmale_hd_bone_47	// 오른쪽 손목뼈 have child
 character_human_male_humanmale_hd_bone_101	// 오른손 넷째 손가락뼈 시작
 character_human_male_humanmale_hd_bone_131	// 오른손 넷째 손가락뼈
@@ -60,7 +60,7 @@ character_human_male_humanmale_hd_bone_37	// 오른쪽 팔꿈치뼈
 character_human_male_humanmale_hd_bone_38	// 오른쪽 어깨 아래뼈
 character_human_male_humanmale_hd_bone_23	// 목 아래뼈
 character_human_male_humanmale_hd_bone_29	// 목 중간뼈
-character_human_male_humanmale_hd_bone_39	// 목 위뼈
+character_human_male_humanmale_hd_bone_39	// 목 위뼈 (헬맷장착) [이름수정]Helmet
 character_human_male_humanmale_hd_bone_48	// 오른쪽 뒷머리 뼈
 character_human_male_humanmale_hd_bone_108	// 오른쪽 뒷머리 아래 망토시작 위치
 character_human_male_humanmale_hd_bone_49	// 왼쪽 뒷머리 뼈
