@@ -21,8 +21,6 @@ void ComChrControl::Awake()
 		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
 
 	m_pos = &gameObject->transform->GetPosition();
-	m_pTimer = new CTimer(CClock::GetInstance());
-	m_pTimer->Start();
 }
 
 void ComChrControl::Update()
