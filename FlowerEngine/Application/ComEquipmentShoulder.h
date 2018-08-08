@@ -36,9 +36,11 @@ private:
 	// 어깨 방어구 게임오브젝트 오른쪽, 왼쪽
 	GameObject* m_pGOShoulderRight;
 	GameObject* m_pGOShoulderLeft;
+	GameObject* m_pGOHelmet;
 
 	// 어깨 방어구 렌더링 구성요소 오른쪽, 왼쪽
 	ComRenderXMesh* m_pRenderRight;
 	ComRenderXMesh* m_pRenderLeft;
+	ComRenderXMesh* m_pRenderHelmet;
 };
 

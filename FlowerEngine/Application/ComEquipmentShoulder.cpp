@@ -9,7 +9,9 @@ ComEquipmentShoulder::ComEquipmentShoulder(CString szName) :
 	m_pRenderLeft(NULL),
 	m_pAnimation(NULL),
 	m_pGOShoulderRight(NULL),
-	m_pGOShoulderLeft(NULL)
+	m_pGOShoulderLeft(NULL),
+	m_pGOHelmet(NULL),
+	m_pRenderHelmet(NULL)
 {
 }
 
@@ -33,10 +35,16 @@ void ComEquipmentShoulder::Awake()
 	FactoryGameObject factory;
 	m_pGOShoulderRight = factory.CreateEquipment("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", m_vOffsetPosR);	// .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
 	m_pGOShoulderLeft = factory.CreateEquipment("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", m_vOffsetPosL, true);	// .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
+	m_pGOHelmet = factory.CreateEquipment("Equipment_Helmet", "Resources/character/Equipment/", "Helmet_01.X", Vector3(0, 0, 0));
+	// 헬맷이 누워있어서 돌림
+	m_pGOHelmet->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
 
 	// 어깨 렌더링 컴포넌트 미리 찾아둠
 	m_pRenderRight = (ComRenderXMesh*)m_pGOShoulderRight->GetComponent("ComRenderXMesh");
 	m_pRenderLeft = (ComRenderXMesh*)m_pGOShoulderLeft->GetComponent("ComRenderXMesh");
+
+	if (m_pGOHelmet)
+		m_pRenderHelmet = (ComRenderXMesh*)m_pGOHelmet->GetComponent("ComRenderXMesh");
 }
 
 void ComEquipmentShoulder::Update()
@@ -47,6 +55,11 @@ void ComEquipmentShoulder::Render()
 {
 	m_pRenderRight->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Shoulder_Right"), &gameObject->transform->GetWorldMatrix());
 	m_pRenderLeft->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Shoulder_Left"), &gameObject->transform->GetWorldMatrix());
+	if (m_pRenderHelmet)
+	{
+		Matrix4x4 matHead = m_pAnimation->GetMatrixByName("Helmet");
+		m_pRenderHelmet->SetFrameMatrix(&matHead, &gameObject->transform->GetWorldMatrix());
+	}
 }
 
 void ComEquipmentShoulder::SetOffsetPos(Vector3 vOffsetPosR)
