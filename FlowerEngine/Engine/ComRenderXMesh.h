@@ -23,6 +23,9 @@ public:
 	// 반전(Mirrored, Flip) 여부
 	bool IsMirrored;
 
+	// 렌더링 텍스쳐를 변경합니다.
+	void ChangeTexture(int iIndex, CString szTextureName);
+
 private:
 	Device9 pDevice9;
 	Shader m_pEffect;

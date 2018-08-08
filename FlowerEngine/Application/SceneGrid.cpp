@@ -97,6 +97,7 @@ void SceneGrid::Init()
 	ComEquipmentShoulder* pShoulder = new ComEquipmentShoulder("ComEquipmentShoulder");
 	pGOChrX5->AddComponent(pShoulder);
 	pShoulder->SetOffsetPos(Vector3(3, 12, -6)); // [z, x, y축]
+	pShoulder->ChangeTexture("ShoulderEquipItemName02");
 
 	// 몬스터 생성
 	GameObject* pGOMonX = factory.CreateFromXFile("smallderon_orange", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(0, 15, 9));

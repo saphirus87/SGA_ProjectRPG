@@ -100,3 +100,8 @@ void ComRenderXMesh::SetFrameMatrix(Matrix4x4 * pMatFrame, Matrix4x4 * pMatParen
 	m_matFrame = *pMatFrame;
 	m_matParent = *pMatParent;
 }
+
+void ComRenderXMesh::ChangeTexture(int iIndex, CString szTextureName)
+{
+	m_vecMtrl[iIndex].pTexture = Assets::GetTexture(szTextureName);
+}

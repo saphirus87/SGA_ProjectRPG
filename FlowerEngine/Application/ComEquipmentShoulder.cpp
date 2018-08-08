@@ -21,6 +21,9 @@ ComEquipmentShoulder::~ComEquipmentShoulder()
 void ComEquipmentShoulder::Awake()
 {
 	pDataSholder = new EquipmentShoulder();
+	
+	m_mapTextureName.insert(map<CString, CString>::value_type("ShoulderEquipItemName01", "Resources/character/Equipment/shoulder_plate_d_02copper.png"));
+	m_mapTextureName.insert(map<CString, CString>::value_type("ShoulderEquipItemName02", "Resources/character/Equipment/shoulder_robe_b_03blue.png"));
 
 	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 
@@ -34,6 +37,8 @@ void ComEquipmentShoulder::Awake()
 	// ¾î±ú ·»´õ¸µ ÄÄÆ÷³ÍÆ® ¹Ì¸® Ã£¾ÆµÒ
 	m_pRenderRight = (ComRenderXMesh*)m_pGOShoulderRight->GetComponent("ComRenderXMesh");
 	m_pRenderLeft = (ComRenderXMesh*)m_pGOShoulderLeft->GetComponent("ComRenderXMesh");
+
+	// shoulder_robe_b_03blue.png
 }
 
 void ComEquipmentShoulder::Update()
@@ -56,4 +61,10 @@ void ComEquipmentShoulder::SetOffsetPos(Vector3 vOffsetPosR)
 		m_pGOShoulderRight->transform->SetPosition(m_vOffsetPosR);
 	if (m_pGOShoulderLeft)
 		m_pGOShoulderLeft->transform->SetPosition(m_vOffsetPosL);
+}
+
+void ComEquipmentShoulder::ChangeTexture(CString szItemName)
+{
+	m_pRenderRight->ChangeTexture(0, m_mapTextureName[szItemName]);
+	m_pRenderLeft->ChangeTexture(0, m_mapTextureName[szItemName]);
 }
