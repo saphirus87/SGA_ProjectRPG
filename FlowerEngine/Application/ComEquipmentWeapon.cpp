@@ -4,13 +4,16 @@
 
 ComEquipmentWeapon::ComEquipmentWeapon(CString szName) :
 	Component(szName),
+	m_pAnimation(NULL),
 	m_pGOWeaponRight(NULL),
 	m_pGOWeaponLeft(NULL),
-	m_pAnimation(NULL)
+	m_pGOShieldLeft(NULL),
+	m_pRenderRight(NULL),
+	m_pRenderLeft(NULL),
+	m_pRenderShieldLeft(NULL)
 {
 	
 }
-
 
 ComEquipmentWeapon::~ComEquipmentWeapon()
 {
@@ -26,19 +29,26 @@ void ComEquipmentWeapon::Awake()
 	// .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
 	m_vOffsetPosR = Vector3(0, 0, -6); // 보정위치 y축 아래로 조금 내림
 	m_vOffsetPosL = Vector3(0, 0, -6);
+	m_vOffsetPosLShield = Vector3(0, -5, 0); // 보정위치 팔 밖쪽으로 조금
 
-	m_pGOWeaponRight = factory.CreateEquipmentShoulder("Equipment_weapon", "Resources/character/Equipment/", "Sword_01.X", m_vOffsetPosR);	
+	m_pGOWeaponRight = factory.CreateEquipment("Equipment_weapon", "Resources/character/Equipment/", "Sword_01.X", m_vOffsetPosR);	
+	//m_pGOWeaponLeft = factory.CreateEquipment("Equipment_weapon", "Resources/character/Equipment/", "Sword_01.X", m_vOffsetPosL);
+	m_pGOShieldLeft = factory.CreateEquipment("Equipment_Shield", "Resources/character/Equipment/", "Shield_01.X", m_vOffsetPosLShield);
 
 	// 무기 칼날 아래 방향으로 돌려 잡음
 	m_pGOWeaponRight->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
-	m_pGOWeaponLeft = factory.CreateEquipmentShoulder("Equipment_weapon", "Resources/character/Equipment/", "Sword_01.X", m_vOffsetPosL);
-	m_pGOWeaponLeft->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
+	//m_pGOWeaponLeft->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
+	// 쉴드가 누워있어서 돌림
+	m_pGOShieldLeft->transform->SetRotation(Vector3(D3DXToRadian(90), D3DXToRadian(-90), 0));
 
 	// 어깨 렌더링 컴포넌트 미리 찾아둠
 	m_pRenderRight = (ComRenderXMesh*)m_pGOWeaponRight->GetComponent("ComRenderXMesh");
 
 	if (m_pGOWeaponLeft)
 		m_pRenderLeft = (ComRenderXMesh*)m_pGOWeaponLeft->GetComponent("ComRenderXMesh");
+
+	if (m_pGOShieldLeft)
+		m_pRenderShieldLeft = (ComRenderXMesh*)m_pGOShieldLeft->GetComponent("ComRenderXMesh");
 }
 
 void ComEquipmentWeapon::Update()
@@ -47,10 +57,14 @@ void ComEquipmentWeapon::Update()
 
 void ComEquipmentWeapon::Render()
 {
-	m_pRenderRight->SetFrameMatrix(&m_pAnimation->GetMatrixByName("character_human_male_humanmale_hd_bone_46"), &gameObject->transform->GetWorldMatrix());
+	// Weapon_Right
+	m_pRenderRight->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Weapon_Right"), &gameObject->transform->GetWorldMatrix());
 
 	if (m_pRenderLeft)
-		m_pRenderLeft->SetFrameMatrix(&m_pAnimation->GetMatrixByName("character_human_male_humanmale_hd_bone_41"), &gameObject->transform->GetWorldMatrix());
+		m_pRenderLeft->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Weapon_Left"), &gameObject->transform->GetWorldMatrix());
+
+	if (m_pRenderShieldLeft)
+		m_pRenderShieldLeft->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Shield_Left"), &gameObject->transform->GetWorldMatrix());
 }
 
 void ComEquipmentWeapon::SetOffsetPos(Vector3 vOffsetPosR)

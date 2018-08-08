@@ -21,13 +21,16 @@ private:
 	// 위치 보정값 오른쪽, 왼쪽
 	Vector3 m_vOffsetPosR;
 	Vector3 m_vOffsetPosL;
+	Vector3 m_vOffsetPosLShield;
 
 	// 무기 또는 들것 게임오브젝트 오른쪽, 왼쪽
-	GameObject * m_pGOWeaponRight;
+	GameObject* m_pGOWeaponRight;
 	GameObject* m_pGOWeaponLeft;
+	GameObject* m_pGOShieldLeft; // 왼손 방패
 
 	// 무기 또는 들것 렌더링 구성요소 오른쪽, 왼쪽
 	ComRenderXMesh* m_pRenderRight;
 	ComRenderXMesh* m_pRenderLeft;
+	ComRenderXMesh* m_pRenderShieldLeft; // 왼손 방패
 };
 

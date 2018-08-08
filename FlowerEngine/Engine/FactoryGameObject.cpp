@@ -264,7 +264,7 @@ GameObject * FactoryGameObject::CreateObjMap(CString szName, CString szFolderPat
 	return pGO;
 }
 
-GameObject * FactoryGameObject::CreateEquipmentShoulder(CString szName, CString szFolderPath, CString szFileName, Vector3& pos, bool IsMirrored)
+GameObject * FactoryGameObject::CreateEquipment(CString szName, CString szFolderPath, CString szFileName, Vector3& pos, bool IsMirrored)
 {
 	// PROTOTYPE PATTERN 이미 있는 오브젝트 검사
 	GameObject* pGOExist = GameObject::Find(szName);

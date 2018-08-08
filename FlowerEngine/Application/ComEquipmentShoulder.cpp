@@ -31,8 +31,8 @@ void ComEquipmentShoulder::Awake()
 
 	// 오브젝트들 생성
 	FactoryGameObject factory;
-	m_pGOShoulderRight = factory.CreateEquipmentShoulder("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", m_vOffsetPosR);	// .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
-	m_pGOShoulderLeft = factory.CreateEquipmentShoulder("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", m_vOffsetPosL, true);	// .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
+	m_pGOShoulderRight = factory.CreateEquipment("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", m_vOffsetPosR);	// .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
+	m_pGOShoulderLeft = factory.CreateEquipment("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", m_vOffsetPosL, true);	// .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
 
 	// 어깨 렌더링 컴포넌트 미리 찾아둠
 	m_pRenderRight = (ComRenderXMesh*)m_pGOShoulderRight->GetComponent("ComRenderXMesh");
