@@ -18,9 +18,59 @@ SceneGrid::~SceneGrid()
 
 void SceneGrid::Init()
 {
-	FactoryGameObject factory;
-	GameObject* pGOGrid = factory.CreateGrid("Grid");
+	CreateMap();
+	CreateCharacter();
+	CreateMonster();
+	//CreateTest();
+}
+
+void SceneGrid::CreateMap()
+{
+	// Obj Map 테스트
+	GameObject* pObjMap = factory.CreateObjMap("ObjMap", "./Resources/obj/Map/TestMap/", "tempMap2.obj");
+	//	pObjMap->transform->SetPosition(-3, -5, -3);
+	//pObjMap->transform->SetScale(0.5f, 0.5f, 0.5f);
+}
+
+void SceneGrid::CreateCharacter()
+{
+	// 맵 생성 후 캐릭터 생성
+	//GameObject* pGOChrX = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 3));
+	//GameObject* pGOChrX2 = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 4));
+	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(0, 15, 5));
+	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
+	pGOChrX3->AddComponent(new ComChrControl("ComChrControl"));
+	pGOChrX3->AddComponent(new ComEquipmentShoulder("ComEquipmentShoulder"));
 	
+	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(0, 15, 6));
+	pGOChrX4->AddComponent(new ComUndead01("ComUndead01"));
+	pGOChrX4->AddComponent(new ComChrControl("ComChrControl"));
+	pGOChrX4->AddComponent(new ComEquipmentShoulder("ComEquipmentShoulder"));
+
+	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(0, 15, 7));
+	pGOChrX5->AddComponent(new ComTroll01("ComTroll01"));
+	pGOChrX5->AddComponent(new ComChrControl("ComChrControl"));
+	ComEquipmentShoulder* pShoulder = new ComEquipmentShoulder("ComEquipmentShoulder");
+	pGOChrX5->AddComponent(pShoulder);
+	pShoulder->SetOffsetPos(Vector3(3, 12, -6)); // [z, x, y축]
+	pShoulder->ChangeTexture("ShoulderEquipItemName02");
+
+	// 카메라
+	Camera::GetInstance()->SetTarget(&pGOChrX3->transform->GetPosition());
+
+}
+
+void SceneGrid::CreateMonster()
+{
+	// 몬스터 생성
+	GameObject* pGOMonX = factory.CreateFromXFile("smallderon_orange", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(0, 15, 9));
+	pGOMonX->AddComponent(new ComSmallderon("ComSmallderon"));
+}
+
+void SceneGrid::CreateTest()
+{
+	GameObject* pGOGrid = factory.CreateGrid("Grid");
+
 	factory.CreatePointLight(&Color(1.0f, 0.0f, 0.0f, 1.0f), -10.0f, 10.0f, -10.0f);
 
 	// GameObject 테스트용
@@ -33,10 +83,10 @@ void SceneGrid::Init()
 	// ASE 파일
 	AseLoader loader;
 
-	/*// 캐릭터 
+	/*// 캐릭터
 	GameObject* pGOChr = loader.Load("Resources/ase/", "woman_01_all_stand.ase");
 	pGOChr->transform->SetPosition(0, 0, 3);*/
-	
+
 	// box1
 	GameObject* pGOBox1 = loader.Load("Resources/obj/", "box.ase");
 	pGOBox1->transform->SetPosition(-1, 0, 0);
@@ -73,38 +123,6 @@ void SceneGrid::Init()
 	// 파티클
 	GameObject* pGOParticle = factory.CreateGameObject("Particle");
 	pGOParticle->AddComponent(new ComParticle("ComParticle"));
-
-	// Obj Map 테스트
-	GameObject* pObjMap = factory.CreateObjMap("ObjMap", "./Resources/obj/Map/TestMap/", "tempMap2.obj");
-//	pObjMap->transform->SetPosition(-3, -5, -3);
-	//pObjMap->transform->SetScale(0.5f, 0.5f, 0.5f);
-
-	
-	// 맵 생성 후 캐릭터 생성
-	//GameObject* pGOChrX = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 3));
-	//GameObject* pGOChrX2 = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 4));
-	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(0, 15, 5));
-	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
-	pGOChrX3->AddComponent(new ComEquipmentShoulder("ComEquipmentShoulder"));
-
-	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(0, 15, 6));
-	pGOChrX4->AddComponent(new ComUndead01("ComUndead01"));
-	pGOChrX4->AddComponent(new ComChrControl("ComChrControl"));
-	pGOChrX4->AddComponent(new ComEquipmentShoulder("ComEquipmentShoulder"));
-
-	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(0, 15, 7));
-	pGOChrX5->AddComponent(new ComTroll01("ComTroll01"));
-	ComEquipmentShoulder* pShoulder = new ComEquipmentShoulder("ComEquipmentShoulder");
-	pGOChrX5->AddComponent(pShoulder);
-	pShoulder->SetOffsetPos(Vector3(3, 12, -6)); // [z, x, y축]
-	pShoulder->ChangeTexture("ShoulderEquipItemName02");
-
-	// 몬스터 생성
-	GameObject* pGOMonX = factory.CreateFromXFile("smallderon_orange", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(0, 15, 9));
-	pGOMonX->AddComponent(new ComSmallderon("ComSmallderon"));
-
-	// 카메라
-	Camera::GetInstance()->SetTarget(&pGOChrX3->transform->GetPosition());
 
 	// 포스트 이펙트 게임오브젝트를 렌더링에서 빼기 위해
 	ComPostProcess* comPostProcess = new ComPostProcess("ComPostProcess");

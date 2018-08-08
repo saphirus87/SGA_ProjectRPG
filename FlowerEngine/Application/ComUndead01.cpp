@@ -3,7 +3,8 @@
 #include "ComObjMap.h"
 
 ComUndead01::ComUndead01(CString szName)
-	:Component(szName)
+	:Component(szName),
+	m_pMap(NULL)
 {
 }
 
@@ -15,7 +16,9 @@ void ComUndead01::Awake()
 {
 	//CPP ´ÙÇü¼º
 	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
-	m_pMap = (ComObjMap*)GameObject::Find("ObjMap")->GetComponent("ComObjMap");
+	GameObject* pObjMap = GameObject::Find("ObjMap");
+	if (pObjMap != NULL)
+		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
 }
 
 void ComUndead01::Update()
@@ -23,7 +26,7 @@ void ComUndead01::Update()
 	Vector3 pos = gameObject->transform->GetPosition();
 	float fHeight = 0.0f;
 
-	if (m_pMap->GetHeight(fHeight, pos))
+	if (m_pMap != NULL && m_pMap->GetHeight(fHeight, pos))
 	{
 		pos.y = fHeight;
 		gameObject->transform->SetPosition(pos);

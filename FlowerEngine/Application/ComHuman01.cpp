@@ -4,7 +4,8 @@
 
 ComHuman01::ComHuman01(CString szName) : 
 	Component(szName),
-	m_pAnimation(NULL)
+	m_pAnimation(NULL),
+	m_pMap(NULL)
 {
 
 }
@@ -18,7 +19,8 @@ void ComHuman01::Awake()
 {
 	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 	GameObject* pObjMap = GameObject::Find("ObjMap");
-	m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
+	if (pObjMap != NULL)
+		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
 }
 
 void ComHuman01::Update()
@@ -31,7 +33,7 @@ void ComHuman01::Update()
 
 	Vector3 pos = gameObject->transform->GetPosition();
 	float fHeight = 0.f;
-	if (m_pMap->GetHeight(fHeight, pos) == true)
+	if (m_pMap != NULL && m_pMap->GetHeight(fHeight, pos) == true)
 	{
 		pos.y = fHeight;
 		gameObject->transform->SetPosition(pos);
