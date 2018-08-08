@@ -393,6 +393,9 @@
     <ClCompile Include="Application\ComSmallderon.cpp">
       <Filter>Application\Components\ComMonster</Filter>
     </ClCompile>
+    <ClCompile Include="Application\ComEquipmentWeapon.cpp">
+      <Filter>Application\Components\ComEquipment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -592,6 +595,9 @@
     </ClInclude>
     <ClInclude Include="Application\ComSmallderon.h">
       <Filter>Application\Components\ComMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComEquipmentWeapon.h">
+      <Filter>Application\Components\ComEquipment</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

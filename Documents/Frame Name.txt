@@ -27,7 +27,7 @@ character_human_male_humanmale_hd_bone_27	// ¿ŞÂÊ ¾î±ú»À [ÀÌ¸§¼öÁ¤]Shoulder_Left
 character_human_male_humanmale_hd_bone_33	// ¿ŞÂÊ ÆÈ²ŞÄ¡»À
 character_human_male_humanmale_hd_bone_34	// ¿ŞÂÊ ¾î±ú ¾Æ·¡»À
 character_human_male_humanmale_hd_bone_35	// ¿ŞÂÊ ÆÈ²ŞÄ¡»À have child
-character_human_male_humanmale_hd_bone_41	// ¿Ş¼Õ Áß¾Ó ¹°°ÇÀâ±â À§Ä¡
+character_human_male_humanmale_hd_bone_41	// ¿ŞÂÊ ¼Õ¸ñ»À (¹°°ÇÀâ±â)
 character_human_male_humanmale_hd_bone_94	// ¿Ş¼Õ Áß¾Ó¼Õ°¡¶ô»À ½ÃÀÛ
 character_human_male_humanmale_hd_bone_126	// ¿Ş¼Õ Áß¾Ó¼Õ°¡¶ô»À
 character_human_male_humanmale_hd_bone_95	// ¿Ş¼Õ »õ³¢¼Õ°¡¶ô»À ½ÃÀÛ
@@ -44,7 +44,7 @@ character_human_male_humanmale_hd_bone_22	// ¿À¸¥ÂÊ ¼â°ñ»À ½ÃÀÛ
 character_human_male_humanmale_hd_bone_28	// ¿À¸¥ÂÊ ¾î±ú»À [ÀÌ¸§¼öÁ¤]Shoulder_Right
 character_human_male_humanmale_hd_bone_36	// ¿À¸¥ÂÊ ÆÈ²ŞÄ¡»À have child
 character_human_male_humanmale_hd_bone_45	// ¿À¸¥ÂÊ ÆÈ²ŞÄ¡ ¾Æ·¡»À
-character_human_male_humanmale_hd_bone_46	// ¿À¸¥ÂÊ ¼Õ¸ñ»À
+character_human_male_humanmale_hd_bone_46	// ¿À¸¥ÂÊ ¼Õ¸ñ»À (¹°°ÇÀâ±â)
 character_human_male_humanmale_hd_bone_47	// ¿À¸¥ÂÊ ¼Õ¸ñ»À have child
 character_human_male_humanmale_hd_bone_101	// ¿À¸¥¼Õ ³İÂ° ¼Õ°¡¶ô»À ½ÃÀÛ
 character_human_male_humanmale_hd_bone_131	// ¿À¸¥¼Õ ³İÂ° ¼Õ°¡¶ô»À
