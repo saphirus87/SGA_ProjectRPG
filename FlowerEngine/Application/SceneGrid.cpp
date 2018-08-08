@@ -3,6 +3,7 @@
 #include "../Application/ComTestCubeControl.h"
 #include "../Application/ComHuman01.h"
 #include "../Application/ComEquipmentShoulder.h"
+#include "../Application/ComEquipmentWeapon.h"
 #include "../Application/ComUndead01.h"
 #include "../Application/ComChrControl.h"
 #include "../Application/ComTroll01.h"
@@ -41,7 +42,8 @@ void SceneGrid::CreateCharacter()
 	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
 	pGOChrX3->AddComponent(new ComChrControl("ComChrControl"));
 	pGOChrX3->AddComponent(new ComEquipmentShoulder("ComEquipmentShoulder"));
-	
+	pGOChrX3->AddComponent(new ComEquipmentWeapon("ComEquipmentWeapon"));
+
 	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(0, 15, 6));
 	pGOChrX4->AddComponent(new ComUndead01("ComUndead01"));
 	pGOChrX4->AddComponent(new ComChrControl("ComChrControl"));

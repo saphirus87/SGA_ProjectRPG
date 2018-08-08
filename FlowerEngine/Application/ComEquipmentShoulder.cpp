@@ -37,8 +37,6 @@ void ComEquipmentShoulder::Awake()
 	// ¾î±ú ·»´õ¸µ ÄÄÆ÷³ÍÆ® ¹Ì¸® Ã£¾ÆµÒ
 	m_pRenderRight = (ComRenderXMesh*)m_pGOShoulderRight->GetComponent("ComRenderXMesh");
 	m_pRenderLeft = (ComRenderXMesh*)m_pGOShoulderLeft->GetComponent("ComRenderXMesh");
-
-	// shoulder_robe_b_03blue.png
 }
 
 void ComEquipmentShoulder::Update()
