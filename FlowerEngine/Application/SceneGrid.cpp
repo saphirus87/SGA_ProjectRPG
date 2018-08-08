@@ -6,6 +6,7 @@
 #include "../Application/ComUndead01.h"
 #include "../Application/ComChrControl.h"
 #include "../Application/ComTroll01.h"
+#include "../Application/ComSmallderon.h"
 
 SceneGrid::SceneGrid(CString szName) : Scene(szName)
 {
@@ -96,6 +97,10 @@ void SceneGrid::Init()
 	ComEquipmentShoulder* pShoulder = new ComEquipmentShoulder("ComEquipmentShoulder");
 	pGOChrX5->AddComponent(pShoulder);
 	pShoulder->SetOffsetPos(Vector3(3, 12, -6)); // [z, x, y축]
+
+	// 몬스터 생성
+	GameObject* pGOMonX = factory.CreateFromXFile("smallderon_orange", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(0, 15, 9));
+	pGOMonX->AddComponent(new ComSmallderon("ComSmallderon"));
 
 	// 카메라
 	Camera::GetInstance()->SetTarget(&pGOChrX3->transform->GetPosition());

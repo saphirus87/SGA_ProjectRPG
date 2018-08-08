@@ -69,6 +69,9 @@
     <Filter Include="Application\Components\ComEquipment">
       <UniqueIdentifier>{e7a116d3-9bc8-4d37-8132-bffb081d7195}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Components\ComMonster">
+      <UniqueIdentifier>{cba1ace0-cd3f-40ff-a2b3-4f159cf17c61}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -387,6 +390,9 @@
     <ClCompile Include="Application\StatusInfo.cpp">
       <Filter>Application\Datas</Filter>
     </ClCompile>
+    <ClCompile Include="Application\ComSmallderon.cpp">
+      <Filter>Application\Components\ComMonster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -583,6 +589,9 @@
     </ClInclude>
     <ClInclude Include="Application\StatusInfo.h">
       <Filter>Application\Datas</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComSmallderon.h">
+      <Filter>Application\Components\ComMonster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
