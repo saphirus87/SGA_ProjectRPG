@@ -57,13 +57,9 @@ void SceneGrid::CreateCharacter()
 	pShoulder->SetOffsetPos(Vector3(3, 12, -6)); // [z, x, y축]
 	pShoulder->ChangeTexture("ShoulderEquipItemName02");
 
-	// 46 오른쪽 무기잡기
-	GameObject* pWeapon = new GameObject("");
-
-
 	// 카메라
-	Camera::GetInstance()->SetTarget(&pGOChrX3->transform->GetPosition());
-
+	//Camera::GetInstance()->SetTarget(&pGOChrX3->transform->GetPosition());
+	Camera::GetInstance()->SetTarget(&Vector3(0, 0, 0));
 }
 
 void SceneGrid::CreateMonster()

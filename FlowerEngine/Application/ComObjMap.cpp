@@ -60,6 +60,7 @@ void ComObjMap::Awake()
 			}
 		}*/
 
+		return;
 		for (int i = 0; i < mapSize; ++i)
 		{
 			for (int j = 0; j < mapSize; ++j)
@@ -261,6 +262,38 @@ void ComObjMap::LoadMap()
 			vecAttbuf.push_back(m_mtltexList[mtlName]->id);
 		}
 	}
+
+	// Hyuns Test START
+	m_vertices.clear();
+	//m_mtltexList.clear();
+
+	VERTEX_PNT vertex;
+	
+	// 0
+	vertex.p = Vector3(0, 0, 0);
+	vertex.t = Vector2(0, 1);
+	vertex.n = Vector3(0, 1, 0);
+	m_vertices.push_back(vertex);
+
+	// 1
+	vertex.p = Vector3(0, 0, 1);
+	vertex.t = Vector2(0, 0);
+	vertex.n = Vector3(0, 1, 0);
+	m_vertices.push_back(vertex);
+
+	// 2
+	vertex.p = Vector3(1, 0, 1);
+	vertex.t = Vector2(1, 0);
+	vertex.n = Vector3(0, 1, 0);
+	m_vertices.push_back(vertex);
+
+	// 3
+	vertex.p = Vector3(1, 0, 0);
+	vertex.t = Vector2(1, 1);
+	vertex.n = Vector3(0, 1, 0);
+	m_vertices.push_back(vertex);
+
+	// Hyuns Test END
 
 	//m_mtltexList.clear();
 	fin.close();
