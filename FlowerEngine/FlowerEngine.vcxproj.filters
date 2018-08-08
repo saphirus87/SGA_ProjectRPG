@@ -399,6 +399,9 @@
     <ClCompile Include="Application\QuadTree.cpp">
       <Filter>Application\Components\ComMap</Filter>
     </ClCompile>
+    <ClCompile Include="Application\ComTerrain.cpp">
+      <Filter>Application\Components\ComMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -603,6 +606,9 @@
       <Filter>Application\Components\ComEquipment</Filter>
     </ClInclude>
     <ClInclude Include="Application\QuadTree.h">
+      <Filter>Application\Components\ComMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComTerrain.h">
       <Filter>Application\Components\ComMap</Filter>
     </ClInclude>
   </ItemGroup>

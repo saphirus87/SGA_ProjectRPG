@@ -11,6 +11,7 @@
 #include "../Application/ComMissile.h"
 #include "ComMeshSphere.h"
 #include "../Application/ComObjMap.h"
+#include "../Application/ComTerrain.h"
 #include "../Application/ComEquipmentShoulder.h"
 
 FactoryGameObject::FactoryGameObject()
@@ -257,7 +258,9 @@ GameObject * FactoryGameObject::CreateFromXFile(CString szName, CString szFolder
 GameObject * FactoryGameObject::CreateObjMap(CString szName, CString szFolderPath, CString szFileName)
 {
 	GameObject* pGO = new GameObject(szName);
-	ComObjMap* pComObjMap = new ComObjMap("ComObjMap");
+	//ComObjMap* pComObjMap = new ComObjMap("ComObjMap");
+	ComTerrain* pComObjMap = new ComTerrain("ComTerrain");
+
 	pComObjMap->SetFilename(szFolderPath, szFileName);
 	pGO->AddComponent(pComObjMap);
 

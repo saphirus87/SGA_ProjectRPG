@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "ComChrControl.h"
-#include "ComObjMap.h"
+#include "ComTerrain.h"
 
 ComChrControl::ComChrControl(CString szName)
 	:Component(szName), 
@@ -18,7 +18,7 @@ void ComChrControl::Awake()
 {
 	GameObject* pObjMap = GameObject::Find("ObjMap");
 	if (pObjMap != NULL)
-		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
+		m_pMap = (ComTerrain*)pObjMap->GetComponent("ComTerrain");
 
 	m_pos = &gameObject->transform->GetPosition();
 }

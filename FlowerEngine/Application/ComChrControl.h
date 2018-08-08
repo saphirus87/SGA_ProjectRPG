@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 
-class ComObjMap;
+class ComTerrain;
 
 class ComChrControl : public Component
 {
@@ -18,7 +18,7 @@ private:
 	void Move();
 
 private:
-	ComObjMap * m_pMap;
+	ComTerrain * m_pMap;
 
 	Vector3* m_pos;					// 캐릭터 위치
 	Vector3 m_vecForward;			// 앞 방향 벡터
