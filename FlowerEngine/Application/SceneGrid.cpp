@@ -60,7 +60,7 @@ void SceneGrid::CreateCharacter()
 	pShoulder->ChangeTexture("ShoulderEquipItemName02");
 
 	// Ä«¸Þ¶ó
-	Camera::GetInstance()->SetTarget(&pGOChrX3->transform->GetPosition());
+	Camera::GetInstance()->SetTarget(&pGOChrX4->transform->GetPosition());
 }
 
 void SceneGrid::CreateMonster()

@@ -68,7 +68,7 @@ void ComChrControl::Move()
 	else
 		m_isMoving = false;
 
-	float fMoveSpeed = 0.5f;	//이동 속도
+	float fMoveSpeed = 0.10f;	//이동 속도
 	gameObject->transform->GetForward(m_vecForward);
 	Vector3 forward = fDeltaZ * m_vecForward * fMoveSpeed;
 	gameObject->transform->Translate(forward);
