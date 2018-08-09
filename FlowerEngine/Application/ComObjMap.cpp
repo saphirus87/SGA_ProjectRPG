@@ -254,18 +254,6 @@ void ComObjMap::LoadMap()
 	m_pVB->Lock(0, 0, (LPVOID*)&pVertex, 0);
 	memcpy(pVertex, &m_vertices[0], m_vertices.size() * sizeof(VERTEX_PNT));
 	m_pVB->Unlock();
-
-	/*for (int i = 0; i < m_vertices.size(); ++i)
-	{
-		m_surfaceIndices[i] = i;
-	}
-
-	pDevice9->CreateIndexBuffer(m_surfaceIndices.size() * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);
-
-	DWORD* pIndex;
-	m_pIB->Lock(0, 0, (LPVOID*)&pIndex, 0);
-	memcpy(pIndex, &m_surfaceIndices[0], m_surfaceIndices.size() * sizeof(DWORD));
-	m_pIB->Unlock();*/
 }
 
 void ComObjMap::LoadMtlLib(LPCTSTR fullPath)
