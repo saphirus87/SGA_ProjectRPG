@@ -1,5 +1,5 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# File Created: 09.08.2018 16:21:12
+# File Created: 09.08.2018 19:06:58
 
 newmtl azeroth_35_33
 	Ns 30.0000
@@ -12,5 +12,5 @@ newmtl azeroth_35_33
 	Kd 0.6400 0.6400 0.6400
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka C:\Users\pc01\Desktop\GitHub\SGA_ProjectRPG\FlowerEngine\Resources\obj\Map\TestMap\azeroth_35_33.png
-	map_Kd C:\Users\pc01\Desktop\GitHub\SGA_ProjectRPG\FlowerEngine\Resources\obj\Map\TestMap\azeroth_35_33.png
+	map_Ka C:\Users\SGA\Documents\GitHub\SGA_ProjectRPG\FlowerEngine\Resources\obj\Map\TestMap\azeroth_35_33.png
+	map_Kd C:\Users\SGA\Documents\GitHub\SGA_ProjectRPG\FlowerEngine\Resources\obj\Map\TestMap\azeroth_35_33.png

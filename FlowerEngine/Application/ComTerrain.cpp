@@ -195,6 +195,12 @@ void ComTerrain::LoadMap()
 	if (fin.is_open() == false)
 		assert(false && "fin.is_open() == false");
 
+	float fPosXMax = 0.0f;
+	float fPosZMax = 0.0f;
+	// 음수로 내려가는 정점들
+	float fPosXMin = 0.0f; 
+	float fPosZMin = 0.0f;
+
 	while (fin.eof() == false)
 	{
 		fin >> token;
@@ -209,6 +215,14 @@ void ComTerrain::LoadMap()
 			float x, y, z;
 			fin.getline(token, TOKEN_SIZE);
 			sscanf_s(token, "%f %f %f", &x, &y, &z);
+			if (x > fPosXMax)
+				fPosXMax = x;
+			if (z > fPosZMax)
+				fPosZMax = z;
+			if (x < fPosXMin)
+				fPosXMin = x;
+			if (z < fPosZMin)
+				fPosZMin = z;
 			vecP.push_back(D3DXVECTOR3(x, y, z));
 		}
 		else if (CompareStr(token, "vt"))
@@ -233,25 +247,17 @@ void ComTerrain::LoadMap()
 		}
 		else if (CompareStr(token, "f"))
 		{
-			int aIndex[3][3];
+			int aIndex[3];
 
 			fin.getline(token, TOKEN_SIZE);
-			sscanf_s(token, "%d/%d/%d %d/%d/%d %d/%d/%d",
-				&aIndex[0][0], &aIndex[0][1], &aIndex[0][2],
-				&aIndex[1][0], &aIndex[1][1], &aIndex[1][2],
-				&aIndex[2][0], &aIndex[2][1], &aIndex[2][2]);
+
+			sscanf_s(token, "%d %d %d", &aIndex[0], &aIndex[1], &aIndex[2]);
 
 			// 삼각형 하나
 			for (int i = 0; i < 3; ++i)
 			{
 				// OBJ 파일에는 INDEX가 1부터 들어가는데 배열 0부터 집어 넣으려고 -1
-				//m_surfaceIndices.push_back((DWORD)aIndex[i][0]-1);
-
-				VERTEX_PNT pnt;
-				pnt.p = vecP[aIndex[i][0] - 1];
-				pnt.t = vecT[aIndex[i][1] - 1];
-				pnt.n = vecN[aIndex[i][2] - 1];
-				m_vertices.push_back(pnt);
+				m_surfaceIndices.push_back((DWORD)aIndex[i]-1);
 			}
 
 			vecAttbuf.push_back(m_mtltexList[mtlName]->id);
@@ -301,27 +307,26 @@ void ComTerrain::LoadMap()
 	//m_surfaceIndices.push_back(2);
 	//m_surfaceIndices.push_back(3);
 
-	/*for (size_t i = 0; i < vecP.size(); ++i)
+	for (size_t i = 0; i < vecP.size(); ++i)
 	{
 		VERTEX_PNT pnt;
+		//vecP[i].x += abs(fPosXMin);
+		//vecP[i].z += abs(fPosZMin);
 		pnt.p = vecP[i];
-		pnt.t = vecT[i];
-		pnt.n = vecN[i];
+		
+		Vector2 vT(pnt.p.x, pnt.p.z);
+		vT.x /= fPosXMax;
+		vT.y = 1.0f - (vT.y /fPosZMax);
+		pnt.t = vT;
+		pnt.n = Vector3(0, 1, 0);
 		D3DXVec3Normalize(&pnt.n, &pnt.n);
 		m_vertices.push_back(pnt);
-	}*/
-
-	//pDevice9->CreateIndexBuffer(m_surfaceIndices.size() * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);
-
-	//DWORD* pIndex;
-	//m_pIB->Lock(0, 0, (LPVOID*)&pIndex, 0);
-	//memcpy(pIndex, &m_surfaceIndices[0], m_surfaceIndices.size() * sizeof(DWORD));
-	//m_pIB->Unlock();
-
+	}
+	
 	// Hyuns Test END
 
-	for (size_t i = 0; i < m_vertices.size(); ++i)
-		m_surfaceIndices.push_back(i);
+	/*for (size_t i = 0; i < m_vertices.size(); ++i)
+		m_surfaceIndices.push_back(i);*/
 
 	//m_mtltexList.clear();
 	fin.close();
