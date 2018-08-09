@@ -53,7 +53,6 @@ private:
 	float m_InverseUV;
 
 	// QuadTree culling
-private:
 	vector<DWORD> m_vecQuadIdx;	// 임시 사용 정리 필요
 	QuadTree* m_pQuadTree;
 

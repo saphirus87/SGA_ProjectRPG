@@ -42,7 +42,7 @@ void ComTerrain::Awake()
 {
 	if (m_mapFilename.IsEmpty() == false)
 	{
-		m_InverseUV = 5.0f;
+		m_InverseUV = 0.0f;
 		LoadMap();
 
 		// QuadTree Culling에 사용할 인덱스 값 생성(추후 정리 필요)
@@ -126,8 +126,7 @@ void ComTerrain::Render()
 	pDevice9->SetStreamSource(0, m_pVB, 0, sizeof(VERTEX_PNT));
 	pDevice9->SetIndices(m_pIB);
 
-	int polygonCnt = m_surfaceIndices.size() / 3;
-	pDevice9->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_vertices.size(), 0, polygonCnt);
+	pDevice9->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_vertices.size(), 0, m_surfaceIndices.size() / 3);
 
 	m_pEffect->EndPass();
 	m_pEffect->End();
@@ -135,13 +134,13 @@ void ComTerrain::Render()
 
 bool ComTerrain::GetHeight(float & height, const D3DXVECTOR3 & pos)
 {
+	return false;
+
 	D3DXVECTOR3 rayPos(pos.x, pos.y + m_rayDistance, pos.z);
 	D3DXVECTOR3 rayDir(0, -1, 0);
 	float distance = 0.0f;
 
-	//const int num = 12;
-	const int num = 3;
-	for (int i = 0; i < m_surfaceIndices.size(); i += num)
+	for (int i = 0; i < m_surfaceIndices.size(); i += 3)
 	{
 		D3DXVECTOR3 v1 = m_vertices[m_surfaceIndices[i]].p;
 		D3DXVECTOR3 v2 = m_vertices[m_surfaceIndices[i + 1]].p;
@@ -210,8 +209,7 @@ void ComTerrain::LoadMap()
 			float x, y, z;
 			fin.getline(token, TOKEN_SIZE);
 			sscanf_s(token, "%f %f %f", &x, &y, &z);
-			// MAX축이랑 달라서 z에 -곱함
-			vecP.push_back(D3DXVECTOR3(x, y, -z));
+			vecP.push_back(D3DXVECTOR3(x, y, z));
 		}
 		else if (CompareStr(token, "vt"))
 		{
@@ -247,7 +245,13 @@ void ComTerrain::LoadMap()
 			for (int i = 0; i < 3; ++i)
 			{
 				// OBJ 파일에는 INDEX가 1부터 들어가는데 배열 0부터 집어 넣으려고 -1
-				m_surfaceIndices.push_back((DWORD)aIndex[i][0]-1);
+				//m_surfaceIndices.push_back((DWORD)aIndex[i][0]-1);
+
+				VERTEX_PNT pnt;
+				pnt.p = vecP[aIndex[i][0] - 1];
+				pnt.t = vecT[aIndex[i][1] - 1];
+				pnt.n = vecN[aIndex[i][2] - 1];
+				m_vertices.push_back(pnt);
 			}
 
 			vecAttbuf.push_back(m_mtltexList[mtlName]->id);
@@ -297,7 +301,7 @@ void ComTerrain::LoadMap()
 	//m_surfaceIndices.push_back(2);
 	//m_surfaceIndices.push_back(3);
 
-	for (size_t i = 0; i < vecP.size(); ++i)
+	/*for (size_t i = 0; i < vecP.size(); ++i)
 	{
 		VERTEX_PNT pnt;
 		pnt.p = vecP[i];
@@ -305,7 +309,7 @@ void ComTerrain::LoadMap()
 		pnt.n = vecN[i];
 		D3DXVec3Normalize(&pnt.n, &pnt.n);
 		m_vertices.push_back(pnt);
-	}
+	}*/
 
 	//pDevice9->CreateIndexBuffer(m_surfaceIndices.size() * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);
 
@@ -315,6 +319,9 @@ void ComTerrain::LoadMap()
 	//m_pIB->Unlock();
 
 	// Hyuns Test END
+
+	for (size_t i = 0; i < m_vertices.size(); ++i)
+		m_surfaceIndices.push_back(i);
 
 	//m_mtltexList.clear();
 	fin.close();
@@ -392,7 +399,12 @@ void ComTerrain::LoadMtlLib(LPCTSTR fullPath)
 		else if (CompareStr(token, "map_Kd"))
 		{
 			fin >> token;
-			m_mtltexList[mtlName]->pTexture = Assets::GetTexture(m_filePath + token);
+
+			CString readFileName = CString(token);
+			int index = readFileName.ReverseFind('\\'); // 거꾸로 찾은다음
+			CString szFileName = readFileName.Right(readFileName.GetLength() - index - 1); // 파일이름 길이에서 찾은 위치 빼고 '\\'가 붙어 있어서 1 더 뺌
+
+			m_mtltexList[mtlName]->pTexture = Assets::GetTexture(m_filePath + szFileName);
 		}
 	}
 

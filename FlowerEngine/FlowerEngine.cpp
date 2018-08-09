@@ -362,6 +362,14 @@ void CALLBACK OnD3D9FrameRender(IDirect3DDevice9* pd3dDevice, double fTime, floa
 		//V(g_pEffect9->SetFloat(g_hfTime, (float)fTime));
 
 		pd3dDevice->SetRenderState(D3DRS_LIGHTING, true);
+
+		// WIRE RENDERING
+		static bool m_bRenderWire = false; if (Input::KeyDown(VK_F2)) m_bRenderWire = !m_bRenderWire;
+		if (m_bRenderWire == true)
+			pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		else
+			pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
 		SceneManager::GetInstance()->Render();
 		Debug::Get()->Print();
 

@@ -20,17 +20,8 @@ SceneGrid::~SceneGrid()
 void SceneGrid::Init()
 {
 	CreateMap();
-	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(2.0780f, 146.0027f, -2.0740f));
-	//GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(2.0780f, 0, -2.0740f));
-	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
-	pGOChrX3->AddComponent(new ComChrControl("ComChrControl"));
-	pGOChrX3->AddComponent(new ComEquipmentShoulder("ComEquipmentShoulder"));
-	pGOChrX3->AddComponent(new ComEquipmentWeapon("ComEquipmentWeapon"));
 
-	// 카메라
-	Camera::GetInstance()->SetTarget(&pGOChrX3->transform->GetPosition());
-
-	//CreateCharacter();
+	CreateCharacter();
 	//CreateMonster();
 	CreateTest();
 }
@@ -48,6 +39,12 @@ void SceneGrid::CreateCharacter()
 	//GameObject* pGOChrX = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 3));
 	//GameObject* pGOChrX2 = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 4));
 	
+	//GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(2.0780f, 146.0027f, -2.0740f));
+	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(2.0780f, 10, -2.0740f));
+	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
+	pGOChrX3->AddComponent(new ComChrControl("ComChrControl"));
+	pGOChrX3->AddComponent(new ComEquipmentShoulder("ComEquipmentShoulder"));
+	pGOChrX3->AddComponent(new ComEquipmentWeapon("ComEquipmentWeapon"));
 
 	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(0, 15, 6));
 	pGOChrX4->AddComponent(new ComUndead01("ComUndead01"));
@@ -61,6 +58,9 @@ void SceneGrid::CreateCharacter()
 	pGOChrX5->AddComponent(pShoulder);
 	pShoulder->SetOffsetPos(Vector3(3, 12, -6)); // [z, x, y축]
 	pShoulder->ChangeTexture("ShoulderEquipItemName02");
+
+	// 카메라
+	Camera::GetInstance()->SetTarget(&pGOChrX3->transform->GetPosition());
 }
 
 void SceneGrid::CreateMonster()
