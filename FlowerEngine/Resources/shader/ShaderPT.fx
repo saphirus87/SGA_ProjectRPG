@@ -34,6 +34,9 @@ texture DiffuseMap_Tex
 sampler2D DiffuseSampler = sampler_state
 {
     Texture = (DiffuseMap_Tex);
+    MipFilter = LINEAR;
+    MinFilter = LINEAR;
+    MagFilter = LINEAR;
 };
 
 struct VS_INPUT

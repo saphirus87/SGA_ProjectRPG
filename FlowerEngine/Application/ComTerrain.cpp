@@ -18,7 +18,7 @@ ComTerrain::ComTerrain(CString szName) :
 	m_pIB(NULL)
 {
 	pDevice9 = GetD3D9Device();
-	m_pEffect = Shaders::GetInstance()->GetShader(SHADER_PATH + "/ShaderLightingTexture.fx");
+	m_pEffect = Shaders::GetInstance()->GetShader(SHADER_PATH + "/ShaderPT.fx");
 }
 
 ComTerrain::~ComTerrain()
@@ -101,11 +101,11 @@ void ComTerrain::Update()
 {
 	/*if (Input::m_pKeyboard->KeyDown(VK_SPACE)) UpdateIndexBuffer();*/
 
-	//if (Input::m_pKeyboard->KeyDown(VK_SPACE))
-	//{
-	//	//UpdateIndexBuffer();
-	//	UpdateIndexBufferQuadTree();
-	//}
+	if (Input::m_pKeyboard->KeyDown(VK_SPACE))
+	{
+		UpdateIndexBuffer();
+		//UpdateIndexBufferQuadTree();
+	}
 }
 
 void ComTerrain::Render()
@@ -121,6 +121,7 @@ void ComTerrain::Render()
 	m_pEffect->BeginPass(0);
 
 	m_pEffect->SetTexture("DiffuseMap_Tex", m_mtltexList.begin()->second->pTexture);
+	m_pEffect->CommitChanges();
 
 	pDevice9->SetFVF(VERTEX_PNT::FVF);
 	pDevice9->SetStreamSource(0, m_pVB, 0, sizeof(VERTEX_PNT));
@@ -135,7 +136,6 @@ void ComTerrain::Render()
 bool ComTerrain::GetHeight(float & height, const D3DXVECTOR3 & pos)
 {
 	return false;
-
 	D3DXVECTOR3 rayPos(pos.x, pos.y + m_rayDistance, pos.z);
 	D3DXVECTOR3 rayDir(0, -1, 0);
 	float distance = 0.0f;
