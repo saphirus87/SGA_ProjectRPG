@@ -18,6 +18,8 @@ private:
 	vector<VERTEX_PNT>* m_MapVertex;
 	vector<DWORD>* m_pIndex;
 
+	UINT m_TotalSizeX;
+
 private:
 	// 자식 노드 추가
 	QuadTree* _AddChild(int CornerTR, int CornerTL, int CornerBR, int CornerBL);
@@ -28,7 +30,7 @@ private:
 	// 쿼드 트리를 4개의 하위 트리로 분할
 	bool _SubDivide();
 
-	bool _IsVisible() { return (m_Corner[CORNER_TL] - m_Corner[CORNER_TR] <= 1); }
+	bool _IsVisible() { return (m_Corner[CORNER_TL] - m_Corner[CORNER_TR] <= 0); }
 
 	// 출력할 폴리곤의 인덱스 생성
 	int _GenTriIndex(int Triangles, vector<DWORD>& pIndex);

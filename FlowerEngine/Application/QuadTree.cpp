@@ -13,59 +13,15 @@ int QuadTree::_GenTriIndex(int Triangles, vector<DWORD>& pIndex)
 	// 현재 노드가 출력되어야 하는 경우 인덱스 추가
 	if (_IsVisible())
 	{
-		/*LPDWORD p = ((LPDWORD)pIndex) + Triangles * 3;
-
-		// 와우 기준 하나의 사각형이 4개의 삼각형으로 구성됨
-		 
-		// 우측 삼각형
-		*p++ = (*m_pIndex)[m_Center];
-		*p++ = (*m_pIndex)[m_Corner[CORNER_TR]];
-		*p++ = (*m_pIndex)[m_Corner[CORNER_BR]];
-		++Triangles;
-
-		// 상단 삼각형
-		*p++ = (*m_pIndex)[m_Center];
-		*p++ = (*m_pIndex)[m_Corner[CORNER_TL]];
-		*p++ = (*m_pIndex)[m_Corner[CORNER_TR]];
-		++Triangles;
-
-		// 좌측 삼각형
-		*p++ = (*m_pIndex)[m_Center];
-		*p++ = (*m_pIndex)[m_Corner[CORNER_TL]];
-		*p++ = (*m_pIndex)[m_Corner[CORNER_BL]];
-		++Triangles;
-
-		// 하단 삼각형
-		*p++ = (*m_pIndex)[m_Center];
-		*p++ = (*m_pIndex)[m_Corner[CORNER_BL]];
-		*p++ = (*m_pIndex)[m_Corner[CORNER_BR]];
-		++Triangles;*/
-
 		// 와우 기준 하나의 사각형이 4개의 삼각형으로 구성됨
 
-		// 우측 삼각형
-		pIndex.push_back(m_Center);
-		pIndex.push_back((*m_pIndex)[m_Corner[CORNER_TR]]);
-		pIndex.push_back((*m_pIndex)[m_Corner[CORNER_BR]]);
-		++Triangles;
-
-		// 상단 삼각형
-		pIndex.push_back(m_Center);
-		pIndex.push_back((*m_pIndex)[m_Corner[CORNER_TL]]);
-		pIndex.push_back((*m_pIndex)[m_Corner[CORNER_TR]]);
-		++Triangles;
-
-		// 좌측 삼각형
-		pIndex.push_back(m_Center);
-		pIndex.push_back((*m_pIndex)[m_Corner[CORNER_TL]]);
-		pIndex.push_back((*m_pIndex)[m_Corner[CORNER_BL]]);
-		++Triangles;
-
-		// 하단 삼각형
-		pIndex.push_back(m_Center);
-		pIndex.push_back((*m_pIndex)[m_Corner[CORNER_BL]]);
-		pIndex.push_back((*m_pIndex)[m_Corner[CORNER_BR]]);
-		++Triangles;
+		for (int i = 0; i < 12; i++)
+		{
+			if (i % 3 == 0) ++Triangles;
+			pIndex[Triangles * 3 + i % 3] = m_Center + i;
+			//pIndex.push_back(m_Center + i);
+			
+		}
 
 		return Triangles;
 	}
@@ -87,7 +43,7 @@ int QuadTree::_IsInFrustum()
 	if (_IsVisible())
 		InSphere = Camera::GetInstance()->FrustumCulling(&(*m_MapVertex)[m_Center].p, m_Radius);
 	else
-		InSphere = Camera::GetInstance()->FrustumCulling(&(*m_MapVertex)[(*m_pIndex)[m_Center]].p, m_Radius);
+		InSphere = Camera::GetInstance()->FrustumCulling(&(*m_MapVertex)[(*m_pIndex)[m_Center] + 7].p, m_Radius);
 	// 절두체 안에 구가 포함되지 않으면 바로 함수 종료(포인트별 체크 불필요)
 	if (!InSphere) return FRUSTUM_OUT;
 
@@ -144,7 +100,9 @@ QuadTree::QuadTree(int x, int y)
 	m_Corner[CORNER_BR] = x * (y - 1);
 	m_Corner[CORNER_BL] = x * y - 1;
 
-	m_Center = (m_Corner[CORNER_TR] + m_Corner[CORNER_TL] + m_Corner[CORNER_BR] + m_Corner[CORNER_BL]) / 4;
+	m_Center = (x / 2) - 1 + ((y / 2) - 1) * x;
+
+	m_TotalSizeX = x;
 }
 
 QuadTree::QuadTree(QuadTree* pParent)
@@ -174,9 +132,9 @@ bool QuadTree::Build()
 {
 	// 우측상단과 좌측하단사이의 벡터 및 거리 계산
 	D3DXVECTOR3 v;
-	v = (*m_MapVertex)[(*m_pIndex)[m_Corner[CORNER_TR]]].p - (*m_MapVertex)[(*m_pIndex)[m_Corner[CORNER_BL]]].p;
+	v = (*m_MapVertex)[(*m_pIndex)[m_Corner[CORNER_TR]]].p - (*m_MapVertex)[(*m_pIndex)[m_Corner[CORNER_BL]] + 7].p;
 
-	m_Radius = D3DXVec3Length(&v) / 2.0f;
+	m_Radius = (D3DXVec3Length(&v) / 2.0f) * 2.5f;
 	if (_SubDivide())
 	{
 		m_pChild[CORNER_TR]->Build();
@@ -198,6 +156,7 @@ QuadTree* QuadTree::_AddChild(int CornerTR, int CornerTL, int CornerBR, int Corn
 	QuadTree* pChild;
 
 	pChild = new QuadTree(this);
+	pChild->m_TotalSizeX = m_TotalSizeX;
 	pChild->SetMapVertex(m_MapVertex);
 	pChild->SetIndex(m_pIndex);
 	pChild->_SetCorners(CornerTR, CornerTL, CornerBR, CornerBL);
@@ -212,10 +171,16 @@ bool QuadTree::_SetCorners(int CornerTR, int CornerTL, int CornerBR, int CornerB
 	m_Corner[CORNER_BR] = CornerBR;
 	m_Corner[CORNER_BL] = CornerBL;
 
-	if (CornerTL - CornerTR != 1)
-		m_Center = (m_Corner[CORNER_TR] + m_Corner[CORNER_TL] + m_Corner[CORNER_BR] + m_Corner[CORNER_BL]) / 4;
+	UINT SizeX = m_Corner[CORNER_TL] - m_Corner[CORNER_TR];
+
+	if (CornerTL - CornerTR != 0)
+	{
+		m_Center = m_Corner[CORNER_TR] + (SizeX / 2) + (SizeX / 2) * m_TotalSizeX;
+		//m_Center = ((m_Corner[CORNER_BR] - SizeX) / 2 + m_Corner[CORNER_BL] / 2) / 2;
+		//m_Center = (m_Corner[CORNER_TR] + m_Corner[CORNER_TL] + m_Corner[CORNER_BR] + m_Corner[CORNER_BL]) / 4;
+	}
 	else
-		m_Center = (*m_pIndex)[m_Corner[CORNER_TL]] - 4;
+		m_Center = (*m_pIndex)[m_Corner[CORNER_TR]] - 1;
 
 	return true;
 }
@@ -227,21 +192,34 @@ bool QuadTree::_SubDivide()
 	UINT RightEdgeCenter;
 	UINT LeftEdgeCenter;
 	UINT CentralPoint;
+	UINT SizeX = m_Corner[CORNER_TL] - m_Corner[CORNER_TR] + 1;
 
-	TopEdgeCenter = (m_Corner[CORNER_TR] + m_Corner[CORNER_TL]) / 2;
-	BottomEdgeCenter = (m_Corner[CORNER_BR] + m_Corner[CORNER_BL]) / 2;
-	RightEdgeCenter = (m_Corner[CORNER_TR] + m_Corner[CORNER_BR]) / 2;
-	LeftEdgeCenter = (m_Corner[CORNER_TL] + m_Corner[CORNER_BL]) / 2;
-	CentralPoint = (m_Corner[CORNER_TR] + m_Corner[CORNER_TL] + m_Corner[CORNER_BR] + m_Corner[CORNER_BL]) / 4;
+	if (SizeX > 2)
+	{
+		TopEdgeCenter = (m_Corner[CORNER_TR] + m_Corner[CORNER_TL]) / 2;
+		BottomEdgeCenter = (m_Corner[CORNER_BR] + m_Corner[CORNER_BL]) / 2;
+		RightEdgeCenter = (m_Corner[CORNER_BR] - (m_TotalSizeX * (SizeX / 2)));
+		LeftEdgeCenter = RightEdgeCenter + SizeX - 1;
+		CentralPoint = (RightEdgeCenter + LeftEdgeCenter) / 2;
+	}
 
 	// 더 이상 분할 할 수 없는 경우 종료
-	if (m_Corner[CORNER_TL] - m_Corner[CORNER_TR] <= 1) return false;
+	if (m_Corner[CORNER_TL] - m_Corner[CORNER_TR] <= 0) return false;
 
 	// Child Node 추가
-	m_pChild[CORNER_TR] = _AddChild(m_Corner[CORNER_TR], TopEdgeCenter, RightEdgeCenter, CentralPoint);
-	m_pChild[CORNER_TL] = _AddChild(TopEdgeCenter, m_Corner[CORNER_TL], CentralPoint, LeftEdgeCenter);
-	m_pChild[CORNER_BR] = _AddChild(RightEdgeCenter, CentralPoint, m_Corner[CORNER_BR], BottomEdgeCenter);
-	m_pChild[CORNER_BL] = _AddChild(CentralPoint, LeftEdgeCenter, BottomEdgeCenter, m_Corner[CORNER_BL]);
-
+	if (SizeX > 2)
+	{
+		m_pChild[CORNER_TR] = _AddChild(m_Corner[CORNER_TR], TopEdgeCenter, RightEdgeCenter, CentralPoint);
+		m_pChild[CORNER_TL] = _AddChild(TopEdgeCenter + 1, m_Corner[CORNER_TL], CentralPoint + 1, LeftEdgeCenter);
+		m_pChild[CORNER_BR] = _AddChild(RightEdgeCenter + m_TotalSizeX, CentralPoint + m_TotalSizeX, m_Corner[CORNER_BR], BottomEdgeCenter);
+		m_pChild[CORNER_BL] = _AddChild(CentralPoint + m_TotalSizeX + 1, LeftEdgeCenter + m_TotalSizeX, BottomEdgeCenter + 1, m_Corner[CORNER_BL]);
+	}
+	else
+	{
+		m_pChild[CORNER_TR] = _AddChild(m_Corner[CORNER_TR], m_Corner[CORNER_TR], m_Corner[CORNER_TR], m_Corner[CORNER_TR]);
+		m_pChild[CORNER_TL] = _AddChild(m_Corner[CORNER_TL], m_Corner[CORNER_TL], m_Corner[CORNER_TL], m_Corner[CORNER_TL]);
+		m_pChild[CORNER_BR] = _AddChild(m_Corner[CORNER_BR], m_Corner[CORNER_BR], m_Corner[CORNER_BR], m_Corner[CORNER_BR]);
+		m_pChild[CORNER_BL] = _AddChild(m_Corner[CORNER_BL], m_Corner[CORNER_BL], m_Corner[CORNER_BL], m_Corner[CORNER_BL]);
+	}
 	return true;
 }

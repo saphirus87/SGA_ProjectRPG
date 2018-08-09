@@ -40,66 +40,43 @@ void ComObjMap::Awake()
 		LoadMap();
 
 		// QuadTree Culling에 사용할 인덱스 값 생성(추후 정리 필요)
-		/*for (int i = 0; i < mapSize * mapSize; ++i)
+		for (int i = 0; i < (mapSize - 1) * (mapSize - 1); ++i)
 		{
-			if (i / mapSize == 128)
-			{
-				if (i % mapSize == 0) m_vecQuadIdx.push_back(2 + ((i / mapSize - 1) * (mapSize - 1)) * 12);
-				else m_vecQuadIdx.push_back(8 + ((i / mapSize - 1) * (mapSize - 1) + (i % mapSize) - 1) * 12);
+			// test idx
+			int TotalIndexX = i % 128;
+			int TotalIndexZ = i / 128;
 
-				if (i % mapSize == 0) m_vecQuadIdx.push_back(2 + ((i / mapSize) - 1) * (12 * (mapSize - 1)));
-				else m_vecQuadIdx.push_back(8 + ((i - mapSize - (i / mapSize)) * 12));
-			}
-			else
-			{
-				if (i % mapSize == 0) m_vecQuadIdx.push_back(1 + ((i / mapSize) * (mapSize - 1)) * 12);
-				else m_vecQuadIdx.push_back(4 + ((i / mapSize) * (mapSize - 1) + (i % mapSize) - 1) * 12);
+			// 8X8 타일의 인덱스 값
+			int sqIndexX = TotalIndexX / 8;
+			int sqIndexZ = TotalIndexZ / 8;
+			int sqIndex = sqIndexX + sqIndexZ * 16;
 
-				if (i % mapSize == 0) m_vecQuadIdx.push_back(1 + (i / mapSize) * (12 * (mapSize - 1)));
-				else m_vecQuadIdx.push_back(4 + ((i - (i / mapSize) - 1) * 12));
-			}
-		}*/
+			// 8X8 타일 내 인덱스 값
+			int IndexX = TotalIndexX % 8;
+			int IndexZ = TotalIndexZ % 8;
+			int Index = IndexX + IndexZ * 8;
 
-		return;
-		for (int i = 0; i < mapSize; ++i)
-		{
-			for (int j = 0; j < mapSize; ++j)
-			{
-				if (i == 128)
-				{
-					int xIndex = 0;
-					int zIndex = 0;
+			// 최종 인덱스
+			int result = sqIndex * 64 + IndexX + IndexZ * 8;
 
-					//xIndex = 
-
-					if (j == 0) m_vecQuadIdx.push_back(2 + ((i - 1) * (mapSize - 1)) * 12);
-					else m_vecQuadIdx.push_back(8 + ((i - 1) * (mapSize - 1) + j - 1) * 12);
-				}
-				else
-				{
-					if (j == 0) m_vecQuadIdx.push_back(1 + (i * (mapSize - 1)) * 12);
-					else m_vecQuadIdx.push_back(4 + (i * (mapSize - 1) + j - 1) * 12);
-				}
-			}
+			m_vecQuadIdx.push_back(result * 12 + 1);
 		}
 
-		m_pQuadTree = new QuadTree(mapSize, mapSize);
+		m_surfaceIndices.resize(m_vertices.size());
+		pDevice9->CreateIndexBuffer(m_surfaceIndices.size() * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);
+
+		m_pQuadTree = new QuadTree(mapSize - 1, mapSize - 1);
 		m_pQuadTree->SetMapVertex(&m_vertices);
 		m_pQuadTree->SetIndex(&m_vecQuadIdx);
-		m_pQuadTree->Build();
+ 		m_pQuadTree->Build();
 		m_pIndex = new DWORD;
 	}
 }
 
 void ComObjMap::Update()
 {
-	/*if (Input::m_pKeyboard->KeyDown(VK_SPACE)) UpdateIndexBuffer();*/
-
-	if (Input::m_pKeyboard->KeyDown(VK_SPACE))
-	{
-		//UpdateIndexBuffer();
-		UpdateIndexBufferQuadTree();
-	}
+	//UpdateIndexBuffer();
+	UpdateIndexBufferQuadTree();
 }
 
 void ComObjMap::Render()
@@ -120,7 +97,7 @@ void ComObjMap::Render()
 	pDevice9->SetStreamSource(0, m_pVB, 0, sizeof(VERTEX_PNT));
 	pDevice9->SetIndices(m_pIB);
 
-	pDevice9->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_surfaceVertices.size(), 0, m_surfaceIndices.size() / 3);
+	pDevice9->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_vertices.size(), 0, m_TriangleNum);
 
 	m_pEffect->EndPass();
 	m_pEffect->End();
@@ -132,15 +109,19 @@ bool ComObjMap::GetHeight(float & height, const D3DXVECTOR3 & pos)
 	D3DXVECTOR3 rayDir(0, -1, 0);
 	float distance = 0.0f;
 
-	for (int i = 0; i < m_surfaceIndices.size(); i += 12)
+	for (int i = 0; i < m_TriangleNum * 3; i += 3)
 	{
-		D3DXVECTOR3 v1 = m_vertices[m_surfaceIndices[i] + 10].p;
-		D3DXVECTOR3 v2 = m_vertices[m_surfaceIndices[i] + 4].p;
-		D3DXVECTOR3 v3 = m_vertices[m_surfaceIndices[i] + 11].p;
+		D3DXVECTOR3 TargetPos(pos.x, 0, pos.z);
+		D3DXVECTOR3 TerrainPos(m_vertices[m_surfaceIndices[i]].p.x, 0, m_vertices[m_surfaceIndices[i]].p.z);
+		if (D3DXVec3Length(&(TargetPos - TerrainPos)) >= 5.0f) continue;
 
-		D3DXVECTOR3 v4 = m_vertices[m_surfaceIndices[i] + 1].p;
-		D3DXVECTOR3 v5 = m_vertices[m_surfaceIndices[i] + 2].p;
-		D3DXVECTOR3 v6 = m_vertices[m_surfaceIndices[i] + 4].p;
+		D3DXVECTOR3 v1 = m_vertices[m_surfaceIndices[i]].p;
+		D3DXVECTOR3 v2 = m_vertices[m_surfaceIndices[i] + 1].p;
+		D3DXVECTOR3 v3 = m_vertices[m_surfaceIndices[i] + 2].p;
+
+		//D3DXVECTOR3 v4 = m_vertices[m_surfaceIndices[i] + 1].p;
+		//D3DXVECTOR3 v5 = m_vertices[m_surfaceIndices[i] + 2].p;
+		//D3DXVECTOR3 v6 = m_vertices[m_surfaceIndices[i] + 4].p;
 
 		if (D3DXIntersectTri(&v1, &v2, &v3, &rayPos, &rayDir, NULL, NULL, &distance))
 		{
@@ -148,11 +129,11 @@ bool ComObjMap::GetHeight(float & height, const D3DXVECTOR3 & pos)
 			return true;
 		}
 
-		if (D3DXIntersectTri(&v4, &v5, &v6, &rayPos, &rayDir, NULL, NULL, &distance))
+		/*if (D3DXIntersectTri(&v4, &v5, &v6, &rayPos, &rayDir, NULL, NULL, &distance))
 		{
 			height = rayPos.y - distance;
 			return true;
-		}
+		}*/
 	}
 
 	return false;
@@ -263,38 +244,6 @@ void ComObjMap::LoadMap()
 		}
 	}
 
-	// Hyuns Test START
-	m_vertices.clear();
-	//m_mtltexList.clear();
-
-	VERTEX_PNT vertex;
-	
-	// 0
-	vertex.p = Vector3(0, 0, 0);
-	vertex.t = Vector2(0, 1);
-	vertex.n = Vector3(0, 1, 0);
-	m_vertices.push_back(vertex);
-
-	// 1
-	vertex.p = Vector3(0, 0, 1);
-	vertex.t = Vector2(0, 0);
-	vertex.n = Vector3(0, 1, 0);
-	m_vertices.push_back(vertex);
-
-	// 2
-	vertex.p = Vector3(1, 0, 1);
-	vertex.t = Vector2(1, 0);
-	vertex.n = Vector3(0, 1, 0);
-	m_vertices.push_back(vertex);
-
-	// 3
-	vertex.p = Vector3(1, 0, 0);
-	vertex.t = Vector2(1, 1);
-	vertex.n = Vector3(0, 1, 0);
-	m_vertices.push_back(vertex);
-
-	// Hyuns Test END
-
 	//m_mtltexList.clear();
 	fin.close();
 
@@ -305,6 +254,18 @@ void ComObjMap::LoadMap()
 	m_pVB->Lock(0, 0, (LPVOID*)&pVertex, 0);
 	memcpy(pVertex, &m_vertices[0], m_vertices.size() * sizeof(VERTEX_PNT));
 	m_pVB->Unlock();
+
+	/*for (int i = 0; i < m_vertices.size(); ++i)
+	{
+		m_surfaceIndices[i] = i;
+	}
+
+	pDevice9->CreateIndexBuffer(m_surfaceIndices.size() * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);
+
+	DWORD* pIndex;
+	m_pIB->Lock(0, 0, (LPVOID*)&pIndex, 0);
+	memcpy(pIndex, &m_surfaceIndices[0], m_surfaceIndices.size() * sizeof(DWORD));
+	m_pIB->Unlock();*/
 }
 
 void ComObjMap::LoadMtlLib(LPCTSTR fullPath)
@@ -397,18 +358,18 @@ void ComObjMap::UpdateIndexBuffer()
 
 void ComObjMap::UpdateIndexBufferQuadTree()
 {
-	if (!m_testIndices.empty()) m_testIndices.clear();
+	//if (!m_surfaceIndices.empty()) m_surfaceIndices.clear();
 
-	m_TriangleNum = m_pQuadTree->GenerateIndex(m_testIndices);
+	m_TriangleNum = m_pQuadTree->GenerateIndex(m_surfaceIndices);
 
-	if (m_pIB != NULL) SAFE_RELEASE(m_pIB);
+	//if (m_pIB != NULL) SAFE_RELEASE(m_pIB);
 
 	if (m_TriangleNum <= 0) return;
 
-	pDevice9->CreateIndexBuffer(m_testIndices.size() * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);
+	//pDevice9->CreateIndexBuffer(m_TriangleNum * 3 * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);
 
 	DWORD* pIndex;
 	m_pIB->Lock(0, 0, (LPVOID*)&pIndex, 0);
-	memcpy(pIndex, &m_testIndices[0], m_testIndices.size() * sizeof(DWORD));
+	memcpy(pIndex, &m_surfaceIndices[0], m_TriangleNum * 3 * sizeof(DWORD));
 	m_pIB->Unlock();
 }
