@@ -24,6 +24,7 @@ public:
 
 	void Update();
 
+	// 뼈이름
 	LPCSTR szFrameName;
 	// 위치 보정값
 	Vector3 m_vOffsetPos;
@@ -60,23 +61,6 @@ public:
 private:
 	map<CString, CString> m_mapTextureName;
 
-	// 캐릭터 애니메이션 구성요소
-	ComRenderSkinnedMesh * m_pAnimation;
-
 	vector<RenderEquipment*> m_vecRenderEquipments;
-
-	// 위치 보정값 오른쪽, 왼쪽
-	Vector3 m_vOffsetPosR;
-	Vector3 m_vOffsetPosL;
-
-	// 어깨 방어구 게임오브젝트 오른쪽, 왼쪽
-	GameObject* m_pGOShoulderRight;
-	GameObject* m_pGOShoulderLeft;
-	GameObject* m_pGOHelmet;
-
-	// 어깨 방어구 렌더링 구성요소 오른쪽, 왼쪽
-	ComRenderXMesh* m_pRenderRight;
-	ComRenderXMesh* m_pRenderLeft;
-	ComRenderXMesh* m_pRenderHelmet;
 };
 

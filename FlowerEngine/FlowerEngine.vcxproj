@@ -395,7 +395,6 @@
     <ClInclude Include="Application\ComAircraftEnermyAI.h" />
     <ClInclude Include="Application\ComChrControl.h" />
     <ClInclude Include="Application\ComEquipment.h" />
-    <ClInclude Include="Application\ComEquipmentWeapon.h" />
     <ClInclude Include="Application\ComFollowTarget.h" />
     <ClInclude Include="Application\ComHuman01.h" />
     <ClInclude Include="Application\ComMissile.h" />
@@ -426,7 +425,6 @@
     <ClCompile Include="Application\ComAircraftEnermyAI.cpp" />
     <ClCompile Include="Application\ComChrControl.cpp" />
     <ClCompile Include="Application\ComEquipment.cpp" />
-    <ClCompile Include="Application\ComEquipmentWeapon.cpp" />
     <ClCompile Include="Application\ComFollowTarget.cpp" />
     <ClCompile Include="Application\ComHuman01.cpp" />
     <ClCompile Include="Application\ComMissile.cpp" />
