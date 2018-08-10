@@ -7,9 +7,10 @@ class ChrState
 {
 private:
 	IChrState * m_pChrState;
+	ComRenderSkinnedMesh * m_pAnimation;
 
 public:
-	ChrState();
+	ChrState(ComRenderSkinnedMesh* pAnimation);
 	~ChrState();
 
 	void SetState(IChrState* pChrState);

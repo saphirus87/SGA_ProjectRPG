@@ -2,6 +2,7 @@
 #include "stdafx.h"
 
 class ComTerrain;
+class ChrState;
 
 class ComChrControl : public Component
 {
@@ -24,4 +25,7 @@ private:
 	Vector3 m_vecForward;			// 앞 방향 벡터
 	bool m_isMoving;				// 움직임 변경여부
 	bool m_isRotating;				// 방향 변경여부
+
+public:
+	bool GetMoving(bool isMoving);
 };

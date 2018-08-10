@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "ComChrControl.h"
 #include "ComTerrain.h"
+#include "IChrState.h"
+#include "ChrState.h"
+#include "ChrStateStand.h"
+#include "ChrStateWalk.h"
 
 ComChrControl::ComChrControl(CString szName)
 	:Component(szName), 
@@ -72,4 +76,9 @@ void ComChrControl::Move()
 	gameObject->transform->GetForward(m_vecForward);
 	Vector3 forward = fDeltaZ * m_vecForward * fMoveSpeed;
 	gameObject->transform->Translate(forward);
+}
+
+bool ComChrControl::GetMoving(bool isMoving)
+{
+	return m_isMoving;
 }

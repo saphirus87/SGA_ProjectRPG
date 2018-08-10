@@ -4,14 +4,14 @@
 #include "Application/ChrStateStand.h"
 #include "Application/ChrStateWalk.h"
 
-ChrState::ChrState()
+ChrState::ChrState(ComRenderSkinnedMesh* pAnimation)
 {
-	m_pChrState = new ChrStateStand();
+	m_pChrState = new ChrStateStand(pAnimation);
 }
 
 ChrState::~ChrState()
 {
-	SAFE_DELETE(m_pChrState);
+	SAFE_DELETE(this->m_pChrState);
 }
 
 void ChrState::SetState(IChrState * pChrState)
