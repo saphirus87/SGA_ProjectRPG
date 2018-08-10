@@ -16,5 +16,6 @@ public:
 	void SetState(IChrState* pChrState);
 	void Stand();
 	void Walk();
+	void Attack();
 };
 

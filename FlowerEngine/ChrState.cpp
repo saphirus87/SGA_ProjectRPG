@@ -3,6 +3,7 @@
 #include "Application/IChrState.h"
 #include "Application/ChrStateStand.h"
 #include "Application/ChrStateWalk.h"
+#include "Application/ChrStateAttack.h"
 
 ChrState::ChrState(ComRenderSkinnedMesh* pAnimation)
 {
@@ -28,4 +29,9 @@ void ChrState::Stand()
 void ChrState::Walk()
 {
 	m_pChrState->Walk(this);
+}
+
+void ChrState::Attack()
+{
+	m_pChrState->Attack(this);
 }
