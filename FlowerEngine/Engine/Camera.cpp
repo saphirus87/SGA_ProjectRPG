@@ -142,12 +142,6 @@ void Camera::Render()
 	pDevice9->SetRenderState(D3DRS_LIGHTING, true);*/
 }
 
-
-float Camera::GetDistanceToGameObject(GameObject * pGO)
-{
-	return D3DXVec3Length(&(pGO->transform->GetPosition() - m_eye));
-}
-
 Camera * Camera::GetInstance()
 {
 	if (m_pInstance == NULL)

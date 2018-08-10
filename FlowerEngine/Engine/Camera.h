@@ -17,8 +17,6 @@ public:
 	const Matrix4x4& GetProjMatrix() { return m_matProj; }
 	Matrix4x4 GetVPmatrix() { return (m_matView * m_matProj); }
 
-	float GetDistanceToGameObject(GameObject* pGO);
-
 	static Camera* GetInstance();
 
 	// 절두체(Frustum) 안에 있으면 true 반환, 밖에 있으면 false 반환합니다.

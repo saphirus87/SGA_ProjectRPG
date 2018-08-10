@@ -10,7 +10,7 @@ public:
 	void Update();
 
 	static bool KeyDown(DWORD key) { return m_pKeyboard->KeyDown(key); }
-	static bool KeyUp(DWORD key) { return m_pKeyboard->KeyDown(key); }
+	static bool KeyUp(DWORD key) { return m_pKeyboard->KeyUp(key); }
 	static bool KeyPress(DWORD key) { return m_pKeyboard->KeyPress(key); }
 
 	static bool ButtonDown(DWORD button) { return m_pMouse->ButtonDown(button); }

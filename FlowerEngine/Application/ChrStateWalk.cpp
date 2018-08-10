@@ -15,12 +15,20 @@ ChrStateWalk::~ChrStateWalk()
 
 void ChrStateWalk::Stand(ChrState * pChrState)
 {
-	// Walk -> Stand 상태 변환
-	m_pChrState->SetState(new ChrStateStand(m_pAnimation));
+	CString strDebug("Walk -> Stand 상태 변환");
+	strDebug.Append(L"\r\n");
+	OutputDebugString(strDebug);
+
+	ChrStateStand* pStateStand = new ChrStateStand(m_pAnimation);
+	pChrState->SetState(pStateStand);
+	pStateStand->Stand(pChrState);
 }
 
 void ChrStateWalk::Walk(ChrState * pChrState)
 {
-	// Walk 상태
+	CString strDebug("Walk 상태");
+	strDebug.Append(L"\r\n");
+	OutputDebugString(strDebug);
+	
 	m_pAnimation->PlayAnimation(eAni_Walk);
 }

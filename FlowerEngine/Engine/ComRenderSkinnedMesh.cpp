@@ -307,39 +307,3 @@ void ComRenderSkinnedMesh::RenderMeshContainer(MeshContainer* pMeshContainer)
 		m_pEffect->End();
 	}
 }
-
-Matrix4x4* ComRenderSkinnedMesh::FindMatrixByName(XFrame pFrame, LPCSTR szName)
-{
-	if (pFrame->pFrameFirstChild != NULL)
-	{
-		CString strDebug(pFrame->pFrameFirstChild->Name);
-		strDebug.Append(L"\r\n");
-		OutputDebugString(strDebug);
-		if (CompareStr(pFrame->pFrameFirstChild->Name, szName))
-		{
-			Matrix4x4 pFindMatrix = pFrame->TransformationMatrix;
-		}
-	}
-	if (pFrame->pFrameSibling != NULL)
-	{
-		CString strDebug(pFrame->pFrameSibling->Name);
-		strDebug.Append(L"\r\n");
-		OutputDebugString(strDebug);
-		if (CompareStr(pFrame->pFrameSibling->Name, szName))
-		{
-			Matrix4x4 pFindMatrix = pFrame->TransformationMatrix;
-		}
-	}
-
-	if (pFrame->pFrameSibling != NULL)
-	{
-		FindMatrixByName(pFrame->pFrameSibling, szName);
-	}
-
-	if (pFrame->pFrameFirstChild != NULL)
-	{
-		FindMatrixByName(pFrame->pFrameFirstChild, szName);
-	}
-
-	return NULL;
-}

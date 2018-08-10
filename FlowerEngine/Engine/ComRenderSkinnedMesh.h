@@ -71,9 +71,6 @@ private:
 	// 매쉬 컨테이너를 렌더링 합니다.
 	void RenderMeshContainer(MeshContainer* pMeshContainer);
 
-	// 이름으로 뼈대를 찾습니다.
-	Matrix4x4* FindMatrixByName(XFrame pFrame, LPCSTR szName);
-
 private:
 	// DirectX 디바이스
 	Device9 pDevice9;

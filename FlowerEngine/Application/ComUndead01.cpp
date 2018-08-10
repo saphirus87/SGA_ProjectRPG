@@ -31,6 +31,11 @@ void ComUndead01::Update()
 		m_pChrState->SetState(new ChrStateWalk(m_pAnimation));
 		m_pChrState->Walk();
 	}
+	else if (Input::KeyUp('W'))
+	{
+		m_pChrState->Stand();
+	}
+	
 	//Test Code
 	/*if (Input::KeyDown('1'))
 	{

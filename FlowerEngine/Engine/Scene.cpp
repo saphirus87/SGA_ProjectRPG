@@ -64,7 +64,8 @@ void Scene::Render()
 			if (Camera::GetInstance()->FrustumCulling(&go.second->transform->GetPosition()) ||
 				go.second->IsAlwaysRender)
 			{
-				go.second->fDistanceToCamera = Camera::GetInstance()->GetDistanceToGameObject(go.second);
+				Vector3 camPos = Camera::GetInstance()->GetPosition();
+				go.second->fDistanceToCamera = ComTransform::Distance(go.second, &camPos);
 				m_listRender.push_back(go.second);
 			}
 		}
