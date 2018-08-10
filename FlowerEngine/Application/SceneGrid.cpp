@@ -40,18 +40,18 @@ void SceneGrid::CreateCharacter()
 	//GameObject* pGOChrX2 = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 4));
 	
 	//GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(2.0780f, 146.0027f, -2.0740f));
-	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(2.0780f, 10, -2.0740f));
+	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(2, 15, 5));
 	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
 	pGOChrX3->AddComponent(new ComChrControl("ComChrControl"));
 	pGOChrX3->AddComponent(new ComEquipmentShoulder("ComEquipmentShoulder"));
 	pGOChrX3->AddComponent(new ComEquipmentWeapon("ComEquipmentWeapon"));
 
-	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(0, 15, 6));
+	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(2, 15, 6));
 	pGOChrX4->AddComponent(new ComUndead01("ComUndead01"));
 	pGOChrX4->AddComponent(new ComChrControl("ComChrControl"));
 	pGOChrX4->AddComponent(new ComEquipmentShoulder("ComEquipmentShoulder"));
 
-	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(0, 15, 7));
+	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(2, 15, 7));
 	pGOChrX5->AddComponent(new ComTroll01("ComTroll01"));
 	pGOChrX5->AddComponent(new ComChrControl("ComChrControl"));
 	ComEquipmentShoulder* pShoulder = new ComEquipmentShoulder("ComEquipmentShoulder");

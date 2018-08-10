@@ -115,7 +115,6 @@ void ComTerrain::Render()
 
 bool ComTerrain::GetHeight(float & height, const D3DXVECTOR3 & pos)
 {
-	return false;
 	D3DXVECTOR3 rayPos(pos.x, pos.y + m_rayDistance, pos.z);
 	D3DXVECTOR3 rayDir(0, -1, 0);
 	float distance = 0.0f;
