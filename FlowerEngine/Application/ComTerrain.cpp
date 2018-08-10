@@ -81,11 +81,11 @@ void ComTerrain::Update()
 {
 	/*if (Input::m_pKeyboard->KeyDown(VK_SPACE)) UpdateIndexBuffer();*/
 
-	if (Input::m_pKeyboard->KeyDown(VK_SPACE))
-	{
-		UpdateIndexBuffer();
-		//UpdateIndexBufferQuadTree();
-	}
+	//if (Input::m_pKeyboard->KeyDown(VK_SPACE))
+	//{
+	//	UpdateIndexBuffer();
+	//	//UpdateIndexBufferQuadTree();
+	//}
 }
 
 void ComTerrain::Render()

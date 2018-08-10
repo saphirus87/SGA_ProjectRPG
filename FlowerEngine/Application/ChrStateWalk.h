@@ -9,8 +9,10 @@ class ChrStateWalk : public IChrState
 {
 private:
 	ChrState * m_pChrState;
+	ComRenderSkinnedMesh * m_pAnimation;
+
 public:
-	ChrStateWalk();
+	ChrStateWalk(ComRenderSkinnedMesh* pAnimation);
 	~ChrStateWalk();
 
 	// IChrState을(를) 통해 상속됨

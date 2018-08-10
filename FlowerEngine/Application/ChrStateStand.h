@@ -9,9 +9,10 @@ class ChrStateStand : public IChrState
 {
 private:
 	ChrState * m_pChrState;
+	ComRenderSkinnedMesh * m_pAnimation;
 
 public:
-	ChrStateStand();
+	ChrStateStand(ComRenderSkinnedMesh* pAnimation);
 	~ChrStateStand();
 
 	// IChrState을(를) 통해 상속됨

@@ -1,6 +1,8 @@
 #pragma once
 #include "stdafx.h"
 
+class ChrState;
+
 class ComUndead01 : public Component
 {
 public:
@@ -13,6 +15,7 @@ public:
 	virtual void Render() override;
 
 private:
+	ChrState * m_pChrState;
 	ComRenderSkinnedMesh * m_pAnimation;
 };
 
