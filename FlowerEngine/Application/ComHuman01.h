@@ -9,7 +9,7 @@ E-Mail	: hkn10004@naver.com
 #pragma once
 #include "stdafx.h"
 
-class ComEquipmentShoulder;
+class ComEquipment;
 
 class ComHuman01 : public Component
 {

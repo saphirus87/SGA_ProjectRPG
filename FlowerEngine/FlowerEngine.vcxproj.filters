@@ -384,9 +384,6 @@
     <ClCompile Include="Application\ComChrControl.cpp">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClCompile>
-    <ClCompile Include="Application\ComEquipmentShoulder.cpp">
-      <Filter>Application\Components\ComEquipment</Filter>
-    </ClCompile>
     <ClCompile Include="Application\ItemInfo.cpp">
       <Filter>Application\Datas</Filter>
     </ClCompile>
@@ -413,6 +410,9 @@
     </ClCompile>
     <ClCompile Include="Application\ChrStateWalk.cpp">
       <Filter>Application\Components\ComCharactor\ChrState</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ComEquipment.cpp">
+      <Filter>Application\Components\ComEquipment</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -602,9 +602,6 @@
     <ClInclude Include="Application\ComChrControl.h">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClInclude>
-    <ClInclude Include="Application\ComEquipmentShoulder.h">
-      <Filter>Application\Components\ComEquipment</Filter>
-    </ClInclude>
     <ClInclude Include="Application\ItemInfo.h">
       <Filter>Application\Datas</Filter>
     </ClInclude>
@@ -634,6 +631,9 @@
     </ClInclude>
     <ClInclude Include="Application\ChrStateWalk.h">
       <Filter>Application\Components\ComCharactor\ChrState</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComEquipment.h">
+      <Filter>Application\Components\ComEquipment</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

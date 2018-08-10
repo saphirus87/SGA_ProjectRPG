@@ -3,11 +3,34 @@
 
 class EquipmentShoulder;
 
-class ComEquipmentShoulder : public Component
+enum eEquipment
+{
+	eEquipment_Shoulder,
+	eEquipment_Helmet,
+	eEquipment_Weapon,
+	eEquipment_Shield,
+	eEquipment_Count
+};
+
+class RenderEquipment
 {
 public:
-	ComEquipmentShoulder(CString szName);
-	~ComEquipmentShoulder();
+	RenderEquipment();
+	~RenderEquipment();
+
+	// 위치 보정값
+	Vector3 m_vOffsetPos;
+	// 장비 오브젝트
+	GameObject* m_pGOEquipment;
+	// 렌더링 구성요소
+	ComRenderXMesh* m_pRender;
+};
+
+class ComEquipment : public Component
+{
+public:
+	ComEquipment(CString szName);
+	~ComEquipment();
 
 	// Component을(를) 통해 상속됨
 	virtual void Awake() override;
@@ -28,6 +51,8 @@ private:
 
 	// 캐릭터 애니메이션 구성요소
 	ComRenderSkinnedMesh * m_pAnimation;
+
+	vector<RenderEquipment*> m_vecRenderEquipments;
 
 	// 위치 보정값 오른쪽, 왼쪽
 	Vector3 m_vOffsetPosR;

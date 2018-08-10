@@ -12,7 +12,7 @@
 #include "ComMeshSphere.h"
 #include "../Application/ComObjMap.h"
 #include "../Application/ComTerrain.h"
-#include "../Application/ComEquipmentShoulder.h"
+#include "../Application/ComEquipment.h"
 
 FactoryGameObject::FactoryGameObject()
 {

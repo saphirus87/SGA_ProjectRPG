@@ -1,8 +1,19 @@
 #include "stdafx.h"
-#include "ComEquipmentShoulder.h"
+#include "ComEquipment.h"
 #include "ItemInfo.h"
 
-ComEquipmentShoulder::ComEquipmentShoulder(CString szName) :
+RenderEquipment::RenderEquipment() :
+	m_pGOEquipment(NULL),
+	m_pRender(NULL),
+	m_vOffsetPos(Vector3(0, 0, 0))
+{
+}
+
+RenderEquipment::~RenderEquipment()
+{
+}
+
+ComEquipment::ComEquipment(CString szName) :
 	Component(szName),
 	pDataSholder(NULL),
 	m_pRenderRight(NULL),
@@ -15,12 +26,12 @@ ComEquipmentShoulder::ComEquipmentShoulder(CString szName) :
 {
 }
 
-ComEquipmentShoulder::~ComEquipmentShoulder()
+ComEquipment::~ComEquipment()
 {
 	SAFE_DELETE(pDataSholder);
 }
 
-void ComEquipmentShoulder::Awake()
+void ComEquipment::Awake()
 {
 	pDataSholder = new EquipmentShoulder();
 	
@@ -49,7 +60,7 @@ void ComEquipmentShoulder::Awake()
 	}
 }
 
-void ComEquipmentShoulder::Update()
+void ComEquipment::Update()
 {
 	m_pRenderRight->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Shoulder_Right"), &gameObject->transform->GetWorldMatrix());
 	m_pRenderLeft->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Shoulder_Left"), &gameObject->transform->GetWorldMatrix());
@@ -60,11 +71,11 @@ void ComEquipmentShoulder::Update()
 	}
 }
 
-void ComEquipmentShoulder::Render()
+void ComEquipment::Render()
 {
 }
 
-void ComEquipmentShoulder::SetOffsetPos(Vector3 vOffsetPosR)
+void ComEquipment::SetOffsetPos(Vector3 vOffsetPosR)
 {
 	m_vOffsetPosR = vOffsetPosR;
 	m_vOffsetPosL = m_vOffsetPosR;
@@ -76,7 +87,7 @@ void ComEquipmentShoulder::SetOffsetPos(Vector3 vOffsetPosR)
 		m_pGOShoulderLeft->transform->SetPosition(m_vOffsetPosL);
 }
 
-void ComEquipmentShoulder::ChangeTexture(CString szItemName)
+void ComEquipment::ChangeTexture(CString szItemName)
 {
 	m_pRenderRight->ChangeTexture(0, m_mapTextureName[szItemName]);
 	m_pRenderLeft->ChangeTexture(0, m_mapTextureName[szItemName]);
