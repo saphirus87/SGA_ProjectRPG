@@ -29,10 +29,6 @@ void Scene::Update()
 			// 그렇지 않으면 업데이트
 			else
 			{
-				//pGO->IsInFrustum = Camera::GetInstance()->FrustumCulling(&pGO->transform->GetPosition());
-				//// 일단 Frustum Culling 기능 끔 (렌더링만 컬링)
-				//pGO->IsInFrustum = true;
-
 				GameObject* pRoot = NULL;
 				
 				if (pGO->GetParent() != NULL)
@@ -44,8 +40,7 @@ void Scene::Update()
 					}
 				}
 				
-				// Parent가 있기만 하면 모두 Update가 되기 때문에 수정 필요
-				if (/*pGO->IsInFrustum == true ||*/ pRoot != NULL || pGO->IsAlwaysRender == true)
+				if (pRoot != NULL || pGO->IsAlwaysRender == true)
 					pGO->Update();
 			}
 		}
@@ -55,6 +50,11 @@ void Scene::Update()
 bool Compare(const GameObject* pGO1, const GameObject* pGO2)
 {
 	return pGO1->transform->GetPosition().z > pGO2->transform->GetPosition().z;
+}
+
+bool CompareDist(const GameObject* pGO1, const GameObject* pGO2)
+{
+	return pGO1->fDistanceToCamera > pGO2->fDistanceToCamera;
 }
 
 void Scene::Render()
@@ -69,21 +69,24 @@ void Scene::Render()
 		if (go.second->Name().Find(L"UI") >= 0)
 			m_listRenderUI.push_back(go.second);
 		else
+		{
+			go.second->fDistanceToCamera = Camera::GetInstance()->GetDistanceToGameObject(go.second);
 			m_listRender.push_back(go.second);
+		}
 	}
 
-	m_listRender.sort(Compare);
+	m_listRender.sort(CompareDist);
 	m_listRenderUI.sort(Compare);
 
 	for (auto & go : m_listRender)
 	{
 		// 부모가 있는 애들은 그냥 렌더링
-		if (go->GetParent() != NULL)
+		/*if (go->GetParent() != NULL)
 		{
 			go->Render();
 			++iRenderObjCnt;
 			continue;
-		}
+		}*/
 
 		go->IsInFrustum = Camera::GetInstance()->FrustumCulling(&go->transform->GetPosition());
 

@@ -143,6 +143,11 @@ void Camera::Render()
 }
 
 
+float Camera::GetDistanceToGameObject(GameObject * pGO)
+{
+	return D3DXVec3Length(&(pGO->transform->GetPosition() - m_eye));
+}
+
 Camera * Camera::GetInstance()
 {
 	if (m_pInstance == NULL)

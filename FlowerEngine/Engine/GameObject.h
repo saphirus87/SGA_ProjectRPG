@@ -100,8 +100,9 @@ public:
 	// 해당 씬 마다 mapGameObject가 있어야 할 듯, 현재 모든 씬에 다 들어감
 	static std::multimap<CString, GameObject*> m_mapGameObjects; // 중복 키 값 허용을 위해 multimap 사용
 	ComTransform* transform;
-	bool IsAlwaysRender;	// 항상 렌더링 해야하는 객체
+	bool IsAlwaysRender;	// 항상 렌더링 해야하는 객체(즉 컬링 되면 안돼는 객체들 UI나 스카이박스등)
 	bool IsInFrustum;		// 프러스텀 안에 있는지 여부
+	float fDistanceToCamera; // 카메라와 이 게임 오브젝트와의 거리 (렌더링 정렬(Sorting)에 사용)
 
 private:
 	// 이름
