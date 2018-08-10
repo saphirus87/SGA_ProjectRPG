@@ -5,9 +5,11 @@ class EquipmentShoulder;
 
 enum eEquipment
 {
-	eEquipment_Shoulder,
+	eEquipment_ShoulderR,
+	eEquipment_ShoulderL,
 	eEquipment_Helmet,
-	eEquipment_Weapon,
+	eEquipment_WeaponR,
+	eEquipment_WeaponL,
 	eEquipment_Shield,
 	eEquipment_Count
 };
@@ -18,12 +20,21 @@ public:
 	RenderEquipment();
 	~RenderEquipment();
 
+	void Set(LPCSTR szName, GameObject* pGOParent, GameObject* pGOEquipment);
+
+	void Update();
+
+	LPCSTR szFrameName;
 	// 위치 보정값
 	Vector3 m_vOffsetPos;
+	// 이 장비의 부모 게임 오브젝트
+	GameObject* m_pGOParent;
 	// 장비 오브젝트
 	GameObject* m_pGOEquipment;
 	// 렌더링 구성요소
 	ComRenderXMesh* m_pRender;
+	// 애니메이션 포인터
+	ComRenderSkinnedMesh * m_pAnimation;
 };
 
 class ComEquipment : public Component

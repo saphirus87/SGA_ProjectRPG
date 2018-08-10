@@ -148,15 +148,13 @@ void ComRenderSkinnedMesh::PlayAnimation(AnimationController pAniControl, int iI
 	SAFE_RELEASE(pNextAnimSet);
 }
 
-Matrix4x4& ComRenderSkinnedMesh::GetMatrixByName(LPCSTR szName)
+Matrix4x4* ComRenderSkinnedMesh::GetMatrixByName(LPCSTR szName)
 {
 	Frame* pFrame = (Frame*)D3DXFrameFind(m_pRootFrame, szName);
 	if (pFrame != NULL)
-		return (pFrame)->CombinedTM;
+		return &(pFrame)->CombinedTM;
 
-	Matrix4x4 matIdentity;
-	D3DXMatrixIdentity(&matIdentity);
-	return matIdentity;
+	return NULL;
 }
 
 void ComRenderSkinnedMesh::SetupBoneMatrixPointers(XFrame pFrame)

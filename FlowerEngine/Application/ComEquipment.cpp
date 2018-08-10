@@ -13,6 +13,23 @@ RenderEquipment::~RenderEquipment()
 {
 }
 
+void RenderEquipment::Set(LPCSTR szName, GameObject* pGOParent, GameObject * pGOEquipment)
+{
+	szFrameName = szName;
+	m_pGOParent = pGOParent;
+	m_pGOEquipment = pGOEquipment;
+	m_pRender= (ComRenderXMesh*)pGOEquipment->GetComponent("ComRenderXMesh");
+	m_pAnimation = (ComRenderSkinnedMesh*)m_pGOParent->GetComponent("ComRenderSkinnedMesh");
+}
+
+void RenderEquipment::Update()
+{
+	Matrix4x4* matFrame = m_pAnimation->GetMatrixByName(szFrameName);
+	
+	if (matFrame != NULL)
+		m_pRender->SetFrameMatrix(matFrame, &m_pGOParent->transform->GetWorldMatrix());
+}
+
 ComEquipment::ComEquipment(CString szName) :
 	Component(szName),
 	pDataSholder(NULL),
@@ -29,10 +46,15 @@ ComEquipment::ComEquipment(CString szName) :
 ComEquipment::~ComEquipment()
 {
 	SAFE_DELETE(pDataSholder);
+
+	for (size_t i = 0; i < m_vecRenderEquipments.size(); ++i)
+		SAFE_DELETE(m_vecRenderEquipments[i]);
 }
 
 void ComEquipment::Awake()
 {
+	FactoryGameObject factory;
+
 	pDataSholder = new EquipmentShoulder();
 	
 	m_mapTextureName.insert(map<CString, CString>::value_type("ShoulderEquipItemName01", "Resources/character/Equipment/shoulder_plate_d_02copper.png"));
@@ -40,35 +62,28 @@ void ComEquipment::Awake()
 
 	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 
-	SetOffsetPos();
+	m_vecRenderEquipments.resize(eEquipment_Count);
 
-	// 오브젝트들 생성
-	FactoryGameObject factory;
-	m_pGOShoulderRight = factory.CreateEquipment("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", m_vOffsetPosR);	// .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
-	m_pGOShoulderLeft = factory.CreateEquipment("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", m_vOffsetPosL, true);	// .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
-//	m_pGOHelmet = factory.CreateEquipment("Equipment_Helmet", "Resources/character/Equipment/", "Helmet_01.X", Vector3(0, 0, 0));
+	RenderEquipment* pRenderEquipment = new RenderEquipment();
+	pRenderEquipment->Set("Shoulder_Right", gameObject, factory.CreateEquipment("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", Vector3(3, 10, -8)));
+	m_vecRenderEquipments[eEquipment_ShoulderR] = pRenderEquipment;
 
-	// 어깨 렌더링 컴포넌트 미리 찾아둠
-	m_pRenderRight = (ComRenderXMesh*)m_pGOShoulderRight->GetComponent("ComRenderXMesh");
-	m_pRenderLeft = (ComRenderXMesh*)m_pGOShoulderLeft->GetComponent("ComRenderXMesh");
+	pRenderEquipment = new RenderEquipment();
+	pRenderEquipment->Set("Shoulder_Left", gameObject, factory.CreateEquipment("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", Vector3(3, -10, -8), true));
+	m_vecRenderEquipments[eEquipment_ShoulderL] = pRenderEquipment;
 
-	if (m_pGOHelmet)
-	{
-		// 헬맷이 누워있어서 돌림
-		m_pGOHelmet->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
-		m_pRenderHelmet = (ComRenderXMesh*)m_pGOHelmet->GetComponent("ComRenderXMesh");
-	}
+	pRenderEquipment = new RenderEquipment();
+	GameObject* pGOHelmet = factory.CreateEquipment("Equipment_Helmet", "Resources/character/Equipment/", "Helmet_01.X", Vector3(0, 0, 0));
+	pGOHelmet->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
+	pRenderEquipment->Set("Helmet", gameObject, pGOHelmet);
+	m_vecRenderEquipments[eEquipment_Helmet] = pRenderEquipment;
 }
 
 void ComEquipment::Update()
 {
-	m_pRenderRight->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Shoulder_Right"), &gameObject->transform->GetWorldMatrix());
-	m_pRenderLeft->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Shoulder_Left"), &gameObject->transform->GetWorldMatrix());
-	if (m_pRenderHelmet)
-	{
-		Matrix4x4 matHead = m_pAnimation->GetMatrixByName("Helmet");
-		m_pRenderHelmet->SetFrameMatrix(&matHead, &gameObject->transform->GetWorldMatrix());
-	}
+	for (auto & equipment : m_vecRenderEquipments)
+		if (equipment != NULL)
+			equipment->Update();
 }
 
 void ComEquipment::Render()
@@ -77,18 +92,13 @@ void ComEquipment::Render()
 
 void ComEquipment::SetOffsetPos(Vector3 vOffsetPosR)
 {
-	m_vOffsetPosR = vOffsetPosR;
-	m_vOffsetPosL = m_vOffsetPosR;
-	m_vOffsetPosL.y *= -1;
-	
-	if (m_pGOShoulderRight)
-		m_pGOShoulderRight->transform->SetPosition(m_vOffsetPosR);
-	if (m_pGOShoulderLeft)
-		m_pGOShoulderLeft->transform->SetPosition(m_vOffsetPosL);
+	m_vecRenderEquipments[eEquipment_ShoulderR]->m_pGOEquipment->transform->SetPosition(vOffsetPosR);
+	vOffsetPosR.y *= -1;
+	m_vecRenderEquipments[eEquipment_ShoulderL]->m_pGOEquipment->transform->SetPosition(vOffsetPosR);
 }
 
 void ComEquipment::ChangeTexture(CString szItemName)
 {
-	m_pRenderRight->ChangeTexture(0, m_mapTextureName[szItemName]);
-	m_pRenderLeft->ChangeTexture(0, m_mapTextureName[szItemName]);
+	m_vecRenderEquipments[eEquipment_ShoulderR]->m_pRender->ChangeTexture(0, m_mapTextureName[szItemName]);
+	m_vecRenderEquipments[eEquipment_ShoulderL]->m_pRender->ChangeTexture(0, m_mapTextureName[szItemName]);
 }

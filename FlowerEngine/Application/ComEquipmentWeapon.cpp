@@ -58,13 +58,13 @@ void ComEquipmentWeapon::Update()
 void ComEquipmentWeapon::Render()
 {
 	// Weapon_Right
-	m_pRenderRight->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Weapon_Right"), &gameObject->transform->GetWorldMatrix());
+	m_pRenderRight->SetFrameMatrix(m_pAnimation->GetMatrixByName("Weapon_Right"), &gameObject->transform->GetWorldMatrix());
 
 	if (m_pRenderLeft)
-		m_pRenderLeft->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Weapon_Left"), &gameObject->transform->GetWorldMatrix());
+		m_pRenderLeft->SetFrameMatrix(m_pAnimation->GetMatrixByName("Weapon_Left"), &gameObject->transform->GetWorldMatrix());
 
 	if (m_pRenderShieldLeft)
-		m_pRenderShieldLeft->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Shield_Left"), &gameObject->transform->GetWorldMatrix());
+		m_pRenderShieldLeft->SetFrameMatrix(m_pAnimation->GetMatrixByName("Shield_Left"), &gameObject->transform->GetWorldMatrix());
 }
 
 void ComEquipmentWeapon::SetOffsetPos(Vector3 vOffsetPosR)
