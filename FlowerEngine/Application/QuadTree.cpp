@@ -10,17 +10,50 @@ int QuadTree::_GenTriIndex(int Triangles, vector<DWORD>& pIndex)
 		return Triangles;
 	}
 
+	int LODLevel = _GetLODLevel();
+
 	// 현재 노드가 출력되어야 하는 경우 인덱스 추가
-	if (_IsVisible())
+	if (_IsVisible(LODLevel))
 	{
 		// 와우 기준 하나의 사각형이 4개의 삼각형으로 구성됨
 
-		for (int i = 0; i < 12; i++)
+		if ((m_Corner[CORNER_TL] - m_Corner[CORNER_TR]) == 0)
 		{
-			if (i % 3 == 0) ++Triangles;
-			pIndex[Triangles * 3 + i % 3] = m_Center + i;
-			//pIndex.push_back(m_Center + i);
-			
+			for (int i = 0; i < 12; ++i)
+			{
+				if (i % 3 == 0) ++Triangles;
+				pIndex[Triangles * 3 + i % 3] = m_Center + i;
+				//pIndex.push_back(m_Center + i);
+
+			}
+		}
+		else
+		{
+			DWORD v1Idx = (*m_pIndex)[m_Center] + 6;				// 중점
+			DWORD v2Idx = (*m_pIndex)[m_Corner[CORNER_TR]];			// TR
+			DWORD v3Idx = (*m_pIndex)[m_Corner[CORNER_BR]] + 1;		// BR
+			DWORD v4Idx = (*m_pIndex)[m_Corner[CORNER_TL]] + 3;		// TL
+			DWORD v5Idx = (*m_pIndex)[m_Corner[CORNER_BL]] + 6;		// BL
+
+			++Triangles;
+			pIndex[Triangles * 3] = v1Idx;
+			pIndex[Triangles * 3 + 1] = v2Idx;
+			pIndex[Triangles * 3 + 2] = v3Idx;
+
+			++Triangles;
+			pIndex[Triangles * 3] = v1Idx;
+			pIndex[Triangles * 3 + 1] = v4Idx;
+			pIndex[Triangles * 3 + 2] = v2Idx;
+
+			++Triangles;
+			pIndex[Triangles * 3] = v1Idx;
+			pIndex[Triangles * 3 + 1] = v4Idx;
+			pIndex[Triangles * 3 + 2] = v5Idx;
+
+			++Triangles;
+			pIndex[Triangles * 3] = v1Idx;
+			pIndex[Triangles * 3 + 1] = v5Idx;
+			pIndex[Triangles * 3 + 2] = v3Idx;
 		}
 
 		return Triangles;
@@ -40,7 +73,9 @@ int QuadTree::_IsInFrustum()
 	bool InPoint[4];
 	bool InSphere;
 
-	if (_IsVisible())
+	//int LODLevel = _GetLODLevel();
+
+	if (_IsVisible(0))
 		InSphere = Camera::GetInstance()->FrustumCulling(&(*m_MapVertex)[m_Center].p, m_Radius);
 	else
 		InSphere = Camera::GetInstance()->FrustumCulling(&(*m_MapVertex)[(*m_pIndex)[m_Center] + 7].p, m_Radius);
@@ -84,6 +119,25 @@ void QuadTree::_FrustumCull()
 	{
 		if (m_pChild[i] != NULL) m_pChild[i]->_FrustumCull();
 	}
+}
+
+float QuadTree::_GetDistance(Vector3 & CenterPos)
+{
+	Vector3 v(CenterPos - Camera::GetInstance()->GetPosition());
+	return D3DXVec3Length(&Vector3(v.x, 0.0f, v.z));
+}
+
+int QuadTree::_GetLODLevel()
+{
+	float distance = 0.0f;
+	float LODRatio = 0.01f;	// 거리값에 따른 LOD 레벨 설정을 위한 변수
+
+	if (m_Corner[CORNER_TL] - m_Corner[CORNER_TR] <= 0)
+		distance = _GetDistance((*m_MapVertex)[m_Center].p);
+	else
+		distance = _GetDistance((*m_MapVertex)[(*m_pIndex)[m_Center] + 7].p);
+
+	return max((int)(distance * LODRatio), 0);
 }
 
 void QuadTree::_Destroy()
