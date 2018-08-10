@@ -2,6 +2,7 @@
 #include "ChrStateWalk.h"
 #include "ChrState.h"
 #include "ChrStateStand.h"
+#include "ChrStateAttack.h"
 
 ChrStateWalk::ChrStateWalk(ComRenderSkinnedMesh* pAnimation)
 {
@@ -15,9 +16,9 @@ ChrStateWalk::~ChrStateWalk()
 
 void ChrStateWalk::Stand(ChrState * pChrState)
 {
-	CString strDebug("Walk -> Stand 상태 변환");
+	/*CString strDebug("Walk -> Stand 상태 변환");
 	strDebug.Append(L"\r\n");
-	OutputDebugString(strDebug);
+	OutputDebugString(strDebug);*/
 
 	ChrStateStand* pStateStand = new ChrStateStand(m_pAnimation);
 	pChrState->SetState(pStateStand);
@@ -26,9 +27,20 @@ void ChrStateWalk::Stand(ChrState * pChrState)
 
 void ChrStateWalk::Walk(ChrState * pChrState)
 {
-	CString strDebug("Walk 상태");
+	/*CString strDebug("Walk 상태");
 	strDebug.Append(L"\r\n");
-	OutputDebugString(strDebug);
+	OutputDebugString(strDebug);*/
 	
 	m_pAnimation->PlayAnimation(eAni_Walk);
+}
+
+void ChrStateWalk::Attack(ChrState * pChrState)
+{
+	/*CString strDebug("Walk -> Attack 상태 변환");
+	strDebug.Append(L"\r\n");
+	OutputDebugString(strDebug);*/
+
+	ChrStateAttack* pStateAttack = new ChrStateAttack(m_pAnimation);
+	pChrState->SetState(pStateAttack);
+	pStateAttack->Attack(pChrState);
 }

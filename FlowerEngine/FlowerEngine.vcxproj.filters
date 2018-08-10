@@ -414,6 +414,7 @@
     <ClCompile Include="Application\ComEquipment.cpp">
       <Filter>Application\Components\ComEquipment</Filter>
     </ClCompile>
+    <ClCompile Include="Application\ChrStateAttack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -635,6 +636,7 @@
     <ClInclude Include="Application\ComEquipment.h">
       <Filter>Application\Components\ComEquipment</Filter>
     </ClInclude>
+    <ClInclude Include="Application\ChrStateAttack.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="game-controller.ico">

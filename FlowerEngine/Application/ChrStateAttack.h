@@ -5,15 +5,15 @@
 class IChrState;
 class ChrState;
 
-class ChrStateStand : public IChrState
+class ChrStateAttack : public IChrState
 {
 private:
 	ChrState * m_pChrState;
 	ComRenderSkinnedMesh * m_pAnimation;
 
 public:
-	ChrStateStand(ComRenderSkinnedMesh* pAnimation);
-	~ChrStateStand();
+	ChrStateAttack(ComRenderSkinnedMesh* pAnimation);
+	~ChrStateAttack();
 
 	// IChrState을(를) 통해 상속됨
 	virtual void Stand(ChrState * pChrState) override;

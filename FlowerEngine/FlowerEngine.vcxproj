@@ -387,6 +387,7 @@
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico" />
     <ClInclude Include="Application\ChrState.h" />
+    <ClInclude Include="Application\ChrStateAttack.h" />
     <ClInclude Include="Application\ChrStateStand.h" />
     <ClInclude Include="Application\ChrStateWalk.h" />
     <ClInclude Include="Application\ComAircraft.h" />
@@ -417,6 +418,7 @@
     <ClInclude Include="DXUT\Core\stdafx.h" />
     <ClInclude Include="DXUT\Core\DXUTenum.h" />
     <ClInclude Include="DXUT\Core\DXUTmisc.h" />
+    <ClCompile Include="Application\ChrStateAttack.cpp" />
     <ClCompile Include="Application\ChrStateStand.cpp" />
     <ClCompile Include="Application\ChrStateWalk.cpp" />
     <ClCompile Include="Application\ComAircraft.cpp" />

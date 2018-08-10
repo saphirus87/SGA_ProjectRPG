@@ -11,4 +11,5 @@ public:
 
 	virtual void Stand(ChrState* pChrState) = 0;
 	virtual void Walk(ChrState* pChrState) = 0;
+	virtual void Attack(ChrState* pChrState) = 0;
 };

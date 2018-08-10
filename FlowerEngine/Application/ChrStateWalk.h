@@ -18,5 +18,8 @@ public:
 	// IChrState을(를) 통해 상속됨
 	virtual void Stand(ChrState * pChrState) override;
 	virtual void Walk(ChrState * pChrState) override;
+
+	// IChrState을(를) 통해 상속됨
+	virtual void Attack(ChrState * pChrState) override;
 };
 
