@@ -22,4 +22,4 @@ private:
 	list<GameObject*> m_listRenderUI;
 };
 
-bool Compare(const GameObject* pGO1, const GameObject* pGO2);
+bool CompareZ(const GameObject* pGO1, const GameObject* pGO2);

@@ -9,8 +9,7 @@ GameObject::GameObject(CString szName) :
 	m_bIsActive(true),
 	m_pCollider(NULL),
 	m_bIsDestroy(false),
-	IsAlwaysRender(true),
-	IsInFrustum(true)
+	IsAlwaysRender(false)
 {
 	transform = new ComTransform("ComTransform");
 	AddComponent(transform);

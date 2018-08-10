@@ -261,7 +261,7 @@ void ComPostProcess::Render()
 		}
 		m_pGrid->Render();
 
-		m_listRenderObject.sort(Compare);
+		m_listRenderObject.sort(CompareZ);
 		for (auto & o : m_listRenderObject)
 			o->Render();
 		// Render the skybox as if the camera is at center
@@ -300,7 +300,7 @@ void ComPostProcess::Render()
 		}
 		V(m_pEffect->End());
 
-		m_listRenderObject.sort(Compare);
+		m_listRenderObject.sort(CompareZ);
 		for (auto & o : m_listRenderObject)
 			o->Render();
 

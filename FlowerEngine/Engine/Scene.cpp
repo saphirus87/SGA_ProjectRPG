@@ -29,25 +29,15 @@ void Scene::Update()
 			// 그렇지 않으면 업데이트
 			else
 			{
-				GameObject* pRoot = NULL;
-				
-				if (pGO->GetParent() != NULL)
-				{
-					pRoot = pGO->GetParent();
-					while (pGO->GetParent() == NULL)
-					{
-						pRoot = pRoot->GetParent();
-					}
-				}
-				
-				if (pRoot != NULL || pGO->IsAlwaysRender == true)
+				// 절두체 안에 있는 오브젝트만 업데이트
+				//if (Camera::GetInstance()->FrustumCulling(&pGO->transform->GetPosition()))
 					pGO->Update();
 			}
 		}
 	}
 }
 
-bool Compare(const GameObject* pGO1, const GameObject* pGO2)
+bool CompareZ(const GameObject* pGO1, const GameObject* pGO2)
 {
 	return pGO1->transform->GetPosition().z > pGO2->transform->GetPosition().z;
 }
@@ -70,28 +60,23 @@ void Scene::Render()
 			m_listRenderUI.push_back(go.second);
 		else
 		{
-			go.second->fDistanceToCamera = Camera::GetInstance()->GetDistanceToGameObject(go.second);
-			m_listRender.push_back(go.second);
+			// 절두체 안에 있는 오브젝트들만
+			if (Camera::GetInstance()->FrustumCulling(&go.second->transform->GetPosition()) ||
+				go.second->IsAlwaysRender)
+			{
+				go.second->fDistanceToCamera = Camera::GetInstance()->GetDistanceToGameObject(go.second);
+				m_listRender.push_back(go.second);
+			}
 		}
 	}
 
 	m_listRender.sort(CompareDist);
-	m_listRenderUI.sort(Compare);
+	m_listRenderUI.sort(CompareZ);
 
 	for (auto & go : m_listRender)
 	{
-		// 부모가 있는 애들은 그냥 렌더링
-		/*if (go->GetParent() != NULL)
-		{
-			go->Render();
-			++iRenderObjCnt;
-			continue;
-		}*/
-
-		go->IsInFrustum = Camera::GetInstance()->FrustumCulling(&go->transform->GetPosition());
-
 		// 절두체 안에 있는 게임오브젝트만 컬링
-		if ((go && go->IsInFrustum) || go->IsAlwaysRender)
+		if ((go != NULL /*&& go->IsInFrustum*/) || go->IsAlwaysRender)
 		{
 			go->Render();
 			++iRenderObjCnt;
