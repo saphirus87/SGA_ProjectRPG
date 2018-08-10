@@ -51,10 +51,6 @@ void ComEquipmentShoulder::Awake()
 
 void ComEquipmentShoulder::Update()
 {
-}
-
-void ComEquipmentShoulder::Render()
-{
 	m_pRenderRight->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Shoulder_Right"), &gameObject->transform->GetWorldMatrix());
 	m_pRenderLeft->SetFrameMatrix(&m_pAnimation->GetMatrixByName("Shoulder_Left"), &gameObject->transform->GetWorldMatrix());
 	if (m_pRenderHelmet)
@@ -62,6 +58,10 @@ void ComEquipmentShoulder::Render()
 		Matrix4x4 matHead = m_pAnimation->GetMatrixByName("Helmet");
 		m_pRenderHelmet->SetFrameMatrix(&matHead, &gameObject->transform->GetWorldMatrix());
 	}
+}
+
+void ComEquipmentShoulder::Render()
+{
 }
 
 void ComEquipmentShoulder::SetOffsetPos(Vector3 vOffsetPosR)

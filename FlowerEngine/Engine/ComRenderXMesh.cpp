@@ -10,6 +10,7 @@ ComRenderXMesh::ComRenderXMesh(CString szName) :
 	IsMirrored(false)
 {
 	pDevice9 = GetD3D9Device();
+	D3DXMatrixIdentity(&m_matFinal);
 	D3DXMatrixIdentity(&m_matFrame);
 	D3DXMatrixIdentity(&m_matParent);
 }
@@ -28,14 +29,13 @@ void ComRenderXMesh::Awake()
 
 void ComRenderXMesh::Update()
 {
+	m_matFinal = gameObject->transform->GetWorldMatrix() * m_matFrame * m_matParent;
 }
 
 void ComRenderXMesh::Render()
 {
 	// 현재 행렬 * Combined Matrix * parent Obj Matrix (현재 행렬은 즉 scale, rot, transfomation)
-	Matrix4x4 matFinal = gameObject->transform->GetWorldMatrix() * m_matFrame * m_matParent;
-	
-	m_pEffect->SetMatrix("gWorldMatrix", &matFinal);
+	m_pEffect->SetMatrix("gWorldMatrix", &m_matFinal);
 	m_pEffect->SetMatrix("gViewMatrix", &Camera::GetInstance()->GetViewMatrix());
 	m_pEffect->SetMatrix("gProjMatrix", &Camera::GetInstance()->GetProjMatrix());
 		
@@ -53,8 +53,9 @@ void ComRenderXMesh::Render()
 			pDevice9->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 		m_pMesh->DrawSubset(i);
-		pDevice9->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	}
+
+	pDevice9->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	m_pEffect->EndPass();
 	m_pEffect->End();

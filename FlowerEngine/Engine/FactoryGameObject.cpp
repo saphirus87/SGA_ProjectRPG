@@ -32,6 +32,7 @@ GameObject * FactoryGameObject::CreateGameObject(CString szName)
 GameObject * FactoryGameObject::CreateGrid(CString szName)
 {
 	GameObject* pGO = new GameObject(szName);
+	pGO->IsAlwaysRender = true;
 	pGO->AddComponent(new ComGrid("ComGrid"));
 	return pGO;
 }
@@ -258,6 +259,8 @@ GameObject * FactoryGameObject::CreateFromXFile(CString szName, CString szFolder
 GameObject * FactoryGameObject::CreateObjMap(CString szName, CString szFolderPath, CString szFileName)
 {
 	GameObject* pGO = new GameObject(szName);
+	pGO->IsAlwaysRender = true;
+
 	//ComObjMap* pComObjMap = new ComObjMap("ComObjMap");
 	ComTerrain* pComObjMap = new ComTerrain("ComTerrain");
 
