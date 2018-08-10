@@ -43,8 +43,8 @@ private:
 	CString m_filePath;
 	CString m_mapFilename;
 
-	vector<VERTEX_PNT> m_vertices;
-	vector<DWORD> m_surfaceIndices;
+	vector<VERTEX_PNT> m_vecVertices;
+	vector<DWORD> m_vecIndices;
 	map<CString, MTLTEX*> m_mtltexList;
 	LPDIRECT3DVERTEXBUFFER9 m_pVB;
 	LPDIRECT3DINDEXBUFFER9 m_pIB;

@@ -33,8 +33,8 @@ ComTerrain::~ComTerrain()
 
 	m_mtltexList.clear();
 
-	m_vertices.clear();
-	m_surfaceIndices.clear();
+	m_vecVertices.clear();
+	m_vecIndices.clear();
 	m_testIndices.clear();
 }
 
@@ -45,26 +45,6 @@ void ComTerrain::Awake()
 		m_InverseUV = 0.0f;
 		LoadMap();
 
-		// QuadTree Culling에 사용할 인덱스 값 생성(추후 정리 필요)
-		/*for (int i = 0; i < mapSize * mapSize; ++i)
-		{
-		if (i / mapSize == 128)
-		{
-		if (i % mapSize == 0) m_vecQuadIdx.push_back(2 + ((i / mapSize - 1) * (mapSize - 1)) * 12);
-		else m_vecQuadIdx.push_back(8 + ((i / mapSize - 1) * (mapSize - 1) + (i % mapSize) - 1) * 12);
-
-		if (i % mapSize == 0) m_vecQuadIdx.push_back(2 + ((i / mapSize) - 1) * (12 * (mapSize - 1)));
-		else m_vecQuadIdx.push_back(8 + ((i - mapSize - (i / mapSize)) * 12));
-		}
-		else
-		{
-		if (i % mapSize == 0) m_vecQuadIdx.push_back(1 + ((i / mapSize) * (mapSize - 1)) * 12);
-		else m_vecQuadIdx.push_back(4 + ((i / mapSize) * (mapSize - 1) + (i % mapSize) - 1) * 12);
-
-		if (i % mapSize == 0) m_vecQuadIdx.push_back(1 + (i / mapSize) * (12 * (mapSize - 1)));
-		else m_vecQuadIdx.push_back(4 + ((i - (i / mapSize) - 1) * 12));
-		}
-		}*/
 		m_pQuadTree = new QuadTree(mapSize, mapSize);
 
 		return;
@@ -90,7 +70,7 @@ void ComTerrain::Awake()
 			}
 		}
 
-		m_pQuadTree->SetMapVertex(&m_vertices);
+		m_pQuadTree->SetMapVertex(&m_vecVertices);
 		m_pQuadTree->SetIndex(&m_vecQuadIdx);
 		m_pQuadTree->Build();
 		m_pIndex = new DWORD;
@@ -127,7 +107,7 @@ void ComTerrain::Render()
 	pDevice9->SetStreamSource(0, m_pVB, 0, sizeof(VERTEX_PNT));
 	pDevice9->SetIndices(m_pIB);
 
-	pDevice9->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_vertices.size(), 0, m_surfaceIndices.size() / 3);
+	pDevice9->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_vecVertices.size(), 0, m_vecIndices.size() / 3);
 
 	m_pEffect->EndPass();
 	m_pEffect->End();
@@ -140,11 +120,11 @@ bool ComTerrain::GetHeight(float & height, const D3DXVECTOR3 & pos)
 	D3DXVECTOR3 rayDir(0, -1, 0);
 	float distance = 0.0f;
 
-	for (int i = 0; i < m_surfaceIndices.size(); i += 3)
+	for (int i = 0; i < m_vecIndices.size(); i += 3)
 	{
-		D3DXVECTOR3 v1 = m_vertices[m_surfaceIndices[i]].p;
-		D3DXVECTOR3 v2 = m_vertices[m_surfaceIndices[i + 1]].p;
-		D3DXVECTOR3 v3 = m_vertices[m_surfaceIndices[i + 2]].p;
+		D3DXVECTOR3 v1 = m_vecVertices[m_vecIndices[i]].p;
+		D3DXVECTOR3 v2 = m_vecVertices[m_vecIndices[i + 1]].p;
+		D3DXVECTOR3 v3 = m_vecVertices[m_vecIndices[i + 2]].p;
 
 		if (D3DXIntersectTri(&v1, &v2, &v3, &rayPos, &rayDir, NULL, NULL, &distance))
 		{
@@ -181,9 +161,7 @@ bool ComTerrain::CalcPickedPosition(D3DXVECTOR3 & out, WORD screenX, WORD screen
 
 void ComTerrain::LoadMap()
 {
-	vector<D3DXVECTOR3> vecP;
-	vector<D3DXVECTOR2> vecT;
-	vector<D3DXVECTOR3> vecN;
+	vector<Vector3> vecP;
 	vector<DWORD> vecAttbuf;
 	CString mtlName;
 	char token[TOKEN_SIZE];
@@ -197,9 +175,6 @@ void ComTerrain::LoadMap()
 
 	float fPosXMax = 0.0f;
 	float fPosZMax = 0.0f;
-	// 음수로 내려가는 정점들
-	float fPosXMin = 0.0f; 
-	float fPosZMin = 0.0f;
 
 	while (fin.eof() == false)
 	{
@@ -219,26 +194,7 @@ void ComTerrain::LoadMap()
 				fPosXMax = x;
 			if (z > fPosZMax)
 				fPosZMax = z;
-			if (x < fPosXMin)
-				fPosXMin = x;
-			if (z < fPosZMin)
-				fPosZMin = z;
 			vecP.push_back(D3DXVECTOR3(x, y, z));
-		}
-		else if (CompareStr(token, "vt"))
-		{
-			float x, y;
-			fin.getline(token, TOKEN_SIZE);
-			sscanf_s(token, "%f %f %*f", &x, &y);
-			if (m_InverseUV > 0.1f) vecT.push_back(D3DXVECTOR2(x, m_InverseUV - y));
-			else vecT.push_back(D3DXVECTOR2(x, y));
-		}
-		else if (CompareStr(token, "vn"))
-		{
-			float x, y, z;
-			fin.getline(token, TOKEN_SIZE);
-			sscanf_s(token, "%f %f %f", &x, &y, &z);
-			vecN.push_back(D3DXVECTOR3(x, y, z));
 		}
 		else if (CompareStr(token, "usemtl"))
 		{
@@ -247,7 +203,7 @@ void ComTerrain::LoadMap()
 		}
 		else if (CompareStr(token, "f"))
 		{
-			int aIndex[3];
+			int aIndex[3] = { 0, 0, 0 };
 
 			fin.getline(token, TOKEN_SIZE);
 
@@ -257,12 +213,13 @@ void ComTerrain::LoadMap()
 			for (int i = 0; i < 3; ++i)
 			{
 				// OBJ 파일에는 INDEX가 1부터 들어가는데 배열 0부터 집어 넣으려고 -1
-				m_surfaceIndices.push_back((DWORD)aIndex[i]-1);
+				m_vecIndices.push_back((DWORD)aIndex[i]-1);
 			}
 
 			vecAttbuf.push_back(m_mtltexList[mtlName]->id);
 		}
 	}
+	fin.close();
 
 	// Hyuns Test START
 	//m_vertices.clear();
@@ -307,46 +264,41 @@ void ComTerrain::LoadMap()
 	//m_surfaceIndices.push_back(2);
 	//m_surfaceIndices.push_back(3);
 
+	// Hyuns Test END
+	
 	for (size_t i = 0; i < vecP.size(); ++i)
 	{
 		VERTEX_PNT pnt;
-		//vecP[i].x += abs(fPosXMin);
-		//vecP[i].z += abs(fPosZMin);
 		pnt.p = vecP[i];
-		
+
 		Vector2 vT(pnt.p.x, pnt.p.z);
-		vT.x /= fPosXMax;
-		vT.y = 1.0f - (vT.y /fPosZMax);
+		
+		// 원본 코드
+		//vT.x /= fPosXMax; // 533.613770 - 상수로 표현하면
+		//vT.y = 1.0f - (vT.y / fPosZMax); // 533.236572 - 상수로 표현하면
+		
+		vT.x /= 533.613770;
+		vT.y = 1.0f - (vT.y / 533.236572);
+
 		pnt.t = vT;
 		pnt.n = Vector3(0, 1, 0);
 		D3DXVec3Normalize(&pnt.n, &pnt.n);
-		m_vertices.push_back(pnt);
+		m_vecVertices.push_back(pnt);
 	}
-	
-	// Hyuns Test END
-
-	/*for (size_t i = 0; i < m_vertices.size(); ++i)
-		m_surfaceIndices.push_back(i);*/
-
-	//m_mtltexList.clear();
-	fin.close();
 
 	// buffer 설정 부분
-	pDevice9->CreateVertexBuffer(m_vertices.size() * sizeof(VERTEX_PNT), NULL, VERTEX_PNT::FVF, D3DPOOL_MANAGED, &m_pVB, NULL);
+	pDevice9->CreateVertexBuffer(m_vecVertices.size() * sizeof(VERTEX_PNT), NULL, VERTEX_PNT::FVF, D3DPOOL_MANAGED, &m_pVB, NULL);
 
 	VERTEX_PNT* pVertex;
 	m_pVB->Lock(0, 0, (LPVOID*)&pVertex, 0);
-	memcpy(pVertex, &m_vertices[0], m_vertices.size() * sizeof(VERTEX_PNT));
+	memcpy(pVertex, &m_vecVertices[0], m_vecVertices.size() * sizeof(VERTEX_PNT));
 	m_pVB->Unlock();
 
-	/*for (int i = 0; i < m_vertices.size(); ++i)
-		m_surfaceIndices.push_back(i);*/
-
-	pDevice9->CreateIndexBuffer(m_surfaceIndices.size() * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_MANAGED, &m_pIB, NULL);
+	pDevice9->CreateIndexBuffer(m_vecIndices.size() * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_MANAGED, &m_pIB, NULL);
 
 	DWORD* pIndex;
 	m_pIB->Lock(0, 0, (LPVOID*)&pIndex, 0);
-	memcpy(pIndex, &m_surfaceIndices[0], m_surfaceIndices.size() * sizeof(DWORD));
+	memcpy(pIndex, &m_vecIndices[0], m_vecIndices.size() * sizeof(DWORD));
 	m_pIB->Unlock();
 }
 
@@ -418,29 +370,29 @@ void ComTerrain::LoadMtlLib(LPCTSTR fullPath)
 
 void ComTerrain::UpdateIndexBuffer()
 {
-	if (!m_surfaceIndices.empty()) m_surfaceIndices.clear();
+	if (!m_vecIndices.empty()) m_vecIndices.clear();
 
 	const int num = 12;
-	for (int i = 0; i < m_vertices.size(); i += num)
+	for (int i = 0; i < m_vecVertices.size(); i += num)
 	{
-		if (Camera::GetInstance()->FrustumCulling(&m_vertices[i].p, radius))
+		if (Camera::GetInstance()->FrustumCulling(&m_vecVertices[i].p, radius))
 		{
 			for (int j = 0; j < num; j++)
 			{
-				m_surfaceIndices.push_back(i + j);
+				m_vecIndices.push_back(i + j);
 			}
 		}
 	}
 
 	if (m_pIB != NULL) SAFE_RELEASE(m_pIB);
 
-	if (m_surfaceIndices.size() <= 0) return;
+	if (m_vecIndices.size() <= 0) return;
 
-	pDevice9->CreateIndexBuffer(m_surfaceIndices.size() * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);
+	pDevice9->CreateIndexBuffer(m_vecIndices.size() * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);
 
 	DWORD* pIndex;
 	m_pIB->Lock(0, 0, (LPVOID*)&pIndex, 0);
-	memcpy(pIndex, &m_surfaceIndices[0], m_surfaceIndices.size() * sizeof(DWORD));
+	memcpy(pIndex, &m_vecIndices[0], m_vecIndices.size() * sizeof(DWORD));
 	m_pIB->Unlock();
 }
 
