@@ -91,21 +91,20 @@ void ComRenderSkinnedMesh::Awake()
 
 void ComRenderSkinnedMesh::Update()
 {
+	// 애니메이션 업데이트와 전환시 부드럽게하기 위해 블랜딩(Blending)
+	UpdateAnimation(m_pAniControl);
+
+	// 뼈대의 움직임 적용을 위한 뼈대의 최종 월드 행렬(Combined) 계산
+	UpdateFrameMatrices(m_pRootFrame, NULL);
 }
 
 void ComRenderSkinnedMesh::Render()
 {
-	// 1. 이 게임 오브젝트를 월드 공간으로 보내기 위해 정점 셰이더에 이 게임 오브젝트의 월드 행렬 설정
+	// 이 게임 오브젝트를 월드 공간으로 보내기 위해 정점 셰이더에 이 게임 오브젝트의 월드 행렬 설정
 	m_pEffect->SetMatrix("mView", &Camera::GetInstance()->GetViewMatrix());
 	m_pEffect->SetMatrix("mProj", &Camera::GetInstance()->GetProjMatrix());
 
-	// 2. 애니메이션 업데이트와 전환시 부드럽게하기 위해 블랜딩(Blending)
-	UpdateAnimation(m_pAniControl);
-
-	// 3. 뼈대의 움직임 적용을 위한 뼈대의 최종 월드 행렬(Combined) 계산
-	UpdateFrameMatrices(m_pRootFrame, NULL);
-
-	// 4. 루트 뼈대 부터 메쉬 컨테이너가 있다면 렌더링
+	// 루트 뼈대 부터 메쉬 컨테이너가 있다면 렌더링
 	RenderFrame(m_pRootFrame);
 }
 

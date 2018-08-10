@@ -35,6 +35,8 @@ private:
 	// 재질 수
 	DWORD m_iNumMaterials;			
 
+	Matrix4x4 m_matFinal;
+
 	// 행렬 정보
 	Matrix4x4 m_matFrame;
 	Matrix4x4 m_matParent;
