@@ -37,8 +37,10 @@ private:
 	UINT m_TriangleNum;
 	LPDWORD m_pIndex;
 
-	vector<DWORD> m_testIndices;	// 임시 테스트 후 삭제
-	
+	// 임시 테스트 후 삭제
+	vector<DWORD> m_testIndices;	
+	vector<VERTEX_PNT> m_OptVertices;
+	vector<DWORD> m_OptIndices;
 
 public:
 	ComObjMap(CString szName);
@@ -66,5 +68,8 @@ public:
 
 	// QuadTree Culling
 	void UpdateIndexBufferQuadTree();
+
+	// Map Optimization
+	void VertexOptimization();
 };
 

@@ -17,6 +17,7 @@ private:
 private:
 	vector<VERTEX_PNT>* m_MapVertex;
 	vector<DWORD>* m_pIndex;
+	//vector<DWORD>* m_pIndex2;
 
 	UINT m_TotalSizeX;
 
@@ -62,5 +63,6 @@ public:
 
 	void SetMapVertex(vector<VERTEX_PNT>* vertex) { m_MapVertex = vertex; }
 	void SetIndex(vector<DWORD>* index) { m_pIndex = index; }
+	//void SetIndex2(vector<DWORD>* index) { m_pIndex2 = index; }
 };
 
