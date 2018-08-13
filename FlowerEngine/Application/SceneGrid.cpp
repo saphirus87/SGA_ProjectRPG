@@ -45,10 +45,12 @@ void SceneGrid::CreateCharacter()
 	pGOChrX3->AddComponent(new ComChrControl("ComChrControl"));
 	ComEquipment* pEquipment = new ComEquipment("ComEquipment");
 	pGOChrX3->AddComponent(pEquipment);
+	pGOChrX3->AddComponent(new ComCollider("ComCollider"));
 	// 휴먼 캐릭터 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
-	EquipmentShoulder* pShoulder = new EquipmentShoulder;
-	pShoulder->Set(10, 10, 10, 10);
-	pEquipment->Equip(pShoulder);
+	
+	GameObject* pGOShoulder = factory.CreateEquipment("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", Vector3(3, 10, -8));
+	pGOShoulder->transform->SetPosition(2, 15, 10);
+	pGOShoulder->AddComponent(new ComCollider("ComCollider"));
 
 	EquipmentHelmet* pHelmet = new EquipmentHelmet;
 	pHelmet->Set(10, 10, 10, 10);
@@ -72,9 +74,11 @@ void SceneGrid::CreateCharacter()
 	pGOChrX5->AddComponent(pEquipment);
 	
 	// 휴먼 캐릭터 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
-	pShoulder = new EquipmentShoulder;
+	EquipmentShoulder* pShoulder = new EquipmentShoulder;
 	pShoulder->Set(10, 10, 10, 10, eChrType_Troll);
-	pEquipment->Equip(pShoulder);
+	pGOShoulder = factory.CreateEquipment("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", Vector3(3, 10, -8));
+	pGOShoulder->transform->SetPosition(2, 15, 7);
+	pEquipment->Equip(pShoulder, pGOShoulder);
 
 	// 머리 뼈대 행렬 필요
 	pHelmet = new EquipmentHelmet;

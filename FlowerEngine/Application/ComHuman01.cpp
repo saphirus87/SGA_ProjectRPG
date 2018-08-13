@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "ComHuman01.h"
+#include "ComEquipment.h"
+#include "ItemInfo.h"
 
 ComHuman01::ComHuman01(CString szName) : 
 	Component(szName),
@@ -27,4 +29,23 @@ void ComHuman01::Update()
 
 void ComHuman01::Render()
 {
+}
+
+void ComHuman01::OnTriggerEnter(ComCollider & collider)
+{
+	if (collider.gameObject->Name().Find(L"Equipment_shoulder") >= 0)
+	{
+		static bool isEquiped = false;
+		if (isEquiped == false)
+		{
+			ComEquipment* pEquipment = (ComEquipment*)gameObject->GetComponent("ComEquipment");
+			if (pEquipment != NULL)
+			{
+				EquipmentShoulder* pShoulder = new EquipmentShoulder;
+				pShoulder->Set(10, 10, 10, 10);
+				pEquipment->Equip(pShoulder, collider.gameObject);
+				isEquiped = true;
+			}
+		}
+	}
 }

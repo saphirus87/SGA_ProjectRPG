@@ -59,7 +59,7 @@ public:
 	void ChangeTexture(eEquipment type, CString szItemName);
 
 	// 장비를 장착합니다.
-	void Equip(ItemInfo* pItem);
+	void Equip(ItemInfo* pItem, GameObject* pGOEquipment = NULL);
 	
 private:
 	map<CString, CString> m_mapTextureName;

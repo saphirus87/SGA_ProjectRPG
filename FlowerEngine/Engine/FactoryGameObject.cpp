@@ -286,14 +286,14 @@ GameObject * FactoryGameObject::CreateEquipment(CString szName, CString szFolder
 	GameObject* pGOExist = GameObject::Find(szName);
 	
 	GameObject* pGOEquipment = new GameObject(szName);
-	ComRenderEquipment* pMesh = new ComRenderEquipment("ComRenderXMesh");
+	ComRenderEquipment* pMesh = new ComRenderEquipment("ComRenderEquipment");
 	pMesh->IsMirrored = IsMirrored;
 
 	// 이미 존재하는 게임 오브젝트라면 복제(Clone) 하여 메쉬를 공유하여 사용합니다.
 	if (pGOExist == NULL)
 		pMesh->Load(szFolderPath, szFileName);
 	else
-		pMesh->Clone((ComRenderEquipment*)pGOExist->GetComponent("ComRenderXMesh"));
+		pMesh->Clone((ComRenderEquipment*)pGOExist->GetComponent("ComRenderEquipment"));
 	
 	// 크기를 100으로 맞춰주는 이유는 .X File Export시 본 크기가 0.01인듯함.
 	if (IsMirrored == false)

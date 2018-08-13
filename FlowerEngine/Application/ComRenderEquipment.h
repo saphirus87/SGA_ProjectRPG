@@ -16,7 +16,7 @@ public:
 	void Load(CString szFolderPath, CString szFileName);
 
 	// 매쉬를 복제(Clone)합니다.
-	void Clone(ComRenderEquipment* pComRenderXMesh);
+	void Clone(ComRenderEquipment* pComRenderEquipment);
 	
 	// 뼈대 행렬과 부모행렬을 설정하여 렌더링 합니다.
 	// Render함수를 써서 렌더링 할 경우 뼈대 프레임 설정이 늦어서 캐릭터 이동시 장비가 밀려서 렌더링 되는 현상이 발생하므로 이 함수를 사용합니다.
@@ -28,6 +28,11 @@ public:
 	// 렌더링 텍스쳐를 변경합니다.
 	void ChangeTexture(int iIndex, CString szTextureName);
 
+	// 장착 안됐을 때는 지형 위 렌더링 하기 위한 변수
+	bool IsEquiped;
+
+	// 바닥에 떨어졌으면 GetHeight를 안함
+	bool IsDropped;
 private:
 	Device9 pDevice9;
 	Shader m_pEffect;
