@@ -31,16 +31,11 @@ private:
 
 	// QuadTree culling
 private:
-	vector<DWORD> m_vecQuadIdx;	// 임시 사용 정리 필요
+	vector<VERTEX_PNT> m_OptVertices;		// 최적화된 정점을 저장
+	vector<DWORD> m_vecQuadIdx;				// QuadTree에서 사용할 인덱스
 	QuadTree* m_pQuadTree;
 
-	UINT m_TriangleNum;
-	LPDWORD m_pIndex;
-
-	// 임시 테스트 후 삭제
-	vector<DWORD> m_testIndices;	
-	vector<VERTEX_PNT> m_OptVertices;
-	vector<DWORD> m_OptIndices;
+	UINT m_TriangleNum;						// QuadTree Culling 이 후 그려야할 face(삼각형) 갯수
 
 public:
 	ComObjMap(CString szName);
@@ -62,9 +57,6 @@ public:
 	// Map Load
 	void LoadMap();
 	void LoadMtlLib(LPCTSTR fullPath);
-
-	// frustum culling
-	void UpdateIndexBuffer();
 
 	// QuadTree Culling
 	void UpdateIndexBufferQuadTree();

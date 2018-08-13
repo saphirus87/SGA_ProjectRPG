@@ -30,7 +30,8 @@ ComObjMap::~ComObjMap()
 
 	m_vertices.clear();
 	m_surfaceIndices.clear();
-	m_testIndices.clear();
+	m_OptVertices.clear();
+	m_vecQuadIdx.clear();
 }
 
 void ComObjMap::Awake()
@@ -40,43 +41,17 @@ void ComObjMap::Awake()
 		m_InverseUV = 5.0f;
 		LoadMap();
 
-		// QuadTree Culling에 사용할 인덱스 값 생성(추후 정리 필요)
-		/*for (int i = 0; i < (mapSize - 1) * (mapSize - 1); ++i)
-		{
-			// test idx
-			int TotalIndexX = i % 128;
-			int TotalIndexZ = i / 128;
-
-			// 8X8 타일의 인덱스 값
-			int sqIndexX = TotalIndexX / 8;
-			int sqIndexZ = TotalIndexZ / 8;
-			int sqIndex = sqIndexX + sqIndexZ * 16;
-
-			// 8X8 타일 내 인덱스 값
-			int IndexX = TotalIndexX % 8;
-			int IndexZ = TotalIndexZ % 8;
-			int Index = IndexX + IndexZ * 8;
-
-			// 최종 인덱스
-			int result = sqIndex * 64 + IndexX + IndexZ * 8;
-
-			m_vecQuadIdx.push_back(result * 12 + 1);
-		}*/
-
 		VertexOptimization();
 
 		m_pQuadTree = new QuadTree(mapSize, mapSize);
 		m_pQuadTree->SetMapVertex(&m_OptVertices);
 		m_pQuadTree->SetIndex(&m_vecQuadIdx);
  		m_pQuadTree->Build();
-		m_pIndex = new DWORD;
 	}
 }
 
 void ComObjMap::Update()
 {
-	//UpdateIndexBuffer();
-
 	//if (Input::KeyDown(VK_SPACE))
 		UpdateIndexBufferQuadTree();
 }
@@ -95,13 +70,11 @@ void ComObjMap::Render()
 
 	m_pEffect->SetTexture("DiffuseMap_Tex", m_mtltexList.begin()->second->pTexture);
 
-	//pDevice9->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
 	pDevice9->SetFVF(VERTEX_PNT::FVF);
 	pDevice9->SetStreamSource(0, m_pVB, 0, sizeof(VERTEX_PNT));
 	pDevice9->SetIndices(m_pIB);
 
 	pDevice9->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_vertices.size(), 0, m_TriangleNum);
-	//pDevice9->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_OptVertices.size(), 0, m_OptIndices.size() / 3);
 
 	m_pEffect->EndPass();
 	m_pEffect->End();
@@ -341,44 +314,11 @@ void ComObjMap::LoadMtlLib(LPCTSTR fullPath)
 	fin.close();
 }
 
-void ComObjMap::UpdateIndexBuffer()
-{
-	if (!m_surfaceIndices.empty()) m_surfaceIndices.clear();
-
-	for (int i = 0; i < m_vertices.size(); i += 12)
-	{
-		if (Camera::GetInstance()->FrustumCulling(&m_vertices[i].p, radius))
-		{
-			for (int j = 0; j < 12; j++)
-			{
-				m_surfaceIndices.push_back(i + j);
-			}
-		}
-	}
-
-	if (m_pIB != NULL) SAFE_RELEASE(m_pIB);
-
-	if (m_surfaceIndices.size() <= 0) return;
-
-	pDevice9->CreateIndexBuffer(m_surfaceIndices.size() * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);
-
-	DWORD* pIndex;
-	m_pIB->Lock(0, 0, (LPVOID*)&pIndex, 0);
-	memcpy(pIndex, &m_surfaceIndices[0], m_surfaceIndices.size() * sizeof(DWORD));
-	m_pIB->Unlock();
-}
-
 void ComObjMap::UpdateIndexBufferQuadTree()
 {
-	//if (!m_surfaceIndices.empty()) m_surfaceIndices.clear();
-
 	m_TriangleNum = m_pQuadTree->GenerateIndex(m_surfaceIndices);
 
-	//if (m_pIB != NULL) SAFE_RELEASE(m_pIB);
-
 	if (m_TriangleNum <= 0) return;
-
-	//pDevice9->CreateIndexBuffer(m_TriangleNum * 3 * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);
 
 	DWORD* pIndex;
 	m_pIB->Lock(0, 0, (LPVOID*)&pIndex, 0);
@@ -399,39 +339,6 @@ void ComObjMap::VertexOptimization()
 		m_OptVertices.push_back(m_vertices[i + 2]);
 	}
 
-	for (int i = 0; i < m_OptVertices.size(); ++i)
-	{
-		m_OptIndices.push_back(i);
-	}
-
-	//for (int i = 0; i < m_OptVertices.size(); i += 6)
-	//{
-	//	// test idx
-	//	int TotalIndexX = (i / 6) % 128;
-	//	int TotalIndexZ = (i / 6) / 128;
-
-	//	// 8X8 타일의 인덱스 값
-	//	int sqIndexX = TotalIndexX / 8;
-	//	int sqIndexZ = TotalIndexZ / 8;
-	//	int sqIndex = sqIndexX + sqIndexZ * 16;
-
-	//	// 8X8 타일 내 인덱스 값
-	//	int IndexX = TotalIndexX % 8;
-	//	int IndexZ = TotalIndexZ % 8;
-	//	int Index = IndexX + IndexZ * 8;
-
-	//	// 최종 인덱스
-	//	int result = sqIndex * 64 + IndexX + IndexZ * 8;
-
-	//	m_OptIndices.push_back(result * 6);
-	//	m_OptIndices.push_back(result * 6 + 1);
-	//	m_OptIndices.push_back(result * 6 + 2);
-
-	//	m_OptIndices.push_back(result * 6);
-	//	m_OptIndices.push_back(result * 6 + 4);
-	//	m_OptIndices.push_back(result * 6 + 5);
-	//}
-
 	if (m_pVB != NULL) SAFE_RELEASE(m_pVB);
 
 	pDevice9->CreateVertexBuffer(m_OptVertices.size() * sizeof(VERTEX_PNT), NULL, VERTEX_PNT::FVF, D3DPOOL_MANAGED, &m_pVB, NULL);
@@ -444,11 +351,7 @@ void ComObjMap::VertexOptimization()
 	m_surfaceIndices.resize(m_OptVertices.size());
 	pDevice9->CreateIndexBuffer(m_surfaceIndices.size() * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);
 
-	/*if (m_pIB != NULL) SAFE_RELEASE(m_pIB);
-
-	pDevice9->CreateIndexBuffer(m_OptIndices.size() * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);*/
-
-	// QuadTree Culling에 사용할 인덱스 값 생성(추후 정리 필요)
+	// QuadTree Culling에 사용할 인덱스 값 생성
 	for (int i = 0; i < (mapSize - 1) * (mapSize - 1); ++i)
 	{
 		// test idx
@@ -485,80 +388,4 @@ void ComObjMap::VertexOptimization()
 		if (i % (mapSize - 1) == 0) m_vecQuadIdx.push_back(result * 6 + 5);
 		m_vecQuadIdx.push_back(result * 6);
 	}
-
-	//for (int i = 0; i < mapSize * mapSize; ++i)
-	//{
-	//	// test idx
-	//	int TotalIndexX = i % 129;
-	//	int TotalIndexZ = i / 129;
-
-	//	// 8X8 타일의 인덱스 값
-	//	int sqIndexX = TotalIndexX / 8;
-	//	int sqIndexZ = TotalIndexZ / 8;
-	//	int sqIndex = sqIndexX + sqIndexZ * 16;
-
-	//	// 8X8 타일 내 인덱스 값
-	//	int IndexX = TotalIndexX % 8;
-	//	int IndexZ = TotalIndexZ % 8;
-	//	int Index = IndexX + IndexZ * 8;
-
-	//	// 최종 인덱스
-	//	int result = sqIndex * 64 + IndexX + IndexZ * 8;
-
-	//	if (i / mapSize == 0)
-	//	{
-	//		if (i % mapSize == 0) m_vecQuadIdx.push_back(result * 6 + 2);
-	//		else m_vecQuadIdx.push_back((result - 1) * 6 + 1);
-	//	}
-	//	else
-	//	{
-	//		if (i % mapSize == 0) m_vecQuadIdx.push_back((result - 8) * 6 + 5);
-	//		else m_vecQuadIdx.push_back((result - 9) * 6);		// 타일의 좌측 하단 정점 인덱스
-
-	//	}
-	//}
-
-	/*for (int i = 0; i < (mapSize - 1) * (mapSize - 1); ++i)
-	{
-		if (i == 0)
-		{
-			for (int j = 0; j < (mapSize - 1); ++j)
-			{
-				if (j == 0) m_vecQuadIdx.push_back(j * 6 + 2);
-				m_vecQuadIdx.push_back(j * 6 + 1);
-			}
-		}
-
-		if (i % (mapSize - 1) == 0) m_vecQuadIdx.push_back(i * 6 + 5);
-		m_vecQuadIdx.push_back(i * 6);
-	}*/
-
-	/*for (int i = 0; i < mapSize * mapSize; ++i)
-	{
-		if (i / mapSize == 0)
-		{
-			if (i % mapSize == 0) m_vecQuadIdx.push_back(i);
-			else m_vecQuadIdx.push_back(i - 1);
-		}
-		else
-		{
-			if (i % mapSize == 0) m_vecQuadIdx.push_back(i - mapSize - (i - mapSize) / mapSize);
-			else m_vecQuadIdx.push_back(i - mapSize - 1 - (i - mapSize) / mapSize);
-		}
-	}*/
-
-	//for (int i = 0; i < mapSize * mapSize; ++i)
-	//{
-	//	if (i / mapSize == 0)
-	//	{
-	//		if (i % mapSize == 0) m_vecQuadIdx.push_back(i * 6 + 2);
-	//		else m_vecQuadIdx.push_back((i - 1) * 6 + 1);
-	//	}
-	//	else
-	//	{
-	//		if (i % mapSize == 0) m_vecQuadIdx.push_back((i - mapSize) * 6 + 5);
-	//		else m_vecQuadIdx.push_back((i - mapSize - (i / mapSize)) * 6);		// 타일의 좌측 하단 정점 인덱스
-
-	//	}
-	//}
 }

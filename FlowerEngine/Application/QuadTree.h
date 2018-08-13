@@ -17,7 +17,6 @@ private:
 private:
 	vector<VERTEX_PNT>* m_MapVertex;
 	vector<DWORD>* m_pIndex;
-	//vector<DWORD>* m_pIndex2;
 
 	UINT m_TotalSizeX;
 
