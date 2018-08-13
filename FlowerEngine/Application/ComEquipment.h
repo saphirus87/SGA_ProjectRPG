@@ -3,6 +3,7 @@
 
 class EquipmentShoulder;
 class ComRenderEquipment;
+class ItemInfo;
 
 enum eEquipment
 {
@@ -52,16 +53,21 @@ public:
 
 	// 어깨방어구 장착뼈가 Export되지 않으므로 보정값을 설정하여 위치를 보정해 줍니다.
 	// .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
-	void SetOffsetPos(Vector3 vOffsetPosR = Vector3(3, 10, -8));
+	void SetOffsetPos(eEquipment type, Vector3 vOffsetPos = Vector3(3, 10, -8));
 
 	// 아이템 이름으로 텍스쳐를 변경합니다.
 	void ChangeTexture(eEquipment type, CString szItemName);
 
-	EquipmentShoulder* pDataSholder;
-
+	// 장비를 장착합니다.
+	void Equip(ItemInfo* pItem);
+	
 private:
 	map<CString, CString> m_mapTextureName;
+	
+	// 장착된 장비 아이템들
+	vector<ItemInfo*> m_vecEquipedItems;
 
+	// 렌더링 할 장비 아이템들
 	vector<RenderEquipment*> m_vecRenderEquipments;
 };
 

@@ -134,6 +134,14 @@ enum eAni
 	eAni_Walk = 0,
 };
 
+enum eChrType
+{
+	eChrType_Human,
+	eChrType_Undead,
+	eChrType_Troll,
+	eChrType_COUNT
+};
+
 struct KEYBOARD_STATE
 {
 	Vector3	deltaPos;

@@ -7,6 +7,7 @@
 #include "../Application/ComChrControl.h"
 #include "../Application/ComTroll01.h"
 #include "../Application/ComSmallderon.h"
+#include "../Application/ItemInfo.h"
 
 SceneGrid::SceneGrid(CString szName) : Scene(szName)
 {
@@ -42,8 +43,23 @@ void SceneGrid::CreateCharacter()
 	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(2, 15, 5));
 	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
 	pGOChrX3->AddComponent(new ComChrControl("ComChrControl"));
-	pGOChrX3->AddComponent(new ComEquipment("ComEquipment"));
+	ComEquipment* pEquipment = new ComEquipment("ComEquipment");
+	pGOChrX3->AddComponent(pEquipment);
+	// 휴먼 캐릭터 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
+	EquipmentShoulder* pShoulder = new EquipmentShoulder;
+	pShoulder->Set(10, 10, 10, 10);
+	pEquipment->Equip(pShoulder);
 
+	EquipmentHelmet* pHelmet = new EquipmentHelmet;
+	pHelmet->Set(10, 10, 10, 10);
+	pEquipment->Equip(pHelmet);
+
+	EquipmentShield* pShield = new EquipmentShield;
+	pEquipment->Equip(pShield);
+
+	EquipmentWeapon* pWeaponR = new EquipmentWeapon;
+	pEquipment->Equip(pWeaponR);
+	
 	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(2, 15, 6));
 	pGOChrX4->AddComponent(new ComUndead01("ComUndead01"));
 	pGOChrX4->AddComponent(new ComChrControl("ComChrControl"));
@@ -52,12 +68,24 @@ void SceneGrid::CreateCharacter()
 	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(2, 15, 7));
 	pGOChrX5->AddComponent(new ComTroll01("ComTroll01"));
 	pGOChrX5->AddComponent(new ComChrControl("ComChrControl"));
-	ComEquipment* pShoulder = new ComEquipment("ComEquipment");
-	pGOChrX5->AddComponent(pShoulder);
-	pShoulder->SetOffsetPos(Vector3(3, 12, -6)); // [z, x, y축]
-	pShoulder->ChangeTexture(eEquipment_ShoulderR, "ShoulderEquipItemName02");
-	pShoulder->ChangeTexture(eEquipment_ShoulderL, "ShoulderEquipItemName02");
+	pEquipment = new ComEquipment("ComEquipment");
+	pGOChrX5->AddComponent(pEquipment);
+	
+	// 휴먼 캐릭터 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
+	pShoulder = new EquipmentShoulder;
+	pShoulder->Set(10, 10, 10, 10, eChrType_Troll);
+	pEquipment->Equip(pShoulder);
 
+	// 머리 뼈대 행렬 필요
+	pHelmet = new EquipmentHelmet;
+	pHelmet->Set(10, 10, 10, 10);
+	pEquipment->Equip(pHelmet);
+
+	// 왼손 방패 뼈대 행렬 필요
+	pShield = new EquipmentShield;
+	pEquipment->Equip(pShield);
+	
+	
 	// 카메라
 	Camera::GetInstance()->SetTarget(&pGOChrX4->transform->GetPosition());
 }

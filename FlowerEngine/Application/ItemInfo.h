@@ -11,8 +11,12 @@ E-Mail	: hkn10004@naver.com
 
 enum eItemType
 {
-	eItem_None,		// 타입 없음
-	eItem_Shoulder,	// 어깨 방어구
+	eItem_None,
+	eItem_Shoulder,
+	eItem_Helmet,
+	eItem_Shield,
+	eItem_WeaponR,
+	eItem_WeaponL,
 	eItem_COUNT
 };
 
@@ -25,16 +29,24 @@ public:
 
 	// 아이템 아이디 
 	unsigned int ID;
-	eItemType ItemType;
+	// 아이템 타입
+	eItemType Type;
+	// 아이템 이름
+	CString Name;
+	// 장착 캐릭터 타입
+	eChrType ChrType;
 };
 
-// 장비 아이템
+// 어깨 방어구 장비 아이템
 class EquipmentShoulder : public ItemInfo
 {
 public:
 	EquipmentShoulder();
 	~EquipmentShoulder();
 
+	void Set(int iHP, int iMP, int iDEF_PHY, int iDEF_MGR, eChrType chrType = eChrType_Human);
+
+	// TODO : 능력치 정보 기획에 맞게 수정 가능
 	// 캐릭터의 능력치에 체력(Hit Point) 증가
 	int HP;
 	// 캐릭터의 능력치에 마나(Mana Point) 증가
@@ -43,4 +55,49 @@ public:
 	int DEF_PHY;
 	// 캐릭터의 능력치에 마법 방어력 증가
 	int DEF_MGR;
+};
+
+// 핼멧 방어구 장비 아이템
+class EquipmentHelmet : public ItemInfo
+{
+public:
+	EquipmentHelmet();
+	~EquipmentHelmet();
+
+	void Set(int iHP, int iMP, int iDEF_PHY, int iDEF_MGR, eChrType chrType = eChrType_Human);
+
+	// TODO : 능력치 정보 기획에 맞게 수정 가능
+	// 캐릭터의 능력치에 체력(Hit Point) 증가
+	int HP;
+	// 캐릭터의 능력치에 마나(Mana Point) 증가
+	int MP;
+	// 캐릭터의 능력치에 물리 방어력 증가
+	int DEF_PHY;
+	// 캐릭터의 능력치에 마법 방어력 증가
+	int DEF_MGR;
+};
+
+// 방패 방어구 장비 아이템
+class EquipmentShield : public ItemInfo
+{
+public:
+	EquipmentShield();
+	~EquipmentShield();
+
+	// TODO : 능력치 정보 기획에 맞게 수정 가능
+	// 캐릭터의 능력치에 방패 막기 확률 증가
+	float BLOCK_PER;
+};
+
+class EquipmentWeapon : public ItemInfo
+{
+public:
+	EquipmentWeapon();
+	~EquipmentWeapon();
+
+	// TODO : 능력치 정보 기획에 맞게 수정 가능
+	// 캐릭터의 능력치에 최소 공격력 증가
+	int ATK_MIN;
+	// 캐릭터의 능력치에 최대 공격력 증가
+	int ATK_MAX;
 };
