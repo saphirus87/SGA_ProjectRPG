@@ -133,7 +133,7 @@ enum eAni
 	eAni_Attack_2 = 1,
 	eAni_Attack_1 = 2,
 	eAni_Walk = 3,
-	eAni_Stand = 4,
+	eAni_Stand = 4,		// Export ½Ã °Å²Ù·Î µÊ
 };
 
 enum eChrType

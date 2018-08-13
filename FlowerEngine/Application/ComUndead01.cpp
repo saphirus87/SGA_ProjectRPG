@@ -37,31 +37,20 @@ void ComUndead01::Update()
 	}
 	
 	//Test Code
-	/*if (Input::KeyDown('1'))
-	{
+	if (Input::KeyDown('1'))
 		m_pAnimation->PlayAnimation(eAni_Stand);
-	}
+
 	if (Input::KeyDown('2'))
-	{
 		m_pAnimation->PlayAnimation(eAni_Walk);
-	}*/
-	//애니메이션 추가 코드
-	/*if (Input::KeyDown('3'))
-	{
-		m_pAnimation->PlayAnimation(eAni_WalkBackwards);
-	}
+
+	if (Input::KeyDown('3'))
+		m_pAnimation->PlayAnimation(eAni_Attack_1);
+
 	if (Input::KeyDown('4'))
-	{
-		m_pAnimation->PlayAnimation(eAni_Run);
-	}
+		m_pAnimation->PlayAnimation(eAni_Attack_2);
+
 	if (Input::KeyDown('5'))
-	{
-		m_pAnimation->PlayAnimation(eAni_RotateLeft);
-	}
-	if (Input::KeyDown('6'))
-	{
-		m_pAnimation->PlayAnimation(eAni_RotateRight);
-	}*/
+		m_pAnimation->PlayAnimation(eAni_Attack_3);
 }
 
 void ComUndead01::Render()
