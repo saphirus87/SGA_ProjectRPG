@@ -31,10 +31,14 @@ public:
 	unsigned int ID;
 	// 아이템 타입
 	eItemType Type;
-	// 아이템 이름
-	CString Name;
 	// 장착 캐릭터 타입
 	eChrType ChrType;
+	// 아이템 이름
+	CString Name;
+	// 폴더 경로
+	CString FolderPath;
+	// 아이템 리소스 이름
+	CString XFileName;
 };
 
 // 어깨 방어구 장비 아이템
@@ -46,6 +50,7 @@ public:
 
 	void Set(int iHP, int iMP, int iDEF_PHY, int iDEF_MGR, eChrType chrType = eChrType_Human);
 
+	CString TextureName;
 	// TODO : 능력치 정보 기획에 맞게 수정 가능
 	// 캐릭터의 능력치에 체력(Hit Point) 증가
 	int HP;

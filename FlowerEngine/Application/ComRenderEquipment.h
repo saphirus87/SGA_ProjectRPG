@@ -33,6 +33,9 @@ public:
 
 	// 바닥에 떨어졌으면 GetHeight를 안함
 	bool IsDropped;
+
+	// 아이템 정보
+	ItemInfo * pItemInfo;
 private:
 	Device9 pDevice9;
 	Shader m_pEffect;

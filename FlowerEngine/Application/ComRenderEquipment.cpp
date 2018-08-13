@@ -9,7 +9,8 @@ ComRenderEquipment::ComRenderEquipment(CString szName) :
 	m_pEffect(NULL),
 	IsMirrored(false),
 	IsEquiped(false),
-	IsDropped(false)
+	IsDropped(false),
+	pItemInfo(NULL)
 {
 	pDevice9 = GetD3D9Device();
 	D3DXMatrixIdentity(&m_matFinal);
@@ -20,6 +21,7 @@ ComRenderEquipment::ComRenderEquipment(CString szName) :
 
 ComRenderEquipment::~ComRenderEquipment()
 {
+	SAFE_DELETE(pItemInfo);
 	SAFE_RELEASE(m_pMesh);
 	m_vecMtrl.clear();
 }

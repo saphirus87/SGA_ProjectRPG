@@ -1,6 +1,8 @@
 #pragma once
 #include "stdafx.h"
 
+class ItemInfo;
+
 class FactoryGameObject
 {
 public:
@@ -22,5 +24,6 @@ public:
 	GameObject* CreateFromXFile(CString szName, CString szFolderPath, CString szFileName, Vector3& pos);
 	GameObject* CreateObjMap(CString szName, CString szFolderPath, CString szFileName);
 	GameObject* CreateEquipment(CString szName, CString szFolderPath, CString szFileName, Vector3& pos, bool IsMirrored = false);
+	GameObject* CreateEquipment(ItemInfo* pItemInfo, Vector3& pos, bool IsMirrored = false);
 };
 

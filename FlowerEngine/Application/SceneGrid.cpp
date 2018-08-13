@@ -48,10 +48,14 @@ void SceneGrid::CreateCharacter()
 	pGOChrX3->AddComponent(new ComCollider("ComCollider"));
 	// 휴먼 캐릭터 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
 	
-	/*EquipmentShoulder* pShoulder = new EquipmentShoulder;
-	pShoulder->Set(10, 10, 10, 10);*/
-
-	GameObject* pGOShoulder = factory.CreateEquipment("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", Vector3(3, 10, -8));
+	EquipmentShoulder* pShoulder = new EquipmentShoulder;
+	pShoulder->Set(10, 10, 10, 10);
+	pShoulder->Name = "Equipment_shoulder";
+	pShoulder->FolderPath = "Resources/character/Equipment/";
+	pShoulder->XFileName = "shoulder_01.X";
+	pShoulder->TextureName = "Resources/character/Equipment/shoulder_plate_d_02copper.png";
+	
+	GameObject* pGOShoulder = factory.CreateEquipment(pShoulder, Vector3(3, 10, -8));
 	pGOShoulder->transform->SetPosition(2, 15, 10);
 	pGOShoulder->AddComponent(new ComCollider("ComCollider"));
 
@@ -77,7 +81,7 @@ void SceneGrid::CreateCharacter()
 	pGOChrX5->AddComponent(pEquipment);
 	
 	// 휴먼 캐릭터 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
-	EquipmentShoulder* pShoulder = new EquipmentShoulder;
+	pShoulder = new EquipmentShoulder;
 	pShoulder->Set(10, 10, 10, 10, eChrType_Troll);
 	pGOShoulder = factory.CreateEquipment("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", Vector3(3, 10, -8));
 	pGOShoulder->transform->SetPosition(2, 15, 7);
