@@ -89,6 +89,7 @@ public:
 	float BLOCK_PER;
 };
 
+// 검 무기 아이템
 class EquipmentWeapon : public ItemInfo
 {
 public:

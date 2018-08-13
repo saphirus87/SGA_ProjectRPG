@@ -124,8 +124,6 @@ void ComEquipment::Equip(ItemInfo * pItem)
 			ChangeTexture(eEquipment_ShoulderR, "ShoulderEquipItemName02");
 			break;
 		}
-
-
 	}
 	break;
 
