@@ -55,7 +55,7 @@ public:
 	void SetOffsetPos(Vector3 vOffsetPosR = Vector3(3, 10, -8));
 
 	// 아이템 이름으로 텍스쳐를 변경합니다.
-	void ChangeTexture(CString szItemName);
+	void ChangeTexture(eEquipment type, CString szItemName);
 
 	EquipmentShoulder* pDataSholder;
 

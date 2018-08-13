@@ -14,6 +14,7 @@ Scene::~Scene()
 
 void Scene::Update()
 {
+
 	for (IterGO iter = GameObject::m_mapGameObjects.begin(); iter != GameObject::m_mapGameObjects.end(); ++iter)
 	{
 		GameObject* pGO = (*iter).second;
@@ -31,7 +32,7 @@ void Scene::Update()
 			{
 				// 절두체 안에 있는 오브젝트만 업데이트
 				//if (Camera::GetInstance()->FrustumCulling(&pGO->transform->GetPosition()))
-					pGO->Update();
+				pGO->Update();
 			}
 		}
 	}

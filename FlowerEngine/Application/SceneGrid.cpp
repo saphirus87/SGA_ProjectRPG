@@ -55,7 +55,8 @@ void SceneGrid::CreateCharacter()
 	ComEquipment* pShoulder = new ComEquipment("ComEquipment");
 	pGOChrX5->AddComponent(pShoulder);
 	pShoulder->SetOffsetPos(Vector3(3, 12, -6)); // [z, x, y축]
-	pShoulder->ChangeTexture("ShoulderEquipItemName02");
+	pShoulder->ChangeTexture(eEquipment_ShoulderR, "ShoulderEquipItemName02");
+	pShoulder->ChangeTexture(eEquipment_ShoulderL, "ShoulderEquipItemName02");
 
 	// 카메라
 	Camera::GetInstance()->SetTarget(&pGOChrX4->transform->GetPosition());

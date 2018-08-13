@@ -80,6 +80,7 @@ GameObject * FactoryGameObject::CreateAircraft(CString szName, int iLevel, float
 	case 1:
 	{
 		GameObject* pGO = CreateCubePN(szName);
+		pGO->IsAlwaysRender = true;
 		pGO->AddComponent(new ComAircraft("ComAircraft"));
 		pGO->AddComponent(new ComShooting("ComShooting"));
 		pGO->AddComponent(new ComAircraftControl("ComAircraftControl"));
@@ -91,6 +92,7 @@ GameObject * FactoryGameObject::CreateAircraft(CString szName, int iLevel, float
 	case 2:
 	{
 		GameObject* pGOFront = CreateCubePN(szName + "Front");
+		pGOFront->IsAlwaysRender = true;
 		pGOFront->SetParent(pGO);
 		pGOFront->transform->SetPosition(0, 0, 1.5f);
 		pGOFront->transform->SetScale(0.5f, 0.5f, 0.5f);
@@ -100,11 +102,13 @@ GameObject * FactoryGameObject::CreateAircraft(CString szName, int iLevel, float
 	case 3:
 	{
 		GameObject* pGOWingLeft = CreateCubePN(szName + "WingLeft");
+		pGOWingLeft->IsAlwaysRender = true;
 		pGOWingLeft->SetParent(pGO);
 		pGOWingLeft->transform->SetPosition(-2.5f, 0, 0);
 		pGOWingLeft->transform->SetScale(1.5f, 0.2f, 0.5f);
 
 		GameObject* pGOWingRight = CreateCubePN(szName + "WingRight");
+		pGOWingRight->IsAlwaysRender = true;
 		pGOWingRight->SetParent(pGO);
 		pGOWingRight->transform->SetPosition(2.5f, 0, 0);
 		pGOWingRight->transform->SetScale(1.5f, 0.2f, 0.5f);
@@ -114,26 +118,31 @@ GameObject * FactoryGameObject::CreateAircraft(CString szName, int iLevel, float
 	case 4:
 	{
 		GameObject* pGOWingTail = CreateCubePN(szName + "WingTail");
+		pGOWingTail->IsAlwaysRender = true;
 		pGOWingTail->SetParent(pGO);
 		pGOWingTail->transform->SetPosition(0, 0, -1.5f);
 		pGOWingTail->transform->SetScale(0.5f, 0.5f, 0.5f);
 
 		GameObject* pParticle = CreateGameObject("Particle");
+		pParticle->IsAlwaysRender = true;
 		pParticle->AddComponent(new ComParticle("ComParticle"));
 		pParticle->SetParent(pGOWingTail);
 		pParticle->transform->SetPosition(0, 0, -1.5f);
 
 		GameObject* pGOWingTailLeft = CreateCubePN(szName + "WingTailLeft");
+		pGOWingTailLeft->IsAlwaysRender = true;
 		pGOWingTailLeft->SetParent(pGOWingTail);
 		pGOWingTailLeft->transform->SetPosition(-1.5f, 0, 0);
 		pGOWingTailLeft->transform->SetScale(0.5f, 0.2f, 0.5f);
 
 		GameObject* pGOWingTailRight = CreateCubePN(szName + "WingTailRight");
+		pGOWingTailRight->IsAlwaysRender = true;
 		pGOWingTailRight->SetParent(pGOWingTail);
 		pGOWingTailRight->transform->SetPosition(1.5f, 0, 0);
 		pGOWingTailRight->transform->SetScale(0.5f, 0.2f, 0.5f);
 
 		GameObject* pGOWingTailTop = CreateCubePN(szName + "WingTailTop");
+		pGOWingTailTop->IsAlwaysRender = true;
 		pGOWingTailTop->SetParent(pGOWingTail);
 		pGOWingTailTop->transform->SetPosition(0, 1.5f, 0);
 		pGOWingTailTop->transform->SetScale(0.2f, 0.5f, 0.5f);

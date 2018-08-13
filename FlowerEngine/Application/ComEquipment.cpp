@@ -115,8 +115,7 @@ void ComEquipment::SetOffsetPos(Vector3 vOffsetPosR)
 	m_vecRenderEquipments[eEquipment_ShoulderL]->m_pGOEquipment->transform->SetPosition(vOffsetPosR);
 }
 
-void ComEquipment::ChangeTexture(CString szItemName)
+void ComEquipment::ChangeTexture(eEquipment type, CString szItemName)
 {
-	m_vecRenderEquipments[eEquipment_ShoulderR]->m_pRender->ChangeTexture(0, m_mapTextureName[szItemName]);
-	m_vecRenderEquipments[eEquipment_ShoulderL]->m_pRender->ChangeTexture(0, m_mapTextureName[szItemName]);
+	m_vecRenderEquipments[type]->m_pRender->ChangeTexture(0, m_mapTextureName[szItemName]);
 }
