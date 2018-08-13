@@ -14,6 +14,7 @@
 #include "../Application/ComTerrain.h"
 #include "../Application/ComEquipment.h"
 #include "../Application/ComRenderEquipment.h"
+#include "../Application/ItemInfo.h"
 
 FactoryGameObject::FactoryGameObject()
 {
@@ -286,6 +287,7 @@ GameObject * FactoryGameObject::CreateEquipment(CString szName, CString szFolder
 	GameObject* pGOExist = GameObject::Find(szName);
 	
 	GameObject* pGOEquipment = new GameObject(szName);
+
 	ComRenderEquipment* pMesh = new ComRenderEquipment("ComRenderEquipment");
 	pMesh->IsMirrored = IsMirrored;
 
