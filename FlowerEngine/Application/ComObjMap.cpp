@@ -6,6 +6,7 @@ const int TOKEN_SIZE = 128;
 
 ComObjMap::ComObjMap(CString szName) :
 	Component(szName),
+	m_TriangleNum(0),
 	m_rayDistance(2.f),
 	m_InverseUV(0.0f),
 	m_pVB(NULL),
@@ -29,7 +30,8 @@ ComObjMap::~ComObjMap()
 
 	m_vertices.clear();
 	m_surfaceIndices.clear();
-	m_testIndices.clear();
+	m_OptVertices.clear();
+	m_vecQuadIdx.clear();
 }
 
 void ComObjMap::Awake()
@@ -39,44 +41,19 @@ void ComObjMap::Awake()
 		m_InverseUV = 5.0f;
 		LoadMap();
 
-		// QuadTree Culling에 사용할 인덱스 값 생성(추후 정리 필요)
-		for (int i = 0; i < (mapSize - 1) * (mapSize - 1); ++i)
-		{
-			// test idx
-			int TotalIndexX = i % 128;
-			int TotalIndexZ = i / 128;
+		VertexOptimization();
 
-			// 8X8 타일의 인덱스 값
-			int sqIndexX = TotalIndexX / 8;
-			int sqIndexZ = TotalIndexZ / 8;
-			int sqIndex = sqIndexX + sqIndexZ * 16;
-
-			// 8X8 타일 내 인덱스 값
-			int IndexX = TotalIndexX % 8;
-			int IndexZ = TotalIndexZ % 8;
-			int Index = IndexX + IndexZ * 8;
-
-			// 최종 인덱스
-			int result = sqIndex * 64 + IndexX + IndexZ * 8;
-
-			m_vecQuadIdx.push_back(result * 12 + 1);
-		}
-
-		m_surfaceIndices.resize(m_vertices.size());
-		pDevice9->CreateIndexBuffer(m_surfaceIndices.size() * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);
-
-		m_pQuadTree = new QuadTree(mapSize - 1, mapSize - 1);
-		m_pQuadTree->SetMapVertex(&m_vertices);
+		m_pQuadTree = new QuadTree(mapSize, mapSize);
+		m_pQuadTree->SetMapVertex(&m_OptVertices);
 		m_pQuadTree->SetIndex(&m_vecQuadIdx);
  		m_pQuadTree->Build();
-		m_pIndex = new DWORD;
 	}
 }
 
 void ComObjMap::Update()
 {
-	//UpdateIndexBuffer();
-	UpdateIndexBufferQuadTree();
+	//if (Input::KeyDown(VK_SPACE))
+		UpdateIndexBufferQuadTree();
 }
 
 void ComObjMap::Render()
@@ -105,23 +82,48 @@ void ComObjMap::Render()
 
 bool ComObjMap::GetHeight(float & height, const D3DXVECTOR3 & pos)
 {
+	//return false;
 	D3DXVECTOR3 rayPos(pos.x, pos.y + m_rayDistance, pos.z);
 	D3DXVECTOR3 rayDir(0, -1, 0);
 	float distance = 0.0f;
 
+	//for (int i = 0; i < m_TriangleNum * 3; i += 3)
+	//{
+	//	D3DXVECTOR3 TargetPos(pos.x, 0, pos.z);
+	//	D3DXVECTOR3 TerrainPos(m_vertices[m_surfaceIndices[i]].p.x, 0, m_vertices[m_surfaceIndices[i]].p.z);
+	//	if (D3DXVec3Length(&(TargetPos - TerrainPos)) >= 5.0f) continue;
+
+	//	D3DXVECTOR3 v1 = m_vertices[m_surfaceIndices[i]].p;
+	//	D3DXVECTOR3 v2 = m_vertices[m_surfaceIndices[i] + 1].p;
+	//	D3DXVECTOR3 v3 = m_vertices[m_surfaceIndices[i] + 2].p;
+
+	//	//D3DXVECTOR3 v4 = m_vertices[m_surfaceIndices[i] + 1].p;
+	//	//D3DXVECTOR3 v5 = m_vertices[m_surfaceIndices[i] + 2].p;
+	//	//D3DXVECTOR3 v6 = m_vertices[m_surfaceIndices[i] + 4].p;
+
+	//	if (D3DXIntersectTri(&v1, &v2, &v3, &rayPos, &rayDir, NULL, NULL, &distance))
+	//	{
+	//		height = rayPos.y - distance;
+	//		return true;
+	//	}
+
+	//	/*if (D3DXIntersectTri(&v4, &v5, &v6, &rayPos, &rayDir, NULL, NULL, &distance))
+	//	{
+	//		height = rayPos.y - distance;
+	//		return true;
+	//	}*/
+	//}
+
 	for (int i = 0; i < m_TriangleNum * 3; i += 3)
 	{
 		D3DXVECTOR3 TargetPos(pos.x, 0, pos.z);
-		D3DXVECTOR3 TerrainPos(m_vertices[m_surfaceIndices[i]].p.x, 0, m_vertices[m_surfaceIndices[i]].p.z);
+		D3DXVECTOR3 TerrainPos(m_OptVertices[m_surfaceIndices[i]].p.x, 0, m_OptVertices[m_surfaceIndices[i]].p.z);
 		if (D3DXVec3Length(&(TargetPos - TerrainPos)) >= 5.0f) continue;
 
-		D3DXVECTOR3 v1 = m_vertices[m_surfaceIndices[i]].p;
-		D3DXVECTOR3 v2 = m_vertices[m_surfaceIndices[i] + 1].p;
-		D3DXVECTOR3 v3 = m_vertices[m_surfaceIndices[i] + 2].p;
 
-		//D3DXVECTOR3 v4 = m_vertices[m_surfaceIndices[i] + 1].p;
-		//D3DXVECTOR3 v5 = m_vertices[m_surfaceIndices[i] + 2].p;
-		//D3DXVECTOR3 v6 = m_vertices[m_surfaceIndices[i] + 4].p;
+		D3DXVECTOR3 v1 = m_OptVertices[m_surfaceIndices[i]].p;
+		D3DXVECTOR3 v2 = m_OptVertices[m_surfaceIndices[i + 1]].p;
+		D3DXVECTOR3 v3 = m_OptVertices[m_surfaceIndices[i + 2]].p;
 
 		if (D3DXIntersectTri(&v1, &v2, &v3, &rayPos, &rayDir, NULL, NULL, &distance))
 		{
@@ -129,11 +131,6 @@ bool ComObjMap::GetHeight(float & height, const D3DXVECTOR3 & pos)
 			return true;
 		}
 
-		/*if (D3DXIntersectTri(&v4, &v5, &v6, &rayPos, &rayDir, NULL, NULL, &distance))
-		{
-			height = rayPos.y - distance;
-			return true;
-		}*/
 	}
 
 	return false;
@@ -317,47 +314,78 @@ void ComObjMap::LoadMtlLib(LPCTSTR fullPath)
 	fin.close();
 }
 
-void ComObjMap::UpdateIndexBuffer()
-{
-	if (!m_surfaceIndices.empty()) m_surfaceIndices.clear();
-
-	for (int i = 0; i < m_vertices.size(); i += 12)
-	{
-		if (Camera::GetInstance()->FrustumCulling(&m_vertices[i].p, radius))
-		{
-			for (int j = 0; j < 12; j++)
-			{
-				m_surfaceIndices.push_back(i + j);
-			}
-		}
-	}
-
-	if (m_pIB != NULL) SAFE_RELEASE(m_pIB);
-
-	if (m_surfaceIndices.size() <= 0) return;
-
-	pDevice9->CreateIndexBuffer(m_surfaceIndices.size() * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);
-
-	DWORD* pIndex;
-	m_pIB->Lock(0, 0, (LPVOID*)&pIndex, 0);
-	memcpy(pIndex, &m_surfaceIndices[0], m_surfaceIndices.size() * sizeof(DWORD));
-	m_pIB->Unlock();
-}
-
 void ComObjMap::UpdateIndexBufferQuadTree()
 {
-	//if (!m_surfaceIndices.empty()) m_surfaceIndices.clear();
-
 	m_TriangleNum = m_pQuadTree->GenerateIndex(m_surfaceIndices);
 
-	//if (m_pIB != NULL) SAFE_RELEASE(m_pIB);
-
 	if (m_TriangleNum <= 0) return;
-
-	//pDevice9->CreateIndexBuffer(m_TriangleNum * 3 * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);
 
 	DWORD* pIndex;
 	m_pIB->Lock(0, 0, (LPVOID*)&pIndex, 0);
 	memcpy(pIndex, &m_surfaceIndices[0], m_TriangleNum * 3 * sizeof(DWORD));
 	m_pIB->Unlock();
+}
+
+void ComObjMap::VertexOptimization()
+{
+	for (int i = 0; i < m_vertices.size(); i += 12)
+	{
+		m_OptVertices.push_back(m_vertices[i + 7]);
+		m_OptVertices.push_back(m_vertices[i + 8]);
+		m_OptVertices.push_back(m_vertices[i + 1]);
+
+		m_OptVertices.push_back(m_vertices[i + 7]);
+		m_OptVertices.push_back(m_vertices[i + 1]);
+		m_OptVertices.push_back(m_vertices[i + 2]);
+	}
+
+	if (m_pVB != NULL) SAFE_RELEASE(m_pVB);
+
+	pDevice9->CreateVertexBuffer(m_OptVertices.size() * sizeof(VERTEX_PNT), NULL, VERTEX_PNT::FVF, D3DPOOL_MANAGED, &m_pVB, NULL);
+
+	VERTEX_PNT* pVertex;
+	m_pVB->Lock(0, 0, (LPVOID*)&pVertex, 0);
+	memcpy(pVertex, &m_OptVertices[0], m_OptVertices.size() * sizeof(VERTEX_PNT));
+	m_pVB->Unlock();
+
+	m_surfaceIndices.resize(m_OptVertices.size());
+	pDevice9->CreateIndexBuffer(m_surfaceIndices.size() * sizeof(DWORD), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &m_pIB, NULL);
+
+	// QuadTree Culling에 사용할 인덱스 값 생성
+	for (int i = 0; i < (mapSize - 1) * (mapSize - 1); ++i)
+	{
+		// test idx
+		int TotalIndexX = i % 128;
+		int TotalIndexZ = i / 128;
+
+		// 8X8 타일의 인덱스 값
+		int sqIndexX = TotalIndexX / 8;
+		int sqIndexZ = TotalIndexZ / 8;
+		int sqIndex = sqIndexX + sqIndexZ * 16;
+
+		// 8X8 타일 내 인덱스 값
+		int IndexX = TotalIndexX % 8;
+		int IndexZ = TotalIndexZ % 8;
+		int Index = IndexX + IndexZ * 8;
+
+		// 최종 인덱스
+		int result = sqIndex * 64 + IndexX + IndexZ * 8;
+
+		// 기본적으로 사각형에 좌측 하단 좌표를 삽입
+		// 그럴 경우 최상단 1줄의 좌표가 없게 되므로 처음에 1줄을 삽입
+		// 각 줄의 맨 오른쪽 좌표 누락되었기 때문에 그 부분 추가
+		// 마지막으로 사각형에서 원하는 정점을 넣기 위한 부분 추가
+
+		if (i == 0)
+		{
+			for (int j = 0; j < mapSize - 1; ++j)
+			{
+				if (j == 0) m_vecQuadIdx.push_back(2);
+				m_vecQuadIdx.push_back((j % 8 + (j / 8) * 64) * 6 + 1);
+			}
+		}
+
+		if (i % (mapSize - 1) == 0) m_vecQuadIdx.push_back(result * 6 + 5);
+		m_vecQuadIdx.push_back(result * 6);
+	}
 }
