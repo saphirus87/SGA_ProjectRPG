@@ -41,5 +41,5 @@ void ChrStateAttack::Attack(ChrState * pChrState)
 	strDebug.Append(L"\r\n");
 	OutputDebugString(strDebug);*/
 
-	m_pAnimation->PlayAnimation(eAni_Attack);
+	m_pAnimation->PlayAnimation(eAni_Attack_1);
 }

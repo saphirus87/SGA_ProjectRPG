@@ -129,9 +129,11 @@ enum eCellType
 
 enum eAni
 {
-	eAni_Attack = 2,
-	eAni_Stand = 1,
-	eAni_Walk = 0,
+	eAni_Attack_3 = 0,
+	eAni_Attack_2 = 1,
+	eAni_Attack_1 = 2,
+	eAni_Walk = 3,
+	eAni_Stand = 4,
 };
 
 enum eChrType
