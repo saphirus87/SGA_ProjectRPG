@@ -2,6 +2,7 @@
 #include "stdafx.h"
 
 class EquipmentShoulder;
+class ComRenderEquipment;
 
 enum eEquipment
 {
@@ -22,7 +23,7 @@ public:
 
 	void Set(LPCSTR szName, GameObject* pGOParent, GameObject* pGOEquipment);
 
-	void Update();
+	void Redner();
 
 	// 뼈이름
 	LPCSTR szFrameName;
@@ -33,7 +34,7 @@ public:
 	// 장비 오브젝트
 	GameObject* m_pGOEquipment;
 	// 렌더링 구성요소
-	ComRenderXMesh* m_pRender;
+	ComRenderEquipment* m_pRender;
 	// 애니메이션 포인터
 	ComRenderSkinnedMesh * m_pAnimation;
 };

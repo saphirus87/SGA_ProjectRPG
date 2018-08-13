@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ComEquipment.h"
+#include "ComRenderEquipment.h"
 #include "ItemInfo.h"
 
 RenderEquipment::RenderEquipment() :
@@ -18,16 +19,16 @@ void RenderEquipment::Set(LPCSTR szName, GameObject* pGOParent, GameObject * pGO
 	szFrameName = szName;
 	m_pGOParent = pGOParent;
 	m_pGOEquipment = pGOEquipment;
-	m_pRender= (ComRenderXMesh*)pGOEquipment->GetComponent("ComRenderXMesh");
+	m_pRender= (ComRenderEquipment*)pGOEquipment->GetComponent("ComRenderXMesh");
 	m_pAnimation = (ComRenderSkinnedMesh*)m_pGOParent->GetComponent("ComRenderSkinnedMesh");
 }
 
-void RenderEquipment::Update()
+void RenderEquipment::Redner()
 {
 	Matrix4x4* matFrame = m_pAnimation->GetMatrixByName(szFrameName);
 	
 	if (matFrame != NULL)
-		m_pRender->SetFrameMatrix(matFrame, &m_pGOParent->transform->GetWorldMatrix());
+		m_pRender->Render(matFrame, &m_pGOParent->transform->GetWorldMatrix());
 }
 
 ComEquipment::ComEquipment(CString szName) :
@@ -97,13 +98,14 @@ void ComEquipment::Awake()
 
 void ComEquipment::Update()
 {
-	for (auto & equipment : m_vecRenderEquipments)
-		if (equipment != NULL)
-			equipment->Update();
+
 }
 
 void ComEquipment::Render()
 {
+	for (auto & equipment : m_vecRenderEquipments)
+		if (equipment != NULL)
+			equipment->Redner();
 }
 
 void ComEquipment::SetOffsetPos(Vector3 vOffsetPosR)

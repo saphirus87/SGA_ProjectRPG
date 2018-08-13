@@ -1,8 +1,8 @@
 #include "stdafx.h"
-#include "ComRenderXMesh.h"
+#include "ComRenderEquipment.h"
 
 
-ComRenderXMesh::ComRenderXMesh(CString szName) : 
+ComRenderEquipment::ComRenderEquipment(CString szName) : 
 	Component(szName),
 	m_pMesh(NULL),
 	m_iNumMaterials(0),
@@ -16,52 +16,26 @@ ComRenderXMesh::ComRenderXMesh(CString szName) :
 }
 
 
-ComRenderXMesh::~ComRenderXMesh()
+ComRenderEquipment::~ComRenderEquipment()
 {
 	SAFE_RELEASE(m_pMesh);
 	m_vecMtrl.clear();
 }
 
-void ComRenderXMesh::Awake()
+void ComRenderEquipment::Awake()
 {
 	m_pEffect = Shaders::GetInstance()->GetShader(SHADER_PATH + "/ShaderPT.fx");
 }
 
-void ComRenderXMesh::Update()
+void ComRenderEquipment::Update()
 {
-	m_matFinal = gameObject->transform->GetWorldMatrix() * m_matFrame * m_matParent;
 }
 
-void ComRenderXMesh::Render()
+void ComRenderEquipment::Render()
 {
-	// 현재 행렬 * Combined Matrix * parent Obj Matrix (현재 행렬은 즉 scale, rot, transfomation)
-	m_pEffect->SetMatrix("gWorldMatrix", &m_matFinal);
-	m_pEffect->SetMatrix("gViewMatrix", &Camera::GetInstance()->GetViewMatrix());
-	m_pEffect->SetMatrix("gProjMatrix", &Camera::GetInstance()->GetProjMatrix());
-		
-	UINT pass;
-	m_pEffect->Begin(&pass, NULL);
-	m_pEffect->BeginPass(0);
-
-	for (DWORD i = 0; i < m_iNumMaterials; ++i)
-	{
-		m_pEffect->SetTexture("DiffuseMap_Tex", m_vecMtrl[i].pTexture);
-		m_pEffect->CommitChanges();
-		if (IsMirrored)
-			pDevice9->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
-		else
-			pDevice9->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-		m_pMesh->DrawSubset(i);
-	}
-
-	pDevice9->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	m_pEffect->EndPass();
-	m_pEffect->End();
 }
 
-void ComRenderXMesh::Load(CString szFolderPath, CString szFileName)
+void ComRenderEquipment::Load(CString szFolderPath, CString szFileName)
 {
 	LPD3DXBUFFER pBuffer;
 
@@ -86,7 +60,7 @@ void ComRenderXMesh::Load(CString szFolderPath, CString szFileName)
 	pBuffer->Release();
 }
 
-void ComRenderXMesh::Clone(ComRenderXMesh* pComRenderXMesh)
+void ComRenderEquipment::Clone(ComRenderEquipment* pComRenderXMesh)
 {
 	Mesh pMesh = pComRenderXMesh->m_pMesh;
 	pMesh->CloneMeshFVF(pMesh->GetOptions(), pMesh->GetFVF(), pDevice9, &m_pMesh);
@@ -96,13 +70,40 @@ void ComRenderXMesh::Clone(ComRenderXMesh* pComRenderXMesh)
 		m_vecMtrl[i] = pComRenderXMesh->m_vecMtrl[i];
 }
 
-void ComRenderXMesh::SetFrameMatrix(Matrix4x4 * pMatFrame, Matrix4x4 * pMatParent)
+void ComRenderEquipment::Render(Matrix4x4 * pMatFrame, Matrix4x4 * pMatParent)
 {
 	m_matFrame = *pMatFrame;
 	m_matParent = *pMatParent;
+
+	// 현재 행렬 * Combined Matrix * parent Obj Matrix (현재 행렬은 즉 scale, rot, transfomation)
+	m_matFinal = gameObject->transform->GetWorldMatrix() * m_matFrame * m_matParent;
+	m_pEffect->SetMatrix("gWorldMatrix", &m_matFinal);
+	m_pEffect->SetMatrix("gViewMatrix", &Camera::GetInstance()->GetViewMatrix());
+	m_pEffect->SetMatrix("gProjMatrix", &Camera::GetInstance()->GetProjMatrix());
+
+	UINT pass;
+	m_pEffect->Begin(&pass, NULL);
+	m_pEffect->BeginPass(0);
+
+	for (DWORD i = 0; i < m_iNumMaterials; ++i)
+	{
+		m_pEffect->SetTexture("DiffuseMap_Tex", m_vecMtrl[i].pTexture);
+		m_pEffect->CommitChanges();
+		if (IsMirrored)
+			pDevice9->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
+		else
+			pDevice9->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
+		m_pMesh->DrawSubset(i);
+	}
+
+	pDevice9->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
+	m_pEffect->EndPass();
+	m_pEffect->End();
 }
 
-void ComRenderXMesh::ChangeTexture(int iIndex, CString szTextureName)
+void ComRenderEquipment::ChangeTexture(int iIndex, CString szTextureName)
 {
 	m_vecMtrl[iIndex].pTexture = Assets::GetTexture(szTextureName);
 }

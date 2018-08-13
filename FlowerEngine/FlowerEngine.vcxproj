@@ -399,6 +399,7 @@
     <ClInclude Include="Application\ComHuman01.h" />
     <ClInclude Include="Application\ComMissile.h" />
     <ClInclude Include="Application\ComObjMap.h" />
+    <ClInclude Include="Application\ComRenderEquipment.h" />
     <ClInclude Include="Application\ComShooting.h" />
     <ClInclude Include="Application\ComSmallderon.h" />
     <ClInclude Include="Application\ComTerrain.h" />
@@ -429,6 +430,7 @@
     <ClCompile Include="Application\ComHuman01.cpp" />
     <ClCompile Include="Application\ComMissile.cpp" />
     <ClCompile Include="Application\ComObjMap.cpp" />
+    <ClCompile Include="Application\ComRenderEquipment.cpp" />
     <ClCompile Include="Application\ComShooting.cpp" />
     <ClCompile Include="Application\ComSmallderon.cpp" />
     <ClCompile Include="Application\ComTerrain.cpp" />
@@ -486,7 +488,6 @@
     <ClCompile Include="Engine\ComUIButton.cpp" />
     <ClCompile Include="Engine\ComUIImage.cpp" />
     <ClCompile Include="Engine\ComUIText.cpp" />
-    <ClCompile Include="Engine\ComRenderXMesh.cpp" />
     <ClCompile Include="Engine\Debug.cpp" />
     <ClCompile Include="Engine\FactoryGameObject.cpp" />
     <ClCompile Include="Engine\GameObject.cpp" />
@@ -530,7 +531,6 @@
     <ClInclude Include="Engine\ComUIButton.h" />
     <ClInclude Include="Engine\ComUIImage.h" />
     <ClInclude Include="Engine\ComUIText.h" />
-    <ClInclude Include="Engine\ComRenderXMesh.h" />
     <ClInclude Include="Engine\Debug.h" />
     <ClInclude Include="Engine\DPObserver.h" />
     <ClInclude Include="Engine\FactoryGameObject.h" />

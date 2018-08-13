@@ -1,10 +1,11 @@
 #pragma once
-#include "Component.h"
-class ComRenderXMesh : public Component
+#include "stdafx.h"
+
+class ComRenderEquipment : public Component
 {
 public:
-	ComRenderXMesh(CString szName);
-	~ComRenderXMesh();
+	ComRenderEquipment(CString szName);
+	~ComRenderEquipment();
 
 	// Component을(를) 통해 상속됨
 	virtual void Awake() override;
@@ -15,10 +16,11 @@ public:
 	void Load(CString szFolderPath, CString szFileName);
 
 	// 매쉬를 복제(Clone)합니다.
-	void Clone(ComRenderXMesh* pComRenderXMesh);
+	void Clone(ComRenderEquipment* pComRenderXMesh);
 	
-	// 뼈대 행렬과 부모행렬을 설정합니다.
-	void SetFrameMatrix(Matrix4x4* pMatFrame, Matrix4x4* pMatParent);
+	// 뼈대 행렬과 부모행렬을 설정하여 렌더링 합니다.
+	// Render함수를 써서 렌더링 할 경우 뼈대 프레임 설정이 늦어서 캐릭터 이동시 장비가 밀려서 렌더링 되는 현상이 발생하므로 이 함수를 사용합니다.
+	void Render(Matrix4x4* pMatFrame, Matrix4x4* pMatParent);
 
 	// 반전(Mirrored, Flip) 여부
 	bool IsMirrored;
