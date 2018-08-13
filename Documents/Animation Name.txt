@@ -1,0 +1,7 @@
+Human_01
+
+Stand [0]
+Walk [1]
+Attack1H [92]
+AttackFL [230]
+AttackFL [234]
