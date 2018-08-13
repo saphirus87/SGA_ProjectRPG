@@ -17,6 +17,7 @@ enum eItemType
 	eItem_Shield,
 	eItem_WeaponR,
 	eItem_WeaponL,
+	// 추가
 	eItem_COUNT
 };
 
@@ -60,6 +61,7 @@ public:
 	int DEF_PHY;
 	// 캐릭터의 능력치에 마법 방어력 증가
 	int DEF_MGR;
+	// 능력치 추가
 };
 
 // 핼멧 방어구 장비 아이템
@@ -80,6 +82,7 @@ public:
 	int DEF_PHY;
 	// 캐릭터의 능력치에 마법 방어력 증가
 	int DEF_MGR;
+	// 능력치 추가
 };
 
 // 방패 방어구 장비 아이템
@@ -107,3 +110,6 @@ public:
 	// 캐릭터의 능력치에 최대 공격력 증가
 	int ATK_MAX;
 };
+
+// 장비 클래스 추가
+//class EquipmentStaff : public ItemInfo

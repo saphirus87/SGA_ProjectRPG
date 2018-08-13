@@ -50,7 +50,7 @@ void SceneGrid::CreateCharacter()
 	
 	EquipmentShoulder* pShoulder = new EquipmentShoulder;
 	pShoulder->Set(10, 10, 10, 10);
-	pShoulder->Name = "Equipment_shoulder";
+	pShoulder->Name = "Equipment_shoulder_ItemName01";
 	pShoulder->FolderPath = "Resources/character/Equipment/";
 	pShoulder->XFileName = "shoulder_01.X";
 	pShoulder->TextureName = "Resources/character/Equipment/shoulder_plate_d_02copper.png";
@@ -72,8 +72,25 @@ void SceneGrid::CreateCharacter()
 	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(2, 15, 6));
 	pGOChrX4->AddComponent(new ComUndead01("ComUndead01"));
 	pGOChrX4->AddComponent(new ComChrControl("ComChrControl"));
-	pGOChrX4->AddComponent(new ComEquipment("ComEquipment"));
+	pEquipment = new ComEquipment("ComEquipment");
+	pGOChrX4->AddComponent(pEquipment);
 
+	pHelmet = new EquipmentHelmet;
+	pHelmet->Set(10, 10, 10, 10);
+	pEquipment->Equip(pHelmet);
+
+	pShield = new EquipmentShield;
+	pEquipment->Equip(pShield);
+
+	pWeaponR = new EquipmentWeapon;
+	pEquipment->Equip(pWeaponR);
+
+	pShoulder = new EquipmentShoulder;
+	pShoulder->Set(10, 10, 10, 10, eChrType_Troll);
+	pGOShoulder = factory.CreateEquipment("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", Vector3(3, 10, -8));
+	pGOShoulder->transform->SetPosition(2, 15, 7);
+	pEquipment->Equip(pShoulder, pGOShoulder);
+	
 	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(2, 15, 7));
 	pGOChrX5->AddComponent(new ComTroll01("ComTroll01"));
 	pGOChrX5->AddComponent(new ComChrControl("ComChrControl"));
@@ -87,14 +104,15 @@ void SceneGrid::CreateCharacter()
 	pGOShoulder->transform->SetPosition(2, 15, 7);
 	pEquipment->Equip(pShoulder, pGOShoulder);
 
-	// 머리 뼈대 행렬 필요
 	pHelmet = new EquipmentHelmet;
 	pHelmet->Set(10, 10, 10, 10);
 	pEquipment->Equip(pHelmet);
 
-	// 왼손 방패 뼈대 행렬 필요
 	pShield = new EquipmentShield;
 	pEquipment->Equip(pShield);
+
+	pWeaponR = new EquipmentWeapon;
+	pEquipment->Equip(pWeaponR);
 	
 	
 	// 카메라
