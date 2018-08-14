@@ -95,9 +95,6 @@ void SceneGrid::CreateUndead01()
 
 	EquipmentShoulder* pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
 	pShoulder->Set(10, 10, 10, 10, eChrType_Undead);
-	pShoulder->Name = "Equipment_shoulder_ItemName01";
-	pShoulder->FolderPath = "Resources/character/Equipment/";
-	pShoulder->XFileName = "shoulder_01.X";
 	pShoulder->TextureName = "Resources/character/Equipment/shoulder_robe_b_03blue.png";
 	pEquipment->Equip(pShoulder);
 
@@ -106,9 +103,11 @@ void SceneGrid::CreateUndead01()
 	pEquipment->Equip(pHelmet);
 
 	EquipmentShield* pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X");
+	pShield->Set(10, eChrType_Undead);
 	pEquipment->Equip(pShield);
 
 	EquipmentWeapon* pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
+	pWeaponR->Set(10, 20, eChrType_Undead);
 	pEquipment->Equip(pWeaponR);
 }
 
