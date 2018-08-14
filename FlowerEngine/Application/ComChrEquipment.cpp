@@ -196,7 +196,7 @@ LPCSTR ComChrEquipment::GetFrameName(ItemInfo * itemInfo, eRenderEquipment rende
 		case eRenderEquipment_Helmet:
 			return "character_human_male_humanmale_hd_bone_39";
 		case eRenderEquipment_Shield:
-			return "";
+			return "character_human_male_humanmale_hd_bone_35";
 		case eRenderEquipment_WeaponR:
 			return "character_human_male_humanmale_hd_bone_47";
 		case eRenderEquipment_WeaponL:
