@@ -87,33 +87,6 @@ bool ComObjMap::GetHeight(float & height, const D3DXVECTOR3 & pos)
 	D3DXVECTOR3 rayDir(0, -1, 0);
 	float distance = 0.0f;
 
-	//for (int i = 0; i < m_TriangleNum * 3; i += 3)
-	//{
-	//	D3DXVECTOR3 TargetPos(pos.x, 0, pos.z);
-	//	D3DXVECTOR3 TerrainPos(m_vertices[m_surfaceIndices[i]].p.x, 0, m_vertices[m_surfaceIndices[i]].p.z);
-	//	if (D3DXVec3Length(&(TargetPos - TerrainPos)) >= 5.0f) continue;
-
-	//	D3DXVECTOR3 v1 = m_vertices[m_surfaceIndices[i]].p;
-	//	D3DXVECTOR3 v2 = m_vertices[m_surfaceIndices[i] + 1].p;
-	//	D3DXVECTOR3 v3 = m_vertices[m_surfaceIndices[i] + 2].p;
-
-	//	//D3DXVECTOR3 v4 = m_vertices[m_surfaceIndices[i] + 1].p;
-	//	//D3DXVECTOR3 v5 = m_vertices[m_surfaceIndices[i] + 2].p;
-	//	//D3DXVECTOR3 v6 = m_vertices[m_surfaceIndices[i] + 4].p;
-
-	//	if (D3DXIntersectTri(&v1, &v2, &v3, &rayPos, &rayDir, NULL, NULL, &distance))
-	//	{
-	//		height = rayPos.y - distance;
-	//		return true;
-	//	}
-
-	//	/*if (D3DXIntersectTri(&v4, &v5, &v6, &rayPos, &rayDir, NULL, NULL, &distance))
-	//	{
-	//		height = rayPos.y - distance;
-	//		return true;
-	//	}*/
-	//}
-
 	for (int i = 0; i < m_TriangleNum * 3; i += 3)
 	{
 		D3DXVECTOR3 TargetPos(pos.x, 0, pos.z);
@@ -130,7 +103,6 @@ bool ComObjMap::GetHeight(float & height, const D3DXVECTOR3 & pos)
 			height = rayPos.y - distance;
 			return true;
 		}
-
 	}
 
 	return false;
