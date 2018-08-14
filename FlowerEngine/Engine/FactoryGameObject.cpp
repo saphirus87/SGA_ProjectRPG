@@ -325,13 +325,9 @@ GameObject * FactoryGameObject::CreateEquipment(ItemInfo * pItemInfo, Vector3 & 
 	else
 		pMesh->Clone((ComEquipment*)pGOExist->GetComponent("ComEquipment"));
 
-	// 텍스쳐 변경
-	switch (pItemInfo->Type)
-	{
-	case eItem_Shoulder:
-		pMesh->ChangeTexture(0, ((EquipmentShoulder*)(pItemInfo))->TextureName);
-		break;
-	}
+	// 변경된 텍스쳐 있을 경우 적용
+	if (pItemInfo->TextureName.IsEmpty() == false)
+		pMesh->ChangeTexture(0, pItemInfo->TextureName);
 
 	// 크기를 100으로 맞춰주는 이유는 .X File Export시 본 크기가 0.01인듯함.
 	if (IsMirrored == true)

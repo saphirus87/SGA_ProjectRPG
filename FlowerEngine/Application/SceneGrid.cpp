@@ -49,7 +49,6 @@ void SceneGrid::CreateMapObject()
 	pShoulder->Name = "Equipment_shoulder_ItemName01";
 	pShoulder->FolderPath = "Resources/character/Equipment/";
 	pShoulder->XFileName = "shoulder_01.X";
-	pShoulder->TextureName = "Resources/character/Equipment/shoulder_plate_d_02copper.png";
 
 	GameObject* pGOShoulder = factory.CreateEquipment(pShoulder, Vector3(3, 10, -8));
 	((ComEquipment*)pGOShoulder->GetComponent("ComEquipment"))->pItemInfo = pShoulder;
@@ -72,7 +71,7 @@ void SceneGrid::CreateHuman01()
 
 	// Àåºñ ÀåÂø
 	EquipmentHelmet* pHelmet = new EquipmentHelmet;
-	pHelmet->Set(10, 10, 10, 10);
+	pHelmet->Set(10, 10, 10, 10, eChrType_Human);
 	pEquipment->Equip(pHelmet);
 
 	EquipmentShield* pShield = new EquipmentShield;
@@ -94,7 +93,7 @@ void SceneGrid::CreateUndead01()
 	pGOChrX4->AddComponent(pEquipment);
 
 	EquipmentHelmet* pHelmet = new EquipmentHelmet;
-	pHelmet->Set(10, 10, 10, 10);
+	pHelmet->Set(10, 10, 10, 10, eChrType_Undead);
 	pEquipment->Equip(pHelmet);
 
 	EquipmentShield* pShield = new EquipmentShield;
@@ -130,7 +129,7 @@ void SceneGrid::CreateTroll01()
 	pEquipment->Equip(pShoulder);
 
 	EquipmentHelmet* pHelmet = new EquipmentHelmet;
-	pHelmet->Set(10, 10, 10, 10);
+	pHelmet->Set(10, 10, 10, 10, eChrType_Troll);
 	pEquipment->Equip(pHelmet);
 
 	EquipmentShield* pShield = new EquipmentShield;

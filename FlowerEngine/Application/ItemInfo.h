@@ -40,6 +40,8 @@ public:
 	CString FolderPath;
 	// 아이템 리소스 이름
 	CString XFileName;
+	// 변경된 텍스쳐 이름, 텍스쳐 이름이 없으면 원본 사용
+	CString TextureName;
 };
 
 // 어깨 방어구 장비 아이템
@@ -51,7 +53,6 @@ public:
 
 	void Set(int iHP, int iMP, int iDEF_PHY, int iDEF_MGR, eChrType chrType);
 
-	CString TextureName;
 	// TODO : 능력치 정보 기획에 맞게 수정 가능
 	// 캐릭터의 능력치에 체력(Hit Point) 증가
 	int HP;
@@ -71,7 +72,7 @@ public:
 	EquipmentHelmet();
 	~EquipmentHelmet();
 
-	void Set(int iHP, int iMP, int iDEF_PHY, int iDEF_MGR, eChrType chrType = eChrType_Human);
+	void Set(int iHP, int iMP, int iDEF_PHY, int iDEF_MGR, eChrType chrType);
 
 	// TODO : 능력치 정보 기획에 맞게 수정 가능
 	// 캐릭터의 능력치에 체력(Hit Point) 증가
