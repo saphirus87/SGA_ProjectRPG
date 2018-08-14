@@ -119,6 +119,8 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 	pGOEquipment->transform->SetScale(100, 100, 100);
 	((ComEquipment*)pGOEquipment->GetComponent("ComEquipment"))->IsEquiped = true;
 
+	RenderEquipment * pRenderEquipment = new RenderEquipment();
+
 	// 렌더링 객체를 추가합니다.
 	switch (pItem->Type)
 	{
@@ -127,9 +129,8 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 		// 방어구 어깨 오른쪽
 		pGOEquipment->transform->SetPosition(3, 10, -8);
 
-		RenderEquipment * pRenderEquipmentR = new RenderEquipment();
-		pRenderEquipmentR->Set("Shoulder_Right", gameObject, pGOEquipment);
-		m_vecRenderEquipments[eRenderEquipment_ShoulderR] = pRenderEquipmentR;
+		pRenderEquipment->Set("Shoulder_Right", gameObject, pGOEquipment);
+		m_vecRenderEquipments[eRenderEquipment_ShoulderR] = pRenderEquipment;
 
 		// 방어구 어깨 왼쪽
 		GameObject* pGOShoulderL = factory.CreateEquipment(pItem, Vector3(3, -10, -8), true);
@@ -152,7 +153,6 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 	case eItem_Helmet:
 	{
 		// 방어구 투구
-		RenderEquipment * pRenderEquipment = new RenderEquipment();
 		pGOEquipment->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
 		pRenderEquipment->Set("Helmet", gameObject, pGOEquipment);
 		m_vecRenderEquipments[eRenderEquipment_Helmet] = pRenderEquipment;
@@ -164,7 +164,6 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 		// 무기 오른손
 		pGOEquipment->transform->SetPosition(0, 0, -6); // 보정위치 y축 아래로 조금 내림
 
-		RenderEquipment* pRenderEquipment = new RenderEquipment();
 		pGOEquipment->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
 		pRenderEquipment->Set("Weapon_Right", gameObject, pGOEquipment);
 		m_vecRenderEquipments[eRenderEquipment_WeaponR] = pRenderEquipment;
@@ -176,7 +175,6 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 		// 무기 왼손
 		pGOEquipment->transform->SetPosition(0, 0, -6); // 보정위치 y축 아래로 조금 내림
 
-		RenderEquipment* pRenderEquipment = new RenderEquipment();
 		pGOEquipment->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
 		pRenderEquipment->Set("Weapon_Left", gameObject, pGOEquipment);
 		m_vecRenderEquipments[eRenderEquipment_WeaponL] = pRenderEquipment;
@@ -188,7 +186,6 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 		// 방어구 방패 왼손
 		pGOEquipment->transform->SetPosition(0, -5, 0); // 보정위치 y축 아래로 조금 내림
 
-		RenderEquipment* pRenderEquipment = new RenderEquipment();
 		pGOEquipment->transform->SetRotation(Vector3(D3DXToRadian(90), D3DXToRadian(-90), 0));
 		pRenderEquipment->Set("Shield_Left", gameObject, pGOEquipment); // 보정위치 팔 밖쪽으로 조금
 		m_vecRenderEquipments[eRenderEquipment_Shield] = pRenderEquipment;
