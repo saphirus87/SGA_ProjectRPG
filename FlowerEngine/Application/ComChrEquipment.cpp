@@ -96,6 +96,7 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 {
 	m_vecEquipedItems[pItem->Type] = pItem;
 
+	// eRenderEquipment랑 eItemType이랑 코드 정리 생각해 볼 것.
 	LPCSTR szShoulder_Right = GetFrameName(pItem, eRenderEquipment_ShoulderR);
 	LPCSTR szShoulder_Left = GetFrameName(pItem, eRenderEquipment_ShoulderL);
 	LPCSTR szHelmet = GetFrameName(pItem, eRenderEquipment_Helmet);
@@ -115,7 +116,7 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 	case eItem_Shoulder:
 	{
 		// 방어구 어깨 오른쪽
-		pGOEquipment->transform->SetPosition(3, 10, -8);
+		pGOEquipment->transform->SetPosition(3, 10, -8); // // [z, x, y축] 보정 위치
 
 		pRenderEquipment->Set(szShoulder_Right, gameObject, pGOEquipment);
 		m_vecRenderEquipments[eRenderEquipment_ShoulderR] = pRenderEquipment;
@@ -141,7 +142,6 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 	case eItem_Helmet:
 	{
 		// 방어구 투구
-		pGOEquipment->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
 		pRenderEquipment->Set(szHelmet, gameObject, pGOEquipment);
 		m_vecRenderEquipments[eRenderEquipment_Helmet] = pRenderEquipment;
 	}
@@ -151,8 +151,6 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 	{
 		// 무기 오른손
 		pGOEquipment->transform->SetPosition(0, 0, -6); // 보정위치 y축 아래로 조금 내림
-
-		pGOEquipment->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
 		pRenderEquipment->Set(szWeapon_Right, gameObject, pGOEquipment);
 		m_vecRenderEquipments[eRenderEquipment_WeaponR] = pRenderEquipment;
 	}
@@ -162,8 +160,6 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 	{
 		// 무기 왼손
 		pGOEquipment->transform->SetPosition(0, 0, -6); // 보정위치 y축 아래로 조금 내림
-
-		pGOEquipment->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
 		pRenderEquipment->Set(szWeapon_Left, gameObject, pGOEquipment);
 		m_vecRenderEquipments[eRenderEquipment_WeaponL] = pRenderEquipment;
 	}

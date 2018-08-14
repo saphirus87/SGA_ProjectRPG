@@ -1,0 +1,5 @@
+헬멧, 검
+1. FBX를 3DMAX에 Import한다.
+2. 본을 지운다
+3. 축 변환 없이 Export시 X-Rot 체크 -90
+
