@@ -46,6 +46,7 @@ EquipmentHelmet::EquipmentHelmet(CString szName, CString szXFileName) :
 	DEF_MGR(0)
 {
 	Type = eItem_Helmet;
+	ChrType = eChrType_Human;
 	Name = szName;
 	XFileName = szXFileName;
 }
@@ -68,6 +69,7 @@ EquipmentShield::EquipmentShield(CString szName, CString szXFileName) :
 	BLOCK_PER(10.0f)
 {
 	Type = eItem_Shield;
+	ChrType = eChrType_Human;
 	Name = szName;
 	XFileName = szXFileName;
 }
@@ -81,6 +83,7 @@ EquipmentWeapon::EquipmentWeapon(CString szName, CString szXFileName) :
 	ATK_MAX(7)
 {
 	Type = eItem_WeaponR;
+	ChrType = eChrType_Human;
 	Name = szName;
 	XFileName = szXFileName;
 }

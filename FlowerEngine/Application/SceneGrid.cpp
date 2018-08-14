@@ -49,7 +49,7 @@ void SceneGrid::CreateMapObject()
 
 	GameObject* pGOShoulder = factory.CreateEquipment(pShoulder, Vector3(3, 10, -8));
 	((ComEquipment*)pGOShoulder->GetComponent("ComEquipment"))->pItemInfo = pShoulder;
-	pGOShoulder->transform->SetPosition(2, 15, 10);
+	pGOShoulder->transform->SetPosition(-260, 15, -255);
 	pGOShoulder->AddComponent(new ComCollider("ComCollider"));
 }
 
@@ -76,6 +76,10 @@ void SceneGrid::CreateHuman01()
 
 	EquipmentWeapon* pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
 	pEquipment->Equip(pWeaponR);
+
+	EquipmentWeapon* pWeaponL = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
+	pWeaponL->Type = eItem_WeaponL;
+	pEquipment->Equip(pWeaponL);
 
 	// Ä«¸Þ¶ó
 	Camera::GetInstance()->SetTarget(&pGOChrX3->transform->GetPosition());

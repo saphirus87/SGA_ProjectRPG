@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "ComEquipment.h"
-#include "ComTerrain.h"
+#include "ComObjMap.h"
 #include "ItemInfo.h"
 
 ComEquipment::ComEquipment(CString szName) : 
@@ -38,10 +38,10 @@ void ComEquipment::Update()
 		GameObject* pObjMap = GameObject::Find("ObjMap");
 		if (pObjMap != NULL)
 		{
-			ComTerrain* m_pMap = (ComTerrain*)pObjMap->GetComponent("ComTerrain");
+			ComObjMap* pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
 			Vector3 pos = gameObject->transform->GetPosition();
 			float fHeight = 0.f;
-			if (m_pMap != NULL && m_pMap->GetHeight(fHeight, pos) == true)
+			if (pMap != NULL && pMap->GetHeight(fHeight, pos) == true)
 			{
 				pos.y = fHeight + 0.2f;
 				gameObject->transform->SetPosition(pos);
