@@ -96,18 +96,18 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 {
 	m_vecEquipedItems[pItem->Type] = pItem;
 
-	CString szShoulder_Right;
-	CString szShoulder_Left;
-	CString szHelmet;
-	CString szWeapon_Right;
-	CString szWeapon_Left;
-	CString szShield;
+	LPCSTR szShoulder_Right = "Shoulder_Right";
+	LPCSTR szShoulder_Left = "Shoulder_Left";
+	LPCSTR szHelmet = "Helmet";
+	LPCSTR szWeapon_Right = "Weapon_Right";
+	LPCSTR szWeapon_Left = "Weapon_Left";
+	LPCSTR szShield = "Shield_Left";
 
 	switch (pItem->ChrType)
 	{
 	case eChrType_Human:
-		szShoulder_Right = "";
-		szShoulder_Left = "";
+		szShoulder_Right = "character_human_male_humanmale_hd_bone_28";
+		szShoulder_Left = "character_human_male_humanmale_hd_bone_27";
 		szHelmet = "";
 		szWeapon_Right = "";
 		szWeapon_Left = "";
@@ -129,7 +129,7 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 		// 规绢备 绢柄 坷弗率
 		pGOEquipment->transform->SetPosition(3, 10, -8);
 
-		pRenderEquipment->Set("Shoulder_Right", gameObject, pGOEquipment);
+		pRenderEquipment->Set(szShoulder_Right, gameObject, pGOEquipment);
 		m_vecRenderEquipments[eRenderEquipment_ShoulderR] = pRenderEquipment;
 
 		// 规绢备 绢柄 哭率
@@ -138,7 +138,7 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 		pGOShoulderL->transform->SetScale(100, -100, 100);
 
 		RenderEquipment * pRenderEquipmentL = new RenderEquipment();
-		pRenderEquipmentL->Set("Shoulder_Left", gameObject, pGOShoulderL);
+		pRenderEquipmentL->Set(szShoulder_Left, gameObject, pGOShoulderL);
 		m_vecRenderEquipments[eRenderEquipment_ShoulderL] = pRenderEquipmentL;
 
 		switch (pItem->ChrType)
