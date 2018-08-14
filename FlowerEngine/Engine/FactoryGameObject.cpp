@@ -13,7 +13,6 @@
 #include "../Application/ComObjMap.h"
 #include "../Application/ComTerrain.h"
 #include "../Application/ComEquipment.h"
-#include "../Application/ComRenderEquipment.h"
 #include "../Application/ItemInfo.h"
 
 FactoryGameObject::FactoryGameObject()
@@ -288,14 +287,14 @@ GameObject * FactoryGameObject::CreateEquipment(CString szName, CString szFolder
 	
 	GameObject* pGOEquipment = new GameObject(szName);
 
-	ComRenderEquipment* pMesh = new ComRenderEquipment("ComRenderEquipment");
+	ComEquipment* pMesh = new ComEquipment("ComEquipment");
 	pMesh->IsMirrored = IsMirrored;
 
 	// 이미 존재하는 게임 오브젝트라면 복제(Clone) 하여 메쉬를 공유하여 사용합니다.
 	if (pGOExist == NULL)
 		pMesh->Load(szFolderPath, szFileName);
 	else
-		pMesh->Clone((ComRenderEquipment*)pGOExist->GetComponent("ComRenderEquipment"));
+		pMesh->Clone((ComEquipment*)pGOExist->GetComponent("ComEquipment"));
 	
 	// 크기를 100으로 맞춰주는 이유는 .X File Export시 본 크기가 0.01인듯함.
 	if (IsMirrored == false)
@@ -316,7 +315,7 @@ GameObject * FactoryGameObject::CreateEquipment(ItemInfo * pItemInfo, Vector3 & 
 
 	GameObject* pGOEquipment = new GameObject(pItemInfo->Name);
 
-	ComRenderEquipment* pMesh = new ComRenderEquipment("ComRenderEquipment");
+	ComEquipment* pMesh = new ComEquipment("ComEquipment");
 	pMesh->IsMirrored = IsMirrored;
 	pMesh->pItemInfo = pItemInfo;
 
@@ -324,7 +323,7 @@ GameObject * FactoryGameObject::CreateEquipment(ItemInfo * pItemInfo, Vector3 & 
 	if (pGOExist == NULL)
 		pMesh->Load(pItemInfo->FolderPath, pItemInfo->XFileName);
 	else
-		pMesh->Clone((ComRenderEquipment*)pGOExist->GetComponent("ComRenderEquipment"));
+		pMesh->Clone((ComEquipment*)pGOExist->GetComponent("ComEquipment"));
 
 	// 텍스쳐 변경
 	switch (pItemInfo->Type)

@@ -11,7 +11,7 @@ E-Mail	: hkn10004@naver.com
 
 enum eItemType
 {
-	eItem_None,
+	eItem_None = -1,
 	eItem_Shoulder,
 	eItem_Helmet,
 	eItem_Shield,

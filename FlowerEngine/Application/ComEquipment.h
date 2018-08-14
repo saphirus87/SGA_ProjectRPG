@@ -1,45 +1,6 @@
 #pragma once
 #include "stdafx.h"
 
-class EquipmentShoulder;
-class ComRenderEquipment;
-class ItemInfo;
-
-enum eEquipment
-{
-	eEquipment_ShoulderR,
-	eEquipment_ShoulderL,
-	eEquipment_Helmet,
-	eEquipment_WeaponR,
-	eEquipment_WeaponL,
-	eEquipment_Shield,
-	eEquipment_Count
-};
-
-class RenderEquipment
-{
-public:
-	RenderEquipment();
-	~RenderEquipment();
-
-	void Set(LPCSTR szName, GameObject* pGOParent, GameObject* pGOEquipment);
-
-	void Redner();
-
-	// 뼈이름
-	LPCSTR szFrameName;
-	// 위치 보정값
-	Vector3 m_vOffsetPos;
-	// 이 장비의 부모 게임 오브젝트
-	GameObject* m_pGOParent;
-	// 장비 오브젝트
-	GameObject* m_pGOEquipment;
-	// 렌더링 구성요소
-	ComRenderEquipment* m_pRender;
-	// 애니메이션 포인터
-	ComRenderSkinnedMesh * m_pAnimation;
-};
-
 class ComEquipment : public Component
 {
 public:
@@ -51,26 +12,47 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
-	// 어깨방어구 장착뼈가 Export되지 않으므로 보정값을 설정하여 위치를 보정해 줍니다.
-	// .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
-	void SetOffsetPos(eEquipment type, Vector3 vOffsetPos = Vector3(3, 10, -8));
+	// 매쉬를 로딩합니다.
+	void Load(CString szFolderPath, CString szFileName);
 
-	// 아이템 이름으로 텍스쳐를 변경합니다.
-	void ChangeTexture(eEquipment type, CString szItemName);
+	// 매쉬를 복제(Clone)합니다.
+	void Clone(ComEquipment* pComRenderEquipment);
+	
+	// 뼈대 행렬과 부모행렬을 설정하여 렌더링 합니다.
+	// Render함수를 써서 렌더링 할 경우 뼈대 프레임 설정이 늦어서 캐릭터 이동시 장비가 밀려서 렌더링 되는 현상이 발생하므로 이 함수를 사용합니다.
+	void Render(Matrix4x4* pMatFrame, Matrix4x4* pMatParent);
 
-	// 장비를 장착합니다. (초기 아이템 장착시, 서버에서 데이터 받은경우등)
-	void Equip(ItemInfo* pItem);
+	// 반전(Mirrored, Flip) 여부
+	bool IsMirrored;
 
-	// 장비를 장착합니다. (아이템을 주었을 때)
-	void GetEquip(GameObject* pGOEquipment = NULL);
+	// 렌더링 텍스쳐를 변경합니다.
+	void ChangeTexture(int iIndex, CString szTextureName);
+
+	// 장착 안됐을 때는 지형 위 렌더링 하기 위한 변수
+	bool IsEquiped;
+
+	// 바닥에 떨어졌으면 GetHeight를 안함
+	bool IsDropped;
+
+	// 아이템 정보
+	ItemInfo * pItemInfo;
 	
 private:
-	//map<CString, CString> m_mapTextureName;
-	
-	// 장착된 장비 아이템들
-	vector<ItemInfo*> m_vecEquipedItems;
+	void RenderShader();
 
-	// 렌더링 할 장비 아이템들
-	vector<RenderEquipment*> m_vecRenderEquipments;
+private:
+	Device9 pDevice9;
+	Shader m_pEffect;
+	Mesh m_pMesh;
+	vector<MTLTEX> m_vecMtrl;
+	
+	// 재질 수
+	DWORD m_iNumMaterials;			
+
+	Matrix4x4 m_matFinal;
+
+	// 행렬 정보
+	Matrix4x4 m_matFrame;
+	Matrix4x4 m_matParent;
 };
 

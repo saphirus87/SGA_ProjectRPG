@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ComHuman01.h"
+#include "ComChrEquipment.h"
 #include "ComEquipment.h"
 #include "ItemInfo.h"
 
@@ -44,10 +45,17 @@ void ComHuman01::OnTriggerEnter(ComCollider & collider)
 {
 	if (collider.gameObject->Name().Find(L"Equipment_shoulder") >= 0)
 	{
-		ComEquipment* pEquipment = (ComEquipment*)gameObject->GetComponent("ComEquipment");
+		ComChrEquipment* pEquipment = (ComChrEquipment*)gameObject->GetComponent("ComChrEquipment");
+		static bool equiped = false;
 		if (pEquipment != NULL)
 		{
-			pEquipment->GetEquip(collider.gameObject);
+			if (equiped == false)
+			{
+				ComEquipment* pEquip = (ComEquipment*)collider.gameObject->GetComponent("ComEquipment");
+				pEquipment->Equip(pEquip->pItemInfo);
+				collider.gameObject->SetActive(false);
+				equiped = true;
+			}
 		}
 	}
 }

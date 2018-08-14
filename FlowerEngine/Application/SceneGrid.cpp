@@ -2,12 +2,13 @@
 #include "SceneGrid.h"
 #include "../Application/ComTestCubeControl.h"
 #include "../Application/ComHuman01.h"
-#include "../Application/ComEquipment.h"
+#include "../Application/ComChrEquipment.h"
 #include "../Application/ComUndead01.h"
 #include "../Application/ComChrControl.h"
 #include "../Application/ComTroll01.h"
 #include "../Application/ComSmallderon.h"
 #include "../Application/ItemInfo.h"
+#include "../Application/ComEquipment.h"
 
 SceneGrid::SceneGrid(CString szName) : Scene(szName)
 {
@@ -51,6 +52,7 @@ void SceneGrid::CreateMapObject()
 	pShoulder->TextureName = "Resources/character/Equipment/shoulder_plate_d_02copper.png";
 
 	GameObject* pGOShoulder = factory.CreateEquipment(pShoulder, Vector3(3, 10, -8));
+	((ComEquipment*)pGOShoulder->GetComponent("ComEquipment"))->pItemInfo = pShoulder;
 	pGOShoulder->transform->SetPosition(2, 15, 10);
 	pGOShoulder->AddComponent(new ComCollider("ComCollider"));
 }
@@ -63,7 +65,7 @@ void SceneGrid::CreateHuman01()
 	// 이 게임 오브젝트는 컨트롤 가능
 	pGOChrX3->AddComponent(new ComChrControl("ComChrControl"));
 	// 이 게임 오브젝트는 장비 장착 가능
-	ComEquipment* pEquipment = new ComEquipment("ComEquipment");
+	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
 	pGOChrX3->AddComponent(pEquipment);
 	// 이 게임 오브젝트는 충돌체크 가능
 	pGOChrX3->AddComponent(new ComCollider("ComCollider"));
@@ -88,7 +90,7 @@ void SceneGrid::CreateUndead01()
 	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(2, 15, 6));
 	pGOChrX4->AddComponent(new ComUndead01("ComUndead01"));
 	pGOChrX4->AddComponent(new ComChrControl("ComChrControl"));
-	ComEquipment* pEquipment = new ComEquipment("ComEquipment");
+	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
 	pGOChrX4->AddComponent(pEquipment);
 
 	EquipmentHelmet* pHelmet = new EquipmentHelmet;
@@ -115,7 +117,7 @@ void SceneGrid::CreateTroll01()
 	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(2, 15, 7));
 	pGOChrX5->AddComponent(new ComTroll01("ComTroll01"));
 	pGOChrX5->AddComponent(new ComChrControl("ComChrControl"));
-	ComEquipment* pEquipment = new ComEquipment("ComEquipment");
+	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
 	pGOChrX5->AddComponent(pEquipment);
 
 	// 휴먼 캐릭터 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
