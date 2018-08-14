@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 
+class ComObjMap;
 class ComTerrain;
 class ChrState;
 
@@ -19,7 +20,7 @@ private:
 	void Move();
 
 private:
-	ComTerrain * m_pMap;
+	ComObjMap * m_pMap;
 
 	Vector3* m_pos;					// 캐릭터 위치
 	Vector3 m_vecForward;			// 앞 방향 벡터

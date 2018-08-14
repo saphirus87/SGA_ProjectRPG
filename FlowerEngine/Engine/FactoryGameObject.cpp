@@ -271,8 +271,8 @@ GameObject * FactoryGameObject::CreateObjMap(CString szName, CString szFolderPat
 	GameObject* pGO = new GameObject(szName);
 	pGO->IsAlwaysRender = true;
 
-	//ComObjMap* pComObjMap = new ComObjMap("ComObjMap");
-	ComTerrain* pComObjMap = new ComTerrain("ComTerrain");
+	ComObjMap* pComObjMap = new ComObjMap("ComObjMap");
+	//ComTerrain* pComObjMap = new ComTerrain("ComTerrain");
 
 	pComObjMap->SetFilename(szFolderPath, szFileName);
 	pGO->AddComponent(pComObjMap);

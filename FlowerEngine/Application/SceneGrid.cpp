@@ -37,8 +37,8 @@ void SceneGrid::Init()
 void SceneGrid::CreateMap()
 {
 	// Obj Map 테스트
-	//GameObject* pObjMap = factory.CreateObjMap("ObjMap", "./Resources/obj/Map/TestMap/", "tempMap2.obj");
-	GameObject* pObjMap = factory.CreateObjMap("ObjMap", "./Resources/obj/Map/TestMap/", "Terrain.obj");
+	GameObject* pObjMap = factory.CreateObjMap("ObjMap", "./Resources/obj/Map/TestMap/", "tempMap2.obj");
+	//GameObject* pObjMap = factory.CreateObjMap("ObjMap", "./Resources/obj/Map/TestMap/", "Terrain.obj");
 }
 
 void SceneGrid::CreateMapObject()
@@ -55,7 +55,7 @@ void SceneGrid::CreateMapObject()
 
 void SceneGrid::CreateHuman01()
 {
-	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(2, 15, 5));
+	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(-260, 15, -260));
 	// 이 게임 오브젝트는 휴먼
 	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
 	// 이 게임 오브젝트는 컨트롤 가능
@@ -83,7 +83,7 @@ void SceneGrid::CreateHuman01()
 
 void SceneGrid::CreateUndead01()
 {
-	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(2, 15, 6));
+	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(-260, 15, -261));
 	pGOChrX4->AddComponent(new ComUndead01("ComUndead01"));
 	pGOChrX4->AddComponent(new ComChrControl("ComChrControl"));
 	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
@@ -110,7 +110,7 @@ void SceneGrid::CreateUndead01()
 
 void SceneGrid::CreateTroll01()
 {
-	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(2, 15, 7));
+	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(-260, 15, -262));
 	pGOChrX5->AddComponent(new ComTroll01("ComTroll01"));
 	pGOChrX5->AddComponent(new ComChrControl("ComChrControl"));
 	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
