@@ -78,6 +78,13 @@ EquipmentShield::~EquipmentShield()
 {
 }
 
+void EquipmentShield::Set(int iBLOCK_PER, eChrType chrType)
+{
+	Type = eItem_Shield;
+	ChrType = chrType;
+	BLOCK_PER = iBLOCK_PER;
+}
+
 EquipmentWeapon::EquipmentWeapon(CString szName, CString szXFileName) :
 	ATK_MIN(3),
 	ATK_MAX(7)
@@ -90,4 +97,12 @@ EquipmentWeapon::EquipmentWeapon(CString szName, CString szXFileName) :
 
 EquipmentWeapon::~EquipmentWeapon()
 {
+}
+
+void EquipmentWeapon::Set(int iATK_MIN, int iATK_MAX, eChrType chrType)
+{
+	Type = eItem_WeaponR;
+	ChrType = chrType;
+	ATK_MIN = iATK_MIN;
+	ATK_MAX = iATK_MAX;
 }

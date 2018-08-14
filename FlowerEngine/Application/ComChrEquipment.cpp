@@ -207,17 +207,17 @@ LPCSTR ComChrEquipment::GetFrameName(ItemInfo * itemInfo, eRenderEquipment rende
 		switch (renderType)
 		{
 		case eRenderEquipment_ShoulderR:
-			return "Shoulder_Right";
+			return "character_troll_male_trollmale_hd_bone_34";
 		case eRenderEquipment_ShoulderL:
-			return "Shoulder_Left";
+			return "character_troll_male_trollmale_hd_bone_33";
 		case eRenderEquipment_Helmet:
-			return "Helmet";
+			return "character_troll_male_trollmale_hd_bone_46";
 		case eRenderEquipment_Shield:
-			return "Shield_Left";
+			return "character_troll_male_trollmale_hd_bone_49";
 		case eRenderEquipment_WeaponR:
-			return "Weapon_Right";
+			return "character_troll_male_trollmale_hd_bone_53";
 		case eRenderEquipment_WeaponL:
-			return "Weapon_Left";
+			return "character_troll_male_trollmale_hd_bone_48";
 		}
 
 	case eChrType_Undead:

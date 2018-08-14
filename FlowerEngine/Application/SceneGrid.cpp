@@ -134,9 +134,11 @@ void SceneGrid::CreateTroll01()
 	pEquipment->Equip(pHelmet);
 
 	EquipmentShield* pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X");
+	pShield->Set(10, eChrType_Troll);
 	pEquipment->Equip(pShield);
 
 	EquipmentWeapon* pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
+	pWeaponR->Set(10, 20, eChrType_Troll);
 	pEquipment->Equip(pWeaponR);
 }
 

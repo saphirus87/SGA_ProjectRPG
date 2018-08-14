@@ -93,6 +93,8 @@ public:
 	EquipmentShield(CString szName, CString szXFileName);
 	~EquipmentShield();
 
+	void Set(int iBLOCK_PER, eChrType chrType);
+
 	// TODO : 능력치 정보 기획에 맞게 수정 가능
 	// 캐릭터의 능력치에 방패 막기 확률 증가
 	float BLOCK_PER;
@@ -104,6 +106,8 @@ class EquipmentWeapon : public ItemInfo
 public:
 	EquipmentWeapon(CString szName, CString szXFileName);
 	~EquipmentWeapon();
+
+	void Set(int iATK_MIN, int iATK_MAX, eChrType chrType);
 
 	// TODO : 능력치 정보 기획에 맞게 수정 가능
 	// 캐릭터의 능력치에 최소 공격력 증가
