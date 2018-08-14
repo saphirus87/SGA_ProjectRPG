@@ -62,7 +62,7 @@ public:
 	void Equip(ItemInfo* pItem);
 	
 private:
-	CString GetFrameName(ItemInfo* itemInfo);
+	LPCSTR GetFrameName(ItemInfo* itemInfo, eRenderEquipment renderType);
 
 private:
 	FactoryGameObject factory;

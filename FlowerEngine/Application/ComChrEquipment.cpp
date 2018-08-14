@@ -96,24 +96,12 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 {
 	m_vecEquipedItems[pItem->Type] = pItem;
 
-	LPCSTR szShoulder_Right = "Shoulder_Right";
-	LPCSTR szShoulder_Left = "Shoulder_Left";
-	LPCSTR szHelmet = "Helmet";
-	LPCSTR szWeapon_Right = "Weapon_Right";
-	LPCSTR szWeapon_Left = "Weapon_Left";
-	LPCSTR szShield = "Shield_Left";
-
-	switch (pItem->ChrType)
-	{
-	case eChrType_Human:
-		szShoulder_Right = "character_human_male_humanmale_hd_bone_28";
-		szShoulder_Left = "character_human_male_humanmale_hd_bone_27";
-		szHelmet = "";
-		szWeapon_Right = "";
-		szWeapon_Left = "";
-		szShield = "";
-		break;
-	}
+	LPCSTR szShoulder_Right = GetFrameName(pItem, eRenderEquipment_ShoulderR);
+	LPCSTR szShoulder_Left = GetFrameName(pItem, eRenderEquipment_ShoulderL);
+	LPCSTR szHelmet = GetFrameName(pItem, eRenderEquipment_Helmet);
+	LPCSTR szShield = GetFrameName(pItem, eRenderEquipment_Shield);
+	LPCSTR szWeapon_Right = GetFrameName(pItem, eRenderEquipment_WeaponR);
+	LPCSTR szWeapon_Left = GetFrameName(pItem, eRenderEquipment_WeaponL);
 
 	GameObject* pGOEquipment = factory.CreateEquipment(pItem, Vector3(0, 0, 0));
 	pGOEquipment->transform->SetScale(100, 100, 100);
@@ -154,7 +142,7 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 	{
 		// 방어구 투구
 		pGOEquipment->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
-		pRenderEquipment->Set("Helmet", gameObject, pGOEquipment);
+		pRenderEquipment->Set(szHelmet, gameObject, pGOEquipment);
 		m_vecRenderEquipments[eRenderEquipment_Helmet] = pRenderEquipment;
 	}
 	break;
@@ -165,7 +153,7 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 		pGOEquipment->transform->SetPosition(0, 0, -6); // 보정위치 y축 아래로 조금 내림
 
 		pGOEquipment->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
-		pRenderEquipment->Set("Weapon_Right", gameObject, pGOEquipment);
+		pRenderEquipment->Set(szWeapon_Right, gameObject, pGOEquipment);
 		m_vecRenderEquipments[eRenderEquipment_WeaponR] = pRenderEquipment;
 	}
 	break;
@@ -176,7 +164,7 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 		pGOEquipment->transform->SetPosition(0, 0, -6); // 보정위치 y축 아래로 조금 내림
 
 		pGOEquipment->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
-		pRenderEquipment->Set("Weapon_Left", gameObject, pGOEquipment);
+		pRenderEquipment->Set(szWeapon_Left, gameObject, pGOEquipment);
 		m_vecRenderEquipments[eRenderEquipment_WeaponL] = pRenderEquipment;
 	}
 	break;
@@ -187,18 +175,51 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 		pGOEquipment->transform->SetPosition(0, -5, 0); // 보정위치 y축 아래로 조금 내림
 
 		pGOEquipment->transform->SetRotation(Vector3(D3DXToRadian(90), D3DXToRadian(-90), 0));
-		pRenderEquipment->Set("Shield_Left", gameObject, pGOEquipment); // 보정위치 팔 밖쪽으로 조금
+		pRenderEquipment->Set(szShield, gameObject, pGOEquipment); // 보정위치 팔 밖쪽으로 조금
 		m_vecRenderEquipments[eRenderEquipment_Shield] = pRenderEquipment;
 	}
 	break;
 	}
 }
 
-CString ComChrEquipment::GetFrameName(ItemInfo * itemInfo)
+LPCSTR ComChrEquipment::GetFrameName(ItemInfo * itemInfo, eRenderEquipment renderType)
 {
 	switch (itemInfo->ChrType)
 	{
 	case eChrType_Human:
+		switch (renderType)
+		{
+		case eRenderEquipment_ShoulderR:
+			return "character_human_male_humanmale_hd_bone_28";
+		case eRenderEquipment_ShoulderL:
+			return "character_human_male_humanmale_hd_bone_27";
+		case eRenderEquipment_Helmet:
+			return "";
+		case eRenderEquipment_Shield:
+			return "";
+		case eRenderEquipment_WeaponR:
+			return "";
+		case eRenderEquipment_WeaponL:
+			return "";
+		}
+
+		// 예전것
+	default:
+		switch (renderType)
+		{
+		case eRenderEquipment_ShoulderR:
+			return "Shoulder_Right";
+		case eRenderEquipment_ShoulderL:
+			return "Shoulder_Left";
+		case eRenderEquipment_Helmet:
+			return "Helmet";
+		case eRenderEquipment_Shield:
+			return "Shield_Left";
+		case eRenderEquipment_WeaponR:
+			return "Weapon_Right";
+		case eRenderEquipment_WeaponL:
+			return "Weapon_Left";
+		}
 		break;
 	}
 
