@@ -5,15 +5,15 @@ class EquipmentShoulder;
 class ComEquipment;
 class ItemInfo;
 
-enum eEquipment
+enum eRenderEquipment
 {
-	eEquipment_ShoulderR,
-	eEquipment_ShoulderL,
-	eEquipment_Helmet,
-	eEquipment_WeaponR,
-	eEquipment_WeaponL,
-	eEquipment_Shield,
-	eEquipment_Count
+	eRenderEquipment_ShoulderR,
+	eRenderEquipment_ShoulderL,
+	eRenderEquipment_Helmet,
+	eRenderEquipment_Shield,
+	eRenderEquipment_WeaponR,
+	eRenderEquipment_WeaponL,
+	eRenderEquipment_Count
 };
 
 class RenderEquipment
@@ -53,10 +53,10 @@ public:
 
 	// 어깨방어구 장착뼈가 Export되지 않으므로 보정값을 설정하여 위치를 보정해 줍니다.
 	// .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
-	void SetOffsetPos(eEquipment type, Vector3 vOffsetPos = Vector3(3, 10, -8));
+	void SetOffsetPos(eRenderEquipment type, Vector3 vOffsetPos = Vector3(3, 10, -8));
 
 	// 아이템 이름으로 텍스쳐를 변경합니다.
-	void ChangeTexture(eEquipment type, CString szItemName);
+	void ChangeTexture(eRenderEquipment type, CString szItemName);
 
 	// 장비를 장착합니다. (월드에서 아이템 획득시, 서버에서 데이터 받은경우, 초기 아이템 장착시 등)
 	void Equip(ItemInfo* pItem);
