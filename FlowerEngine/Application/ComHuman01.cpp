@@ -46,16 +46,11 @@ void ComHuman01::OnTriggerEnter(ComCollider & collider)
 	if (collider.gameObject->Name().Find(L"Equipment_shoulder") >= 0)
 	{
 		ComChrEquipment* pEquipment = (ComChrEquipment*)gameObject->GetComponent("ComChrEquipment");
-		static bool equiped = false;
 		if (pEquipment != NULL)
 		{
-			if (equiped == false)
-			{
-				ComEquipment* pEquip = (ComEquipment*)collider.gameObject->GetComponent("ComEquipment");
-				pEquipment->Equip(pEquip->pItemInfo);
-				collider.gameObject->SetActive(false);
-				equiped = true;
-			}
+			ComEquipment* pEquip = (ComEquipment*)collider.gameObject->GetComponent("ComEquipment");
+			pEquipment->Equip(pEquip->pItemInfo);
+			collider.gameObject->SetActive(false);
 		}
 	}
 }

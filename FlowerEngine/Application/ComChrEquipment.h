@@ -62,6 +62,9 @@ public:
 	void Equip(ItemInfo* pItem);
 	
 private:
+	CString GetFrameName(ItemInfo* itemInfo);
+
+private:
 	FactoryGameObject factory;
 
 	// 장착된 장비 아이템들

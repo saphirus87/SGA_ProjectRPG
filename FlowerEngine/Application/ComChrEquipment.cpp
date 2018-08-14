@@ -96,18 +96,39 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 {
 	m_vecEquipedItems[pItem->Type] = pItem;
 
+	CString szShoulder_Right;
+	CString szShoulder_Left;
+	CString szHelmet;
+	CString szWeapon_Right;
+	CString szWeapon_Left;
+	CString szShield;
+
+	switch (pItem->ChrType)
+	{
+	case eChrType_Human:
+		szShoulder_Right = "";
+		szShoulder_Left = "";
+		szHelmet = "";
+		szWeapon_Right = "";
+		szWeapon_Left = "";
+		szShield = "";
+		break;
+	}
+
+	GameObject* pGOEquipment = factory.CreateEquipment(pItem, Vector3(0, 0, 0));
+	pGOEquipment->transform->SetScale(100, 100, 100);
+	((ComEquipment*)pGOEquipment->GetComponent("ComEquipment"))->IsEquiped = true;
+
 	// 렌더링 객체를 추가합니다.
 	switch (pItem->Type)
 	{
 	case eItem_Shoulder:
 	{
 		// 방어구 어깨 오른쪽
-		GameObject* pGOShoulderR = factory.CreateEquipment(pItem, Vector3(3, 10, -8));
-		pGOShoulderR->transform->SetScale(100, 100, 100);
-		((ComEquipment*)pGOShoulderR->GetComponent("ComEquipment"))->IsEquiped = true;
+		pGOEquipment->transform->SetPosition(3, 10, -8);
 
 		RenderEquipment * pRenderEquipmentR = new RenderEquipment();
-		pRenderEquipmentR->Set("Shoulder_Right", gameObject, pGOShoulderR);
+		pRenderEquipmentR->Set("Shoulder_Right", gameObject, pGOEquipment);
 		m_vecRenderEquipments[eRenderEquipment_ShoulderR] = pRenderEquipmentR;
 
 		// 방어구 어깨 왼쪽
@@ -132,10 +153,8 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 	{
 		// 방어구 투구
 		RenderEquipment * pRenderEquipment = new RenderEquipment();
-		GameObject* pGOHelmet = factory.CreateEquipment("Equipment_Helmet", "Resources/character/Equipment/", "Helmet_01.X", Vector3(0, 0, 0));
-		((ComEquipment*)pGOHelmet->GetComponent("ComEquipment"))->IsEquiped = true;
-		pGOHelmet->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
-		pRenderEquipment->Set("Helmet", gameObject, pGOHelmet);
+		pGOEquipment->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
+		pRenderEquipment->Set("Helmet", gameObject, pGOEquipment);
 		m_vecRenderEquipments[eRenderEquipment_Helmet] = pRenderEquipment;
 	}
 	break;
@@ -143,11 +162,11 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 	case eItem_WeaponR:
 	{
 		// 무기 오른손
+		pGOEquipment->transform->SetPosition(0, 0, -6); // 보정위치 y축 아래로 조금 내림
+
 		RenderEquipment* pRenderEquipment = new RenderEquipment();
-		GameObject* pGOWeaponR = factory.CreateEquipment("Equipment_weapon", "Resources/character/Equipment/", "Sword_01.X", Vector3(0, 0, -6)); // 보정위치 y축 아래로 조금 내림
-		((ComEquipment*)pGOWeaponR->GetComponent("ComEquipment"))->IsEquiped = true;																										 // 무기 칼날 아래 방향으로 돌려 잡음
-		pGOWeaponR->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
-		pRenderEquipment->Set("Weapon_Right", gameObject, pGOWeaponR);
+		pGOEquipment->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
+		pRenderEquipment->Set("Weapon_Right", gameObject, pGOEquipment);
 		m_vecRenderEquipments[eRenderEquipment_WeaponR] = pRenderEquipment;
 	}
 	break;
@@ -155,11 +174,11 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 	case eItem_WeaponL:
 	{
 		// 무기 왼손
+		pGOEquipment->transform->SetPosition(0, 0, -6); // 보정위치 y축 아래로 조금 내림
+
 		RenderEquipment* pRenderEquipment = new RenderEquipment();
-		GameObject* pGOWeaponL = factory.CreateEquipment("Equipment_weapon", "Resources/character/Equipment/", "Sword_01.X", Vector3(0, 0, -6)); // 보정위치 y축 아래로 조금 내림
-		((ComEquipment*)pGOWeaponL->GetComponent("ComEquipment"))->IsEquiped = true;
-		pGOWeaponL->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
-		pRenderEquipment->Set("Weapon_Left", gameObject, pGOWeaponL);
+		pGOEquipment->transform->SetRotation(Vector3(D3DXToRadian(90), 0, 0));
+		pRenderEquipment->Set("Weapon_Left", gameObject, pGOEquipment);
 		m_vecRenderEquipments[eRenderEquipment_WeaponL] = pRenderEquipment;
 	}
 	break;
@@ -167,13 +186,24 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 	case eItem_Shield:
 	{
 		// 방어구 방패 왼손
+		pGOEquipment->transform->SetPosition(0, -5, 0); // 보정위치 y축 아래로 조금 내림
+
 		RenderEquipment* pRenderEquipment = new RenderEquipment();
-		GameObject* pGOShield = factory.CreateEquipment("Equipment_Shield", "Resources/character/Equipment/", "Shield_01.X", Vector3(0, -5, 0));
-		((ComEquipment*)pGOShield->GetComponent("ComEquipment"))->IsEquiped = true;
-		pGOShield->transform->SetRotation(Vector3(D3DXToRadian(90), D3DXToRadian(-90), 0));
-		pRenderEquipment->Set("Shield_Left", gameObject, pGOShield); // 보정위치 팔 밖쪽으로 조금
+		pGOEquipment->transform->SetRotation(Vector3(D3DXToRadian(90), D3DXToRadian(-90), 0));
+		pRenderEquipment->Set("Shield_Left", gameObject, pGOEquipment); // 보정위치 팔 밖쪽으로 조금
 		m_vecRenderEquipments[eRenderEquipment_Shield] = pRenderEquipment;
 	}
 	break;
 	}
+}
+
+CString ComChrEquipment::GetFrameName(ItemInfo * itemInfo)
+{
+	switch (itemInfo->ChrType)
+	{
+	case eChrType_Human:
+		break;
+	}
+
+	return "";
 }

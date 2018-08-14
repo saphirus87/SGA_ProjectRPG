@@ -44,11 +44,8 @@ void SceneGrid::CreateMap()
 void SceneGrid::CreateMapObject()
 {
 	// 아이템 정보를 통하여 맵에 게임오브젝트(어깨 방어구) 생성
-	EquipmentShoulder* pShoulder = new EquipmentShoulder;
+	EquipmentShoulder* pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
 	pShoulder->Set(10, 10, 10, 10, eChrType_Human);
-	pShoulder->Name = "Equipment_shoulder_ItemName01";
-	pShoulder->FolderPath = "Resources/character/Equipment/";
-	pShoulder->XFileName = "shoulder_01.X";
 
 	GameObject* pGOShoulder = factory.CreateEquipment(pShoulder, Vector3(3, 10, -8));
 	((ComEquipment*)pGOShoulder->GetComponent("ComEquipment"))->pItemInfo = pShoulder;
@@ -70,14 +67,14 @@ void SceneGrid::CreateHuman01()
 	pGOChrX3->AddComponent(new ComCollider("ComCollider"));
 
 	// 장비 장착
-	EquipmentHelmet* pHelmet = new EquipmentHelmet;
+	EquipmentHelmet* pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X");
 	pHelmet->Set(10, 10, 10, 10, eChrType_Human);
 	pEquipment->Equip(pHelmet);
 
-	EquipmentShield* pShield = new EquipmentShield;
+	EquipmentShield* pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X");
 	pEquipment->Equip(pShield);
 
-	EquipmentWeapon* pWeaponR = new EquipmentWeapon;
+	EquipmentWeapon* pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
 	pEquipment->Equip(pWeaponR);
 
 	// 카메라
@@ -92,23 +89,23 @@ void SceneGrid::CreateUndead01()
 	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
 	pGOChrX4->AddComponent(pEquipment);
 
-	EquipmentHelmet* pHelmet = new EquipmentHelmet;
-	pHelmet->Set(10, 10, 10, 10, eChrType_Undead);
-	pEquipment->Equip(pHelmet);
-
-	EquipmentShield* pShield = new EquipmentShield;
-	pEquipment->Equip(pShield);
-
-	EquipmentWeapon* pWeaponR = new EquipmentWeapon;
-	pEquipment->Equip(pWeaponR);
-
-	EquipmentShoulder* pShoulder = new EquipmentShoulder;
+	EquipmentShoulder* pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
 	pShoulder->Set(10, 10, 10, 10, eChrType_Undead);
 	pShoulder->Name = "Equipment_shoulder_ItemName01";
 	pShoulder->FolderPath = "Resources/character/Equipment/";
 	pShoulder->XFileName = "shoulder_01.X";
 	pShoulder->TextureName = "Resources/character/Equipment/shoulder_robe_b_03blue.png";
 	pEquipment->Equip(pShoulder);
+
+	EquipmentHelmet* pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X");
+	pHelmet->Set(10, 10, 10, 10, eChrType_Undead);
+	pEquipment->Equip(pHelmet);
+
+	EquipmentShield* pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X");
+	pEquipment->Equip(pShield);
+
+	EquipmentWeapon* pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
+	pEquipment->Equip(pWeaponR);
 }
 
 void SceneGrid::CreateTroll01()
@@ -120,7 +117,7 @@ void SceneGrid::CreateTroll01()
 	pGOChrX5->AddComponent(pEquipment);
 
 	// 휴먼 캐릭터 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
-	EquipmentShoulder*pShoulder = new EquipmentShoulder;
+	EquipmentShoulder*pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
 	pShoulder->Set(10, 10, 10, 10, eChrType_Troll);
 	pShoulder->Name = "Equipment_shoulder_ItemName01";
 	pShoulder->FolderPath = "Resources/character/Equipment/";
@@ -128,14 +125,14 @@ void SceneGrid::CreateTroll01()
 	pShoulder->TextureName = "Resources/character/Equipment/shoulder_robe_b_03blue.png";
 	pEquipment->Equip(pShoulder);
 
-	EquipmentHelmet* pHelmet = new EquipmentHelmet;
+	EquipmentHelmet* pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X");
 	pHelmet->Set(10, 10, 10, 10, eChrType_Troll);
 	pEquipment->Equip(pHelmet);
 
-	EquipmentShield* pShield = new EquipmentShield;
+	EquipmentShield* pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X");
 	pEquipment->Equip(pShield);
 
-	EquipmentWeapon* pWeaponR = new EquipmentWeapon;
+	EquipmentWeapon* pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
 	pEquipment->Equip(pWeaponR);
 }
 

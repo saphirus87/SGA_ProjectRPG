@@ -48,7 +48,7 @@ public:
 class EquipmentShoulder : public ItemInfo
 {
 public:
-	EquipmentShoulder();
+	EquipmentShoulder(CString szName, CString szXFileName);
 	~EquipmentShoulder();
 
 	void Set(int iHP, int iMP, int iDEF_PHY, int iDEF_MGR, eChrType chrType);
@@ -69,7 +69,7 @@ public:
 class EquipmentHelmet : public ItemInfo
 {
 public:
-	EquipmentHelmet();
+	EquipmentHelmet(CString szName, CString szXFileName);
 	~EquipmentHelmet();
 
 	void Set(int iHP, int iMP, int iDEF_PHY, int iDEF_MGR, eChrType chrType);
@@ -90,7 +90,7 @@ public:
 class EquipmentShield : public ItemInfo
 {
 public:
-	EquipmentShield();
+	EquipmentShield(CString szName, CString szXFileName);
 	~EquipmentShield();
 
 	// TODO : 능력치 정보 기획에 맞게 수정 가능
@@ -102,7 +102,7 @@ public:
 class EquipmentWeapon : public ItemInfo
 {
 public:
-	EquipmentWeapon();
+	EquipmentWeapon(CString szName, CString szXFileName);
 	~EquipmentWeapon();
 
 	// TODO : 능력치 정보 기획에 맞게 수정 가능

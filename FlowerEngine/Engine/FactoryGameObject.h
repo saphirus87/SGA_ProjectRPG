@@ -23,7 +23,7 @@ public:
 	GameObject* CreateUIButton(GameObject* pParent, CString szName, CString szFileName, float fPosX = 0.0f, float fPosY = 0.0f);
 	GameObject* CreateFromXFile(CString szName, CString szFolderPath, CString szFileName, Vector3& pos);
 	GameObject* CreateObjMap(CString szName, CString szFolderPath, CString szFileName);
-	GameObject* CreateEquipment(CString szName, CString szFolderPath, CString szFileName, Vector3& pos, bool IsMirrored = false);
+//	GameObject* CreateEquipment(CString szName, CString szFolderPath, CString szFileName, Vector3& pos, bool IsMirrored = false);
 	GameObject* CreateEquipment(ItemInfo* pItemInfo, Vector3& pos, bool IsMirrored = false);
 };
 
