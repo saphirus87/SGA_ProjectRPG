@@ -194,13 +194,13 @@ LPCSTR ComChrEquipment::GetFrameName(ItemInfo * itemInfo, eRenderEquipment rende
 		case eRenderEquipment_ShoulderL:
 			return "character_human_male_humanmale_hd_bone_27";
 		case eRenderEquipment_Helmet:
-			return "";
+			return "character_human_male_humanmale_hd_bone_39";
 		case eRenderEquipment_Shield:
 			return "";
 		case eRenderEquipment_WeaponR:
-			return "";
+			return "character_human_male_humanmale_hd_bone_46";
 		case eRenderEquipment_WeaponL:
-			return "";
+			return "character_human_male_humanmale_hd_bone_41";
 		}
 
 		// ¿¹Àü°Í
