@@ -405,12 +405,14 @@
     <ClCompile Include="Application\ChrStateWalk.cpp">
       <Filter>Application\Components\ComCharactor\ChrState</Filter>
     </ClCompile>
-    <ClCompile Include="Application\ChrStateAttack.cpp" />
     <ClCompile Include="Application\ComChrEquipment.cpp">
       <Filter>Application\Components\ComEquipment</Filter>
     </ClCompile>
     <ClCompile Include="Application\ComEquipment.cpp">
       <Filter>Application\Components\ComEquipment</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ChrStateAttack.cpp">
+      <Filter>Application\Components\ComCharactor\ChrState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -624,12 +626,14 @@
     <ClInclude Include="Application\ChrStateWalk.h">
       <Filter>Application\Components\ComCharactor\ChrState</Filter>
     </ClInclude>
-    <ClInclude Include="Application\ChrStateAttack.h" />
     <ClInclude Include="Application\ComChrEquipment.h">
       <Filter>Application\Components\ComEquipment</Filter>
     </ClInclude>
     <ClInclude Include="Application\ComEquipment.h">
       <Filter>Application\Components\ComEquipment</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ChrStateAttack.h">
+      <Filter>Application\Components\ComCharactor\ChrState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
