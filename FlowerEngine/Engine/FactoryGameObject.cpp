@@ -326,11 +326,17 @@ GameObject * FactoryGameObject::CreateEquipment(ItemInfo * pItemInfo, Vector3 & 
 	else
 		pMesh->Clone((ComRenderEquipment*)pGOExist->GetComponent("ComRenderEquipment"));
 
+	// 텍스쳐 변경
+	switch (pItemInfo->Type)
+	{
+	case eItem_Shoulder:
+		pMesh->ChangeTexture(0, ((EquipmentShoulder*)(pItemInfo))->TextureName);
+		break;
+	}
+
 	// 크기를 100으로 맞춰주는 이유는 .X File Export시 본 크기가 0.01인듯함.
-	if (IsMirrored == false)
-		pGOEquipment->transform->SetScale(100, 100, 100); // .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
-	else
-		pGOEquipment->transform->SetScale(100, -100, 100); // .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
+	if (IsMirrored == true)
+		pGOEquipment->transform->SetScale(1, -1, 1); // .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
 
 	pGOEquipment->AddComponent(pMesh);
 	pGOEquipment->transform->SetPosition(pos);

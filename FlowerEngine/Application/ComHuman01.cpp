@@ -47,9 +47,7 @@ void ComHuman01::OnTriggerEnter(ComCollider & collider)
 		ComEquipment* pEquipment = (ComEquipment*)gameObject->GetComponent("ComEquipment");
 		if (pEquipment != NULL)
 		{
-			EquipmentShoulder* pShoulder = new EquipmentShoulder;
-			pShoulder->Set(10, 10, 10, 10);
-			pEquipment->Equip(pShoulder, collider.gameObject);
+			pEquipment->GetEquip(collider.gameObject);
 		}
 	}
 }

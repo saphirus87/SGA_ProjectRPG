@@ -49,7 +49,7 @@ public:
 	EquipmentShoulder();
 	~EquipmentShoulder();
 
-	void Set(int iHP, int iMP, int iDEF_PHY, int iDEF_MGR, eChrType chrType = eChrType_Human);
+	void Set(int iHP, int iMP, int iDEF_PHY, int iDEF_MGR, eChrType chrType);
 
 	CString TextureName;
 	// TODO : 능력치 정보 기획에 맞게 수정 가능

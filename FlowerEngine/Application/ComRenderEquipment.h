@@ -36,6 +36,10 @@ public:
 
 	// 아이템 정보
 	ItemInfo * pItemInfo;
+	
+private:
+	void RenderShader();
+
 private:
 	Device9 pDevice9;
 	Shader m_pEffect;

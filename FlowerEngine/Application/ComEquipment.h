@@ -58,11 +58,14 @@ public:
 	// 아이템 이름으로 텍스쳐를 변경합니다.
 	void ChangeTexture(eEquipment type, CString szItemName);
 
-	// 장비를 장착합니다.
-	void Equip(ItemInfo* pItem, GameObject* pGOEquipment = NULL);
+	// 장비를 장착합니다. (초기 아이템 장착시, 서버에서 데이터 받은경우등)
+	void Equip(ItemInfo* pItem);
+
+	// 장비를 장착합니다. (아이템을 주었을 때)
+	void GetEquip(GameObject* pGOEquipment = NULL);
 	
 private:
-	map<CString, CString> m_mapTextureName;
+	//map<CString, CString> m_mapTextureName;
 	
 	// 장착된 장비 아이템들
 	vector<ItemInfo*> m_vecEquipedItems;

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ComRenderEquipment.h"
 #include "ComTerrain.h"
+#include "ItemInfo.h"
 
 ComRenderEquipment::ComRenderEquipment(CString szName) : 
 	Component(szName),
@@ -21,7 +22,6 @@ ComRenderEquipment::ComRenderEquipment(CString szName) :
 
 ComRenderEquipment::~ComRenderEquipment()
 {
-	SAFE_DELETE(pItemInfo);
 	SAFE_RELEASE(m_pMesh);
 	m_vecMtrl.clear();
 }
@@ -53,36 +53,13 @@ void ComRenderEquipment::Update()
 
 void ComRenderEquipment::Render()
 {
+	// 장착이 안되었을 경우 뼈대 행렬을 곱하지 않는다. 그러므로 크기는 다시 1이된다.
+	// 지형 위에서 렌더링
 	if (IsEquiped == false)
 	{
-		// 현재 행렬 * Combined Matrix * parent Obj Matrix (현재 행렬은 즉 scale, rot, transfomation)
-		gameObject->transform->SetScale(1.0f, 1.0f, 1.0f);
 		m_matFinal = gameObject->transform->GetWorldMatrix();
 
-		m_pEffect->SetMatrix("gWorldMatrix", &m_matFinal);
-		m_pEffect->SetMatrix("gViewMatrix", &Camera::GetInstance()->GetViewMatrix());
-		m_pEffect->SetMatrix("gProjMatrix", &Camera::GetInstance()->GetProjMatrix());
-
-		UINT pass;
-		m_pEffect->Begin(&pass, NULL);
-		m_pEffect->BeginPass(0);
-
-		for (DWORD i = 0; i < m_iNumMaterials; ++i)
-		{
-			m_pEffect->SetTexture("DiffuseMap_Tex", m_vecMtrl[i].pTexture);
-			m_pEffect->CommitChanges();
-			if (IsMirrored)
-				pDevice9->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
-			else
-				pDevice9->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-			m_pMesh->DrawSubset(i);
-		}
-
-		pDevice9->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-		m_pEffect->EndPass();
-		m_pEffect->End();
+		RenderShader();
 	}
 }
 
@@ -129,6 +106,16 @@ void ComRenderEquipment::Render(Matrix4x4 * pMatFrame, Matrix4x4 * pMatParent)
 	// 현재 행렬 * Combined Matrix * parent Obj Matrix (현재 행렬은 즉 scale, rot, transfomation)
 	m_matFinal = gameObject->transform->GetWorldMatrix() * m_matFrame * m_matParent;
 
+	RenderShader();
+}
+
+void ComRenderEquipment::ChangeTexture(int iIndex, CString szTextureName)
+{
+	m_vecMtrl[iIndex].pTexture = Assets::GetTexture(szTextureName);
+}
+
+void ComRenderEquipment::RenderShader()
+{
 	m_pEffect->SetMatrix("gWorldMatrix", &m_matFinal);
 	m_pEffect->SetMatrix("gViewMatrix", &Camera::GetInstance()->GetViewMatrix());
 	m_pEffect->SetMatrix("gProjMatrix", &Camera::GetInstance()->GetProjMatrix());
@@ -153,9 +140,4 @@ void ComRenderEquipment::Render(Matrix4x4 * pMatFrame, Matrix4x4 * pMatParent)
 
 	m_pEffect->EndPass();
 	m_pEffect->End();
-}
-
-void ComRenderEquipment::ChangeTexture(int iIndex, CString szTextureName)
-{
-	m_vecMtrl[iIndex].pTexture = Assets::GetTexture(szTextureName);
 }

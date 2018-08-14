@@ -20,8 +20,15 @@ SceneGrid::~SceneGrid()
 void SceneGrid::Init()
 {
 	CreateMap();
+	CreateMapObject();
 
-	CreateCharacter();
+	// testcode : 맵 생성 후 캐릭터 생성
+	//GameObject* pGOChrX = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 3));
+	//GameObject* pGOChrX2 = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 4));
+
+	CreateHuman01();
+	CreateUndead01();
+	CreateTroll01();
 	//CreateMonster();
 	CreateTest();
 }
@@ -33,31 +40,56 @@ void SceneGrid::CreateMap()
 	GameObject* pObjMap = factory.CreateObjMap("ObjMap", "./Resources/obj/Map/TestMap/", "Terrain.obj");
 }
 
-void SceneGrid::CreateCharacter()
+void SceneGrid::CreateMapObject()
 {
-	// 맵 생성 후 캐릭터 생성
-	//GameObject* pGOChrX = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 3));
-	//GameObject* pGOChrX2 = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 4));
-	
-	//GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(2.0780f, 146.0027f, -2.0740f));
-	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(2, 15, 5));
-	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
-	pGOChrX3->AddComponent(new ComChrControl("ComChrControl"));
-	ComEquipment* pEquipment = new ComEquipment("ComEquipment");
-	pGOChrX3->AddComponent(pEquipment);
-	pGOChrX3->AddComponent(new ComCollider("ComCollider"));
-	// 휴먼 캐릭터 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
-	
+	// 아이템 정보를 통하여 맵에 게임오브젝트(어깨 방어구) 생성
 	EquipmentShoulder* pShoulder = new EquipmentShoulder;
-	pShoulder->Set(10, 10, 10, 10);
+	pShoulder->Set(10, 10, 10, 10, eChrType_Human);
 	pShoulder->Name = "Equipment_shoulder_ItemName01";
 	pShoulder->FolderPath = "Resources/character/Equipment/";
 	pShoulder->XFileName = "shoulder_01.X";
 	pShoulder->TextureName = "Resources/character/Equipment/shoulder_plate_d_02copper.png";
-	
+
 	GameObject* pGOShoulder = factory.CreateEquipment(pShoulder, Vector3(3, 10, -8));
 	pGOShoulder->transform->SetPosition(2, 15, 10);
 	pGOShoulder->AddComponent(new ComCollider("ComCollider"));
+}
+
+void SceneGrid::CreateHuman01()
+{
+	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(2, 15, 5));
+	// 이 게임 오브젝트는 휴먼
+	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
+	// 이 게임 오브젝트는 컨트롤 가능
+	pGOChrX3->AddComponent(new ComChrControl("ComChrControl"));
+	// 이 게임 오브젝트는 장비 장착 가능
+	ComEquipment* pEquipment = new ComEquipment("ComEquipment");
+	pGOChrX3->AddComponent(pEquipment);
+	// 이 게임 오브젝트는 충돌체크 가능
+	pGOChrX3->AddComponent(new ComCollider("ComCollider"));
+
+	// 장비 장착
+	EquipmentHelmet* pHelmet = new EquipmentHelmet;
+	pHelmet->Set(10, 10, 10, 10);
+	pEquipment->Equip(pHelmet);
+
+	EquipmentShield* pShield = new EquipmentShield;
+	pEquipment->Equip(pShield);
+
+	EquipmentWeapon* pWeaponR = new EquipmentWeapon;
+	pEquipment->Equip(pWeaponR);
+
+	// 카메라
+	Camera::GetInstance()->SetTarget(&pGOChrX3->transform->GetPosition());
+}
+
+void SceneGrid::CreateUndead01()
+{
+	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(2, 15, 6));
+	pGOChrX4->AddComponent(new ComUndead01("ComUndead01"));
+	pGOChrX4->AddComponent(new ComChrControl("ComChrControl"));
+	ComEquipment* pEquipment = new ComEquipment("ComEquipment");
+	pGOChrX4->AddComponent(pEquipment);
 
 	EquipmentHelmet* pHelmet = new EquipmentHelmet;
 	pHelmet->Set(10, 10, 10, 10);
@@ -68,55 +100,42 @@ void SceneGrid::CreateCharacter()
 
 	EquipmentWeapon* pWeaponR = new EquipmentWeapon;
 	pEquipment->Equip(pWeaponR);
-	
-	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(2, 15, 6));
-	pGOChrX4->AddComponent(new ComUndead01("ComUndead01"));
-	pGOChrX4->AddComponent(new ComChrControl("ComChrControl"));
-	pEquipment = new ComEquipment("ComEquipment");
-	pGOChrX4->AddComponent(pEquipment);
 
-	pHelmet = new EquipmentHelmet;
-	pHelmet->Set(10, 10, 10, 10);
-	pEquipment->Equip(pHelmet);
+	EquipmentShoulder* pShoulder = new EquipmentShoulder;
+	pShoulder->Set(10, 10, 10, 10, eChrType_Undead);
+	pShoulder->Name = "Equipment_shoulder_ItemName01";
+	pShoulder->FolderPath = "Resources/character/Equipment/";
+	pShoulder->XFileName = "shoulder_01.X";
+	pShoulder->TextureName = "Resources/character/Equipment/shoulder_robe_b_03blue.png";
+	pEquipment->Equip(pShoulder);
+}
 
-	pShield = new EquipmentShield;
-	pEquipment->Equip(pShield);
-
-	pWeaponR = new EquipmentWeapon;
-	pEquipment->Equip(pWeaponR);
-
-	pShoulder = new EquipmentShoulder;
-	pShoulder->Set(10, 10, 10, 10, eChrType_Troll);
-	pGOShoulder = factory.CreateEquipment("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", Vector3(3, 10, -8));
-	pGOShoulder->transform->SetPosition(2, 15, 7);
-	pEquipment->Equip(pShoulder, pGOShoulder);
-	
+void SceneGrid::CreateTroll01()
+{
 	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(2, 15, 7));
 	pGOChrX5->AddComponent(new ComTroll01("ComTroll01"));
 	pGOChrX5->AddComponent(new ComChrControl("ComChrControl"));
-	pEquipment = new ComEquipment("ComEquipment");
+	ComEquipment* pEquipment = new ComEquipment("ComEquipment");
 	pGOChrX5->AddComponent(pEquipment);
-	
-	// 휴먼 캐릭터 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
-	pShoulder = new EquipmentShoulder;
-	pShoulder->Set(10, 10, 10, 10, eChrType_Troll);
-	pGOShoulder = factory.CreateEquipment("Equipment_shoulder", "Resources/character/Equipment/", "shoulder_01.X", Vector3(3, 10, -8));
-	pGOShoulder->transform->SetPosition(2, 15, 7);
-	pEquipment->Equip(pShoulder, pGOShoulder);
 
-	pHelmet = new EquipmentHelmet;
+	// 휴먼 캐릭터 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
+	EquipmentShoulder*pShoulder = new EquipmentShoulder;
+	pShoulder->Set(10, 10, 10, 10, eChrType_Troll);
+	pShoulder->Name = "Equipment_shoulder_ItemName01";
+	pShoulder->FolderPath = "Resources/character/Equipment/";
+	pShoulder->XFileName = "shoulder_01.X";
+	pShoulder->TextureName = "Resources/character/Equipment/shoulder_robe_b_03blue.png";
+	pEquipment->Equip(pShoulder);
+
+	EquipmentHelmet* pHelmet = new EquipmentHelmet;
 	pHelmet->Set(10, 10, 10, 10);
 	pEquipment->Equip(pHelmet);
 
-	pShield = new EquipmentShield;
+	EquipmentShield* pShield = new EquipmentShield;
 	pEquipment->Equip(pShield);
 
-	pWeaponR = new EquipmentWeapon;
+	EquipmentWeapon* pWeaponR = new EquipmentWeapon;
 	pEquipment->Equip(pWeaponR);
-	
-	
-	// 카메라
-	Camera::GetInstance()->SetTarget(&pGOChrX4->transform->GetPosition());
 }
 
 void SceneGrid::CreateMonster()
