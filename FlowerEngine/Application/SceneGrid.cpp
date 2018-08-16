@@ -216,7 +216,6 @@ void SceneGrid::CreateTest()
 	// 포스트 이펙트
 	GameObject* pPostEffect = factory.CreateGameObject("PostEffect");
 	pPostEffect->IsAlwaysRender = true;
-	pPostEffect->transform->SetPosition(0, 0, -2);
 	pPostEffect->AddComponent(comPostProcess);
 
 }

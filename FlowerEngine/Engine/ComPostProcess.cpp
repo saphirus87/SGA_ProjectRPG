@@ -259,7 +259,8 @@ void ComPostProcess::Render()
 				}
 			}
 		}
-		m_pGrid->Render();
+		if (m_pGrid)
+			m_pGrid->Render();
 
 		m_listRenderObject.sort(CompareZ);
 		for (auto & o : m_listRenderObject)

@@ -55,6 +55,8 @@ void Scene::Render()
 	// UI나 파티클 때문에 Z소팅
 	m_listRender.clear();
 	m_listRenderUI.clear();
+
+	GameObject* pGOPostEffect = NULL;
 	for (auto & go : GameObject::m_mapGameObjects)
 	{
 		if (go.second->Name().Find(L"UI") >= 0)
@@ -67,12 +69,17 @@ void Scene::Render()
 			{
 				Vector3 camPos = Camera::GetInstance()->GetPosition();
 				go.second->fDistanceToCamera = ComTransform::Distance(go.second, &camPos);
-				m_listRender.push_back(go.second);
+
+				if (go.second->Name().Find(L"PostEffect") >= 0)
+					pGOPostEffect = go.second;
+				else
+					m_listRender.push_back(go.second);
 			}
 		}
 	}
 
 	m_listRender.sort(CompareDist);
+	m_listRender.push_back(pGOPostEffect);
 	m_listRenderUI.sort(CompareZ);
 
 	for (auto & go : m_listRender)
