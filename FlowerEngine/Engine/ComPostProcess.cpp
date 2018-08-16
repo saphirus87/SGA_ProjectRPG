@@ -95,7 +95,6 @@ void ComPostProcess::Awake()
 	g_aszFxFile.push_back(szFolder + "PP_PositionMap.fx");
 
 	m_pEffect = Shaders::GetInstance()->GetShader("Resources/shader/PostEffect/Scene.fx");
-	m_pEffect->SetMatrix("g_mProj", &Camera::GetInstance()->GetProjMatrix());
 	
 	HRESULT hr;
 	const D3DSURFACE_DESC* pBackBufferSurfaceDesc = DXUTGetD3D9BackBufferSurfaceDesc();
@@ -230,7 +229,6 @@ void ComPostProcess::Update()
 void ComPostProcess::Render()
 {
 	pDevice9->EndScene();
-	HRESULT hr;
 
 	// Save render target 0 so we can restore it later
 	IDirect3DSurface9* pOldRT;
@@ -244,7 +242,7 @@ void ComPostProcess::Render()
 		}
 
 		// Clear the render target and the zbuffer 
-		V(pDevice9->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(1, 64, 64, 64), 1.0f, 0));
+		pDevice9->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(1, 64, 64, 64), 1.0f, 0);
 		
 		if (m_pGrid == NULL)
 		{
@@ -262,11 +260,12 @@ void ComPostProcess::Render()
 		if (m_pGrid)
 			m_pGrid->Render();
 
-		m_listRenderObject.sort(CompareZ);
+		/*m_listRenderObject.sort(CompareZ);
 		for (auto & o : m_listRenderObject)
-			o->Render();
+			o->Render();*/
 		// Render the skybox as if the camera is at center
 		D3DXMATRIXA16 mWorldView;
+		D3DXMatrixIdentity(&mWorldView);
 		m_pEffect->SetTechnique("RenderSkyBox");
 		pDevice9->SetVertexDeclaration(g_pSkyBoxDecl);
 
@@ -275,31 +274,35 @@ void ComPostProcess::Render()
 
 		D3DXMatrixScaling(&mWorldView, 100.0f, 100.0f, 100.0f);
 		D3DXMatrixMultiply(&mWorldView, &mWorldView, &mView);
-		V(m_pEffect->SetMatrix("g_mWorldView", &mWorldView));
-		V(m_pEffect->SetTexture("g_txScene", g_pEnvTex));
+		m_pEffect->SetMatrix("g_mWorldView", &mWorldView);
+		Camera::GetInstance()->SetProj(1000);
+		Matrix4x4 matProj = Camera::GetInstance()->GetProjMatrix();
+		Camera::GetInstance()->SetProj(100);
+		m_pEffect->SetMatrix("g_mProj", &matProj);
+		m_pEffect->SetTexture("g_txScene", g_pEnvTex);
 
 		UINT cPass;
 		LPD3DXMESH pMeshObj = g_Skybox.GetMesh();
-		V(m_pEffect->Begin(&cPass, 0));
+		m_pEffect->Begin(&cPass, 0);
 		for (int p = 0; p < cPass; ++p)
 		{
 			// Set the render target(s) for this pass
 			for (int rt = 0; rt < g_nRtUsed; ++rt)
-				V(pDevice9->SetRenderTarget(rt, g_aRtTable[p].pRT[rt]));
+				pDevice9->SetRenderTarget(rt, g_aRtTable[p].pRT[rt]);
 
-			V(m_pEffect->BeginPass(p));
+			m_pEffect->BeginPass(p);
 
 			// Iterate through each subset and render with its texture
 			for (DWORD m = 0; m < g_Skybox.m_dwNumMaterials; ++m)
 			{
-				V(m_pEffect->SetTexture("g_txScene", g_Skybox.m_pTextures[m]));
-				V(m_pEffect->CommitChanges());
-				V(pMeshObj->DrawSubset(m));
+				m_pEffect->SetTexture("g_txScene", g_Skybox.m_pTextures[m]);
+				m_pEffect->CommitChanges();
+				pMeshObj->DrawSubset(m);
 			}
 
-			V(m_pEffect->EndPass());
+			m_pEffect->EndPass();
 		}
-		V(m_pEffect->End());
+		m_pEffect->End();
 
 		m_listRenderObject.sort(CompareZ);
 		for (auto & o : m_listRenderObject)
@@ -320,7 +323,7 @@ void ComPostProcess::Render()
 
 	// Reset all render targets used besides RT 0
 	for (i = 1; i < g_nRtUsed; ++i)
-		V(pDevice9->SetRenderTarget(i, NULL));
+		pDevice9->SetRenderTarget(i, NULL);
 
 	//
 	// Perform post-processes
@@ -331,7 +334,7 @@ void ComPostProcess::Render()
 		PerformPostProcess(pDevice9);
 
 	// Restore old render target 0 (back buffer)
-	V(pDevice9->SetRenderTarget(0, pOldRT));
+	pDevice9->SetRenderTarget(0, pOldRT);
 	SAFE_RELEASE(pOldRT);
 
 	//
@@ -351,20 +354,20 @@ void ComPostProcess::Render()
 		IDirect3DTexture9* pPrevTarget;
 		pPrevTarget = (bPerformPostProcess) ? g_RTChain[0].GetPrevTarget() : g_pSceneSave[0];
 
-		V(pDevice9->SetVertexDeclaration(m_pVertexDecl));
-		V(m_pEffect->SetTechnique("RenderNoLight"));
-		V(m_pEffect->SetTexture("g_txScene", pPrevTarget));
+		pDevice9->SetVertexDeclaration(m_pVertexDecl);
+		m_pEffect->SetTechnique("RenderNoLight");
+		m_pEffect->SetTexture("g_txScene", pPrevTarget);
 		UINT cPasses;
-		V(m_pEffect->Begin(&cPasses, 0));
+		m_pEffect->Begin(&cPasses, 0);
 		for (int p = 0; p < cPasses; ++p)
 		{
-			V(m_pEffect->BeginPass(p));
-			V(pDevice9->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, quad, sizeof(PPVERT)));
-			V(m_pEffect->EndPass());
+			m_pEffect->BeginPass(p);
+			pDevice9->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, quad, sizeof(PPVERT));
+			m_pEffect->EndPass();
 		}
-		V(m_pEffect->End());
+		m_pEffect->End();
 
-		V(pDevice9->EndScene());
+		pDevice9->EndScene();
 	}
 
 	pDevice9->BeginScene();

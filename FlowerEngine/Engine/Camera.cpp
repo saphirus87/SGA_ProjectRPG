@@ -34,11 +34,8 @@ void Camera::Init()
 	// View를 얘로 쓰겠다.
 	pDevice9->SetTransform(D3DTS_VIEW, &m_matView);
 
-	RECT clientRect = DXUTGetWindowClientRect();
+	SetProj(100);
 	
-	// 투영 행렬 왼손 좌표계, 시야각 45도, 화면 사이즈 종횡비, 보이는 거리 1~1000
-	D3DXMatrixPerspectiveFovLH(&m_matProj, D3DX_PI / 4.0f, clientRect.right / (float)clientRect.bottom, 1, 100);
-
 	pDevice9->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
 	// Projection 변환 상태에서의 프러스텀 박스
@@ -140,6 +137,13 @@ void Camera::Render()
 	pDevice9->SetFVF(VERTEX_PC::FVF);
 	pDevice9->DrawPrimitiveUP(D3DPT_LINELIST, m_worldVtx.size() / 2, &m_worldVtx[0], sizeof(VERTEX_PC));
 	pDevice9->SetRenderState(D3DRS_LIGHTING, true);*/
+}
+
+void Camera::SetProj(float fDistZ)
+{
+	RECT clientRect = DXUTGetWindowClientRect();
+	// 투영 행렬 왼손 좌표계, 시야각 45도, 화면 사이즈 종횡비, 보이는 거리 1~1000
+	D3DXMatrixPerspectiveFovLH(&m_matProj, D3DX_PI / 4.0f, clientRect.right / (float)clientRect.bottom, 1, fDistZ);
 }
 
 Camera * Camera::GetInstance()

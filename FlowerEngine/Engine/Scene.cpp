@@ -85,7 +85,7 @@ void Scene::Render()
 	for (auto & go : m_listRender)
 	{
 		// 절두체 안에 있는 게임오브젝트만 컬링
-		if ((go != NULL /*&& go->IsInFrustum*/) || go->IsAlwaysRender)
+		if (go != NULL)
 		{
 			go->Render();
 			++iRenderObjCnt;

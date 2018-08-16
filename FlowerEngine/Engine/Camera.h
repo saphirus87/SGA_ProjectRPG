@@ -9,6 +9,9 @@ public:
 	void Delete();
 	void Update(float fElapsedTime);
 	void Render();
+
+	void SetProj(float fDistZ);
+
 	void SetTarget(Vector3* pTarget) { m_pTarget = pTarget; }
 	const Vector3& GetPosition() { return m_eye; }
 	const Vector4& GetPosition4() { return Vector4(m_eye, 1); }
