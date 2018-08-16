@@ -7,6 +7,7 @@ ComFollowTarget::ComFollowTarget(CString szName) :
 	accellation(0.0f),
 	m_fLerp(0.003f),
 	IsFollowing(false),
+	AbleAttack(false), 
 	pTarget(NULL)
 {
 }
@@ -28,8 +29,14 @@ void ComFollowTarget::Update()
 
 	// Target 위치와 나의 위치가 특정 거리 이하이면
 	float fDistance = ComTransform::Distance(gameObject, pTarget);
+	
+	// 초기화 
+	AbleAttack = false;
+	IsFollowing = false;
 
-	if (fDistance < 20.0f)
+	if (fDistance < 1.0f)
+		AbleAttack = true;
+	else if (fDistance < 20.0f)
 	{
 		IsFollowing = true;
 		// 플레이어를 바라보는 방향 벡터
@@ -51,8 +58,6 @@ void ComFollowTarget::Update()
 		if (m_fLerp >= 1.0f)
 			m_fLerp = 0.0f;
 	}
-	else
-		IsFollowing = false;
 }
 
 void ComFollowTarget::Render()

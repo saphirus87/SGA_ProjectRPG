@@ -19,7 +19,9 @@ public:
 	// 따라가야 할 타겟
 	GameObject * pTarget;
 	// 타겟을 따라가는 중 여부
-	bool IsFollowing; 
+	bool IsFollowing;
+	// 공격 가능 여부
+	bool AbleAttack;
 
 private:
 	float m_fLerp;

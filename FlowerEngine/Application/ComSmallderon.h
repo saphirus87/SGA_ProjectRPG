@@ -2,6 +2,8 @@
 #include "stdafx.h"
 
 class ComObjMap;
+class ComFollowTarget;
+class IChrState;
 
 class ComSmallderon : public Component
 {
@@ -14,9 +16,14 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
+	void Stand();
+	void Walk();
+	void Attack1();
 private:
-	ComRenderSkinnedMesh * m_pAnimation;
 	ComObjMap* m_pMap;
-
+	ComFollowTarget* m_pTarget;
+	
+	ComRenderSkinnedMesh * m_pAnimation;
+	IChrState * m_pCurrentState;
 };
 

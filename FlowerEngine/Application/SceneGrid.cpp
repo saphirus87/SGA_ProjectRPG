@@ -9,6 +9,7 @@
 #include "../Application/ComSmallderon.h"
 #include "../Application/ItemInfo.h"
 #include "../Application/ComEquipment.h"
+#include "../Application/ComFollowTarget.h"
 
 SceneGrid::SceneGrid(CString szName) : Scene(szName)
 {
@@ -151,7 +152,10 @@ void SceneGrid::CreateMonster()
 {
 	// 몬스터 생성
 	GameObject* pGOMonX = factory.CreateFromXFile("smallderon_orange", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-250, 15, -250));
+	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
+	pGOMonX->AddComponent(pComTarget);
 	pGOMonX->AddComponent(new ComSmallderon("ComSmallderon"));
+	pComTarget->pTarget = GameObject::Find("undead_01");
 }
 
 void SceneGrid::CreateTest()
