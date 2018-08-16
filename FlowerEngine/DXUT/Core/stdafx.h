@@ -388,6 +388,7 @@ using namespace std;
 #include "../../Engine/GlobalDefinition.h"
 #include "../../Engine/Component.h"
 #include "../../Engine/ComTransform.h"
+#include "../../Engine/ComRenderCubePN.h"
 #include "../../Engine/ComCollider.h"
 #include "../../Engine/ComRenderAse.h"
 #include "../../Engine/ComRenderPOM.h"

@@ -18,8 +18,14 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
+	
+	void Set(Vector3& scale, bool isRender);
+
 	Vector3 minPos;
 	Vector3 maxPos;
 	Vector3 oriPos;
+
+private:
+	ComRenderCubePN * m_pCube;
 };
 

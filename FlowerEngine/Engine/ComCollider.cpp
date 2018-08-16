@@ -5,9 +5,9 @@
 ComCollider::ComCollider(CString szName) : 
 	Component(szName), 
 	minPos(Vector3(-1.0f, -1.0f, -1.0f)),
-	maxPos(Vector3( 1.0f,  1.0f,  1.0f))
+	maxPos(Vector3( 1.0f,  1.0f,  1.0f)),
+	m_pCube(NULL)
 {
-	
 }
 
 
@@ -34,6 +34,8 @@ bool ComCollider::IsPointInside(Vector3 & p)
 void ComCollider::Awake()
 {
 	oriPos = ((ComTransform*)gameObject->GetComponent("ComTransform"))->GetPosition();
+	m_pCube = new ComRenderCubePN("ComRenderCubePN");
+	gameObject->AddComponent(m_pCube);
 }
 
 void ComCollider::Update()
@@ -42,4 +44,16 @@ void ComCollider::Update()
 
 void ComCollider::Render()
 {
+}
+
+void ComCollider::Set(Vector3 & scale, bool isRender)
+{
+	if (m_pCube == NULL)
+		return;
+
+	minPos.x *= scale.x; minPos.y *= scale.y; minPos.z *= scale.z;
+	maxPos.x *= scale.x; maxPos.y *= scale.y; maxPos.z *= scale.z;
+
+	m_pCube->SetLocalVertexScale(scale);
+	m_pCube->IsRender = isRender;
 }
