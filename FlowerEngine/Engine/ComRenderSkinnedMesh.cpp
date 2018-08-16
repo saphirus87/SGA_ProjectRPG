@@ -47,7 +47,7 @@ void ComRenderSkinnedMesh::Load(CString szFolderPath, CString szFileName)
 	
 	int numTrack = m_pAniControl->GetMaxNumTracks();
 	for (int iTrack = 0; iTrack < numTrack; ++iTrack)
-		m_pAniControl->SetTrackSpeed(iTrack, 0.5f);
+		m_pAniControl->SetTrackSpeed(iTrack, 0.8f);
 
 	// 3. 루트 뼈대 부터 행렬 포인터들 설정
 	SetupBoneMatrixPointers(m_pRootFrame);

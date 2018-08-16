@@ -32,7 +32,7 @@ void SceneGrid::Init()
 	CreateUndead01();
 	CreateTroll01();
 	CreateMonster();
-	CreateTest();
+	//CreateTest();
 }
 
 void SceneGrid::CreateMap()
