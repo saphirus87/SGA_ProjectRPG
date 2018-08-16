@@ -6,7 +6,8 @@ ComFollowTarget::ComFollowTarget(CString szName) :
 	Component(szName),
 	accellation(0.0f),
 	m_fLerp(0.003f),
-	IsFollowing(false)
+	IsFollowing(false),
+	pTarget(NULL)
 {
 }
 
@@ -17,11 +18,14 @@ ComFollowTarget::~ComFollowTarget()
 
 void ComFollowTarget::Awake()
 {
-	pTarget = GameObject::Find("Aircraft");
+	
 }
 
 void ComFollowTarget::Update()
 {
+	if (pTarget == NULL)
+		return;
+
 	// Target 위치와 나의 위치가 특정 거리 이하이면
 	float fDistance = ComTransform::Distance(gameObject, pTarget);
 

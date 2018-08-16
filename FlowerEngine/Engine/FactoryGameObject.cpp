@@ -158,6 +158,7 @@ GameObject * FactoryGameObject::CreateAircraftEnermy(CString szName, float fPosX
 	GameObject* pGOEnermy = CreateCubePN(szName);
 	ComFollowTarget* pComEnermy = new ComFollowTarget("ComFollowTarget");
 	pGOEnermy->AddComponent(pComEnermy);
+	pComEnermy->pTarget = GameObject::Find("Aircraft");
 	pGOEnermy->transform->SetPosition(fPosX, fPosY, fPosZ);
 	
 	ComShooting* pShooting = new ComShooting("ComShooting");
