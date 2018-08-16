@@ -279,34 +279,6 @@ GameObject * FactoryGameObject::CreateObjMap(CString szName, CString szFolderPat
 
 	return pGO;
 }
-//
-//GameObject * FactoryGameObject::CreateEquipment(CString szName, CString szFolderPath, CString szFileName, Vector3& pos, bool IsMirrored)
-//{
-//	// PROTOTYPE PATTERN 이미 있는 오브젝트 검사
-//	GameObject* pGOExist = GameObject::Find(szName);
-//	
-//	GameObject* pGOEquipment = new GameObject(szName);
-//
-//	ComEquipment* pMesh = new ComEquipment("ComEquipment");
-//	pMesh->IsMirrored = IsMirrored;
-//
-//	// 이미 존재하는 게임 오브젝트라면 복제(Clone) 하여 메쉬를 공유하여 사용합니다.
-//	if (pGOExist == NULL)
-//		pMesh->Load(szFolderPath, szFileName);
-//	else
-//		pMesh->Clone((ComEquipment*)pGOExist->GetComponent("ComEquipment"));
-//	
-//	// 크기를 100으로 맞춰주는 이유는 .X File Export시 본 크기가 0.01인듯함.
-//	if (IsMirrored == false)
-//		pGOEquipment->transform->SetScale(100, 100, 100); // .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
-//	else
-//		pGOEquipment->transform->SetScale(100, -100, 100); // .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
-//
-//	pGOEquipment->AddComponent(pMesh);
-//	pGOEquipment->transform->SetPosition(pos);
-//	
-//	return pGOEquipment;
-//}
 
 GameObject * FactoryGameObject::CreateEquipment(ItemInfo * pItemInfo, Vector3 & pos, bool IsMirrored)
 {

@@ -23,18 +23,26 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
-	void RenderUseShader();
 	void RenderRambert();
 	bool IsRenderShader;
+	// 렌더링 할지 여부
+	bool IsRender;
+	
+	void SetLocalVertexScale(Vector3& vScale);
 
 private:
 	Device9			pDevice9;
+	Shader			m_pEffect;
+
 	VertexBuffer	m_pVB; // 버퍼를 사용해서 그리기
 	IndexBuffer		m_pIB;
+	VertexDecl		m_pVertexDecl;
 
 	vector<VERTEX_PN> m_verticesPN;
 	vector<WORD> m_indices;
 
+	Material		m_material;
+	
 	int m_iVertexCnt;
 	int m_iPrimitiveCnt;
 };

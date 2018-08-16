@@ -50,7 +50,9 @@ void SceneGrid::CreateMapObject()
 	GameObject* pGOShoulder = factory.CreateEquipment(pShoulder, Vector3(3, 10, -8));
 	((ComEquipment*)pGOShoulder->GetComponent("ComEquipment"))->pItemInfo = pShoulder;
 	pGOShoulder->transform->SetPosition(-260, 15, -255);
-	pGOShoulder->AddComponent(new ComCollider("ComCollider"));
+	ComCollider* pCollider = new ComCollider("ComCollider");
+	pGOShoulder->AddComponent(pCollider);
+	pCollider->Set(Vector3(0.1, 0.1, 0.1), false);
 }
 
 void SceneGrid::CreateHuman01()
@@ -64,7 +66,9 @@ void SceneGrid::CreateHuman01()
 	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
 	pGOChrX3->AddComponent(pEquipment);
 	// 이 게임 오브젝트는 충돌체크 가능
-	pGOChrX3->AddComponent(new ComCollider("ComCollider"));
+	ComCollider* pCollider = new ComCollider("ComCollider");
+	pGOChrX3->AddComponent(pCollider);
+	pCollider->Set(Vector3(0.3, 0.6, 0.3), false);
 
 	// 장비 장착
 	EquipmentHelmet* pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X");

@@ -30,6 +30,7 @@ public:
 	void SetRotation(float fAngleX, float fAngleY, float fAngleZ);
 	inline void SetRotation(Vector3& vRot) { m_rotAngle = vRot; }
 	void SetScale(float fScaleX, float fScaleY, float fScaleZ);
+	inline void SetScale(Vector3& vScale) { m_scale = vScale; }
 
 	void RotateX(float fAngleX);
 	void RotateY(float fAngleY);
