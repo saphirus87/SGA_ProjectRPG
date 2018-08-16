@@ -386,7 +386,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico" />
-    <ClInclude Include="Application\ChrState.h" />
     <ClInclude Include="Application\ChrStateAttack.h" />
     <ClInclude Include="Application\ChrStateStand.h" />
     <ClInclude Include="Application\ChrStateWalk.h" />
@@ -445,7 +444,6 @@
     <ClCompile Include="Application\SceneGrid.cpp" />
     <ClCompile Include="Application\ScenePicking.cpp" />
     <ClCompile Include="Application\StatusInfo.cpp" />
-    <ClCompile Include="ChrState.cpp" />
     <ClCompile Include="DXUT\Core\stdafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

@@ -3,12 +3,11 @@
 #include "IChrState.h"
 
 class IChrState;
-class ChrState;
+class ComChrControl;
 
 class ChrStateAttack : public IChrState
 {
 private:
-	ChrState * m_pChrState;
 	ComRenderSkinnedMesh * m_pAnimation;
 
 public:
@@ -16,8 +15,8 @@ public:
 	~ChrStateAttack();
 
 	// IChrState을(를) 통해 상속됨
-	virtual void Stand(ChrState * pChrState) override;
-	virtual void Walk(ChrState * pChrState) override;
-	virtual void Attack(ChrState * pChrState) override;
+	virtual void Stand(ComChrControl * pChrState) override;
+	virtual void Walk(ComChrControl * pChrState) override;
+	virtual void Attack(ComChrControl * pChrState) override;
 };
 

@@ -15,7 +15,6 @@ public:
 	virtual void Render() override;
 
 private:
-	ChrState * m_pChrState;
 	ComRenderSkinnedMesh * m_pAnimation;
 };
 

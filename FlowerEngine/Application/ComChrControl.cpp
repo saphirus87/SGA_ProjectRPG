@@ -3,17 +3,15 @@
 #include "ComObjMap.h"
 #include "ComTerrain.h"
 #include "IChrState.h"
-#include "ChrState.h"
 #include "ChrStateStand.h"
 #include "ChrStateWalk.h"
 
 ComChrControl::ComChrControl(CString szName)
 	:Component(szName), 
-	m_isMoving(false), 
-	m_isRotating(false), 
-	m_pos(NULL),
-	m_pMap(NULL)
+	m_pMap(NULL),
+	m_pCurrentState(NULL)
 {
+	
 }
 
 ComChrControl::~ComChrControl()
@@ -26,10 +24,51 @@ void ComChrControl::Awake()
 	if (pObjMap != NULL)
 		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
 
-	m_pos = &gameObject->transform->GetPosition();
+	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
+	m_pCurrentState = new ChrStateStand(m_pAnimation);
 }
 
 void ComChrControl::Update()
+{
+	if (Input::KeyPress('A') || Input::KeyPress(VK_LEFT))
+	{
+		gameObject->transform->RotateY(-0.1f);
+	}
+	if (Input::KeyPress('D') || Input::KeyPress(VK_RIGHT))
+	{
+		gameObject->transform->RotateY(0.1f);
+	}
+
+	if (Input::KeyPress('W') || Input::KeyPress(VK_UP))
+	{
+		Walk(1);
+	}
+	else if (Input::KeyUp('W') || Input::KeyUp(VK_UP))
+	{
+		Stand();
+	}
+	if (Input::KeyPress('S') || Input::KeyPress(VK_DOWN))
+	{
+		Walk(-1);
+	}
+	else if (Input::KeyUp('S') || Input::KeyUp(VK_DOWN))
+	{
+		Stand();
+	}
+
+	if (Input::KeyDown('F'))
+	{
+		Attack();
+	}
+
+
+}
+
+void ComChrControl::Render()
+{
+}
+
+void ComChrControl::GetHeight()
 {
 	Vector3 pos = gameObject->transform->GetPosition();
 	float fHeight = 0.f;
@@ -38,48 +77,36 @@ void ComChrControl::Update()
 		pos.y = fHeight;
 		gameObject->transform->SetPosition(pos);
 	}
-
-	Move();
-}
-
-void ComChrControl::Render()
-{
 }
 
 void ComChrControl::Move()
 {
-	if (Input::KeyPress('A') || Input::KeyPress(VK_LEFT))
-	{
-		m_isRotating = true;
-		gameObject->transform->RotateY(-0.1f);
-	}
-	if (Input::KeyPress('D') || Input::KeyPress(VK_RIGHT))
-	{
-		m_isRotating = true;
-		gameObject->transform->RotateY(0.1f);
-	}
+	
+}
 
-	float fDeltaZ = 0;
-	if (Input::KeyPress('W') || Input::KeyPress(VK_UP))
-	{
-		m_isMoving = true;
-		fDeltaZ = 1;
-	}
-	if (Input::KeyPress('S') || Input::KeyPress(VK_DOWN))
-	{
-		m_isMoving = true;
-		fDeltaZ = -1;
-	}
-	else
-		m_isMoving = false;
+void ComChrControl::SetState(IChrState * pChrState)
+{
+	SAFE_DELETE(m_pCurrentState);
+	m_pCurrentState = pChrState;
+}
 
+void ComChrControl::Stand()
+{
+	m_pCurrentState->Stand(this);
+}
+
+void ComChrControl::Walk(float fDeltaZ)
+{
+	m_pCurrentState->Walk(this);
+	GetHeight();
 	float fMoveSpeed = 0.10f;	//이동 속도
 	gameObject->transform->GetForward(m_vecForward);
 	Vector3 forward = fDeltaZ * m_vecForward * fMoveSpeed;
 	gameObject->transform->Translate(forward);
 }
 
-bool ComChrControl::GetMoving(bool isMoving)
+void ComChrControl::Attack()
 {
-	return m_isMoving;
+	m_pCurrentState->Attack(this);
 }
+

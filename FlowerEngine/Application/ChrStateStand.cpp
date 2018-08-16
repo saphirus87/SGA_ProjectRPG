@@ -1,45 +1,40 @@
 #include "stdafx.h"
+#include "ComChrControl.h"
 #include "ChrStateStand.h"
-#include "ChrState.h"
 #include "ChrStateWalk.h"
 #include "ChrStateAttack.h"
 
 ChrStateStand::ChrStateStand(ComRenderSkinnedMesh* pAnimation)
 {
 	m_pAnimation = pAnimation;
+	m_pAnimation->PlayAnimation(eAni_Stand);
 }
 
 ChrStateStand::~ChrStateStand()
 {
 }
 
-void ChrStateStand::Stand(ChrState * pChrState)
+void ChrStateStand::Stand(ComChrControl * pChrState)
 {
-	/*CString strDebug("Stand 상태");
-	strDebug.Append(L"\r\n");
-	OutputDebugString(strDebug);*/
-
-	m_pAnimation->PlayAnimation(eAni_Stand);
+	// 사용되지 않음
 }
 
-void ChrStateStand::Walk(ChrState * pChrState)
+void ChrStateStand::Walk(ComChrControl * pChrState)
 {
-	/*CString strDebug("Stand -> Walk 상태 변환");
+	CString strDebug("Stand -> Walk 상태 변환");
 	strDebug.Append(L"\r\n");
-	OutputDebugString(strDebug);*/
+	OutputDebugString(strDebug);
 
 	ChrStateWalk* pStateWalk = new ChrStateWalk(m_pAnimation);
 	pChrState->SetState(pStateWalk);
-	pStateWalk->Attack(pChrState);
 }
 
-void ChrStateStand::Attack(ChrState * pChrState)
+void ChrStateStand::Attack(ComChrControl * pChrState)
 {
-	/*CString strDebug("Stand -> Attack 상태 변환");
+	CString strDebug("Stand -> Attack 상태 변환");
 	strDebug.Append(L"\r\n");
-	OutputDebugString(strDebug);*/
+	OutputDebugString(strDebug);
 
 	ChrStateAttack* pStateAttack = new ChrStateAttack(m_pAnimation);
 	pChrState->SetState(pStateAttack);
-	pStateAttack->Attack(pChrState);
 }
