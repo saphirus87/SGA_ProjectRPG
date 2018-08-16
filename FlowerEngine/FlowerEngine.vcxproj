@@ -389,6 +389,7 @@
     <ClInclude Include="Application\ChrStateAttack.h" />
     <ClInclude Include="Application\ChrStateStand.h" />
     <ClInclude Include="Application\ChrStateWalk.h" />
+    <ClInclude Include="Application\ChrStatusInfo.h" />
     <ClInclude Include="Application\ComAircraft.h" />
     <ClInclude Include="Application\ComAircraftControl.h" />
     <ClInclude Include="Application\ComAircraftEnermyAI.h" />
@@ -420,6 +421,7 @@
     <ClCompile Include="Application\ChrStateAttack.cpp" />
     <ClCompile Include="Application\ChrStateStand.cpp" />
     <ClCompile Include="Application\ChrStateWalk.cpp" />
+    <ClCompile Include="Application\ChrStatusInfo.cpp" />
     <ClCompile Include="Application\ComAircraft.cpp" />
     <ClCompile Include="Application\ComAircraftControl.cpp" />
     <ClCompile Include="Application\ComAircraftEnermyAI.cpp" />
