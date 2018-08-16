@@ -81,8 +81,18 @@ void Scene::Update()
 
 void Scene::Render()
 {
+	// 설계 정리 필요
+	// 후처리 렌더링 일 때
 	if (m_pGOPostEffect)
 		m_pGOPostEffect->Render();
+	else // Scene Aircraft등 다른 씬일때
+	{
+		for (auto & go : m_listRender)
+		{
+			go->Render();
+			++m_iRenderObjCnt;
+		}
+	}
 
 	// UI Rendering
 	for (auto & go : m_listRenderUI)
