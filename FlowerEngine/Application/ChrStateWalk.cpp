@@ -27,10 +27,18 @@ void ChrStateWalk::Walk(ComChrControl * pChrState)
 	// 사용되지 않음
 }
 
-void ChrStateWalk::Attack(ComChrControl * pChrState)
+void ChrStateWalk::Attack1(ComChrControl * pChrState)
 {
-	OutputDebugString(L"Walk -> Attack 상태 변환\r\n");
+	OutputDebugString(L"Walk -> Attack1 상태 변환\r\n");
 
-	ChrStateAttack* pStateAttack = new ChrStateAttack(m_pAnimation);
+	ChrStateAttack1* pStateAttack = new ChrStateAttack1(m_pAnimation);
 	pChrState->SetState(pStateAttack);
+}
+
+void ChrStateWalk::Attack2(ComChrControl * pChrState)
+{
+}
+
+void ChrStateWalk::Attack3(ComChrControl * pChrState)
+{
 }

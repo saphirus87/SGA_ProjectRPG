@@ -45,7 +45,7 @@ void ComChrControl::Update()
 
 	// 캐릭터 공격
 	if (Input::KeyDown('F'))
-		Attack();
+		Attack1();
 }
 
 void ComChrControl::Render()
@@ -89,8 +89,8 @@ void ComChrControl::Walk(float fDeltaZ)
 	gameObject->transform->Translate(forward);
 }
 
-void ComChrControl::Attack()
+void ComChrControl::Attack1()
 {
-	m_pCurrentState->Attack(this);
+	m_pCurrentState->Attack1(this);
 }
 

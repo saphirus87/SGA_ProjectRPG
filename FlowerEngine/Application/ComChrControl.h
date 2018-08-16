@@ -25,7 +25,7 @@ private:
 	//상태 기계
 	void Stand();
 	void Walk(float fDeltaZ);
-	void Attack();
+	void Attack1();
 private:
 	ComObjMap * m_pMap;
 	ComRenderSkinnedMesh * m_pAnimation;

@@ -412,7 +412,7 @@
       <Filter>Application\Components\ComCharactor</Filter>
     </ClCompile>
     <ClCompile Include="Application\ChrStatusInfo.cpp">
-      <Filter>Application\Components\ComCharactor</Filter>
+      <Filter>Application\Components\ComCharactor\ChrState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -633,7 +633,7 @@
       <Filter>Application\Components\ComCharactor</Filter>
     </ClInclude>
     <ClInclude Include="Application\ChrStatusInfo.h">
-      <Filter>Application\Components\ComCharactor</Filter>
+      <Filter>Application\Components\ComCharactor\ChrState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

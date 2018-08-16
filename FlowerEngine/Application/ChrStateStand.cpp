@@ -27,10 +27,18 @@ void ChrStateStand::Walk(ComChrControl * pChrState)
 	pChrState->SetState(pStateWalk);
 }
 
-void ChrStateStand::Attack(ComChrControl * pChrState)
+void ChrStateStand::Attack1(ComChrControl * pChrState)
 {
-	OutputDebugString(L"Stand -> Attack 상태 변환\r\n");
+	OutputDebugString(L"Stand -> Attack1 상태 변환\r\n");
 
-	ChrStateAttack* pStateAttack = new ChrStateAttack(m_pAnimation);
+	ChrStateAttack1* pStateAttack = new ChrStateAttack1(m_pAnimation);
 	pChrState->SetState(pStateAttack);
+}
+
+void ChrStateStand::Attack2(ComChrControl * pChrState)
+{
+}
+
+void ChrStateStand::Attack3(ComChrControl * pChrState)
+{
 }
