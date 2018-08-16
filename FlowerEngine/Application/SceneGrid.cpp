@@ -30,7 +30,7 @@ void SceneGrid::Init()
 	CreateHuman01();
 	CreateUndead01();
 	CreateTroll01();
-	//CreateMonster();
+	CreateMonster();
 	CreateTest();
 }
 
@@ -150,7 +150,7 @@ void SceneGrid::CreateTroll01()
 void SceneGrid::CreateMonster()
 {
 	// 몬스터 생성
-	GameObject* pGOMonX = factory.CreateFromXFile("smallderon_orange", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(0, 15, 9));
+	GameObject* pGOMonX = factory.CreateFromXFile("smallderon_orange", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-250, 15, -250));
 	pGOMonX->AddComponent(new ComSmallderon("ComSmallderon"));
 }
 
