@@ -58,6 +58,8 @@ void SceneGrid::CreateMapObject()
 void SceneGrid::CreateHuman01()
 {
 	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(-260, 15, -260));
+	//GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(0, 0, 0));
+
 	// 이 게임 오브젝트는 휴먼
 	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
 	// 이 게임 오브젝트는 컨트롤 가능

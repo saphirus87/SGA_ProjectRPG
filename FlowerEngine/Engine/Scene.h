@@ -16,7 +16,12 @@ public:
 
 	void CleanUpGameObject();
 
+	void RenderObjects();
+
 private:
+	GameObject * m_pGOPostEffect = NULL;
+	int m_iRenderObjCnt;
+
 	CString m_szName;
 	list<GameObject*> m_listRender;
 	list<GameObject*> m_listRenderUI;

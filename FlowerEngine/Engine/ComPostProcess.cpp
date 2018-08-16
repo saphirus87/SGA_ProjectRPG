@@ -260,9 +260,6 @@ void ComPostProcess::Render()
 		if (m_pGrid)
 			m_pGrid->Render();
 
-		/*m_listRenderObject.sort(CompareZ);
-		for (auto & o : m_listRenderObject)
-			o->Render();*/
 		// Render the skybox as if the camera is at center
 		D3DXMATRIXA16 mWorldView;
 		D3DXMatrixIdentity(&mWorldView);
@@ -304,10 +301,9 @@ void ComPostProcess::Render()
 		}
 		m_pEffect->End();
 
-		m_listRenderObject.sort(CompareZ);
-		for (auto & o : m_listRenderObject)
-			o->Render();
-
+		Scene* pScene = SceneManager::GetInstance()->GetCurrentScene();
+		pScene->RenderObjects();
+		
 		pDevice9->EndScene();
 	}
 
