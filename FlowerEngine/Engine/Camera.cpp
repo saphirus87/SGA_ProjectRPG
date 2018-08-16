@@ -37,7 +37,7 @@ void Camera::Init()
 	RECT clientRect = DXUTGetWindowClientRect();
 	
 	// 투영 행렬 왼손 좌표계, 시야각 45도, 화면 사이즈 종횡비, 보이는 거리 1~1000
-	D3DXMatrixPerspectiveFovLH(&m_matProj, D3DX_PI / 4.0f, clientRect.right / (float)clientRect.bottom, 1, 1000);
+	D3DXMatrixPerspectiveFovLH(&m_matProj, D3DX_PI / 4.0f, clientRect.right / (float)clientRect.bottom, 1, 100);
 
 	pDevice9->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
