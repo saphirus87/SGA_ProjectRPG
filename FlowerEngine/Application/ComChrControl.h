@@ -22,13 +22,14 @@ private:
 	void GetHeight();
 	void Move();
 
+	//상태 기계
 	void Stand();
 	void Walk(float fDeltaZ);
 	void Attack();
 private:
+	ComObjMap * m_pMap;
 	ComRenderSkinnedMesh * m_pAnimation;
 	IChrState * m_pCurrentState;
-	ComObjMap * m_pMap;
 
 	Vector3 m_vecForward;			// 앞 방향 벡터
 

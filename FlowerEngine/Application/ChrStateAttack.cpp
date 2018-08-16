@@ -16,13 +16,10 @@ ChrStateAttack::~ChrStateAttack()
 
 void ChrStateAttack::Stand(ComChrControl * pChrState)
 {
-	/*CString strDebug("Attack -> Stand 상태 변환");
-	strDebug.Append(L"\r\n");
-	OutputDebugString(strDebug);*/
+	OutputDebugString(L"Attack -> Stand 상태 변환\r\n");
 
-	//ChrStateStand* pStateStand = new ChrStateStand(m_pAnimation);
-	//pChrState->SetState(pStateStand);
-	//pStateStand->Stand(pChrState);
+	ChrStateStand* pStateStand = new ChrStateStand(m_pAnimation);
+	pChrState->SetState(pStateStand);
 }
 
 void ChrStateAttack::Walk(ComChrControl * pChrState)
@@ -35,9 +32,5 @@ void ChrStateAttack::Walk(ComChrControl * pChrState)
 
 void ChrStateAttack::Attack(ComChrControl * pChrState)
 {
-	/*CString strDebug("Attack 상태");
-	strDebug.Append(L"\r\n");
-	OutputDebugString(strDebug);*/
-
-	//m_pAnimation->PlayAnimation(eAni_Attack_1);
+	// 사용하지 않음
 }

@@ -8,7 +8,6 @@ class ComChrControl;
 class ChrStateStand : public IChrState
 {
 private:
-	//ChrState * m_pChrState;
 	ComRenderSkinnedMesh * m_pAnimation;
 
 public:

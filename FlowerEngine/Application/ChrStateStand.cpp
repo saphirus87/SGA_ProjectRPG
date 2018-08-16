@@ -21,9 +21,7 @@ void ChrStateStand::Stand(ComChrControl * pChrState)
 
 void ChrStateStand::Walk(ComChrControl * pChrState)
 {
-	CString strDebug("Stand -> Walk 상태 변환");
-	strDebug.Append(L"\r\n");
-	OutputDebugString(strDebug);
+	OutputDebugString(L"Stand -> Walk 상태 변환\r\n");
 
 	ChrStateWalk* pStateWalk = new ChrStateWalk(m_pAnimation);
 	pChrState->SetState(pStateWalk);
@@ -31,9 +29,7 @@ void ChrStateStand::Walk(ComChrControl * pChrState)
 
 void ChrStateStand::Attack(ComChrControl * pChrState)
 {
-	CString strDebug("Stand -> Attack 상태 변환");
-	strDebug.Append(L"\r\n");
-	OutputDebugString(strDebug);
+	OutputDebugString(L"Stand -> Attack 상태 변환\r\n");
 
 	ChrStateAttack* pStateAttack = new ChrStateAttack(m_pAnimation);
 	pChrState->SetState(pStateAttack);

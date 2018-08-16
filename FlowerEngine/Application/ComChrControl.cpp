@@ -7,11 +7,9 @@
 #include "ChrStateWalk.h"
 
 ComChrControl::ComChrControl(CString szName)
-	:Component(szName), 
-	m_pMap(NULL),
+	:Component(szName), m_pMap(NULL),
 	m_pCurrentState(NULL)
 {
-	
 }
 
 ComChrControl::~ComChrControl()
@@ -23,45 +21,31 @@ void ComChrControl::Awake()
 	GameObject* pObjMap = GameObject::Find("ObjMap");
 	if (pObjMap != NULL)
 		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
-
 	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 	m_pCurrentState = new ChrStateStand(m_pAnimation);
 }
 
 void ComChrControl::Update()
 {
+	// 캐릭터 회전
 	if (Input::KeyPress('A') || Input::KeyPress(VK_LEFT))
-	{
 		gameObject->transform->RotateY(-0.1f);
-	}
 	if (Input::KeyPress('D') || Input::KeyPress(VK_RIGHT))
-	{
 		gameObject->transform->RotateY(0.1f);
-	}
 
+	// 캐릭터 이동
 	if (Input::KeyPress('W') || Input::KeyPress(VK_UP))
-	{
 		Walk(1);
-	}
 	else if (Input::KeyUp('W') || Input::KeyUp(VK_UP))
-	{
 		Stand();
-	}
 	if (Input::KeyPress('S') || Input::KeyPress(VK_DOWN))
-	{
 		Walk(-1);
-	}
 	else if (Input::KeyUp('S') || Input::KeyUp(VK_DOWN))
-	{
 		Stand();
-	}
 
+	// 캐릭터 공격
 	if (Input::KeyDown('F'))
-	{
 		Attack();
-	}
-
-
 }
 
 void ComChrControl::Render()

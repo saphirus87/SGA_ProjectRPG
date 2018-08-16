@@ -16,9 +16,7 @@ ChrStateWalk::~ChrStateWalk()
 
 void ChrStateWalk::Stand(ComChrControl * pChrState)
 {
-	CString strDebug("Walk -> Stand 상태 변환");
-	strDebug.Append(L"\r\n");
-	OutputDebugString(strDebug);
+	OutputDebugString(L"Walk -> Stand 상태 변환\r\n");
 
 	ChrStateStand* pStateStand = new ChrStateStand(m_pAnimation);
 	pChrState->SetState(pStateStand);
