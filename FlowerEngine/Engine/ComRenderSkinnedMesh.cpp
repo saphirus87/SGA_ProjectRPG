@@ -16,7 +16,8 @@ ComRenderSkinnedMesh::ComRenderSkinnedMesh(CString szName) :
 	m_pBoneMatrices(NULL),
 	m_pAllocateHierarchy(NULL),
 	pDevice9(GetD3D9Device()),
-	m_iReference(0)
+	m_iReference(0),
+	m_iCurrentAniIndex(0)
 {
 }
 
@@ -118,6 +119,11 @@ void ComRenderSkinnedMesh::SeparateFrame(XFrame pFrame, CString szName, Animatio
 
 void ComRenderSkinnedMesh::PlayAnimation(int iIndex, bool isBlend)
 {
+	if (m_iCurrentAniIndex == iIndex)
+		return;
+
+	m_iCurrentAniIndex = iIndex;
+
 	PlayAnimation(m_pAniControl, iIndex, isBlend);
 }
 

@@ -109,5 +109,8 @@ private:
 
 	// 이 컴포넌트를 사용하는 객체수 (Clone된)
 	int m_iReference;
+
+	// 현재 플레이중인 애니메이션 식별값
+	int m_iCurrentAniIndex;
 };
 
