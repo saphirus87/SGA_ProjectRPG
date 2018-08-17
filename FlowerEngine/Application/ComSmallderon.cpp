@@ -22,6 +22,13 @@ void ComSmallderon::Awake()
 	Init();
 
 	m_pTarget = (ComFollowTarget*)gameObject->GetComponent("ComFollowTarget");
+
+	m_vecState.resize(eAniMon_COUNT);
+	m_vecState[eAniMon_Stand] = new ChrStateStand(this);
+	m_vecState[eAniMon_Walk] = new ChrStateWalk(this);
+	m_vecState[eAniMon_Attack_1] = new ChrStateAttack1(this);
+
+	m_pCurrentState = m_vecState[eAniMon_Stand];
 }
 
 void ComSmallderon::Update()
@@ -29,12 +36,15 @@ void ComSmallderon::Update()
 	if (m_pTarget->IsFollowing)
 	{
 		GetHeight();
+		Walk(1);
 	}
-	if (m_pTarget->AbleAttack)
+	else if (m_pTarget->AbleAttack)
 	{
 		// 공격 가능 거리
-
+		Attack1();
 	}
+	else
+		Stand();
 
 	//Test Code
 	if (Input::KeyDown('1'))

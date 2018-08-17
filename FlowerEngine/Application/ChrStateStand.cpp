@@ -15,7 +15,7 @@ ChrStateStand::~ChrStateStand()
 
 void ChrStateStand::Stand(int iIndex)
 {
-	m_pControl->m_pAnimation->PlayAnimation(eAni_Stand);
+	m_pControl->m_pAnimation->PlayAnimation(iIndex);
 }
 
 void ChrStateStand::Walk(int iIndex)
