@@ -10,27 +10,31 @@ class ComChrControl : public Component
 {
 public:
 	ComChrControl(CString szName);
-	~ComChrControl();
+	virtual ~ComChrControl();
 
 	// Component을(를) 통해 상속됨
 	virtual void Awake() override;
 	virtual void Update() override;
 	virtual void Render() override;
 
-	void SetState(IChrState* pChrState);
-private:
-	void GetHeight();
-	void Move();
+	void Init();
+	void SetState(int iIndex);
+
+	ComRenderSkinnedMesh * m_pAnimation;
 
 	//상태 기계
-	void Stand();
-	void Walk(float fDeltaZ);
-	void Attack1();
-private:
+	virtual void Stand();
+	virtual void Walk(float fDeltaZ);
+	virtual void Attack1();
+
+protected:
+	void GetHeight();
+	
+protected:
 	ComObjMap * m_pMap;
-	ComRenderSkinnedMesh * m_pAnimation;
 	IChrState * m_pCurrentState;
 
 	Vector3 m_vecForward;			// 앞 방향 벡터
 
+	vector<IChrState*> m_vecState;
 };

@@ -1,11 +1,13 @@
 #pragma once
 #include "stdafx.h"
+#include "ComChrControl.h"
 
 class ComObjMap;
 class ComFollowTarget;
 class IChrState;
 
-class ComSmallderon : public Component
+// Smallderon의 인공지능(AI)
+class ComSmallderon : public ComChrControl
 {
 public:
 	ComSmallderon(CString szName);
@@ -16,14 +18,12 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
-	void Stand();
-	void Walk();
-	void Attack1();
+	//상태 기계
+	void Stand() override;
+	void Walk(float fDeltaZ) override;
+	void Attack1() override;
+
 private:
-	ComObjMap* m_pMap;
 	ComFollowTarget* m_pTarget;
-	
-	ComRenderSkinnedMesh * m_pAnimation;
-	IChrState * m_pCurrentState;
 };
 

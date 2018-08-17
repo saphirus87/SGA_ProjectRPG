@@ -134,6 +134,15 @@ enum eAni
 	eAni_Attack_1 = 2,
 	eAni_Walk = 3,
 	eAni_Stand = 4,		// Export ½Ã °Å²Ù·Î µÊ
+	eAni_COUNT
+};
+
+enum eAniMon
+{
+	eAniMon_Attack_1,
+	eAniMon_Walk,
+	eAniMon_Stand,
+	eAniMon_COUNT
 };
 
 enum eChrType

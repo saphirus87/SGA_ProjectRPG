@@ -5,6 +5,7 @@
 #include "IChrState.h"
 #include "ChrStateStand.h"
 #include "ChrStateWalk.h"
+#include "ChrStateAttack.h"
 
 ComChrControl::ComChrControl(CString szName)
 	:Component(szName), m_pMap(NULL),
@@ -14,15 +15,22 @@ ComChrControl::ComChrControl(CString szName)
 
 ComChrControl::~ComChrControl()
 {
+	for (size_t i = 0; i < m_vecState.size(); ++i)
+		SAFE_DELETE(m_vecState[i]);
 }
 
 void ComChrControl::Awake()
 {
-	GameObject* pObjMap = GameObject::Find("ObjMap");
-	if (pObjMap != NULL)
-		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
-	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
-	m_pCurrentState = new ChrStateStand(m_pAnimation);
+	Init();
+
+	m_vecState.resize(eAni_COUNT);
+	m_vecState[eAni_Stand] = new ChrStateStand(this);
+	m_vecState[eAni_Walk] = new ChrStateWalk(this);
+	m_vecState[eAni_Attack_1] = new ChrStateAttack1(this);
+	m_vecState[eAni_Attack_2] = new ChrStateAttack1(this);
+	m_vecState[eAni_Attack_3] = new ChrStateAttack1(this);
+
+	m_pCurrentState = m_vecState[eAni_Stand];
 }
 
 void ComChrControl::Update()
@@ -63,25 +71,29 @@ void ComChrControl::GetHeight()
 	}
 }
 
-void ComChrControl::Move()
+void ComChrControl::Init()
 {
-	
+	GameObject* pObjMap = GameObject::Find("ObjMap");
+	if (pObjMap != NULL)
+		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
+	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 }
 
-void ComChrControl::SetState(IChrState * pChrState)
+void ComChrControl::SetState(int iIndex)
 {
-	SAFE_DELETE(m_pCurrentState);
-	m_pCurrentState = pChrState;
+	m_pCurrentState = m_vecState[iIndex];
 }
 
 void ComChrControl::Stand()
 {
-	m_pCurrentState->Stand(this);
+	// 현재 상태에서 Stand로
+	m_pCurrentState->Stand(eAni_Stand);
 }
 
 void ComChrControl::Walk(float fDeltaZ)
 {
-	m_pCurrentState->Walk(this);
+	// 현재 상태에서 Walk로
+	m_pCurrentState->Walk(eAni_Walk);
 	GetHeight();
 	float fMoveSpeed = 0.10f;	//이동 속도
 	gameObject->transform->GetForward(m_vecForward);
@@ -91,6 +103,7 @@ void ComChrControl::Walk(float fDeltaZ)
 
 void ComChrControl::Attack1()
 {
-	m_pCurrentState->Attack1(this);
+	// 현재 상태에서 Attack1로
+	m_pCurrentState->Attack1(eAni_Attack_1);
 }
 

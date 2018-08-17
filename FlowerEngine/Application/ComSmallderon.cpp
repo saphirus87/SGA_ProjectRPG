@@ -3,14 +3,13 @@
 #include "ComObjMap.h"
 #include "ComFollowTarget.h"
 #include "IChrState.h"
-#include "ComChrControl.h"
 #include "ChrStateStand.h"
 #include "ChrStateWalk.h"
 #include "ChrStateAttack.h"
 
 ComSmallderon::ComSmallderon(CString szName)
-	:Component(szName), m_pMap(NULL), 
-	m_pTarget(NULL), m_pCurrentState(NULL)
+	:ComChrControl(szName), 
+	m_pTarget(NULL)
 {
 }
 
@@ -20,27 +19,16 @@ ComSmallderon::~ComSmallderon()
 
 void ComSmallderon::Awake()
 {
-	//CPP 다형성
-	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
+	Init();
+
 	m_pTarget = (ComFollowTarget*)gameObject->GetComponent("ComFollowTarget");
-	GameObject* pObjMap = GameObject::Find("ObjMap");
-	if (pObjMap != NULL)
-		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
-	m_pCurrentState = new ChrStateStand(m_pAnimation);
 }
 
 void ComSmallderon::Update()
 {
 	if (m_pTarget->IsFollowing)
 	{
-		Vector3 pos = gameObject->transform->GetPosition();
-		float fHeight = 0.0f;
-
-		if (m_pMap != NULL && m_pMap->GetHeight(fHeight, pos))
-		{
-			pos.y = fHeight;
-			gameObject->transform->SetPosition(pos);
-		}
+		GetHeight();
 	}
 	if (m_pTarget->AbleAttack)
 	{
@@ -51,11 +39,11 @@ void ComSmallderon::Update()
 	//Test Code
 	if (Input::KeyDown('1'))
 	{
-		m_pAnimation->PlayAnimation(eAni_Stand);
+		m_pAnimation->PlayAnimation(eAniMon_Stand);
 	}
 	if (Input::KeyDown('2'))
 	{
-		m_pAnimation->PlayAnimation(eAni_Walk);
+		m_pAnimation->PlayAnimation(eAniMon_Walk);
 	}
 }
 
@@ -65,12 +53,18 @@ void ComSmallderon::Render()
 
 void ComSmallderon::Stand()
 {
+	// 현재 상태에서 Stand로
+	m_pCurrentState->Stand(eAniMon_Stand);
 }
 
-void ComSmallderon::Walk()
+void ComSmallderon::Walk(float fDeltaZ)
 {
+	// 현재 상태에서 Walk로
+	m_pCurrentState->Walk(eAniMon_Walk);
 }
 
 void ComSmallderon::Attack1()
 {
+	// 현재 상태에서 Attack1로
+	m_pCurrentState->Attack1(eAniMon_Attack_1);
 }

@@ -4,41 +4,31 @@
 #include "ChrStateWalk.h"
 #include "ChrStateAttack.h"
 
-ChrStateStand::ChrStateStand(ComRenderSkinnedMesh* pAnimation)
+ChrStateStand::ChrStateStand(ComChrControl* pControl)
 {
-	m_pAnimation = pAnimation;
-	m_pAnimation->PlayAnimation(eAni_Stand);
+	m_pControl = pControl;
 }
 
 ChrStateStand::~ChrStateStand()
 {
 }
 
-void ChrStateStand::Stand(ComChrControl * pChrState)
+void ChrStateStand::Stand(int iIndex)
 {
-	// 사용되지 않음
+	m_pControl->m_pAnimation->PlayAnimation(eAni_Stand);
 }
 
-void ChrStateStand::Walk(ComChrControl * pChrState)
+void ChrStateStand::Walk(int iIndex)
 {
 	OutputDebugString(L"Stand -> Walk 상태 변환\r\n");
 
-	ChrStateWalk* pStateWalk = new ChrStateWalk(m_pAnimation);
-	pChrState->SetState(pStateWalk);
+	m_pControl->SetState(iIndex);
 }
 
-void ChrStateStand::Attack1(ComChrControl * pChrState)
+void ChrStateStand::Attack1(int iIndex)
 {
 	OutputDebugString(L"Stand -> Attack1 상태 변환\r\n");
 
-	ChrStateAttack1* pStateAttack = new ChrStateAttack1(m_pAnimation);
-	pChrState->SetState(pStateAttack);
-}
-
-void ChrStateStand::Attack2(ComChrControl * pChrState)
-{
-}
-
-void ChrStateStand::Attack3(ComChrControl * pChrState)
-{
+	m_pControl->SetState(iIndex);
+	m_pControl->Attack1();
 }
