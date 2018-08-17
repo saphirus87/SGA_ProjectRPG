@@ -31,6 +31,7 @@ void ComChrControl::Awake()
 	m_vecState[eAni_Attack_3] = new ChrStateAttack1(this);
 
 	m_pCurrentState = m_vecState[eAni_Stand];
+	Stand();
 }
 
 void ComChrControl::Update()
