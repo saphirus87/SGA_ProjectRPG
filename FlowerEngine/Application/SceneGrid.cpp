@@ -23,11 +23,6 @@ void SceneGrid::Init()
 {
 	CreateMap();
 	CreateMapObject();
-
-	// testcode : 맵 생성 후 캐릭터 생성
-	//GameObject* pGOChrX = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 3));
-	//GameObject* pGOChrX2 = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 4));
-
 	CreateHuman01();
 	CreateUndead01();
 	CreateTroll01();
@@ -192,6 +187,10 @@ void SceneGrid::CreateTest()
 	/*// 캐릭터
 	GameObject* pGOChr = loader.Load("Resources/ase/", "woman_01_all_stand.ase");
 	pGOChr->transform->SetPosition(0, 0, 3);*/
+
+	// testcode : 맵 생성 후 캐릭터 생성
+	//GameObject* pGOChrX = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 3));
+	//GameObject* pGOChrX2 = factory.CreateFromXFile("Zealot", "Resources/obj/zealot/", "zealot.X", Vector3(0, 0, 4));
 
 	// box1
 	GameObject* pGOBox1 = loader.Load("Resources/obj/", "box.ase");
