@@ -53,7 +53,7 @@ void ComObjMap::Awake()
 void ComObjMap::Update()
 {
 	//if (Input::KeyDown(VK_SPACE))
-		UpdateIndexBufferQuadTree();
+		//UpdateIndexBufferQuadTree();
 }
 
 void ComObjMap::Render()

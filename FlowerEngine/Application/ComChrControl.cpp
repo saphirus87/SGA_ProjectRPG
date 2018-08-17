@@ -62,6 +62,7 @@ void ComChrControl::Render()
 
 void ComChrControl::GetHeight()
 {
+	m_pMap->UpdateIndexBufferQuadTree();
 	Vector3 pos = gameObject->transform->GetPosition();
 	float fHeight = 0.f;
 	if (m_pMap != NULL && m_pMap->GetHeight(fHeight, pos) == true)
