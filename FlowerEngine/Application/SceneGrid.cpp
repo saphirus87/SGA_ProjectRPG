@@ -166,6 +166,11 @@ void SceneGrid::CreateMonster()
 	pGOMonX->AddComponent(pComTarget);
 	pGOMonX->AddComponent(new ComSmallderon("ComSmallderon"));
 	pComTarget->pTarget = GameObject::Find("undead_01");
+
+	// 이 게임 오브젝트는 충돌체크 가능
+	ComCollider* pCollider = new ComCollider("ComCollider");
+	pGOMonX->AddComponent(pCollider);
+	pCollider->Set(Vector3(0, 0.7, 0), Vector3(0.5, 0.8, 0.5), false);
 }
 
 void SceneGrid::CreateTest()
