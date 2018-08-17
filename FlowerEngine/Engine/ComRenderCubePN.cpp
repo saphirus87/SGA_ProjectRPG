@@ -6,7 +6,8 @@ ComRenderCubePN::ComRenderCubePN(CString szName) :
 	m_pVB(NULL),
 	m_pIB(NULL),
 	IsRenderShader(true),
-	IsRender(true)
+	IsRender(true),
+	pCollider(NULL)
 {
 	pDevice9 = GetD3D9Device();
 	
@@ -32,7 +33,6 @@ void ComRenderCubePN::Update()
 {
 	//if (Input::GetInstance()->KeyDown('R'))
 	//	IsRenderShader = !IsRenderShader;
-
 	if (Input::GetInstance()->KeyDown(VK_F2))
 		IsRender = !IsRender;
 }
@@ -57,7 +57,14 @@ void ComRenderCubePN::Render()
 
 void ComRenderCubePN::RenderRambert()
 {
-	m_pEffect->SetMatrix("gWorldMatrix", &gameObject->transform->GetWorldMatrix());
+	Vector3 offsetPos = pCollider->offsetPos;
+	Matrix4x4 matLocal;
+	D3DXMatrixIdentity(&matLocal);
+	D3DXMatrixTranslation(&matLocal, offsetPos.x, offsetPos.y, offsetPos.z);
+
+	Matrix4x4 matWorld = matLocal * gameObject->transform->GetWorldMatrix();
+
+	m_pEffect->SetMatrix("gWorldMatrix", &matWorld);
 	m_pEffect->SetMatrix("gViewMatrix", &Camera::GetInstance()->GetViewMatrix());
 	m_pEffect->SetMatrix("gProjMatrix", &Camera::GetInstance()->GetProjMatrix());
 

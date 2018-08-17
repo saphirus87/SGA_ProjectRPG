@@ -46,14 +46,20 @@ void ComCollider::Render()
 {
 }
 
-void ComCollider::Set(Vector3 & scale, bool isRender)
+void ComCollider::Set(Vector3& offsetPos, Vector3 & scale, bool isRender)
 {
 	if (m_pCube == NULL)
 		return;
 
+	this->offsetPos = offsetPos;
+
+	minPos.x += offsetPos.x; minPos.y += offsetPos.y; minPos.z += offsetPos.z;
+	maxPos.x += offsetPos.x; maxPos.y += offsetPos.y; maxPos.z += offsetPos.z;
+	
 	minPos.x *= scale.x; minPos.y *= scale.y; minPos.z *= scale.z;
 	maxPos.x *= scale.x; maxPos.y *= scale.y; maxPos.z *= scale.z;
 
 	m_pCube->SetLocalVertexScale(scale);
 	m_pCube->IsRender = isRender;
+	m_pCube->pCollider = this;
 }

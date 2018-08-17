@@ -30,6 +30,9 @@ public:
 	
 	void SetLocalVertexScale(Vector3& vScale);
 
+	// ¿œ¥‹ public
+	ComCollider* pCollider;
+
 private:
 	Device9			pDevice9;
 	Shader			m_pEffect;

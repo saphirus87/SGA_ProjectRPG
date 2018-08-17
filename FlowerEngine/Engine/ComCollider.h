@@ -19,11 +19,13 @@ public:
 	virtual void Render() override;
 
 	
-	void Set(Vector3& scale, bool isRender);
+	void Set(Vector3& offsetPos, Vector3& scale, bool isRender);
 
 	Vector3 minPos;
 	Vector3 maxPos;
 	Vector3 oriPos;
+
+	Vector3 offsetPos; // 보정값 : Local위치
 
 private:
 	ComRenderCubePN * m_pCube;

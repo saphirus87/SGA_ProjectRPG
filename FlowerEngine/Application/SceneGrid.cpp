@@ -53,7 +53,7 @@ void SceneGrid::CreateMapObject()
 	pGOShoulder->transform->SetPosition(-260, 15, -255);
 	ComCollider* pCollider = new ComCollider("ComCollider");
 	pGOShoulder->AddComponent(pCollider);
-	pCollider->Set(Vector3(0.1, 0.1, 0.1), false);
+	pCollider->Set(Vector3(0, 0, 0), Vector3(0.1, 0.1, 0.1), false);
 }
 
 void SceneGrid::CreateHuman01()
@@ -71,7 +71,7 @@ void SceneGrid::CreateHuman01()
 	// 이 게임 오브젝트는 충돌체크 가능
 	ComCollider* pCollider = new ComCollider("ComCollider");
 	pGOChrX3->AddComponent(pCollider);
-	pCollider->Set(Vector3(0.3, 0.6, 0.3), false);
+	pCollider->Set(Vector3(0, 0.5f, 0), Vector3(0.3, 0.6, 0.3), false);
 
 	// 장비 장착
 	EquipmentHelmet* pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X");
@@ -103,7 +103,7 @@ void SceneGrid::CreateUndead01()
 	// 이 게임 오브젝트는 충돌체크 가능
 	ComCollider* pCollider = new ComCollider("ComCollider");
 	pGOChrX4->AddComponent(pCollider);
-	pCollider->Set(Vector3(0.3, 0.6, 0.3), false);
+	pCollider->Set(Vector3(0, 0.5f, 0), Vector3(0.3, 0.6, 0.3), false);
 
 	EquipmentShoulder* pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
 	pShoulder->Set(10, 10, 10, 10, eChrType_Undead);
@@ -134,7 +134,7 @@ void SceneGrid::CreateTroll01()
 	// 이 게임 오브젝트는 충돌체크 가능
 	ComCollider* pCollider = new ComCollider("ComCollider");
 	pGOChrX5->AddComponent(pCollider);
-	pCollider->Set(Vector3(0.3, 0.6, 0.3), false);
+	pCollider->Set(Vector3(0, 0.5, 0), Vector3(0.3, 0.6, 0.3), false);
 
 	// 휴먼 캐릭터 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
 	EquipmentShoulder*pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
