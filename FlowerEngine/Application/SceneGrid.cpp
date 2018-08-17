@@ -100,6 +100,11 @@ void SceneGrid::CreateUndead01()
 	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
 	pGOChrX4->AddComponent(pEquipment);
 
+	// 이 게임 오브젝트는 충돌체크 가능
+	ComCollider* pCollider = new ComCollider("ComCollider");
+	pGOChrX4->AddComponent(pCollider);
+	pCollider->Set(Vector3(0.3, 0.6, 0.3), false);
+
 	EquipmentShoulder* pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
 	pShoulder->Set(10, 10, 10, 10, eChrType_Undead);
 	pShoulder->TextureName = "Resources/character/Equipment/shoulder_robe_b_03blue.png";
@@ -125,6 +130,11 @@ void SceneGrid::CreateTroll01()
 	pGOChrX5->AddComponent(new ComChrControl("ComChrControl"));
 	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
 	pGOChrX5->AddComponent(pEquipment);
+
+	// 이 게임 오브젝트는 충돌체크 가능
+	ComCollider* pCollider = new ComCollider("ComCollider");
+	pGOChrX5->AddComponent(pCollider);
+	pCollider->Set(Vector3(0.3, 0.6, 0.3), false);
 
 	// 휴먼 캐릭터 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
 	EquipmentShoulder*pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
