@@ -91,7 +91,10 @@ void ComChrControl::Update()
 		CheckPickingChr();
 
 	if (Input::ButtonDown(VK_RBUTTON))
+	{
 		CheckPickingMon();
+		CheckPickingMap();
+	}
 
 	if (m_pTarget != NULL && m_pTarget->IsFollowing)
 	{
@@ -196,5 +199,14 @@ void ComChrControl::CheckPickingMon()
 			}
 		}
 	}
+}
+
+void ComChrControl::CheckPickingMap()
+{
+	Mouse* pMouse = Input::GetInstance()->m_pMouse;
+	Vector3 mousePos = Input::GetInstance()->m_pMouse->GetPosition();
+
+	Vector3 vOut(0, 0, 0);
+	//m_pMap->CalcPickedPosition(vOut, mousePos.x, mousePos.y);
 }
 
