@@ -13,7 +13,9 @@ ComChrControl::ComChrControl(CString szName)
 	:Component(szName), m_pMap(NULL),
 	m_pCurrentState(NULL),
 	IsPicking(false),
-	m_pTarget(NULL)
+	m_pTarget(NULL),
+	IsMoveToPoint(false),
+	vMoveToPoint(0, 0, 0)
 {
 }
 
@@ -60,26 +62,22 @@ void ComChrControl::Update()
 	// 캐릭터 이동
 	if (Input::KeyPress('W') || Input::KeyPress(VK_UP))
 	{
-		m_pTarget->pTarget = NULL;
-		m_pTarget->AbleAttack = false;
+		CancleAttackTarget();
 		Walk(1);
 	}
 	else if (Input::KeyUp('W') || Input::KeyUp(VK_UP))
 	{
-		m_pTarget->pTarget = NULL;
-		m_pTarget->AbleAttack = false;
+		CancleAttackTarget();
 		Stand();
 	}
 	if (Input::KeyPress('S') || Input::KeyPress(VK_DOWN))
 	{
-		m_pTarget->pTarget = NULL;
-		m_pTarget->AbleAttack = false;
+		CancleAttackTarget();
 		Walk(-1);
 	}
 	else if (Input::KeyUp('S') || Input::KeyUp(VK_DOWN))
 	{
-		m_pTarget->pTarget = NULL;
-		m_pTarget->AbleAttack = false;
+		CancleAttackTarget();
 		Stand();
 	}
 
@@ -92,6 +90,7 @@ void ComChrControl::Update()
 
 	if (Input::ButtonDown(VK_RBUTTON))
 	{
+		CancleAttackTarget();
 		CheckPickingMon();
 		CheckPickingMap();
 	}
@@ -103,6 +102,41 @@ void ComChrControl::Update()
 	}
 	else if (m_pTarget != NULL && m_pTarget->AbleAttack)
 		Attack1();
+
+
+	if (IsPicking == true)
+	{
+		// 특정 위치로 이동
+		float fDistToPoint = ComTransform::Distance(gameObject, &vMoveToPoint);
+
+		if (fDistToPoint < 1.0f)
+		{
+			IsMoveToPoint = false;
+			Stand();
+		}
+		else
+		{
+			IsMoveToPoint = true;
+			m_pCurrentState->Walk(eAni_Walk);
+			GetHeight();
+
+			// 플레이어를 바라보는 방향 벡터
+			Vector3 vDir = vMoveToPoint - gameObject->transform->GetPosition();
+			D3DXVec3Normalize(&vDir, &vDir);
+
+			// 일단은 Y축으로만 회전하자
+			float angleY = Vector::GetAngleY(&vDir);
+			gameObject->transform->SetRotation(0.0f, angleY, 0.0f);
+
+			Vector3 move;
+
+			// 속도가 0.02f라면
+			vDir *= 0.02f;
+
+			// 속도벡터 곱하는 방법
+			gameObject->transform->Translate(vDir);
+		}
+	}
 }
 
 void ComChrControl::Render()
@@ -119,6 +153,12 @@ void ComChrControl::GetHeight()
 		pos.y = fHeight;
 		gameObject->transform->SetPosition(pos);
 	}
+}
+
+void ComChrControl::CancleAttackTarget()
+{
+	m_pTarget->pTarget = NULL;
+	m_pTarget->AbleAttack = false;
 }
 
 void ComChrControl::SetState(int iIndex)
@@ -167,6 +207,11 @@ void ComChrControl::CheckPickingChr()
 	{
 		float dist = 0;
 		IsPicking = ray.CalcIntersectTri(&vertices[i], &dist);
+		if (IsPicking == true)
+		{
+			vMoveToPoint = gameObject->transform->GetPosition();
+			break;
+		}
 	}
 }
 
@@ -206,7 +251,6 @@ void ComChrControl::CheckPickingMap()
 	Mouse* pMouse = Input::GetInstance()->m_pMouse;
 	Vector3 mousePos = Input::GetInstance()->m_pMouse->GetPosition();
 
-	Vector3 vOut(0, 0, 0);
-	m_pMap->CalcPickedPosition(vOut, mousePos.x, mousePos.y);
+	m_pMap->CalcPickedPosition(vMoveToPoint, mousePos.x, mousePos.y);
 }
 

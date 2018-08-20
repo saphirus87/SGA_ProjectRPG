@@ -39,6 +39,8 @@ void ComCharacter::Defence(int dmg)
 	// 총 방어력 계산 (내 방어력 + 장비 방어력)
 	int def = m_status.DEF_PHY;
 
+	dmg -= def;
+
 	// HP 차감
 	m_status.HP -= dmg;
 }

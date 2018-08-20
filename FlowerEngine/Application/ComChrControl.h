@@ -37,6 +37,7 @@ public:
 
 protected:
 	void GetHeight();
+	void CancleAttackTarget();
 	
 protected:
 	ComObjMap * m_pMap;
@@ -48,4 +49,9 @@ protected:
 
 	ComFollowTarget* m_pTarget;
 	ComCharacter* m_pCharacter;
+
+	// 이동하고하 하는 위치
+	Vector3 vMoveToPoint;
+	// 특정 좌표로 이동 여부
+	bool IsMoveToPoint;
 };
