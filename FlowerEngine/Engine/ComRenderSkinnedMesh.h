@@ -50,7 +50,15 @@ public:
 	// 애니메이션을 실행합니다.
 	void PlayAnimation(AnimationController pAniControl, int iIndex, bool isBlend);
 
+	// 이름으로 뼈대행렬을 찾습니다.
 	Matrix4x4* GetMatrixByName(LPCSTR szName);
+
+	// 애니메이션 이벤트를 등록합니다.
+	HRESULT AddCallbackKeysAndCompress(LPD3DXANIMATIONCONTROLLER pAC, LPD3DXKEYFRAMEDANIMATIONSET pAS,
+		DWORD dwNumCallbackKeys, D3DXKEY_CALLBACK aKeys[],
+		DWORD dwCompressionFlags, FLOAT fCompression);
+
+	ID3DXAnimationCallbackHandler* m_pCallbackHandler;
 
 private:
 	// 루트 뼈대 부터 행렬 포인터들 지정 (재귀호출)
@@ -112,5 +120,12 @@ private:
 
 	// 현재 플레이중인 애니메이션 식별값
 	int m_iCurrentAniIndex;
+
+	D3DXKEY_CALLBACK someKey;
 };
 
+class CBHandlerTiny : public ID3DXAnimationCallbackHandler
+{
+	HRESULT CALLBACK HandleCallback(THIS_ UINT Track, LPVOID pCallbackData);
+	
+};

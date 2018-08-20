@@ -17,7 +17,8 @@ ComRenderSkinnedMesh::ComRenderSkinnedMesh(CString szName) :
 	m_pAllocateHierarchy(NULL),
 	pDevice9(GetD3D9Device()),
 	m_iReference(0),
-	m_iCurrentAniIndex(0)
+	m_iCurrentAniIndex(0),
+	m_pCallbackHandler(NULL)
 {
 }
 
@@ -30,6 +31,7 @@ ComRenderSkinnedMesh::~ComRenderSkinnedMesh()
 		SAFE_DELETE_ARRAY(m_pBoneMatrices);
 		m_mapBoneMatrices.clear();
 		SAFE_DELETE(m_pAllocateHierarchy);
+		SAFE_DELETE(m_pCallbackHandler);
 	}
 	else
 		--m_iReference;
@@ -55,6 +57,19 @@ void ComRenderSkinnedMesh::Load(CString szFolderPath, CString szFileName)
 
 	// 4. 뼈대 행렬들 메모리 할당
 	m_pBoneMatrices = new Matrix4x4[m_pAllocateHierarchy->GetNumBoneMatricesMax()];
+
+
+	//LPD3DXKEYFRAMEDANIMATIONSET pAnimSet = NULL;
+	//m_pAniControl->GetAnimationSet(eAni_Attack_1, (LPD3DXANIMATIONSET*)&pAnimSet);
+	//someKey.Time = float(pAnimSet->GetPeriod() / 2.0 * pAnimSet->GetSourceTicksPerSecond()); // 2 프레임?
+	//someKey.pCallbackData = NULL;
+
+	//if (pAnimSet != NULL)
+	//{
+	//	AddCallbackKeysAndCompress(m_pAniControl, pAnimSet, 1, &someKey, D3DXCOMPRESS_DEFAULT, .4f);
+
+	//	m_pCallbackHandler = new CBHandlerTiny();
+	//}
 }
 
 void ComRenderSkinnedMesh::Clone(ComRenderSkinnedMesh* pExist)
@@ -77,6 +92,18 @@ void ComRenderSkinnedMesh::Clone(ComRenderSkinnedMesh* pExist)
 		&m_pAniControl);
 
 	++m_iReference;
+
+
+	/*someKey.Time = 0;
+	LPD3DXKEYFRAMEDANIMATIONSET pAnimSet = NULL;
+	m_pAniControl->GetAnimationSet(eAni_Attack_1, (LPD3DXANIMATIONSET*)&pAnimSet);
+
+	if (pAnimSet != NULL)
+	{
+		AddCallbackKeysAndCompress(m_pAniControl, pAnimSet, 1, &someKey, D3DXCOMPRESS_DEFAULT, .4f);
+
+		m_pCallbackHandler = new CBHandlerTiny();
+	}*/
 }
 
 void ComRenderSkinnedMesh::Awake()
@@ -163,6 +190,47 @@ Matrix4x4* ComRenderSkinnedMesh::GetMatrixByName(LPCSTR szName)
 	return NULL;
 }
 
+HRESULT ComRenderSkinnedMesh::AddCallbackKeysAndCompress(LPD3DXANIMATIONCONTROLLER pAC, LPD3DXKEYFRAMEDANIMATIONSET pAS, DWORD dwNumCallbackKeys, D3DXKEY_CALLBACK aKeys[], DWORD dwCompressionFlags, FLOAT fCompression)
+{
+	HRESULT hr;
+	LPD3DXCOMPRESSEDANIMATIONSET pASNew = NULL;
+	LPD3DXBUFFER pBufCompressed = NULL;
+
+	hr = pAS->Compress(dwCompressionFlags, fCompression, NULL, &pBufCompressed);
+	if (FAILED(hr))
+		goto e_Exit;
+
+	hr = D3DXCreateCompressedAnimationSet(pAS->GetName(),
+		pAS->GetSourceTicksPerSecond(),
+		pAS->GetPlaybackType(),
+		pBufCompressed,
+		dwNumCallbackKeys,
+		aKeys,
+		&pASNew);
+	pBufCompressed->Release();
+
+	if (FAILED(hr))
+		goto e_Exit;
+
+	pAC->UnregisterAnimationSet(pAS);
+	pAS->Release();
+
+	hr = pAC->RegisterAnimationSet(pASNew);
+	if (FAILED(hr))
+		goto e_Exit;
+
+	pASNew->Release();
+	pASNew = NULL;
+
+
+e_Exit:
+
+	if (pASNew)
+		pASNew->Release();
+
+	return hr;
+}
+
 void ComRenderSkinnedMesh::SetupBoneMatrixPointers(XFrame pFrame)
 {
 	if (pFrame->pMeshContainer != NULL)
@@ -206,7 +274,7 @@ void ComRenderSkinnedMesh::UpdateAnimation(AnimationController pAniControl)
 {
 	float fDeltaTime = GetElapsedTime();
 
-	pAniControl->AdvanceTime(fDeltaTime, NULL);
+	pAniControl->AdvanceTime(fDeltaTime, m_pCallbackHandler);
 
 	// 애니메이션을 부드럽게 전환(Blend)
 	if (m_fPassedBlendTime <= m_fBlendTime)
@@ -310,4 +378,26 @@ void ComRenderSkinnedMesh::RenderMeshContainer(MeshContainer* pMeshContainer)
 		m_pEffect->EndPass();
 		m_pEffect->End();
 	}
+}
+
+HRESULT CBHandlerTiny::HandleCallback(UINT Track, LPVOID pCallbackData)
+{
+	int a = 0;
+	//CallbackDataTiny* pCD = (CallbackDataTiny*)pCallbackData;
+
+	//// this is set to NULL if we're not playing sounds
+	//if ( /*fornow*/ !pCD || !pCD->m_pvCameraPos)
+	//	return S_OK;
+
+	//// scale volume by distance from tiny
+	//D3DXVECTOR3 vDiff;
+	//D3DXVec3Subtract(&vDiff, pCD->m_pvCameraPos, pCD->m_pvTinyPos);
+	//float fVolume = min(D3DXVec3LengthSq(&vDiff), 1.f);
+	//fVolume *= -3000.f;
+
+	//// play the sound
+	//if (pCD && g_apSoundsTiny[pCD->m_dwFoot])
+	//	g_apSoundsTiny[pCD->m_dwFoot]->Play(0, 0, (LONG)fVolume);
+
+	return S_OK;
 }
