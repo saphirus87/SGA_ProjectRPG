@@ -28,7 +28,7 @@ void ComChrControl::Init()
 	GameObject* pObjMap = GameObject::Find("ObjMap");
 	if (pObjMap != NULL)
 		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
-	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
+	pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 
 	m_pTarget = (ComFollowTarget*)gameObject->GetComponent("ComFollowTarget");
 	m_pCharacter = (ComCharacter*)gameObject->GetComponent("ComCharacter");

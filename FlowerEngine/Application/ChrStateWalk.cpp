@@ -23,7 +23,7 @@ void ChrStateWalk::Stand(int iIndex)
 
 void ChrStateWalk::Walk(int iIndex)
 {
-	m_pControl->m_pAnimation->PlayAnimation(iIndex);
+	m_pControl->pAnimation->PlayAnimation(iIndex);
 }
 
 void ChrStateWalk::Attack1(int iIndex)

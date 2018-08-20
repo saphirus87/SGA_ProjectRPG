@@ -30,5 +30,5 @@ void ChrStateAttack1::Walk(int iIndex)
 
 void ChrStateAttack1::Attack1(int iIndex)
 {
-	m_pControl->m_pAnimation->PlayAnimation(iIndex);
+	m_pControl->pAnimation->PlayAnimation(iIndex);
 }

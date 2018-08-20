@@ -46,11 +46,11 @@ void ComSmallderon::Update()
 	//Test Code
 	if (Input::KeyDown('1'))
 	{
-		m_pAnimation->PlayAnimation(eAniMon_Stand);
+		pAnimation->PlayAnimation(eAniMon_Stand);
 	}
 	if (Input::KeyDown('2'))
 	{
-		m_pAnimation->PlayAnimation(eAniMon_Walk);
+		pAnimation->PlayAnimation(eAniMon_Walk);
 	}
 }
 

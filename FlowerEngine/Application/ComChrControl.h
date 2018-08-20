@@ -20,9 +20,7 @@ public:
 
 	void Init();
 	void SetState(int iIndex);
-
-	ComRenderSkinnedMesh * m_pAnimation;
-
+		
 	//상태 기계
 	virtual void Stand();
 	virtual void Walk(float fDeltaZ);
@@ -34,6 +32,7 @@ public:
 
 	// 이 객체가 픽킹되었는지 여부
 	bool IsPicking;
+	ComRenderSkinnedMesh * pAnimation;
 
 protected:
 	void GetHeight();
