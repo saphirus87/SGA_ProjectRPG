@@ -418,3 +418,10 @@ using namespace std;
 #include "../../Engine/Ray.h"
 #include "../../Engine/AllocateHierarchy.h"
 #include "../../Engine/ComRenderSkinnedMesh.h"
+
+#include "../../Engine/UI/ComDialog.h"
+#include "../../Engine/UI/UIControl.h"
+#include "../../Engine/UI/UIImage.h"
+#include "../../Engine/UI/UIText.h"
+#include "../../Engine/UI/UIButton.h"
+#include "../../Engine/UI/UIProgressBar.h"

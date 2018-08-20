@@ -28,6 +28,7 @@ void SceneGrid::Init()
 	CreateTroll01();
 	CreateMonster();
 	//CreateTest();
+	CreateUI();
 }
 
 void SceneGrid::CreateMap()
@@ -243,4 +244,19 @@ void SceneGrid::CreateTest()
 	pPostEffect->IsAlwaysRender = true;
 	pPostEffect->AddComponent(comPostProcess);
 
+}
+
+void SceneGrid::CreateUI()
+{
+	GameObject* pUIBar = factory.CreateGameObject("testUI");
+	pUIBar->transform->SetPosition(20.0f, 20.0f, 0);
+	pUIBar->IsAlwaysRender = true;
+
+	ComDialog* pComDialog = new ComDialog("ComDialog");
+	pUIBar->AddComponent(pComDialog);
+	//pComDialog->AddButton(1, "Resources/ui/btn-med-up.png", "Resources/ui/btn-med-over.png", "Resources/ui/btn-med-down.png");
+	pComDialog->AddProgressBar(0, "Resources/ui/6.tga");
+
+	//pComDialog->GetButton(1)->SetPosition(Vector3(50.0f, 0.0f, 0.0f));
+	//pComDialog->AddImage(2, "Resources/ui/btn-tower-up.png");
 }
