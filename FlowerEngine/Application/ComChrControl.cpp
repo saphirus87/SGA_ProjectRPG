@@ -104,39 +104,7 @@ void ComChrControl::Update()
 		Attack1();
 
 
-	if (IsPicking == true)
-	{
-		// 특정 위치로 이동
-		float fDistToPoint = ComTransform::Distance(gameObject, &vMoveToPoint);
-
-		if (fDistToPoint < 1.0f)
-		{
-			IsMoveToPoint = false;
-			Stand();
-		}
-		else
-		{
-			IsMoveToPoint = true;
-			m_pCurrentState->Walk(eAni_Walk);
-			GetHeight();
-
-			// 플레이어를 바라보는 방향 벡터
-			Vector3 vDir = vMoveToPoint - gameObject->transform->GetPosition();
-			D3DXVec3Normalize(&vDir, &vDir);
-
-			// 일단은 Y축으로만 회전하자
-			float angleY = Vector::GetAngleY(&vDir);
-			gameObject->transform->SetRotation(0.0f, angleY, 0.0f);
-
-			Vector3 move;
-
-			// 속도가 0.02f라면
-			vDir *= 0.02f;
-
-			// 속도벡터 곱하는 방법
-			gameObject->transform->Translate(vDir);
-		}
-	}
+	MoveToPoint();
 }
 
 void ComChrControl::Render()
@@ -159,6 +127,42 @@ void ComChrControl::CancleAttackTarget()
 {
 	m_pTarget->pTarget = NULL;
 	m_pTarget->AbleAttack = false;
+}
+
+void ComChrControl::MoveToPoint()
+{
+	if (IsMoveToPoint == true)
+	{
+		// 특정 위치로 이동
+		float fDistToPoint = ComTransform::Distance(gameObject, &vMoveToPoint);
+
+		if (fDistToPoint < 1.0f)
+		{
+			IsMoveToPoint = false;
+			Stand();
+		}
+		else
+		{
+			m_pCurrentState->Walk(eAni_Walk);
+			GetHeight();
+
+			// 플레이어를 바라보는 방향 벡터
+			Vector3 vDir = vMoveToPoint - gameObject->transform->GetPosition();
+			D3DXVec3Normalize(&vDir, &vDir);
+
+			// 일단은 Y축으로만 회전하자
+			float angleY = Vector::GetAngleY(&vDir);
+			gameObject->transform->SetRotation(0.0f, angleY, 0.0f);
+
+			Vector3 move;
+
+			// 속도가 0.02f라면
+			vDir *= 0.02f;
+
+			// 속도벡터 곱하는 방법
+			gameObject->transform->Translate(vDir);
+		}
+	}
 }
 
 void ComChrControl::SetState(int iIndex)
@@ -209,6 +213,7 @@ void ComChrControl::CheckPickingChr()
 		IsPicking = ray.CalcIntersectTri(&vertices[i], &dist);
 		if (IsPicking == true)
 		{
+			// 자기 위치로 초기화
 			vMoveToPoint = gameObject->transform->GetPosition();
 			break;
 		}
@@ -248,9 +253,19 @@ void ComChrControl::CheckPickingMon()
 
 void ComChrControl::CheckPickingMap()
 {
+	// 이미 클릭되어 있다면 IsMoveToPoint를 false로 하여 새 MoveToPoint까지 가도록 한다.
+	if (IsPicking == true)
+		IsMoveToPoint = false;
+
+	// 클릭했는데 아직 이동중이라면 MoveToPoint까지 갈 때 까지 둔다.
+	if (IsMoveToPoint == true)
+		return;
+
 	Mouse* pMouse = Input::GetInstance()->m_pMouse;
 	Vector3 mousePos = Input::GetInstance()->m_pMouse->GetPosition();
 
-	m_pMap->CalcPickedPosition(vMoveToPoint, mousePos.x, mousePos.y);
+	// Picking된 객체만 MoveToPoint를 계산하고 해당 위치로 이동한다.
+	if (m_pMap->CalcPickedPosition(vMoveToPoint, mousePos.x, mousePos.y) && IsPicking == true)
+		IsMoveToPoint = true;
 }
 

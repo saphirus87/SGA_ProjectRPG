@@ -38,6 +38,7 @@ public:
 protected:
 	void GetHeight();
 	void CancleAttackTarget();
+	void MoveToPoint();
 	
 protected:
 	ComObjMap * m_pMap;
