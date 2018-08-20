@@ -3,6 +3,7 @@
 
 class ComObjMap;
 class ComTerrain;
+class ComFollowTarget;
 class ChrState;
 class IChrState;
 
@@ -27,6 +28,13 @@ public:
 	virtual void Walk(float fDeltaZ);
 	virtual void Attack1();
 
+	// 이 객체가 픽킹되었는지 여부를 검사합니다. (캐릭터, 몬스터)
+	void CheckPickingChr();
+	void CheckPickingMon();
+
+	// 이 객체가 픽킹되었는지 여부
+	bool IsPicking;
+
 protected:
 	void GetHeight();
 	
@@ -37,4 +45,6 @@ protected:
 	Vector3 m_vecForward;			// 앞 방향 벡터
 
 	vector<IChrState*> m_vecState;
+
+	ComFollowTarget* m_pTarget;
 };

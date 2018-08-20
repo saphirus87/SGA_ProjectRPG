@@ -113,7 +113,8 @@ void ComRenderCubePN::RenderRambert()
 void ComRenderCubePN::SetLocalVertexScale(Vector3 & vScale)
 {
 	SAFE_RELEASE(m_pVB);
-
+	m_verticesPN.clear();
+	
 	// 노멀 벡터는 중심점에서 그 벡터
 	for (size_t i = 0; i < g_vecCubeVertex.size(); ++i)
 	{
@@ -137,7 +138,23 @@ void ComRenderCubePN::SetLocalVertexScale(Vector3 & vScale)
 	memcpy(pVertex, &m_verticesPN[0], m_verticesPN.size() * sizeof(VERTEX_PN));
 	m_pVB->Unlock();
 	m_iVertexCnt = m_verticesPN.size();
-	m_verticesPN.clear();
+}
+
+vector<Vector3>& ComRenderCubePN::GetVector()
+{
+	m_vecP.clear();
+	for (size_t i = 0; i < g_vecCubeIndex.size(); ++i)
+		m_vecP.push_back(m_verticesPN[g_vecCubeIndex[i]].p);
+
+	Vector3& pos = gameObject->transform->GetPosition();
+	Matrix4x4 matT;
+	D3DXMatrixIdentity(&matT);
+	D3DXMatrixTranslation(&matT, pos.x, pos.y, pos.z);
+
+	for (size_t i = 0; i < m_vecP.size(); ++i)
+		D3DXVec3TransformCoord(&m_vecP[i], &m_vecP[i], &matT);
+
+	return m_vecP;
 }
 
 void ComRenderCubePN::Awake()

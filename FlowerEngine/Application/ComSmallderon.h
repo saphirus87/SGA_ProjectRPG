@@ -22,8 +22,5 @@ public:
 	void Stand() override;
 	void Walk(float fDeltaZ) override;
 	void Attack1() override;
-
-private:
-	ComFollowTarget* m_pTarget;
 };
 

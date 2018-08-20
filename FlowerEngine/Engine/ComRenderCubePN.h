@@ -30,6 +30,9 @@ public:
 	
 	void SetLocalVertexScale(Vector3& vScale);
 
+	// 삼각형 충돌검사를 위해 WorldMatrix 적용된 모든 삼각형 정점들을 반환합니다.
+	vector<Vector3>& GetVector();
+
 	// 일단 public
 	ComCollider* pCollider;
 
@@ -42,6 +45,7 @@ private:
 	VertexDecl		m_pVertexDecl;
 
 	vector<VERTEX_PN> m_verticesPN;
+	vector<Vector3> m_vecP;
 	vector<WORD> m_indices;
 
 	Material		m_material;

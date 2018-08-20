@@ -8,8 +8,7 @@
 #include "ChrStateAttack.h"
 
 ComSmallderon::ComSmallderon(CString szName)
-	:ComChrControl(szName), 
-	m_pTarget(NULL)
+	:ComChrControl(szName)
 {
 }
 
@@ -20,8 +19,6 @@ ComSmallderon::~ComSmallderon()
 void ComSmallderon::Awake()
 {
 	Init();
-
-	m_pTarget = (ComFollowTarget*)gameObject->GetComponent("ComFollowTarget");
 
 	m_vecState.resize(eAniMon_COUNT);
 	m_vecState[eAniMon_Stand] = new ChrStateStand(this);

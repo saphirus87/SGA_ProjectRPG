@@ -58,6 +58,9 @@ void SceneGrid::CreateHuman01()
 
 	// 이 게임 오브젝트는 휴먼
 	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
+	// 이 게임 오브젝트는 대상을 따라다님
+	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
+	pGOChrX3->AddComponent(pComTarget);
 	// 이 게임 오브젝트는 컨트롤 가능
 	pGOChrX3->AddComponent(new ComChrControl("ComChrControl"));
 	// 이 게임 오브젝트는 장비 장착 가능
@@ -91,6 +94,9 @@ void SceneGrid::CreateUndead01()
 {
 	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(-260, 15, -261));
 	pGOChrX4->AddComponent(new ComUndead01("ComUndead01"));
+	// 이 게임 오브젝트는 대상을 따라다님
+	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
+	pGOChrX4->AddComponent(pComTarget);
 	pGOChrX4->AddComponent(new ComChrControl("ComChrControl"));
 	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
 	pGOChrX4->AddComponent(pEquipment);
@@ -122,6 +128,9 @@ void SceneGrid::CreateTroll01()
 {
 	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(-260, 15, -262));
 	pGOChrX5->AddComponent(new ComTroll01("ComTroll01"));
+	// 이 게임 오브젝트는 대상을 따라다님
+	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
+	pGOChrX5->AddComponent(pComTarget);
 	pGOChrX5->AddComponent(new ComChrControl("ComChrControl"));
 	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
 	pGOChrX5->AddComponent(pEquipment);
@@ -155,8 +164,8 @@ void SceneGrid::CreateTroll01()
 
 void SceneGrid::CreateMonster()
 {
-	// 몬스터 생성
-	GameObject* pGOMonX = factory.CreateFromXFile("smallderon_orange", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-250, 15, -250));
+	// 몬스터 생성 (smallderon_orange)
+	GameObject* pGOMonX = factory.CreateFromXFile("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-250, 15, -250));
 	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
 	pGOMonX->AddComponent(pComTarget);
 	pGOMonX->AddComponent(new ComSmallderon("ComSmallderon"));

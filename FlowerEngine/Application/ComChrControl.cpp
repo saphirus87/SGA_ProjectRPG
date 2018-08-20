@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ComChrControl.h"
 #include "ComObjMap.h"
+#include "ComFollowTarget.h"
 #include "ComTerrain.h"
 #include "IChrState.h"
 #include "ChrStateStand.h"
@@ -9,7 +10,9 @@
 
 ComChrControl::ComChrControl(CString szName)
 	:Component(szName), m_pMap(NULL),
-	m_pCurrentState(NULL)
+	m_pCurrentState(NULL),
+	IsPicking(false),
+	m_pTarget(NULL)
 {
 }
 
@@ -17,6 +20,16 @@ ComChrControl::~ComChrControl()
 {
 	for (size_t i = 0; i < m_vecState.size(); ++i)
 		SAFE_DELETE(m_vecState[i]);
+}
+
+void ComChrControl::Init()
+{
+	GameObject* pObjMap = GameObject::Find("ObjMap");
+	if (pObjMap != NULL)
+		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
+	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
+
+	m_pTarget = (ComFollowTarget*)gameObject->GetComponent("ComFollowTarget");
 }
 
 void ComChrControl::Awake()
@@ -44,16 +57,46 @@ void ComChrControl::Update()
 
 	// 캐릭터 이동
 	if (Input::KeyPress('W') || Input::KeyPress(VK_UP))
+	{
+		m_pTarget->pTarget = NULL;
+		m_pTarget->AbleAttack = false;
 		Walk(1);
+	}
 	else if (Input::KeyUp('W') || Input::KeyUp(VK_UP))
+	{
+		m_pTarget->pTarget = NULL;
+		m_pTarget->AbleAttack = false;
 		Stand();
+	}
 	if (Input::KeyPress('S') || Input::KeyPress(VK_DOWN))
+	{
+		m_pTarget->pTarget = NULL;
+		m_pTarget->AbleAttack = false;
 		Walk(-1);
+	}
 	else if (Input::KeyUp('S') || Input::KeyUp(VK_DOWN))
+	{
+		m_pTarget->pTarget = NULL;
+		m_pTarget->AbleAttack = false;
 		Stand();
+	}
 
 	// 캐릭터 공격
 	if (Input::KeyDown('F'))
+		Attack1();
+
+	if (Input::ButtonDown(VK_LBUTTON))
+		CheckPickingChr();
+
+	if (Input::ButtonDown(VK_RBUTTON))
+		CheckPickingMon();
+
+	if (m_pTarget != NULL && m_pTarget->IsFollowing)
+	{
+		m_pCurrentState->Walk(eAni_Walk);
+		GetHeight();
+	}
+	else if (m_pTarget != NULL && m_pTarget->AbleAttack)
 		Attack1();
 }
 
@@ -71,14 +114,6 @@ void ComChrControl::GetHeight()
 		pos.y = fHeight;
 		gameObject->transform->SetPosition(pos);
 	}
-}
-
-void ComChrControl::Init()
-{
-	GameObject* pObjMap = GameObject::Find("ObjMap");
-	if (pObjMap != NULL)
-		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
-	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 }
 
 void ComChrControl::SetState(int iIndex)
@@ -107,5 +142,53 @@ void ComChrControl::Attack1()
 {
 	// 현재 상태에서 Attack1로
 	m_pCurrentState->Attack1(eAni_Attack_1);
+}
+
+void ComChrControl::CheckPickingChr()
+{
+	Mouse* pMouse = Input::GetInstance()->m_pMouse;
+	Vector3 mousePos = Input::GetInstance()->m_pMouse->GetPosition();
+	
+	ComRenderCubePN* pCube = (ComRenderCubePN*)gameObject->GetComponent("ComRenderCubePN");
+
+	Ray ray = Ray::RayAtWorldSpace(mousePos.x, mousePos.y);
+
+	vector<Vector3>& vertices = pCube->GetVector();
+	for (size_t i = 0; i < vertices.size(); i += 3)
+	{
+		float dist = 0;
+		IsPicking = ray.CalcIntersectTri(&vertices[i], &dist);
+	}
+}
+
+void ComChrControl::CheckPickingMon()
+{
+	if (m_pTarget == NULL)
+		return;
+
+	Mouse* pMouse = Input::GetInstance()->m_pMouse;
+	Vector3 mousePos = Input::GetInstance()->m_pMouse->GetPosition();
+
+	list<GameObject*> listMonster = GameObject::FindAll("Monster");
+
+	for (auto & o : listMonster)
+	{
+		ComRenderCubePN* pCube = (ComRenderCubePN*)o->GetComponent("ComRenderCubePN");
+
+		Ray ray = Ray::RayAtWorldSpace(mousePos.x, mousePos.y);
+
+		vector<Vector3>& vertices = pCube->GetVector();
+		for (size_t i = 0; i < vertices.size(); i += 3)
+		{
+			float dist = 0;
+			bool pickMon = ray.CalcIntersectTri(&vertices[i], &dist);
+
+			if (pickMon == true)
+			{
+				// 몬스터를 따라간다.
+				m_pTarget->pTarget = o;
+			}
+		}
+	}
 }
 
