@@ -165,16 +165,12 @@ void SceneGrid::CreateTroll01()
 void SceneGrid::CreateMonster()
 {
 	// 몬스터 생성 (smallderon_orange)
-	GameObject* pGOMonX = factory.CreateFromXFile("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-250, 15, -250));
-	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
-	pGOMonX->AddComponent(pComTarget);
-	pGOMonX->AddComponent(new ComSmallderon("ComSmallderon"));
-	pComTarget->pTarget = GameObject::Find("undead_01");
-
-	// 이 게임 오브젝트는 충돌체크 가능
-	ComCollider* pCollider = new ComCollider("ComCollider");
-	pGOMonX->AddComponent(pCollider);
-	pCollider->Set(Vector3(0, 0.7, 0), Vector3(0.5, 0.8, 0.5), false);
+	GameObject* pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-250, 15, -250),
+		new ComSmallderon("ComSmallderon"), GameObject::Find("undead_01"));
+	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-253, 15, -253),
+		new ComSmallderon("ComSmallderon"), GameObject::Find("human_01"));
+	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-253, 15, -253),
+		new ComSmallderon("ComSmallderon"), GameObject::Find("troll_01"));
 }
 
 void SceneGrid::CreateTest()

@@ -311,3 +311,20 @@ GameObject * FactoryGameObject::CreateEquipment(ItemInfo * pItemInfo, Vector3 & 
 
 	return pGOEquipment;
 }
+
+GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPath, CString szFileName, Vector3 & pos, Component* pComAI, GameObject* pTarget)
+{
+	// 몬스터 생성 (smallderon_orange)
+	GameObject* pGOMonX = CreateFromXFile(szName, szFolderPath, szFileName, pos);
+	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
+	pGOMonX->AddComponent(pComTarget);
+	pGOMonX->AddComponent(pComAI);
+	pComTarget->pTarget = pTarget;
+
+	// 이 게임 오브젝트는 충돌체크 가능
+	ComCollider* pCollider = new ComCollider("ComCollider");
+	pGOMonX->AddComponent(pCollider);
+	pCollider->Set(Vector3(0, 0.7, 0), Vector3(0.5, 0.8, 0.5), false);
+
+	return pGOMonX;
+}
