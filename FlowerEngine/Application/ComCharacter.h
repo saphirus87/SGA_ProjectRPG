@@ -1,19 +1,22 @@
 #pragma once
 #include "stdafx.h"
-#include "ComCharacter.h"
 
-class ComTroll01 : public ComCharacter
+// 캐릭터의 공통요소입니다.
+class ComCharacter : public Component
 {
 public:
-	ComTroll01(CString szName);
-	~ComTroll01();
+	ComCharacter(CString szName);
+	virtual ~ComCharacter();
 
 	// Component을(를) 통해 상속됨
 	virtual void Awake() override;
 	virtual void Update() override;
 	virtual void Render() override;
 
-private:
+protected:
+	void Init();
+
+protected:
 	ComRenderSkinnedMesh * m_pAnimation;
 };
 

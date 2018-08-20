@@ -3,10 +3,10 @@
 #include "ComChrEquipment.h"
 #include "ComEquipment.h"
 #include "ItemInfo.h"
+#include "ComCharacter.h"
 
 ComHuman01::ComHuman01(CString szName) : 
-	Component(szName),
-	m_pAnimation(NULL)
+	ComCharacter(szName)
 {
 }
 
@@ -16,7 +16,7 @@ ComHuman01::~ComHuman01()
 
 void ComHuman01::Awake()
 {
-	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
+	Init();
 }
 
 void ComHuman01::Update()

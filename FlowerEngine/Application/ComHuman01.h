@@ -8,10 +8,11 @@ E-Mail	: hkn10004@naver.com
 */
 #pragma once
 #include "stdafx.h"
+#include "ComCharacter.h"
 
 class ComChrEquipment;
 
-class ComHuman01 : public Component
+class ComHuman01 : public ComCharacter
 {
 public:
 	ComHuman01(CString szName);
@@ -26,6 +27,5 @@ public:
 	virtual void OnTriggerEnter(ComCollider &collider) override;
 
 private:
-	ComRenderSkinnedMesh * m_pAnimation;
 };
 

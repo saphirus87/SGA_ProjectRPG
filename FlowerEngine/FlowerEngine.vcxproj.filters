@@ -414,6 +414,9 @@
     <ClCompile Include="Application\ChrStatusInfo.cpp">
       <Filter>Application\Components\ComCharactor\ChrState</Filter>
     </ClCompile>
+    <ClCompile Include="Application\ComCharacter.cpp">
+      <Filter>Application\Components\ComCharactor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -634,6 +637,9 @@
     </ClInclude>
     <ClInclude Include="Application\ChrStatusInfo.h">
       <Filter>Application\Components\ComCharactor\ChrState</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComCharacter.h">
+      <Filter>Application\Components\ComCharactor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

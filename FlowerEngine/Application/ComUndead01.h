@@ -1,9 +1,10 @@
 #pragma once
 #include "stdafx.h"
+#include "ComCharacter.h"
 
 class ChrState;
 
-class ComUndead01 : public Component
+class ComUndead01 : public ComCharacter
 {
 public:
 	ComUndead01(CString szName);

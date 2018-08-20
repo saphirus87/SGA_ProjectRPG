@@ -2,9 +2,10 @@
 #include "ComUndead01.h"
 #include "ChrStateStand.h"
 #include "ChrStateWalk.h"
+#include "ComCharacter.h"
 
 ComUndead01::ComUndead01(CString szName)
-	:Component(szName)
+	:ComCharacter(szName)
 {
 }
 
@@ -14,9 +15,7 @@ ComUndead01::~ComUndead01()
 
 void ComUndead01::Awake()
 {
-	//CPP ´ÙÇü¼º
-	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
-
+	Init();
 }
 
 void ComUndead01::Update()

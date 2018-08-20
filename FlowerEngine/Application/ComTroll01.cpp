@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "ComTroll01.h"
 #include "ComObjMap.h"
+#include "ComCharacter.h"
 
 ComTroll01::ComTroll01(CString szName)
-	:Component(szName)
+	:ComCharacter(szName)
 {
 }
 
@@ -13,8 +14,7 @@ ComTroll01::~ComTroll01()
 
 void ComTroll01::Awake()
 {
-	//CPP ´ÙÇü¼º
-	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
+	Init();
 }
 
 void ComTroll01::Update()
