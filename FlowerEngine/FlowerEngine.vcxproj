@@ -502,6 +502,12 @@
     <ClCompile Include="Engine\SceneManager.cpp" />
     <ClCompile Include="Engine\Shader.cpp" />
     <ClCompile Include="Engine\Time.cpp" />
+    <ClCompile Include="Engine\UI\ComDialog.cpp" />
+    <ClCompile Include="Engine\UI\UIButton.cpp" />
+    <ClCompile Include="Engine\UI\UIControl.cpp" />
+    <ClCompile Include="Engine\UI\UIImage.cpp" />
+    <ClCompile Include="Engine\UI\UIProgressBar.cpp" />
+    <ClCompile Include="Engine\UI\UIText.cpp" />
     <ClCompile Include="Engine\Vector.cpp" />
     <ClCompile Include="FlowerEngine.cpp" />
   </ItemGroup>
@@ -548,6 +554,12 @@
     <ClInclude Include="Engine\Time.h" />
     <ClInclude Include="Engine\TimeSource.h" />
     <ClInclude Include="Engine\TimeSourceWin32.h" />
+    <ClInclude Include="Engine\UI\ComDialog.h" />
+    <ClInclude Include="Engine\UI\UIButton.h" />
+    <ClInclude Include="Engine\UI\UIControl.h" />
+    <ClInclude Include="Engine\UI\UIImage.h" />
+    <ClInclude Include="Engine\UI\UIProgressBar.h" />
+    <ClInclude Include="Engine\UI\UIText.h" />
     <ClInclude Include="Engine\Vector.h" />
     <CLInclude Include="resource.h" />
     <ResourceCompile Include="FlowerEngine.rc" />

@@ -75,6 +75,9 @@
     <Filter Include="Application\Components\ComCharactor\ChrState">
       <UniqueIdentifier>{d3c0b1a3-170b-4184-8c5e-d513530aa2bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\UI2">
+      <UniqueIdentifier>{be50b7c9-ecf4-49f9-a8d3-37d597ba3a2a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -417,6 +420,24 @@
     <ClCompile Include="Application\ComCharacter.cpp">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\UI\ComDialog.cpp">
+      <Filter>Engine\UI2</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\UIButton.cpp">
+      <Filter>Engine\UI2</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\UIControl.cpp">
+      <Filter>Engine\UI2</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\UIImage.cpp">
+      <Filter>Engine\UI2</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\UIProgressBar.cpp">
+      <Filter>Engine\UI2</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\UIText.cpp">
+      <Filter>Engine\UI2</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -640,6 +661,24 @@
     </ClInclude>
     <ClInclude Include="Application\ComCharacter.h">
       <Filter>Application\Components\ComCharactor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\ComDialog.h">
+      <Filter>Engine\UI2</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\UIButton.h">
+      <Filter>Engine\UI2</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\UIControl.h">
+      <Filter>Engine\UI2</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\UIImage.h">
+      <Filter>Engine\UI2</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\UIProgressBar.h">
+      <Filter>Engine\UI2</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\UIText.h">
+      <Filter>Engine\UI2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

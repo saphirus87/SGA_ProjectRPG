@@ -25,6 +25,9 @@ private:
 	// 5. 테스트 객체들을 생성합니다.
 	void CreateTest();
 
+	// 6. Test : UI 생성
+	void CreateUI();
+
 private:
 	FactoryGameObject factory;
 	D3DLIGHT9 m_lightPoint; // 포인트 라이트
