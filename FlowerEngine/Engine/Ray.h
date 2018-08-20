@@ -16,6 +16,7 @@ public:
 
 	// »ï°¢ÇüÀÌ¶û Ãæµ¹
 	bool CalcIntersectTri(Vector3* pStart, float* distance);
+	bool CalcIntersectTri(Vector3* v0, Vector3* v1, Vector3* v2, float* distance);
 
 public:
 	Vector3 m_pos;

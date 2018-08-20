@@ -65,3 +65,8 @@ bool Ray::CalcIntersectTri(Vector3 * pStart, float * distance)
 {
 	return D3DXIntersectTri(pStart, pStart + 1, pStart + 2, &m_pos, &m_dir, NULL, NULL, distance);
 }
+
+bool Ray::CalcIntersectTri(Vector3 v0, Vector3 v1, Vector3 v2, float * distance)
+{
+	return false;
+}

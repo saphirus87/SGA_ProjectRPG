@@ -47,6 +47,7 @@ void ComObjMap::Awake()
 		m_pQuadTree->SetMapVertex(&m_OptVertices);
 		m_pQuadTree->SetIndex(&m_vecQuadIdx);
  		m_pQuadTree->Build();
+		UpdateIndexBufferQuadTree();
 	}
 }
 
@@ -115,9 +116,9 @@ bool ComObjMap::CalcPickedPosition(D3DXVECTOR3 & out, WORD screenX, WORD screenY
 	float dist = 0;
 	bool bIntersect = false;
 
-	for (size_t i = 0; i < m_surfaceVertices.size(); i += 3)
+	for (int i = 0; i < m_TriangleNum * 3; i += 3)
 	{
-		if (ray.CalcIntersectTri(&m_surfaceVertices[i], &dist))
+		if (ray.CalcIntersectTri(&m_OptVertices[m_surfaceIndices[i]].p, &m_OptVertices[m_surfaceIndices[i + 1]].p, &m_OptVertices[m_surfaceIndices[i + 2]].p, &dist))
 		{
 			if (dist < minDist)
 			{
