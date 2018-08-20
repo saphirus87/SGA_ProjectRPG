@@ -49,6 +49,16 @@ void ComDialog::AddImage(UINT id, CString szFileName)
 	m_Controls.insert(make_pair(id, img));
 }
 
+void ComDialog::AddText(UINT id, LPD3DXFONT pFont, CString szText)
+{
+	UIText* text = new UIText;
+	text->SetSprite(m_pSprite);
+	text->SetParent(this);
+	text->SetText(pFont, szText);
+
+	m_Controls.insert(make_pair(id, text));
+}
+
 void ComDialog::AddButton(UINT id, CString szNormalImg, CString szMouseoverImg, CString szClickImg)
 {
 	UIButton* button = new UIButton;

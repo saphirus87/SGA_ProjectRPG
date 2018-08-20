@@ -29,11 +29,22 @@ void UIButton::Update()
 
 	if (PtInRect(&rc, mousePos))
 	{
-		m_ButtonState = eButtonState_Mouseover;
+		if (Input::ButtonPress(VK_LBUTTON))
+		{
+			if (m_ButtonState == eButtonState_Mouseover)
+				m_ButtonState = eButtonState_Click;
+		}
+		else
+		{
+			if (m_ButtonState == eButtonState_Click);	// 클릭시 실행할 부분 구현 필요
+			
+			m_ButtonState = eButtonState_Mouseover;
+		}
 	}
 	else
 	{
-		m_ButtonState = eButtonState_Normal;
+		if (Input::ButtonPress(VK_LBUTTON));
+		else m_ButtonState = eButtonState_Normal;
 	}
 }
 

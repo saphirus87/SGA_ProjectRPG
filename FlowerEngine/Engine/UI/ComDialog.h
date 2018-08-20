@@ -23,11 +23,13 @@ public:
 	virtual void Render() override;
 
 	void AddImage(UINT id, CString szFileName);
-	void AddText(UINT id, CString szText);
+	void AddText(UINT id, LPD3DXFONT pFont, CString szText);
 	void AddButton(UINT id, CString szNormalImg, CString szMouseoverImg, CString szClickImg);
 	void AddProgressBar(UINT id, CString szFileName);
 
 	// Getter
+	UIImage* GetImage(UINT id) { return (UIImage*)m_Controls[id]; }
+	UIText* GetText(UINT id) { return (UIText*)m_Controls[id]; }
 	UIButton* GetButton(UINT id) { return (UIButton*)m_Controls[id]; }
 	UIProgressBar* GetProgressBar(UINT id) { return (UIProgressBar*)m_Controls[id]; }
 };
