@@ -207,6 +207,6 @@ void ComChrControl::CheckPickingMap()
 	Vector3 mousePos = Input::GetInstance()->m_pMouse->GetPosition();
 
 	Vector3 vOut(0, 0, 0);
-	//m_pMap->CalcPickedPosition(vOut, mousePos.x, mousePos.y);
+	m_pMap->CalcPickedPosition(vOut, mousePos.x, mousePos.y);
 }
 
