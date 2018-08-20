@@ -14,6 +14,7 @@
 #include "../Application/ComTerrain.h"
 #include "../Application/ComEquipment.h"
 #include "../Application/ItemInfo.h"
+#include "../Application/ComCharacter.h"
 
 FactoryGameObject::FactoryGameObject()
 {
@@ -318,8 +319,11 @@ GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPa
 	GameObject* pGOMonX = CreateFromXFile(szName, szFolderPath, szFileName, pos);
 	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
 	pGOMonX->AddComponent(pComTarget);
-	pGOMonX->AddComponent(pComAI);
 	pComTarget->pTarget = pTarget;
+
+	pGOMonX->AddComponent(pComAI);
+
+	pGOMonX->AddComponent(new ComCharacter("ComCharacter"));
 
 	// 이 게임 오브젝트는 충돌체크 가능
 	ComCollider* pCollider = new ComCollider("ComCollider");

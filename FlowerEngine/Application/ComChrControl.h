@@ -4,7 +4,7 @@
 class ComObjMap;
 class ComTerrain;
 class ComFollowTarget;
-class ChrState;
+class ComCharacter;
 class IChrState;
 
 class ComChrControl : public Component
@@ -47,4 +47,5 @@ protected:
 	vector<IChrState*> m_vecState;
 
 	ComFollowTarget* m_pTarget;
+	ComCharacter* m_pCharacter;
 };

@@ -7,6 +7,7 @@
 #include "ChrStateStand.h"
 #include "ChrStateWalk.h"
 #include "ChrStateAttack.h"
+#include "ComCharacter.h"
 
 ComChrControl::ComChrControl(CString szName)
 	:Component(szName), m_pMap(NULL),
@@ -30,6 +31,7 @@ void ComChrControl::Init()
 	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 
 	m_pTarget = (ComFollowTarget*)gameObject->GetComponent("ComFollowTarget");
+	m_pCharacter = (ComCharacter*)gameObject->GetComponent("ComCharacter");
 }
 
 void ComChrControl::Awake()
@@ -142,6 +144,10 @@ void ComChrControl::Attack1()
 {
 	// 현재 상태에서 Attack1로
 	m_pCurrentState->Attack1(eAni_Attack_1);
+	
+	// 특정 프레임에서 공격
+	//ComCharacter* pChr = (ComCharacter*)m_pTarget->gameObject->GetComponent("ComCharacter");
+	//m_pCharacter->AttackTarget(pChr);
 }
 
 void ComChrControl::CheckPickingChr()
