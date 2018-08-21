@@ -34,19 +34,15 @@ void ComText3D::Awake()
 void ComText3D::Update()
 {
 	Matrix4x4 matView = Camera::GetInstance()->GetViewMatrix();
-	// X축 회전행렬은 22, 23, 32, 33번 행렬에 회전값이 들어간다.
-	//m_matBillboard._22 = matView._22;
-	//m_matBillboard._23 = matView._23;
-	//m_matBillboard._32 = matView._32;
 
-	//// Y축 회전행렬은 11, 13, 31, 33번 행렬에 회전값이 들어간다.
-	//m_matBillboard._11 = matView._11;
-	//m_matBillboard._13 = matView._13;
-	//m_matBillboard._31 = matView._31;
-	//m_matBillboard._33 = matView._33;
+	// 역행렬을 구해준 후
+	D3DXMatrixInverse(&m_matBillboard, NULL, &matView);
 
-	m_matBillboard = matView;
-	D3DXMatrixInverse(&m_matBillboard, NULL, &m_matBillboard);
+	// 위치만 강제 셋팅
+	Vector3 vPos = gameObject->transform->GetPosition();
+	m_matBillboard._41 = vPos.x;
+	m_matBillboard._42 = vPos.y;
+	m_matBillboard._43 = vPos.z;
 }
 
 void ComText3D::Render()
@@ -54,7 +50,8 @@ void ComText3D::Render()
 	if (m_pMesh3DText != NULL)
 	{
 		pDevice9->SetMaterial(&m_mtrl);
-		pDevice9->SetTransform(D3DTS_WORLD, &( gameObject->transform->GetWorldMatrix() * m_matBillboard));
+		pDevice9->SetTransform(D3DTS_WORLD, &m_matBillboard);
+		
 		m_pMesh3DText->DrawSubset(0);
 	}
 }
