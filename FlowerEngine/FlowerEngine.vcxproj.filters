@@ -438,6 +438,7 @@
     <ClCompile Include="Engine\UI\UIText.cpp">
       <Filter>Engine\UI2</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\ComText3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -680,6 +681,7 @@
     <ClInclude Include="Engine\UI\UIText.h">
       <Filter>Engine\UI2</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\ComText3D.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="game-controller.ico">

@@ -425,3 +425,4 @@ using namespace std;
 #include "../../Engine/UI/UIText.h"
 #include "../../Engine/UI/UIButton.h"
 #include "../../Engine/UI/UIProgressBar.h"
+#include "../../Engine/ComText3D.h"

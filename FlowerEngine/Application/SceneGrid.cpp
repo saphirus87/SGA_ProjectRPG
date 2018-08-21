@@ -259,4 +259,8 @@ void SceneGrid::CreateUI()
 
 	//pComDialog->GetButton(1)->SetPosition(Vector3(50.0f, 0.0f, 0.0f));
 	//pComDialog->AddImage(2, "Resources/ui/btn-tower-up.png");
+
+	GameObject* pGOText3D = factory.CreateGameObject("Text3D");
+	pGOText3D->AddComponent(new ComText3D("ComText3D"));
+
 }

@@ -485,6 +485,7 @@
     <ClCompile Include="Engine\ComRenderCubePN.cpp" />
     <ClCompile Include="Engine\ComRenderPOM.cpp" />
     <ClCompile Include="Engine\ComRenderSkinnedMesh.cpp" />
+    <ClCompile Include="Engine\ComText3D.cpp" />
     <ClCompile Include="Engine\ComTransform.cpp" />
     <ClCompile Include="Engine\ComUI.cpp" />
     <ClCompile Include="Engine\ComUIButton.cpp" />
@@ -534,6 +535,7 @@
     <ClInclude Include="Engine\ComRenderCubePN.h" />
     <ClInclude Include="Engine\ComRenderPOM.h" />
     <ClInclude Include="Engine\ComRenderSkinnedMesh.h" />
+    <ClInclude Include="Engine\ComText3D.h" />
     <ClInclude Include="Engine\ComTransform.h" />
     <ClInclude Include="Engine\ComUI.h" />
     <ClInclude Include="Engine\ComUIButton.h" />
