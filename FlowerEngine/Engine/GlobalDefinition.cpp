@@ -26,10 +26,10 @@ vector<WORD> g_vecCubeIndex = {
 };
 
 vector<Vector3> g_vecQuadVertex = {
-	Vector3(-1, -1, 0),
-	Vector3(-1, 1, 0),
-	Vector3(1, 1, 0),
-	Vector3(1, -1, 0)
+	Vector3(-0.5f, -0.5f, 0),
+	Vector3(-0.5f, 0.5f, 0),
+	Vector3(0.5f, 0.5f, 0),
+	Vector3(0.5f, -0.5f, 0)
 };
 
 vector<WORD> g_vecQuadIndex = {
