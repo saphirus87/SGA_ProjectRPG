@@ -16,7 +16,6 @@ ComChrControl::ComChrControl(CString szName)
 	m_pTarget(NULL),
 	IsMoveToPoint(false),
 	vMoveToPoint(0, 0, 0),
-	hAttack(NULL),
 	pAttackTarget(NULL)
 {
 }

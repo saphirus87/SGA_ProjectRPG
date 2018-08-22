@@ -244,7 +244,7 @@ void ComRenderSkinnedMesh::AniEvent(D3DXKEY_CALLBACK* pEvent)
 		m_pAniControl->UnregisterAnimationSet(vecKeyFrameAnimSet[i]);
 	
 	float fPeriod = vecKeyFrameAnimSet[eAni_Attack_1]->GetPeriod();
-	float fSrcTime = vecKeyFrameAnimSet[eAni_Attack_1]->GetSourceTicksPerSecond();
+	float fSrcTime = vecKeyFrameAnimSet[eAni_Attack_1]->GetSourceTicksPerSecond();	// 4800
 	
 	pEvent->Time = float(fPeriod / fSrcTime);
 

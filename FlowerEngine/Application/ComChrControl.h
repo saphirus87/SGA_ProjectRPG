@@ -34,7 +34,8 @@ public:
 	// 이 객체가 픽킹되었는지 여부
 	bool IsPicking;
 	ComRenderSkinnedMesh * pAnimation;
-	ID3DXAnimationCallbackHandler* hAttack;
+
+	// 공격하고자 하는 타겟
 	ComCharacter* pAttackTarget;
 
 protected:

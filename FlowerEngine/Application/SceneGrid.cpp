@@ -63,17 +63,14 @@ void SceneGrid::CreateHuman01()
 	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
 	pGOChrX3->AddComponent(pComTarget);
 	// 이 게임 오브젝트는 컨트롤 가능
-	ComChrControl* pChrControl = new ComChrControl("ComChrControl");
-	pGOChrX3->AddComponent(pChrControl);
-	HumanAttackHandler* hAttack = new HumanAttackHandler();
-	pChrControl->hAttack = hAttack;
+	pGOChrX3->AddComponent(new ComChrControl("ComChrControl"));
 	
+	// 애니 이벤트키와 핸들러
 	D3DXKEY_CALLBACK* attackKey = new D3DXKEY_CALLBACK();
 	attackKey->pCallbackData = (ComCharacter*)pGOChrX3->GetComponent("ComHuman01");
-
-	// 애니 이벤트 핸들러
 	ComRenderSkinnedMesh* pRenderSkinnedMesh = (ComRenderSkinnedMesh*)pGOChrX3->GetComponent("ComRenderSkinnedMesh");
 	pRenderSkinnedMesh->AniEvent(attackKey);
+	HumanAttackHandler* hAttack = new HumanAttackHandler();
 	pRenderSkinnedMesh->pCallbackHandler = hAttack;
 
 	// 이 게임 오브젝트는 장비 장착 가능
