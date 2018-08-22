@@ -74,6 +74,7 @@ HRESULT AttackHandler::HandleCallback(UINT Track, LPVOID pCallbackData)
 	// 특정 프레임에서 공격
 	ComCharacter* pChr = (ComCharacter*)pCallbackData;
 	ComChrControl* pControl = (ComChrControl*)pChr->gameObject->GetComponent("ComChrControl");
+
 	pChr->AttackTarget(pControl->pAttackTarget);
 
 	return S_OK;
