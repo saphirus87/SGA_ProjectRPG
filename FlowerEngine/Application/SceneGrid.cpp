@@ -55,7 +55,6 @@ void SceneGrid::CreateMapObject()
 void SceneGrid::CreateHuman01()
 {
 	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(-260, 15, -260));
-	//GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(0, 0, 0));
 
 	// 이 게임 오브젝트는 휴먼
 	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
@@ -65,13 +64,9 @@ void SceneGrid::CreateHuman01()
 	// 이 게임 오브젝트는 컨트롤 가능
 	pGOChrX3->AddComponent(new ComChrControl("ComChrControl"));
 	
-	// 애니 이벤트키와 핸들러
-	D3DXKEY_CALLBACK* attackKey = new D3DXKEY_CALLBACK();
-	attackKey->pCallbackData = (ComCharacter*)pGOChrX3->GetComponent("ComHuman01");
+	// 애니 콜백 함수 설정
 	ComRenderSkinnedMesh* pRenderSkinnedMesh = (ComRenderSkinnedMesh*)pGOChrX3->GetComponent("ComRenderSkinnedMesh");
-	pRenderSkinnedMesh->AniEvent(attackKey);
-	HumanAttackHandler* hAttack = new HumanAttackHandler();
-	pRenderSkinnedMesh->pCallbackHandler = hAttack;
+	pRenderSkinnedMesh->pCallbackHandler = new HumanAttackHandler();
 
 	// 이 게임 오브젝트는 장비 장착 가능
 	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");

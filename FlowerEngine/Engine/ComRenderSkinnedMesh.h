@@ -58,6 +58,8 @@ public:
 		DWORD dwNumCallbackKeys, D3DXKEY_CALLBACK aKeys[],
 		DWORD dwCompressionFlags, FLOAT fCompression);
 
+	// 기본 애니메이션 제어
+	AnimationController m_pAniControl;
 	ID3DXAnimationCallbackHandler* pCallbackHandler;
 
 	void AniEvent(D3DXKEY_CALLBACK* pEvent);
@@ -99,8 +101,7 @@ private:
 	XFrame m_pSubRootFrame;
 	XFrame m_pConnetFrame;
 
-	// 기본 애니메이션 제어
-	AnimationController m_pAniControl;
+	
 	// 보조 애니메이션 제어 - 위는 총쏘기 아래는 달리기 애니메이션을 적용하기 위한
 	AnimationController m_pSubAniControl;
 
