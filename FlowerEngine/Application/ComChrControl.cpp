@@ -122,8 +122,9 @@ void ComChrControl::GetHeight()
 void ComChrControl::CancleAttackTarget()
 {
 	pAttackTarget = NULL;
-	m_pTarget->pTarget = NULL;
+	m_pTarget->IsFollowing = false;
 	m_pTarget->AbleAttack = false;
+	m_pTarget->pTarget = NULL;
 }
 
 void ComChrControl::MoveToPoint()
