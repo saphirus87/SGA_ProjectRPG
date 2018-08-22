@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "ComRenderSkinnedMesh.h"
 
-
 ComRenderSkinnedMesh::ComRenderSkinnedMesh(CString szName) :
 	Component(szName),
 	m_pEffect(NULL),
@@ -18,7 +17,7 @@ ComRenderSkinnedMesh::ComRenderSkinnedMesh(CString szName) :
 	pDevice9(GetD3D9Device()),
 	m_iReference(0),
 	m_iCurrentAniIndex(0),
-	m_pCallbackHandler(NULL)
+	pCallbackHandler(NULL)
 {
 }
 
@@ -31,7 +30,7 @@ ComRenderSkinnedMesh::~ComRenderSkinnedMesh()
 		SAFE_DELETE_ARRAY(m_pBoneMatrices);
 		m_mapBoneMatrices.clear();
 		SAFE_DELETE(m_pAllocateHierarchy);
-		SAFE_DELETE(m_pCallbackHandler);
+		SAFE_DELETE(pCallbackHandler);
 	}
 	else
 		--m_iReference;
@@ -181,7 +180,6 @@ Matrix4x4* ComRenderSkinnedMesh::GetMatrixByName(LPCSTR szName)
 }
 
 HRESULT ComRenderSkinnedMesh::AddCallbackKeysAndCompress(
-	LPD3DXANIMATIONCONTROLLER pAC, 
 	LPD3DXKEYFRAMEDANIMATIONSET pAS, 
 	DWORD dwNumCallbackKeys, 
 	D3DXKEY_CALLBACK aKeys[], 
@@ -216,9 +214,7 @@ HRESULT ComRenderSkinnedMesh::AddCallbackKeysAndCompress(
 	pAS->Release();
 
 	// 새로 만들어진 Animation Set을 등록한다.
-	hr = pAC->RegisterAnimationSet(pASNew);
-	
-	int cnt = pAC->GetNumAnimationSets();
+	hr = m_pAniControl->RegisterAnimationSet(pASNew);
 
 	if (FAILED(hr))
 		goto e_Exit;
@@ -235,7 +231,7 @@ e_Exit:
 	return hr;
 }
 
-void ComRenderSkinnedMesh::AniEvent()
+void ComRenderSkinnedMesh::AniEvent(D3DXKEY_CALLBACK* pEvent)
 {
 	vector<LPD3DXKEYFRAMEDANIMATIONSET> vecKeyFrameAnimSet;
 	vecKeyFrameAnimSet.resize(eAni_COUNT);
@@ -243,42 +239,23 @@ void ComRenderSkinnedMesh::AniEvent()
 	for (int i = eAni_Attack_3; i < eAni_COUNT; ++i)
 		m_pAniControl->GetAnimationSet(i, (LPD3DXANIMATIONSET*)&vecKeyFrameAnimSet[i]);
 
+	// Register 하는 순서데로 Animation Index가 설정되기 때문에 미리 모두 Unregister 한다.
 	for (int i = eAni_Attack_3; i < eAni_COUNT; ++i)
 		m_pAniControl->UnregisterAnimationSet(vecKeyFrameAnimSet[i]);
+	
+	float fPeriod = vecKeyFrameAnimSet[eAni_Attack_1]->GetPeriod();
+	float fSrcTime = vecKeyFrameAnimSet[eAni_Attack_1]->GetSourceTicksPerSecond();
+	
+	pEvent->Time = float(fPeriod / fSrcTime);
 
-
-	/*LPD3DXKEYFRAMEDANIMATIONSET pAnimAttack3 = NULL;
-	LPD3DXKEYFRAMEDANIMATIONSET pAnimAttack2 = NULL;
-	LPD3DXKEYFRAMEDANIMATIONSET pAnimAttack1 = NULL;
-	LPD3DXKEYFRAMEDANIMATIONSET pAnimWalk = NULL;
-	LPD3DXKEYFRAMEDANIMATIONSET pAnimStand = NULL;
-
-	m_pAniControl->GetAnimationSet(eAni_Attack_3, (LPD3DXANIMATIONSET*)&pAnimAttack3);
-	m_pAniControl->GetAnimationSet(eAni_Attack_2, (LPD3DXANIMATIONSET*)&pAnimAttack2);
-	m_pAniControl->GetAnimationSet(eAni_Attack_1, (LPD3DXANIMATIONSET*)&pAnimAttack1);
-	m_pAniControl->GetAnimationSet(eAni_Walk, (LPD3DXANIMATIONSET*)&pAnimWalk);
-	m_pAniControl->GetAnimationSet(eAni_Stand, (LPD3DXANIMATIONSET*)&pAnimStand);*/
-
-	//float fPeriod = pAnimAttack1->GetPeriod();
-	//float fSrcTime = pAnimAttack1->GetSourceTicksPerSecond();
-	//
-	//someKey.Time = float(fPeriod / fSrcTime);
-	//someKey.pCallbackData = NULL;
-
-	// Register 하는 순서데로 Animation Index가 설정되기 때문에 미리 모두 Unregister 한다.
-	/*m_pAniControl->UnregisterAnimationSet(pAnimAttack3);
-	m_pAniControl->UnregisterAnimationSet(pAnimAttack2);
-	m_pAniControl->UnregisterAnimationSet(pAnimAttack1);
-	m_pAniControl->UnregisterAnimationSet(pAnimWalk);
-	m_pAniControl->UnregisterAnimationSet(pAnimStand);*/
-
-	AddCallbackKeysAndCompress(m_pAniControl, vecKeyFrameAnimSet[eAni_Attack_3], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
-	AddCallbackKeysAndCompress(m_pAniControl, vecKeyFrameAnimSet[eAni_Attack_2], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
-	AddCallbackKeysAndCompress(m_pAniControl, vecKeyFrameAnimSet[eAni_Attack_1], 1, &someKey, D3DXCOMPRESS_DEFAULT, 1.0f);
-	AddCallbackKeysAndCompress(m_pAniControl, vecKeyFrameAnimSet[eAni_Walk], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
-	AddCallbackKeysAndCompress(m_pAniControl, vecKeyFrameAnimSet[eAni_Stand], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
+	AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Attack_3], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
+	AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Attack_2], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
+	AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Attack_1], 1, pEvent, D3DXCOMPRESS_DEFAULT, 1.0f);
+	AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Walk], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
+	AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Stand], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
 		
-	m_pCallbackHandler = new CBHandlerTiny();
+	vecKeyFrameAnimSet.clear();
+	SAFE_DELETE(pEvent);
 }
 
 DWORD ComRenderSkinnedMesh::GetAnimIndex(char sString[])
@@ -350,7 +327,7 @@ void ComRenderSkinnedMesh::UpdateAnimation(AnimationController pAniControl)
 {
 	float fDeltaTime = GetElapsedTime();
 
-	pAniControl->AdvanceTime(fDeltaTime, m_pCallbackHandler);
+	pAniControl->AdvanceTime(fDeltaTime, pCallbackHandler);
 
 	// 애니메이션을 부드럽게 전환(Blend)
 	if (m_fPassedBlendTime <= m_fBlendTime)
@@ -454,30 +431,4 @@ void ComRenderSkinnedMesh::RenderMeshContainer(MeshContainer* pMeshContainer)
 		m_pEffect->EndPass();
 		m_pEffect->End();
 	}
-}
-
-HRESULT CBHandlerTiny::HandleCallback(UINT Track, LPVOID pCallbackData)
-{
-	int a = 0;
-	CString szDebug;
-	szDebug.Format(L"EventCallback Track : %d\r\n", Track);
-	OutputDebugString(szDebug);
-
-	//CallbackDataTiny* pCD = (CallbackDataTiny*)pCallbackData;
-
-	//// this is set to NULL if we're not playing sounds
-	//if ( /*fornow*/ !pCD || !pCD->m_pvCameraPos)
-	//	return S_OK;
-
-	//// scale volume by distance from tiny
-	//D3DXVECTOR3 vDiff;
-	//D3DXVec3Subtract(&vDiff, pCD->m_pvCameraPos, pCD->m_pvTinyPos);
-	//float fVolume = min(D3DXVec3LengthSq(&vDiff), 1.f);
-	//fVolume *= -3000.f;
-
-	//// play the sound
-	//if (pCD && g_apSoundsTiny[pCD->m_dwFoot])
-	//	g_apSoundsTiny[pCD->m_dwFoot]->Play(0, 0, (LONG)fVolume);
-
-	return S_OK;
 }

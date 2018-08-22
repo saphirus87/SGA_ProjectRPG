@@ -4,6 +4,7 @@
 #include "ComEquipment.h"
 #include "ItemInfo.h"
 #include "ComCharacter.h"
+#include "ComChrControl.h"
 
 ComHuman01::ComHuman01(CString szName) : 
 	ComCharacter(szName)
@@ -17,6 +18,7 @@ ComHuman01::~ComHuman01()
 void ComHuman01::Awake()
 {
 	Init();
+
 }
 
 void ComHuman01::Update()
@@ -40,4 +42,18 @@ void ComHuman01::OnTriggerEnter(ComCollider & collider)
 			collider.gameObject->SetActive(false);
 		}
 	}
+}
+
+HRESULT HumanAttackHandler::HandleCallback(UINT Track, LPVOID pCallbackData)
+{
+	CString szDebug;
+	szDebug.Format(L"EventCallback Track : %d\r\n", Track);
+	OutputDebugString(szDebug);
+
+	// 특정 프레임에서 공격
+	ComCharacter* pChr = (ComCharacter*)pCallbackData;
+	ComChrControl* pControl = (ComChrControl*)pChr->gameObject->GetComponent("ComChrControl");
+	pChr->AttackTarget(pControl->pAttackTarget);
+
+	return S_OK;
 }

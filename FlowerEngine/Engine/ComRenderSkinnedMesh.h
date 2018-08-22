@@ -54,13 +54,13 @@ public:
 	Matrix4x4* GetMatrixByName(LPCSTR szName);
 
 	// 애니메이션 이벤트를 등록합니다.
-	HRESULT AddCallbackKeysAndCompress(LPD3DXANIMATIONCONTROLLER pAC, LPD3DXKEYFRAMEDANIMATIONSET pAS,
+	HRESULT AddCallbackKeysAndCompress(LPD3DXKEYFRAMEDANIMATIONSET pAS,
 		DWORD dwNumCallbackKeys, D3DXKEY_CALLBACK aKeys[],
 		DWORD dwCompressionFlags, FLOAT fCompression);
 
-	ID3DXAnimationCallbackHandler* m_pCallbackHandler;
+	ID3DXAnimationCallbackHandler* pCallbackHandler;
 
-	void AniEvent();
+	void AniEvent(D3DXKEY_CALLBACK* pEvent);
 	
 	DWORD GetAnimIndex(char sString[]);
 	
@@ -125,11 +125,5 @@ private:
 	// 현재 플레이중인 애니메이션 식별값
 	int m_iCurrentAniIndex;
 
-	D3DXKEY_CALLBACK someKey;
-};
-
-class CBHandlerTiny : public ID3DXAnimationCallbackHandler
-{
-	HRESULT CALLBACK HandleCallback(THIS_ UINT Track, LPVOID pCallbackData);
-	
+//	D3DXKEY_CALLBACK someKey;
 };

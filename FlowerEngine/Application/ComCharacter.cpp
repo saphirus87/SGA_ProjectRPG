@@ -43,6 +43,9 @@ void ComCharacter::Defence(int dmg)
 
 	// HP Â÷°¨
 	m_status.HP -= dmg;
+
+	if (CheckDeath())
+		gameObject->SetActive(false);
 }
 
 bool ComCharacter::CheckDeath()

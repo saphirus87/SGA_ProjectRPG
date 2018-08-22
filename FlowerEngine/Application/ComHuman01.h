@@ -12,6 +12,11 @@ E-Mail	: hkn10004@naver.com
 
 class ComChrEquipment;
 
+class HumanAttackHandler : public ID3DXAnimationCallbackHandler
+{
+	HRESULT CALLBACK HandleCallback(THIS_ UINT Track, LPVOID pCallbackData);
+};
+
 class ComHuman01 : public ComCharacter
 {
 public:
@@ -25,5 +30,6 @@ public:
 
 	// 다른 콜라이더에 충돌했을 때 호출되는 함수
 	virtual void OnTriggerEnter(ComCollider &collider) override;
-};
 
+	HumanAttackHandler* hAttack;
+};

@@ -15,7 +15,9 @@ ComChrControl::ComChrControl(CString szName)
 	IsPicking(false),
 	m_pTarget(NULL),
 	IsMoveToPoint(false),
-	vMoveToPoint(0, 0, 0)
+	vMoveToPoint(0, 0, 0),
+	hAttack(NULL),
+	pAttackTarget(NULL)
 {
 }
 
@@ -191,9 +193,7 @@ void ComChrControl::Attack1()
 	// 현재 상태에서 Attack1로
 	m_pCurrentState->Attack1(eAni_Attack_1);
 	
-	// 특정 프레임에서 공격
-	//ComCharacter* pChr = (ComCharacter*)m_pTarget->gameObject->GetComponent("ComCharacter");
-	//m_pCharacter->AttackTarget(pChr);
+
 }
 
 void ComChrControl::CheckPickingChr()
@@ -245,6 +245,7 @@ void ComChrControl::CheckPickingMon()
 			{
 				// 몬스터를 따라간다.
 				m_pTarget->pTarget = o;
+				pAttackTarget = (ComCharacter*)o->GetComponent("ComCharacter");
 			}
 		}
 	}

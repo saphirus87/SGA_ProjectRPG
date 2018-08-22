@@ -34,6 +34,8 @@ public:
 	// 이 객체가 픽킹되었는지 여부
 	bool IsPicking;
 	ComRenderSkinnedMesh * pAnimation;
+	ID3DXAnimationCallbackHandler* hAttack;
+	ComCharacter* pAttackTarget;
 
 protected:
 	void GetHeight();

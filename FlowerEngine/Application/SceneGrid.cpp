@@ -63,7 +63,19 @@ void SceneGrid::CreateHuman01()
 	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
 	pGOChrX3->AddComponent(pComTarget);
 	// 이 게임 오브젝트는 컨트롤 가능
-	pGOChrX3->AddComponent(new ComChrControl("ComChrControl"));
+	ComChrControl* pChrControl = new ComChrControl("ComChrControl");
+	pGOChrX3->AddComponent(pChrControl);
+	HumanAttackHandler* hAttack = new HumanAttackHandler();
+	pChrControl->hAttack = hAttack;
+	
+	D3DXKEY_CALLBACK* attackKey = new D3DXKEY_CALLBACK();
+	attackKey->pCallbackData = (ComCharacter*)pGOChrX3->GetComponent("ComHuman01");
+
+	// 애니 이벤트 핸들러
+	ComRenderSkinnedMesh* pRenderSkinnedMesh = (ComRenderSkinnedMesh*)pGOChrX3->GetComponent("ComRenderSkinnedMesh");
+	pRenderSkinnedMesh->AniEvent(attackKey);
+	pRenderSkinnedMesh->pCallbackHandler = hAttack;
+
 	// 이 게임 오브젝트는 장비 장착 가능
 	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
 	pGOChrX3->AddComponent(pEquipment);
@@ -89,9 +101,6 @@ void SceneGrid::CreateHuman01()
 
 	// 카메라
 	Camera::GetInstance()->SetTarget(&pGOChrX3->transform->GetPosition());
-
-	ComRenderSkinnedMesh* pRenderSkinnedMesh = (ComRenderSkinnedMesh*)pGOChrX3->GetComponent("ComRenderSkinnedMesh");
-	pRenderSkinnedMesh->AniEvent();
 }
 
 void SceneGrid::CreateUndead01()
