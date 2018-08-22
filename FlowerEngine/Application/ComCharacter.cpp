@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "ComCharacter.h"
-
+#include "ComChrControl.h"
 
 ComCharacter::ComCharacter(CString szName) : 
 	Component(szName),
@@ -62,4 +62,19 @@ void ComCharacter::Init()
 {
 	// CPP 다형성
 	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
+}
+
+
+HRESULT AttackHandler::HandleCallback(UINT Track, LPVOID pCallbackData)
+{
+	CString szDebug;
+	szDebug.Format(L"EventCallback Track : %d\r\n", Track);
+	OutputDebugString(szDebug);
+
+	// 특정 프레임에서 공격
+	ComCharacter* pChr = (ComCharacter*)pCallbackData;
+	ComChrControl* pControl = (ComChrControl*)pChr->gameObject->GetComponent("ComChrControl");
+	pChr->AttackTarget(pControl->pAttackTarget);
+
+	return S_OK;
 }

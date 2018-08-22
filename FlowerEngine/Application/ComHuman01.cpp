@@ -79,17 +79,3 @@ void ComHuman01::OnTriggerEnter(ComCollider & collider)
 		}
 	}
 }
-
-HRESULT HumanAttackHandler::HandleCallback(UINT Track, LPVOID pCallbackData)
-{
-	CString szDebug;
-	szDebug.Format(L"EventCallback Track : %d\r\n", Track);
-	OutputDebugString(szDebug);
-
-	// 특정 프레임에서 공격
-	ComCharacter* pChr = (ComCharacter*)pCallbackData;
-	ComChrControl* pControl = (ComChrControl*)pChr->gameObject->GetComponent("ComChrControl");
-	pChr->AttackTarget(pControl->pAttackTarget);
-
-	return S_OK;
-}

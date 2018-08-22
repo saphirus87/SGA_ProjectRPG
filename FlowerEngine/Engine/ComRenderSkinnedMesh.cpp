@@ -56,9 +56,6 @@ void ComRenderSkinnedMesh::Load(CString szFolderPath, CString szFileName)
 
 	// 4. 뼈대 행렬들 메모리 할당
 	m_pBoneMatrices = new Matrix4x4[m_pAllocateHierarchy->GetNumBoneMatricesMax()];
-
-
-	
 }
 
 void ComRenderSkinnedMesh::Clone(ComRenderSkinnedMesh* pExist)

@@ -12,11 +12,6 @@ E-Mail	: hkn10004@naver.com
 
 class ComChrEquipment;
 
-class HumanAttackHandler : public ID3DXAnimationCallbackHandler
-{
-	HRESULT CALLBACK HandleCallback(THIS_ UINT Track, LPVOID pCallbackData);
-};
-
 class ComHuman01 : public ComCharacter
 {
 public:

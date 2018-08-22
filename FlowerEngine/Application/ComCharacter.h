@@ -2,6 +2,11 @@
 #include "stdafx.h"
 #include "StatusInfo.h"
 
+class AttackHandler : public ID3DXAnimationCallbackHandler
+{
+	HRESULT CALLBACK HandleCallback(THIS_ UINT Track, LPVOID pCallbackData);
+};
+
 // 캐릭터의 공통요소입니다.
 class ComCharacter : public Component
 {

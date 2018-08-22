@@ -66,7 +66,7 @@ void SceneGrid::CreateHuman01()
 	
 	// 애니 콜백 함수 설정
 	ComRenderSkinnedMesh* pRenderSkinnedMesh = (ComRenderSkinnedMesh*)pGOChrX3->GetComponent("ComRenderSkinnedMesh");
-	pRenderSkinnedMesh->pCallbackHandler = new HumanAttackHandler();
+	pRenderSkinnedMesh->pCallbackHandler = new AttackHandler();
 
 	// 이 게임 오브젝트는 장비 장착 가능
 	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
