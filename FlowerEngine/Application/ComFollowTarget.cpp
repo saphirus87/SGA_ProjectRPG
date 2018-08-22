@@ -25,7 +25,12 @@ void ComFollowTarget::Awake()
 void ComFollowTarget::Update()
 {
 	if (pTarget == NULL)
+	{
+		// 초기화 
+		AbleAttack = false;
+		IsFollowing = false;
 		return;
+	}
 
 	// Target 위치와 나의 위치가 특정 거리 이하이면
 	float fDistance = ComTransform::Distance(gameObject, pTarget);

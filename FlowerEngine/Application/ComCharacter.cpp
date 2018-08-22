@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ComCharacter.h"
 #include "ComChrControl.h"
+#include "ComFollowTarget.h"
 
 ComCharacter::ComCharacter(CString szName) : 
 	Component(szName),
@@ -32,6 +33,18 @@ void ComCharacter::AttackTarget(ComCharacter * pTarget)
 	int dmg = m_status.ATK_PHY;
 
 	pTarget->Defence(m_status.ATK_PHY);
+
+	// 공격 상대가 죽었으면
+	if (pTarget->CheckDeath() == true)
+	{
+		pTarget->gameObject->SetActive(false);
+
+		ComChrControl* pChrControl = (ComChrControl*)gameObject->GetComponent("ComChrControl");
+		pChrControl->pAttackTarget = NULL;
+
+		ComFollowTarget* pFollow = (ComFollowTarget*)(gameObject->GetComponent("ComFollowTarget"));
+		pFollow->pTarget = NULL;
+	}
 }
 
 void ComCharacter::Defence(int dmg)
@@ -43,17 +56,15 @@ void ComCharacter::Defence(int dmg)
 
 	// HP 차감
 	m_status.HP -= dmg;
-
-	CheckDeath();
+	
+	// UI 갱신
+	UpdateHPBar();
 }
 
 bool ComCharacter::CheckDeath()
 {
 	if (m_status.HP <= 0)
-	{
-		gameObject->SetActive(false);
 		return true;
-	}
 
 	return false;
 }
@@ -74,6 +85,10 @@ HRESULT AttackHandler::HandleCallback(UINT Track, LPVOID pCallbackData)
 	// 특정 프레임에서 공격
 	ComCharacter* pChr = (ComCharacter*)pCallbackData;
 	ComChrControl* pControl = (ComChrControl*)pChr->gameObject->GetComponent("ComChrControl");
+
+	// 죽어서 없으면
+	if (pControl->pAttackTarget == NULL)
+		return S_OK;
 
 	pChr->AttackTarget(pControl->pAttackTarget);
 

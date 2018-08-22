@@ -24,13 +24,18 @@ void ComUndead01::Awake()
 
 	m_pHPBar = uiDialog->GetProgressBar(eUI_HPBar);
 	m_pHPBar->SetMaxValue(m_status.HPMAX);
+	UpdateHPBar();
 }
 
 void ComUndead01::Update()
 {
-	m_pHPBar->SetCurValue(m_status.HP);
 }
 
 void ComUndead01::Render()
 {
+}
+
+void ComUndead01::UpdateHPBar()
+{
+	m_pHPBar->SetCurValue(m_status.HP);
 }

@@ -24,9 +24,12 @@ public:
 	
 	// 방어를 합니다.
 	void Defence(int dmg);
-
+	
 	// 죽음을 검사합니다.
 	bool CheckDeath();
+
+	// UI 관련
+	virtual void UpdateHPBar() {}
 
 protected:
 	void Init();

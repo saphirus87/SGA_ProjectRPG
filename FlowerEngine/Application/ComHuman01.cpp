@@ -25,7 +25,7 @@ void ComHuman01::SetAniEvent()
 {
 	vector<LPD3DXKEYFRAMEDANIMATIONSET> vecKeyFrameAnimSet;
 	vecKeyFrameAnimSet.resize(eAni_COUNT);
-
+	
 	for (int i = eAni_Attack_3; i < eAni_COUNT; ++i)
 		m_pAnimation->m_pAniControl->GetAnimationSet(i, (LPD3DXANIMATIONSET*)&vecKeyFrameAnimSet[i]);
 
@@ -41,7 +41,7 @@ void ComHuman01::SetAniEvent()
 	// eAni_Attack_1 때릴때 애니 프레임 Number : 12
 	// 비례식 12 : 29 = x : 4800(SrcTime)
 	float x = fSrcTime * 12 / 29;
-
+	
 	// 키 이벤트 콜백
 	D3DXKEY_CALLBACK attackKey;
 	attackKey.pCallbackData = this;
