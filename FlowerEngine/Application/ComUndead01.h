@@ -14,5 +14,8 @@ public:
 	virtual void Awake() override;
 	virtual void Update() override;
 	virtual void Render() override;
+
+private:
+	UIProgressBar * m_pHPBar;
 };
 

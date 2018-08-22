@@ -21,6 +21,7 @@ SceneGrid::~SceneGrid()
 
 void SceneGrid::Init()
 {
+	CreateUI();
 	CreateMap();
 	CreateMapObject();
 	CreateHuman01();
@@ -28,7 +29,6 @@ void SceneGrid::Init()
 	CreateTroll01();
 	CreateMonster();
 	//CreateTest();
-	CreateUI();
 }
 
 void SceneGrid::CreateMap()
@@ -57,7 +57,7 @@ void SceneGrid::CreateHuman01()
 	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(-260, 15, -260));
 
 	// 이 게임 오브젝트는 휴먼
-	pGOChrX3->AddComponent(new ComHuman01("ComHuman01"));
+	pGOChrX3->AddComponent(new ComHuman01("ComCharacter"));
 	// 이 게임 오브젝트는 대상을 따라다님
 	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
 	pGOChrX3->AddComponent(pComTarget);
@@ -87,9 +87,9 @@ void SceneGrid::CreateHuman01()
 	EquipmentWeapon* pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
 	pEquipment->Equip(pWeaponR);
 
-	EquipmentWeapon* pWeaponL = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
-	pWeaponL->Type = eItem_WeaponL;
-	pEquipment->Equip(pWeaponL);
+	//EquipmentWeapon* pWeaponL = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
+	//pWeaponL->Type = eItem_WeaponL;
+	//pEquipment->Equip(pWeaponL);
 
 	// 카메라
 	Camera::GetInstance()->SetTarget(&pGOChrX3->transform->GetPosition());
@@ -98,7 +98,7 @@ void SceneGrid::CreateHuman01()
 void SceneGrid::CreateUndead01()
 {
 	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(-260, 15, -261));
-	pGOChrX4->AddComponent(new ComUndead01("ComUndead01"));
+	pGOChrX4->AddComponent(new ComUndead01("ComCharacter"));
 	// 이 게임 오브젝트는 대상을 따라다님
 	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
 	pGOChrX4->AddComponent(pComTarget);
@@ -132,7 +132,7 @@ void SceneGrid::CreateUndead01()
 void SceneGrid::CreateTroll01()
 {
 	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(-260, 15, -262));
-	pGOChrX5->AddComponent(new ComTroll01("ComTroll01"));
+	pGOChrX5->AddComponent(new ComTroll01("ComCharacter"));
 	// 이 게임 오브젝트는 대상을 따라다님
 	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
 	pGOChrX5->AddComponent(pComTarget);
@@ -259,7 +259,7 @@ void SceneGrid::CreateUI()
 	//((ComDialog*)uiDialog)->AddText(3, Assets::GetFont(Assets::FontType_NORMAL), "한글test123!@#");
 	//pComDialog->GetText(3)->SetSize(Vector2(140.0f, 40.0f));
 	//((ComDialog*)uiDialog)->AddProgressBar(0, "Resources/ui/6.tga");
-	((ComDialog*)uiDialog)->AddCheckBox(0, "Resources/ui/Box.png", "Resources/ui/Checked.png", Assets::GetFont(Assets::FontType_NORMAL), "testCheckBox");
+	//((ComDialog*)uiDialog)->AddCheckBox(10, "Resources/ui/Box.png", "Resources/ui/Checked.png", Assets::GetFont(Assets::FontType_NORMAL), "testCheckBox");
 
 	//pComDialog->GetButton(1)->SetPosition(Vector3(50.0f, 0.0f, 0.0f));
 	//pComDialog->AddImage(2, "Resources/ui/btn-tower-up.png");

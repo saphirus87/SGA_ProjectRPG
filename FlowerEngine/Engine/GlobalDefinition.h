@@ -153,6 +153,11 @@ enum eChrType
 	eChrType_COUNT
 };
 
+enum eUI
+{
+	eUI_HPBar
+};
+
 struct KEYBOARD_STATE
 {
 	Vector3	deltaPos;

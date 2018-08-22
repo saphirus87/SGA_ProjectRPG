@@ -4,7 +4,9 @@
 
 StatusInfo::StatusInfo() :
 HP(10),
+HPMAX(10),
 MP(10),
+MPMAX(10),
 ATK_PHY(3),
 ATK_MGR(3),
 DEF_PHY(1),
