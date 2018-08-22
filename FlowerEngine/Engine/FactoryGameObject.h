@@ -25,5 +25,6 @@ public:
 	GameObject* CreateObjMap(CString szName, CString szFolderPath, CString szFileName);
 	GameObject* CreateEquipment(ItemInfo* pItemInfo, Vector3& pos, bool IsMirrored = false);
 	GameObject* CreateMonster(CString szName, CString szFolderPath, CString szFileName, Vector3& pos, Component* pComAI, GameObject* pTarget);
+	GameObject* CreateUIDialog(CString szName, float fPosX, float fPosY);
 };
 

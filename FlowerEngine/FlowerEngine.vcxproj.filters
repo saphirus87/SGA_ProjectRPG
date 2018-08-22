@@ -439,6 +439,9 @@
       <Filter>Engine\UI2</Filter>
     </ClCompile>
     <ClCompile Include="Engine\ComText3D.cpp" />
+    <ClCompile Include="Engine\UI\UICheckBox.cpp">
+      <Filter>Engine\UI2</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -682,6 +685,9 @@
       <Filter>Engine\UI2</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ComText3D.h" />
+    <ClInclude Include="Engine\UI\UICheckBox.h">
+      <Filter>Engine\UI2</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="game-controller.ico">
