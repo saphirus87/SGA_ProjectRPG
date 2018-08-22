@@ -323,14 +323,13 @@ GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPa
 	pGOMonX->AddComponent(pComTarget);
 	pComTarget->pTarget = pTarget;
 
+	pGOMonX->AddComponent(new ComCharacter("ComCharacter"));
 	pGOMonX->AddComponent(pComAI);
 
 	// pComAI 다음에
 	ComRenderSkinnedMesh* pRenderSkinnedMesh = (ComRenderSkinnedMesh*)pGOMonX->GetComponent("ComRenderSkinnedMesh");
 	pRenderSkinnedMesh->pCallbackHandler = new AttackHandler();
 
-	pGOMonX->AddComponent(new ComCharacter("ComCharacter"));
-	
 	((ComChrControl*)pComAI)->pAttackTarget = (ComCharacter*)(pTarget->GetComponent("ComUndead01"));
 
 	// 이 게임 오브젝트는 충돌체크 가능

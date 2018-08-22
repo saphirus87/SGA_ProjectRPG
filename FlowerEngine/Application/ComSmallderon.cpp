@@ -48,7 +48,7 @@ void ComSmallderon::Awake()
 
 	// 키 이벤트 콜백
 	D3DXKEY_CALLBACK attackKey;
-	attackKey.pCallbackData = this;
+	attackKey.pCallbackData = (ComCharacter*)gameObject->GetComponent("ComCharacter");
 	attackKey.Time = x;
 
 	// eAni 순서데로 추가한다.
