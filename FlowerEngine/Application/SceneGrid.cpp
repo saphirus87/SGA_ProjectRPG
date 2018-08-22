@@ -89,6 +89,9 @@ void SceneGrid::CreateHuman01()
 
 	// Ä«¸Þ¶ó
 	Camera::GetInstance()->SetTarget(&pGOChrX3->transform->GetPosition());
+
+	ComRenderSkinnedMesh* pRenderSkinnedMesh = (ComRenderSkinnedMesh*)pGOChrX3->GetComponent("ComRenderSkinnedMesh");
+	pRenderSkinnedMesh->AniEvent();
 }
 
 void SceneGrid::CreateUndead01()

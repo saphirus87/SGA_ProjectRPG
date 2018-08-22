@@ -103,7 +103,6 @@ void ComChrControl::Update()
 	else if (m_pTarget != NULL && m_pTarget->AbleAttack)
 		Attack1();
 
-
 	MoveToPoint();
 }
 

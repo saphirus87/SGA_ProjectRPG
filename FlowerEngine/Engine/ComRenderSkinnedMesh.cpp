@@ -59,17 +59,7 @@ void ComRenderSkinnedMesh::Load(CString szFolderPath, CString szFileName)
 	m_pBoneMatrices = new Matrix4x4[m_pAllocateHierarchy->GetNumBoneMatricesMax()];
 
 
-	//LPD3DXKEYFRAMEDANIMATIONSET pAnimSet = NULL;
-	//m_pAniControl->GetAnimationSet(eAni_Attack_1, (LPD3DXANIMATIONSET*)&pAnimSet);
-	//someKey.Time = float(pAnimSet->GetPeriod() / 2.0 * pAnimSet->GetSourceTicksPerSecond()); // 2 프레임?
-	//someKey.pCallbackData = NULL;
-
-	//if (pAnimSet != NULL)
-	//{
-	//	AddCallbackKeysAndCompress(m_pAniControl, pAnimSet, 1, &someKey, D3DXCOMPRESS_DEFAULT, .4f);
-
-	//	m_pCallbackHandler = new CBHandlerTiny();
-	//}
+	
 }
 
 void ComRenderSkinnedMesh::Clone(ComRenderSkinnedMesh* pExist)
@@ -190,17 +180,26 @@ Matrix4x4* ComRenderSkinnedMesh::GetMatrixByName(LPCSTR szName)
 	return NULL;
 }
 
-HRESULT ComRenderSkinnedMesh::AddCallbackKeysAndCompress(LPD3DXANIMATIONCONTROLLER pAC, LPD3DXKEYFRAMEDANIMATIONSET pAS, DWORD dwNumCallbackKeys, D3DXKEY_CALLBACK aKeys[], DWORD dwCompressionFlags, FLOAT fCompression)
+HRESULT ComRenderSkinnedMesh::AddCallbackKeysAndCompress(
+	LPD3DXANIMATIONCONTROLLER pAC, 
+	LPD3DXKEYFRAMEDANIMATIONSET pAS, 
+	DWORD dwNumCallbackKeys, 
+	D3DXKEY_CALLBACK aKeys[], 
+	DWORD dwCompressionFlags, 
+	FLOAT fCompression)
 {
 	HRESULT hr;
 	LPD3DXCOMPRESSEDANIMATIONSET pASNew = NULL;
 	LPD3DXBUFFER pBufCompressed = NULL;
 
+	// Compression 의미 : 압축
 	hr = pAS->Compress(dwCompressionFlags, fCompression, NULL, &pBufCompressed);
 	if (FAILED(hr))
 		goto e_Exit;
 
-	hr = D3DXCreateCompressedAnimationSet(pAS->GetName(),
+	// 압축된 애니메이션을 pASNew에 만든다.
+	hr = D3DXCreateCompressedAnimationSet(
+		pAS->GetName(),
 		pAS->GetSourceTicksPerSecond(),
 		pAS->GetPlaybackType(),
 		pBufCompressed,
@@ -208,14 +207,19 @@ HRESULT ComRenderSkinnedMesh::AddCallbackKeysAndCompress(LPD3DXANIMATIONCONTROLL
 		aKeys,
 		&pASNew);
 	pBufCompressed->Release();
-
+	
 	if (FAILED(hr))
 		goto e_Exit;
 
-	pAC->UnregisterAnimationSet(pAS);
+	// 기존 Animation Set을 등록해지 하고
+	//pAC->UnregisterAnimationSet(pAS);
 	pAS->Release();
 
+	// 새로 만들어진 Animation Set을 등록한다.
 	hr = pAC->RegisterAnimationSet(pASNew);
+	
+	int cnt = pAC->GetNumAnimationSets();
+
 	if (FAILED(hr))
 		goto e_Exit;
 
@@ -229,6 +233,78 @@ e_Exit:
 		pASNew->Release();
 
 	return hr;
+}
+
+void ComRenderSkinnedMesh::AniEvent()
+{
+	vector<LPD3DXKEYFRAMEDANIMATIONSET> vecKeyFrameAnimSet;
+	vecKeyFrameAnimSet.resize(eAni_COUNT);
+
+	for (int i = eAni_Attack_3; i < eAni_COUNT; ++i)
+		m_pAniControl->GetAnimationSet(i, (LPD3DXANIMATIONSET*)&vecKeyFrameAnimSet[i]);
+
+	for (int i = eAni_Attack_3; i < eAni_COUNT; ++i)
+		m_pAniControl->UnregisterAnimationSet(vecKeyFrameAnimSet[i]);
+
+
+	/*LPD3DXKEYFRAMEDANIMATIONSET pAnimAttack3 = NULL;
+	LPD3DXKEYFRAMEDANIMATIONSET pAnimAttack2 = NULL;
+	LPD3DXKEYFRAMEDANIMATIONSET pAnimAttack1 = NULL;
+	LPD3DXKEYFRAMEDANIMATIONSET pAnimWalk = NULL;
+	LPD3DXKEYFRAMEDANIMATIONSET pAnimStand = NULL;
+
+	m_pAniControl->GetAnimationSet(eAni_Attack_3, (LPD3DXANIMATIONSET*)&pAnimAttack3);
+	m_pAniControl->GetAnimationSet(eAni_Attack_2, (LPD3DXANIMATIONSET*)&pAnimAttack2);
+	m_pAniControl->GetAnimationSet(eAni_Attack_1, (LPD3DXANIMATIONSET*)&pAnimAttack1);
+	m_pAniControl->GetAnimationSet(eAni_Walk, (LPD3DXANIMATIONSET*)&pAnimWalk);
+	m_pAniControl->GetAnimationSet(eAni_Stand, (LPD3DXANIMATIONSET*)&pAnimStand);*/
+
+	//float fPeriod = pAnimAttack1->GetPeriod();
+	//float fSrcTime = pAnimAttack1->GetSourceTicksPerSecond();
+	//
+	//someKey.Time = float(fPeriod / fSrcTime);
+	//someKey.pCallbackData = NULL;
+
+	// Register 하는 순서데로 Animation Index가 설정되기 때문에 미리 모두 Unregister 한다.
+	/*m_pAniControl->UnregisterAnimationSet(pAnimAttack3);
+	m_pAniControl->UnregisterAnimationSet(pAnimAttack2);
+	m_pAniControl->UnregisterAnimationSet(pAnimAttack1);
+	m_pAniControl->UnregisterAnimationSet(pAnimWalk);
+	m_pAniControl->UnregisterAnimationSet(pAnimStand);*/
+
+	AddCallbackKeysAndCompress(m_pAniControl, vecKeyFrameAnimSet[eAni_Attack_3], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
+	AddCallbackKeysAndCompress(m_pAniControl, vecKeyFrameAnimSet[eAni_Attack_2], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
+	AddCallbackKeysAndCompress(m_pAniControl, vecKeyFrameAnimSet[eAni_Attack_1], 1, &someKey, D3DXCOMPRESS_DEFAULT, 1.0f);
+	AddCallbackKeysAndCompress(m_pAniControl, vecKeyFrameAnimSet[eAni_Walk], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
+	AddCallbackKeysAndCompress(m_pAniControl, vecKeyFrameAnimSet[eAni_Stand], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
+		
+	m_pCallbackHandler = new CBHandlerTiny();
+}
+
+DWORD ComRenderSkinnedMesh::GetAnimIndex(char sString[])
+{
+	HRESULT hr;
+	LPD3DXANIMATIONSET pAS;
+	DWORD dwRet = 0xffffffff;
+		
+	for (DWORD i = 0; i < m_pAniControl->GetNumAnimationSets(); ++i)
+	{
+		hr = m_pAniControl->GetAnimationSet(i, &pAS);
+		if (FAILED(hr))
+			continue;
+
+		if (pAS->GetName() &&
+			!strncmp(pAS->GetName(), sString, min(strlen(pAS->GetName()), strlen(sString))))
+		{
+			dwRet = i;
+			pAS->Release();
+			break;
+		}
+
+		pAS->Release();
+	}
+
+	return dwRet;
 }
 
 void ComRenderSkinnedMesh::SetupBoneMatrixPointers(XFrame pFrame)
@@ -383,6 +459,10 @@ void ComRenderSkinnedMesh::RenderMeshContainer(MeshContainer* pMeshContainer)
 HRESULT CBHandlerTiny::HandleCallback(UINT Track, LPVOID pCallbackData)
 {
 	int a = 0;
+	CString szDebug;
+	szDebug.Format(L"EventCallback Track : %d\r\n", Track);
+	OutputDebugString(szDebug);
+
 	//CallbackDataTiny* pCD = (CallbackDataTiny*)pCallbackData;
 
 	//// this is set to NULL if we're not playing sounds

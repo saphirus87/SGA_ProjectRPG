@@ -42,16 +42,6 @@ void ComSmallderon::Update()
 	}
 	else
 		Stand();
-
-	//Test Code
-	if (Input::KeyDown('1'))
-	{
-		pAnimation->PlayAnimation(eAniMon_Stand);
-	}
-	if (Input::KeyDown('2'))
-	{
-		pAnimation->PlayAnimation(eAniMon_Walk);
-	}
 }
 
 void ComSmallderon::Render()

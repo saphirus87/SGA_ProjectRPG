@@ -12,8 +12,5 @@ public:
 	virtual void Awake() override;
 	virtual void Update() override;
 	virtual void Render() override;
-
-private:
-	ComRenderSkinnedMesh * m_pAnimation;
 };
 

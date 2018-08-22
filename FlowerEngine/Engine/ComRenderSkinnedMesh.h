@@ -60,6 +60,10 @@ public:
 
 	ID3DXAnimationCallbackHandler* m_pCallbackHandler;
 
+	void AniEvent();
+	
+	DWORD GetAnimIndex(char sString[]);
+	
 private:
 	// 루트 뼈대 부터 행렬 포인터들 지정 (재귀호출)
 	void SetupBoneMatrixPointers(XFrame pFrame);
