@@ -83,3 +83,15 @@ void ComDialog::AddProgressBar(UINT id, CString szFileName)
 
 	m_Controls.insert(make_pair(id, bar));
 }
+
+void ComDialog::AddCheckBox(UINT id, CString szBoxImg, CString szCheckImg, LPD3DXFONT pFont, CString szText)
+{
+	UICheckBox* box = new UICheckBox;
+	box->SetSprite(m_pSprite);
+	box->SetParent(this);
+	box->SetTexture(szBoxImg, szCheckImg);
+	box->SetText(pFont, szText);
+
+
+	m_Controls.insert(make_pair(id, box));
+}

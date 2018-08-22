@@ -26,6 +26,7 @@ public:
 	void AddText(UINT id, LPD3DXFONT pFont, CString szText);
 	void AddButton(UINT id, CString szNormalImg, CString szMouseoverImg, CString szClickImg);
 	void AddProgressBar(UINT id, CString szFileName);
+	void AddCheckBox(UINT id, CString szBoxImg, CString szCheckImg, LPD3DXFONT pFont, CString szText);
 
 	// Getter
 	UIImage* GetImage(UINT id) { return (UIImage*)m_Controls[id]; }

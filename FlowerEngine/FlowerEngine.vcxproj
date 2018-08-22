@@ -505,6 +505,7 @@
     <ClCompile Include="Engine\Time.cpp" />
     <ClCompile Include="Engine\UI\ComDialog.cpp" />
     <ClCompile Include="Engine\UI\UIButton.cpp" />
+    <ClCompile Include="Engine\UI\UICheckBox.cpp" />
     <ClCompile Include="Engine\UI\UIControl.cpp" />
     <ClCompile Include="Engine\UI\UIImage.cpp" />
     <ClCompile Include="Engine\UI\UIProgressBar.cpp" />
@@ -558,6 +559,7 @@
     <ClInclude Include="Engine\TimeSourceWin32.h" />
     <ClInclude Include="Engine\UI\ComDialog.h" />
     <ClInclude Include="Engine\UI\UIButton.h" />
+    <ClInclude Include="Engine\UI\UICheckBox.h" />
     <ClInclude Include="Engine\UI\UIControl.h" />
     <ClInclude Include="Engine\UI\UIImage.h" />
     <ClInclude Include="Engine\UI\UIProgressBar.h" />

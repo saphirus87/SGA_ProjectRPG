@@ -252,19 +252,16 @@ void SceneGrid::CreateTest()
 
 void SceneGrid::CreateUI()
 {
-	GameObject* pUIBar = factory.CreateGameObject("testUI");
-	pUIBar->transform->SetPosition(20.0f, 20.0f, 0);
-	pUIBar->IsAlwaysRender = true;
+	GameObject* pUIBar = factory.CreateUIDialog("testUI", 20.0f, 20.0f);
+	Component* uiDialog = pUIBar->GetComponent("ComDialog");
 
-	ComDialog* pComDialog = new ComDialog("ComDialog");
-	pUIBar->AddComponent(pComDialog);
-	//pComDialog->AddButton(1, "Resources/ui/btn-med-up.png", "Resources/ui/btn-med-over.png", "Resources/ui/btn-med-down.png");
-	pComDialog->AddProgressBar(0, "Resources/ui/6.tga");
+	//((ComDialog*)uiDialog)->AddButton(1, "Resources/ui/btn-med-up.png", "Resources/ui/btn-med-over.png", "Resources/ui/btn-med-down.png");
+	//((ComDialog*)uiDialog)->AddText(3, Assets::GetFont(Assets::FontType_NORMAL), "ÇÑ±Ûtest123!@#");
+	//pComDialog->GetText(3)->SetSize(Vector2(140.0f, 40.0f));
+	//((ComDialog*)uiDialog)->AddProgressBar(0, "Resources/ui/6.tga");
+	((ComDialog*)uiDialog)->AddCheckBox(0, "Resources/ui/Box.png", "Resources/ui/Checked.png", Assets::GetFont(Assets::FontType_NORMAL), "testCheckBox");
 
 	//pComDialog->GetButton(1)->SetPosition(Vector3(50.0f, 0.0f, 0.0f));
 	//pComDialog->AddImage(2, "Resources/ui/btn-tower-up.png");
-
-	//GameObject* pGOText3D = factory.CreateGameObject("Text3D");
-	//pGOText3D->AddComponent(new ComText3D("ComText3D"));
 
 }
