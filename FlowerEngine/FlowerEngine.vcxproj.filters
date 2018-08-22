@@ -442,6 +442,7 @@
     <ClCompile Include="Engine\UI\UICheckBox.cpp">
       <Filter>Engine\UI2</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\ComTexture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -688,6 +689,7 @@
     <ClInclude Include="Engine\UI\UICheckBox.h">
       <Filter>Engine\UI2</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\ComTexture.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="game-controller.ico">
