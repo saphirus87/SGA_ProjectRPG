@@ -38,10 +38,17 @@ void ComCharacter::AttackTarget(ComCharacter * pTarget)
 	if (pTarget->CheckDeath() == true)
 	{
 		pTarget->gameObject->SetActive(false);
-
-		ComChrControl* pChrControl = (ComChrControl*)gameObject->GetComponent("ComChrControl");
-		pChrControl->pAttackTarget = NULL;
-
+		
+		// 캐릭터 
+		list<GameObject*> listChr = GameObject::FindAll(eTag_Chracter);
+		for (auto & chr : listChr)
+		{
+			ComChrControl* pControl = (ComChrControl*)(chr->GetComponent("ComChrControl"));
+			pControl->CancleAttackTarget();
+			pControl->Stand();
+		}
+		
+		// 몬스터 : 캐릭터 따라다니기 멈춤
 		ComFollowTarget* pFollow = (ComFollowTarget*)(gameObject->GetComponent("ComFollowTarget"));
 		pFollow->pTarget = NULL;
 	}

@@ -81,11 +81,7 @@ void ComChrControl::Update()
 		CancleAttackTarget();
 		Stand();
 	}
-
-	// 캐릭터 공격
-	if (Input::KeyDown('F'))
-		Attack1();
-
+	
 	if (Input::ButtonDown(VK_LBUTTON))
 		CheckPickingChr();
 
@@ -125,6 +121,7 @@ void ComChrControl::GetHeight()
 
 void ComChrControl::CancleAttackTarget()
 {
+	pAttackTarget = NULL;
 	m_pTarget->pTarget = NULL;
 	m_pTarget->AbleAttack = false;
 }
@@ -191,8 +188,6 @@ void ComChrControl::Attack1()
 {
 	// 현재 상태에서 Attack1로
 	m_pCurrentState->Attack1(eAni_Attack_1);
-	
-
 }
 
 void ComChrControl::CheckPickingChr()

@@ -93,6 +93,9 @@ public:
 	// 해당 이름으로 모든 게임 오브젝트를 찾아서 리스트로 반환합니다.
 	static list<GameObject*> FindAll(CString szName);
 
+	// 해당 태그로 모든 게임 오브젝트를 찾아서 리스트로 반환합니다.
+	static list<GameObject*> FindAll(int iTag);
+
 public:
 	// 최적화 필요
 	// public말고 처리방안 필요
@@ -102,6 +105,9 @@ public:
 	ComTransform* transform;
 	bool IsAlwaysRender;	// 항상 렌더링 해야하는 객체(즉 컬링 되면 안돼는 객체들 UI나 스카이박스등)
 	float fDistanceToCamera; // 카메라와 이 게임 오브젝트와의 거리 (렌더링 정렬(Sorting)에 사용)
+
+	// 식별 태그
+	int Tag;
 
 private:
 	// 이름

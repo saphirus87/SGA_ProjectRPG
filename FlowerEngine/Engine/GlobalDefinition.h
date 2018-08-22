@@ -153,6 +153,12 @@ enum eChrType
 	eChrType_COUNT
 };
 
+enum eTag
+{
+	eTag_Chracter,
+	eTag_Monster,
+};
+
 enum eUI
 {
 	eUI_HPBar

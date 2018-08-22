@@ -37,10 +37,10 @@ public:
 
 	// 공격하고자 하는 타겟
 	ComCharacter* pAttackTarget;
+	void CancleAttackTarget();
 
 protected:
 	void GetHeight();
-	void CancleAttackTarget();
 	void MoveToPoint();
 	
 protected:

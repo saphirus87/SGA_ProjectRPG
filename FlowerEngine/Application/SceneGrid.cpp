@@ -55,6 +55,7 @@ void SceneGrid::CreateMapObject()
 void SceneGrid::CreateHuman01()
 {
 	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(-260, 15, -260));
+	pGOChrX3->Tag = eTag_Chracter;
 
 	// 이 게임 오브젝트는 휴먼
 	pGOChrX3->AddComponent(new ComHuman01("ComCharacter"));
@@ -98,6 +99,8 @@ void SceneGrid::CreateHuman01()
 void SceneGrid::CreateUndead01()
 {
 	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(-260, 15, -261));
+	pGOChrX4->Tag = eTag_Chracter;
+
 	pGOChrX4->AddComponent(new ComUndead01("ComCharacter"));
 	// 이 게임 오브젝트는 대상을 따라다님
 	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
@@ -132,6 +135,8 @@ void SceneGrid::CreateUndead01()
 void SceneGrid::CreateTroll01()
 {
 	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(-260, 15, -262));
+	pGOChrX5->Tag = eTag_Chracter;
+	
 	pGOChrX5->AddComponent(new ComTroll01("ComCharacter"));
 	// 이 게임 오브젝트는 대상을 따라다님
 	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");

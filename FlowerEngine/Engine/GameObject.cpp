@@ -9,7 +9,8 @@ GameObject::GameObject(CString szName) :
 	m_bIsActive(true),
 	m_pCollider(NULL),
 	m_bIsDestroy(false),
-	IsAlwaysRender(false)
+	IsAlwaysRender(false),
+	Tag(-1)
 {
 	transform = new ComTransform("ComTransform");
 	AddComponent(transform);
@@ -174,6 +175,21 @@ list<GameObject*> GameObject::FindAll(CString szName)
 		GameObject* pGO = (*iter).second;
 
 		if (pGO != NULL && pGO->Name().Find(szName) >= 0)
+			listGO.push_back(pGO);
+	}
+
+	return listGO;
+}
+
+list<GameObject*> GameObject::FindAll(int iTag)
+{
+	list<GameObject*> listGO;
+
+	for (IterGO iter = m_mapGameObjects.begin(); iter != m_mapGameObjects.end(); ++iter)
+	{
+		GameObject* pGO = (*iter).second;
+
+		if (pGO != NULL && pGO->Tag == iTag)
 			listGO.push_back(pGO);
 	}
 
