@@ -17,9 +17,9 @@ private:
 	// 2. 맵 오브젝트들을 생성합니다.
 	void CreateMapObject();
 	// 3. 캐릭터를 생성합니다.
-	void CreateHuman01();
-	void CreateUndead01();
-	void CreateTroll01();
+	void CreateHuman();
+	void CreateUndead();
+	void CreateTroll();
 	// 4. 몬스터를 생성합니다.
 	void CreateMonster();
 	// 5. 테스트 객체들을 생성합니다.

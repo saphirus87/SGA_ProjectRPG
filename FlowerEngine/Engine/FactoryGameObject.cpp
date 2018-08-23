@@ -13,6 +13,7 @@
 #include "../Application/ComObjMap.h"
 #include "../Application/ComTerrain.h"
 #include "../Application/ComEquipment.h"
+#include "../Application/ComChrEquipment.h"
 #include "../Application/ItemInfo.h"
 #include "../Application/ComCharacter.h"
 #include "../Application/ComChrControl.h"
@@ -312,6 +313,30 @@ GameObject * FactoryGameObject::CreateEquipment(ItemInfo * pItemInfo, Vector3 & 
 	pGOEquipment->transform->SetPosition(pos);
 
 	return pGOEquipment;
+}
+
+GameObject * FactoryGameObject::CreateCharacter(CString szName, CString szFolderPath, CString szFileName, Vector3 & pos, ComCharacter* pComChr)
+{
+	GameObject* pGOChr = CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(-260, 15, -260));
+	pGOChr->Tag = eTag_Chracter;
+
+	// 이 게임 오브젝트의 직업
+	pGOChr->AddComponent(pComChr);
+	// 이 게임 오브젝트는 대상을 따라다님
+	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
+	pGOChr->AddComponent(pComTarget);
+	// 이 게임 오브젝트는 컨트롤 가능
+	pGOChr->AddComponent(new ComChrControl("ComChrControl"));
+	// 애니 콜백 함수 설정
+	ComRenderSkinnedMesh* pRenderSkinnedMesh = (ComRenderSkinnedMesh*)pGOChr->GetComponent("ComRenderSkinnedMesh");
+	pRenderSkinnedMesh->pCallbackHandler = new AttackHandler();
+	// 이 게임 오브젝트는 장비 장착 가능
+	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
+	pGOChr->AddComponent(pEquipment);
+	// 이 게임 오브젝트는 충돌체크 가능
+	ComCollider* pCollider = new ComCollider("ComCollider");
+	pGOChr->AddComponent(pCollider);
+	pCollider->Set(Vector3(0, 0.5f, 0), Vector3(0.3, 0.6, 0.3), false);
 }
 
 GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPath, CString szFileName, Vector3 & pos, Component* pComAI, GameObject* pTarget)

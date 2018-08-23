@@ -24,9 +24,9 @@ void SceneGrid::Init()
 	CreateUI();
 	CreateMap();
 	CreateMapObject();
-	CreateHuman01();
-	CreateUndead01();
-	CreateTroll01();
+	CreateHuman();
+	CreateUndead();
+	CreateTroll();
 	CreateMonster();
 	//CreateTest();
 }
@@ -52,30 +52,12 @@ void SceneGrid::CreateMapObject()
 	pCollider->Set(Vector3(0, 0, 0), Vector3(0.1, 0.1, 0.1), false);
 }
 
-void SceneGrid::CreateHuman01()
+void SceneGrid::CreateHuman()
 {
-	GameObject* pGOChrX3 = factory.CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(-260, 15, -260));
-	pGOChrX3->Tag = eTag_Chracter;
-
-	// 이 게임 오브젝트는 휴먼
-	pGOChrX3->AddComponent(new ComHuman01("ComCharacter"));
-	// 이 게임 오브젝트는 대상을 따라다님
-	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
-	pGOChrX3->AddComponent(pComTarget);
-	// 이 게임 오브젝트는 컨트롤 가능
-	pGOChrX3->AddComponent(new ComChrControl("ComChrControl"));
-	
-	// 애니 콜백 함수 설정
-	ComRenderSkinnedMesh* pRenderSkinnedMesh = (ComRenderSkinnedMesh*)pGOChrX3->GetComponent("ComRenderSkinnedMesh");
-	pRenderSkinnedMesh->pCallbackHandler = new AttackHandler();
+	GameObject* pGOHuman = factory.CreateCharacter("human_01", "Resources/character/human_01/", "human_01.X", Vector3(-260, 15, -260), new ComHuman01("ComCharacter"));
 
 	// 이 게임 오브젝트는 장비 장착 가능
-	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
-	pGOChrX3->AddComponent(pEquipment);
-	// 이 게임 오브젝트는 충돌체크 가능
-	ComCollider* pCollider = new ComCollider("ComCollider");
-	pGOChrX3->AddComponent(pCollider);
-	pCollider->Set(Vector3(0, 0.5f, 0), Vector3(0.3, 0.6, 0.3), false);
+	ComChrEquipment* pEquipment = (ComChrEquipment*)pGOHuman->GetComponent("ComChrEquipment");
 
 	// 장비 장착
 	EquipmentHelmet* pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X");
@@ -93,31 +75,15 @@ void SceneGrid::CreateHuman01()
 	//pEquipment->Equip(pWeaponL);
 
 	// 카메라
-	Camera::GetInstance()->SetTarget(&pGOChrX3->transform->GetPosition());
+	Camera::GetInstance()->SetTarget(&pGOHuman->transform->GetPosition());
 }
 
-void SceneGrid::CreateUndead01()
+void SceneGrid::CreateUndead()
 {
-	GameObject* pGOChrX4 = factory.CreateFromXFile("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(-260, 15, -261));
-	pGOChrX4->Tag = eTag_Chracter;
+	GameObject* pGOUndead = factory.CreateCharacter("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(-260, 15, -261), new ComUndead01("ComCharacter"));
 
-	pGOChrX4->AddComponent(new ComUndead01("ComCharacter"));
-	// 이 게임 오브젝트는 대상을 따라다님
-	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
-	pGOChrX4->AddComponent(pComTarget);
-	pGOChrX4->AddComponent(new ComChrControl("ComChrControl"));
-	
-	// 애니 콜백 함수 설정
-	ComRenderSkinnedMesh* pRenderSkinnedMesh = (ComRenderSkinnedMesh*)pGOChrX4->GetComponent("ComRenderSkinnedMesh");
-	pRenderSkinnedMesh->pCallbackHandler = new AttackHandler();
-	
-	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
-	pGOChrX4->AddComponent(pEquipment);
-
-	// 이 게임 오브젝트는 충돌체크 가능
-	ComCollider* pCollider = new ComCollider("ComCollider");
-	pGOChrX4->AddComponent(pCollider);
-	pCollider->Set(Vector3(0, 0.5f, 0), Vector3(0.3, 0.6, 0.3), false);
+	// 이 게임 오브젝트는 장비 장착 가능
+	ComChrEquipment* pEquipment = (ComChrEquipment*)pGOUndead->GetComponent("ComChrEquipment");
 
 	EquipmentShoulder* pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
 	pShoulder->Set(10, 10, 10, 10, eChrType_Undead);
@@ -137,23 +103,12 @@ void SceneGrid::CreateUndead01()
 	pEquipment->Equip(pWeaponR);
 }
 
-void SceneGrid::CreateTroll01()
+void SceneGrid::CreateTroll()
 {
-	GameObject* pGOChrX5 = factory.CreateFromXFile("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(-260, 15, -262));
-	pGOChrX5->Tag = eTag_Chracter;
+	GameObject* pGOTroll = factory.CreateCharacter("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(-260, 15, -262), new ComTroll01("ComCharacter"));
 	
-	pGOChrX5->AddComponent(new ComTroll01("ComCharacter"));
-	// 이 게임 오브젝트는 대상을 따라다님
-	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
-	pGOChrX5->AddComponent(pComTarget);
-	pGOChrX5->AddComponent(new ComChrControl("ComChrControl"));
-	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
-	pGOChrX5->AddComponent(pEquipment);
-
-	// 이 게임 오브젝트는 충돌체크 가능
-	ComCollider* pCollider = new ComCollider("ComCollider");
-	pGOChrX5->AddComponent(pCollider);
-	pCollider->Set(Vector3(0, 0.5, 0), Vector3(0.3, 0.6, 0.3), false);
+	// 이 게임 오브젝트는 장비 장착 가능
+	ComChrEquipment* pEquipment = (ComChrEquipment*)pGOTroll->GetComponent("ComChrEquipment");
 
 	// 휴먼 캐릭터 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
 	EquipmentShoulder*pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
