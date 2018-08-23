@@ -402,7 +402,7 @@
     <ClInclude Include="Application\ComObjMap.h" />
     <ClInclude Include="Application\ComEquipment.h" />
     <ClInclude Include="Application\ComShooting.h" />
-    <ClInclude Include="Application\ComSmallderon.h" />
+    <ClInclude Include="Application\ComSmallderonAI.h" />
     <ClInclude Include="Application\ComTerrain.h" />
     <ClInclude Include="Application\ComTestCubeControl.h" />
     <ClInclude Include="Application\ComTestPicking.h" />
@@ -435,7 +435,7 @@
     <ClCompile Include="Application\ComObjMap.cpp" />
     <ClCompile Include="Application\ComEquipment.cpp" />
     <ClCompile Include="Application\ComShooting.cpp" />
-    <ClCompile Include="Application\ComSmallderon.cpp" />
+    <ClCompile Include="Application\ComSmallderonAI.cpp" />
     <ClCompile Include="Application\ComTerrain.cpp" />
     <ClCompile Include="Application\ComTestCubeControl.cpp" />
     <ClCompile Include="Application\ComTestPicking.cpp" />

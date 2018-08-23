@@ -6,7 +6,8 @@ std::vector<ComCollider*> Component::m_vecColliders;
 Component::Component(CString szName) :
 	gameObject(NULL),
 	m_szName(szName),
-	IsAwaked(false)
+	IsAwaked(false),
+	Enable(true)
 {
 }
 

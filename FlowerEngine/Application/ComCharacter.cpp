@@ -5,7 +5,8 @@
 
 ComCharacter::ComCharacter(CString szName) : 
 	Component(szName),
-	m_pAnimation(NULL)
+	m_pAnimation(NULL),
+	m_pAttackTarget(NULL)
 {
 }
 
@@ -21,6 +22,7 @@ void ComCharacter::Awake()
 
 void ComCharacter::Update()
 {
+	
 }
 
 void ComCharacter::Render()
@@ -29,29 +31,14 @@ void ComCharacter::Render()
 
 void ComCharacter::AttackTarget(ComCharacter * pTarget)
 {
+	m_pAttackTarget = pTarget;
+	ComChrControl* pControl = (ComChrControl*)(gameObject->GetComponent("ComChrControl"));
+	pControl->LookatTarget();
+
 	// 총 공격력 계산 (내 공격력 + 장비 공격력)
 	int dmg = m_status.ATK_PHY;
 
 	pTarget->Defence(m_status.ATK_PHY);
-
-	// 공격 상대가 죽었으면
-	if (pTarget->CheckDeath() == true)
-	{
-		pTarget->gameObject->SetActive(false);
-		
-		// 캐릭터 
-		list<GameObject*> listChr = GameObject::FindAll(eTag_Chracter);
-		for (auto & chr : listChr)
-		{
-			ComChrControl* pControl = (ComChrControl*)(chr->GetComponent("ComChrControl"));
-			pControl->CancleAttackTarget();
-			pControl->Stand();
-		}
-		
-		// 몬스터 : 캐릭터 따라다니기 멈춤
-		ComFollowTarget* pFollow = (ComFollowTarget*)(gameObject->GetComponent("ComFollowTarget"));
-		pFollow->pTarget = NULL;
-	}
 }
 
 void ComCharacter::Defence(int dmg)
@@ -85,13 +72,13 @@ void ComCharacter::Init()
 
 HRESULT AttackHandler::HandleCallback(UINT Track, LPVOID pCallbackData)
 {
-	CString szDebug;
-	szDebug.Format(L"EventCallback Track : %d\r\n", Track);
-	OutputDebugString(szDebug);
-
 	// 특정 프레임에서 공격
 	ComCharacter* pChr = (ComCharacter*)pCallbackData;
 	ComChrControl* pControl = (ComChrControl*)pChr->gameObject->GetComponent("ComChrControl");
+
+	CString szDebug;
+	szDebug.Format(L"EventCallback Track : %d %s\r\n", Track, pChr->gameObject->Name());
+	OutputDebugString(szDebug);
 
 	// 죽어서 없으면
 	if (pControl->pAttackTarget == NULL)

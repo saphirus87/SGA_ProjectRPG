@@ -36,6 +36,7 @@ public:
 public:
 	static std::vector<ComCollider*> m_vecColliders;
 	bool IsAwaked;
+	bool Enable;
 	GameObject* gameObject;
 
 protected:

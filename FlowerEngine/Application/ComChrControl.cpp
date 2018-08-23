@@ -13,7 +13,7 @@ ComChrControl::ComChrControl(CString szName)
 	:Component(szName), m_pMap(NULL),
 	m_pCurrentState(NULL),
 	IsPicking(false),
-	m_pTarget(NULL),
+	m_pFollow(NULL),
 	IsMoveToPoint(false),
 	vMoveToPoint(0, 0, 0),
 	pAttackTarget(NULL)
@@ -33,7 +33,7 @@ void ComChrControl::Init()
 		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
 	pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 
-	m_pTarget = (ComFollowTarget*)gameObject->GetComponent("ComFollowTarget");
+	m_pFollow = (ComFollowTarget*)gameObject->GetComponent("ComFollowTarget");
 	m_pCharacter = (ComCharacter*)gameObject->GetComponent("ComCharacter");
 }
 
@@ -92,15 +92,16 @@ void ComChrControl::Update()
 		CheckPickingMap();
 	}
 
-	if (m_pTarget != NULL && m_pTarget->IsFollowing)
+	if (m_pFollow != NULL && m_pFollow->IsFollowing)
 	{
 		m_pCurrentState->Walk(eAni_Walk);
 		GetHeight();
 	}
-	else if (m_pTarget != NULL && m_pTarget->AbleAttack)
+	else if (m_pFollow != NULL && m_pFollow->AbleAttack)
 		Attack1();
 
 	MoveToPoint();
+	CheckAttackTargetDeath();
 }
 
 void ComChrControl::Render()
@@ -109,10 +110,14 @@ void ComChrControl::Render()
 
 void ComChrControl::GetHeight()
 {
+	if (m_pMap == NULL)
+		return;
+
 	m_pMap->UpdateIndexBufferQuadTree();
+
 	Vector3 pos = gameObject->transform->GetPosition();
 	float fHeight = 0.f;
-	if (m_pMap != NULL && m_pMap->GetHeight(fHeight, pos) == true)
+	if (m_pMap->GetHeight(fHeight, pos) == true)
 	{
 		pos.y = fHeight;
 		gameObject->transform->SetPosition(pos);
@@ -122,9 +127,60 @@ void ComChrControl::GetHeight()
 void ComChrControl::CancleAttackTarget()
 {
 	pAttackTarget = NULL;
-	m_pTarget->IsFollowing = false;
-	m_pTarget->AbleAttack = false;
-	m_pTarget->pTarget = NULL;
+	m_pFollow->IsFollowing = false;
+	m_pFollow->AbleAttack = false;
+	m_pFollow->pTarget = NULL;
+}
+
+void ComChrControl::LookatTarget()
+{
+	if (pAttackTarget == NULL)
+		return;
+
+	// 플레이어를 바라보는 방향 벡터
+	Vector3 vDir = pAttackTarget->gameObject->transform->GetPosition() - gameObject->transform->GetPosition();
+	D3DXVec3Normalize(&vDir, &vDir);
+
+	// 일단은 Y축으로만 회전하자
+	float angleY = Vector::GetAngleY(&vDir);
+	gameObject->transform->SetRotation(0.0f, angleY, 0.0f);
+}
+
+void ComChrControl::CheckAttackTargetDeath()
+{
+	if (pAttackTarget)
+	{
+		// 공격 상대가 죽었으면
+		if (pAttackTarget->CheckDeath() == true)
+		{
+			pAttackTarget->gameObject->SetActive(false);
+			CancleAttackTarget();
+			Stand();
+			//// switch문으로 나누어 주지 않으면 몬스터에 의해 캐릭터 사망시에도 캐릭터들 Stand() 상태가 됨
+			//// 캐릭터 
+			//switch (gameObject->Tag)
+			//{
+			//case eTag_Chracter:
+			//{
+			//	/*	list<GameObject*> listChr = GameObject::FindAll(eTag_Chracter);
+			//	for (auto & chr : listChr)
+			//	{
+			//	ComChrControl* pControl = (ComChrControl*)(chr->GetComponent("ComChrControl"));
+			//	pControl->CancleAttackTarget();
+			//	pControl->Stand();
+			//	}*/
+			//}
+			//break;
+			//case eTag_Monster:
+			//{
+			//	// 몬스터 : 캐릭터 따라다니기 멈춤
+			//	ComFollowTarget* pFollow = (ComFollowTarget*)(gameObject->GetComponent("ComFollowTarget"));
+			//	pFollow->pTarget = NULL;
+			//}
+			//break;
+			//}
+		}
+	}
 }
 
 void ComChrControl::MoveToPoint()
@@ -216,7 +272,7 @@ void ComChrControl::CheckPickingChr()
 
 void ComChrControl::CheckPickingMon()
 {
-	if (m_pTarget == NULL)
+	if (m_pFollow == NULL)
 		return;
 
 	Mouse* pMouse = Input::GetInstance()->m_pMouse;
@@ -239,7 +295,7 @@ void ComChrControl::CheckPickingMon()
 			if (pickMon == true)
 			{
 				// 몬스터를 따라간다.
-				m_pTarget->pTarget = o;
+				m_pFollow->pTarget = o;
 				pAttackTarget = (ComCharacter*)o->GetComponent("ComCharacter");
 			}
 		}
@@ -260,7 +316,7 @@ void ComChrControl::CheckPickingMap()
 	Vector3 mousePos = Input::GetInstance()->m_pMouse->GetPosition();
 
 	// Picking된 객체만 MoveToPoint를 계산하고 해당 위치로 이동한다.
-	if (m_pMap->CalcPickedPosition(vMoveToPoint, mousePos.x, mousePos.y) && IsPicking == true)
+	if (m_pMap && m_pMap->CalcPickedPosition(vMoveToPoint, mousePos.x, mousePos.y) && IsPicking == true)
 		IsMoveToPoint = true;
 }
 

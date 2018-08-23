@@ -6,7 +6,7 @@
 #include "../Application/ComUndead01.h"
 #include "../Application/ComChrControl.h"
 #include "../Application/ComTroll01.h"
-#include "../Application/ComSmallderon.h"
+#include "../Application/ComSmallderonAI.h"
 #include "../Application/ItemInfo.h"
 #include "../Application/ComEquipment.h"
 #include "../Application/ComFollowTarget.h"
@@ -106,6 +106,11 @@ void SceneGrid::CreateUndead01()
 	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
 	pGOChrX4->AddComponent(pComTarget);
 	pGOChrX4->AddComponent(new ComChrControl("ComChrControl"));
+	
+	// 애니 콜백 함수 설정
+	ComRenderSkinnedMesh* pRenderSkinnedMesh = (ComRenderSkinnedMesh*)pGOChrX4->GetComponent("ComRenderSkinnedMesh");
+	pRenderSkinnedMesh->pCallbackHandler = new AttackHandler();
+	
 	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
 	pGOChrX4->AddComponent(pEquipment);
 
@@ -176,7 +181,7 @@ void SceneGrid::CreateMonster()
 {
 	// 몬스터 생성 (smallderon_orange)
 	GameObject* pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-250, 15, -250),
-		new ComSmallderon("ComChrControl"), GameObject::Find("undead_01"));
+		new ComSmallderonAI("ComChrControl"), GameObject::Find("undead_01"));
 	//pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-253, 15, -253),
 	//	new ComSmallderon("ComSmallderon"), GameObject::Find("human_01"));
 	//pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-253, 15, -253),

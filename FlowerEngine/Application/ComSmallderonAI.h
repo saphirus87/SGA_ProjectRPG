@@ -7,11 +7,11 @@ class ComFollowTarget;
 class IChrState;
 
 // Smallderon의 인공지능(AI)
-class ComSmallderon : public ComChrControl
+class ComSmallderonAI : public ComChrControl
 {
 public:
-	ComSmallderon(CString szName);
-	~ComSmallderon();
+	ComSmallderonAI(CString szName);
+	~ComSmallderonAI();
 
 	// Component을(를) 통해 상속됨
 	virtual void Awake() override;

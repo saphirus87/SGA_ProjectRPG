@@ -38,6 +38,10 @@ public:
 	// 공격하고자 하는 타겟
 	ComCharacter* pAttackTarget;
 	void CancleAttackTarget();
+	// 대상을 바라봅니다.
+	void LookatTarget();
+	// 공격대상이 죽었을 때 처리를 합니다.
+	void CheckAttackTargetDeath();
 
 protected:
 	void GetHeight();
@@ -51,7 +55,7 @@ protected:
 
 	vector<IChrState*> m_vecState;
 
-	ComFollowTarget* m_pTarget;
+	ComFollowTarget* m_pFollow;
 	ComCharacter* m_pCharacter;
 
 	// 이동하고하 하는 위치

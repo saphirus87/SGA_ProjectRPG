@@ -61,8 +61,6 @@ public:
 	// 기본 애니메이션 제어
 	AnimationController m_pAniControl;
 	ID3DXAnimationCallbackHandler* pCallbackHandler;
-
-	void AniEvent(D3DXKEY_CALLBACK* pEvent);
 	
 	DWORD GetAnimIndex(char sString[]);
 	

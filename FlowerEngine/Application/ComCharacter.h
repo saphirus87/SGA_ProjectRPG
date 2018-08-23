@@ -37,4 +37,6 @@ protected:
 protected:
 	ComRenderSkinnedMesh * m_pAnimation;
 	StatusInfo m_status;
+
+	ComCharacter* m_pAttackTarget;
 };

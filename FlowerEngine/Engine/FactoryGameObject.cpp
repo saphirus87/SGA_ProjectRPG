@@ -318,9 +318,11 @@ GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPa
 {
 	// 몬스터 생성 (smallderon_orange)
 	GameObject* pGOMonX = CreateFromXFile(szName, szFolderPath, szFileName, pos);
+	pGOMonX->Tag = eTag_Monster;
 	
 	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
 	pGOMonX->AddComponent(pComTarget);
+	// 타겟을 따라다닌다.
 	pComTarget->pTarget = pTarget;
 
 	pGOMonX->AddComponent(new ComCharacter("ComCharacter"));
@@ -329,7 +331,7 @@ GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPa
 	// pComAI 다음에
 	ComRenderSkinnedMesh* pRenderSkinnedMesh = (ComRenderSkinnedMesh*)pGOMonX->GetComponent("ComRenderSkinnedMesh");
 	pRenderSkinnedMesh->pCallbackHandler = new AttackHandler();
-
+	// 공격 타겟
 	((ComChrControl*)pComAI)->pAttackTarget = (ComCharacter*)(pTarget->GetComponent("ComCharacter"));
 
 	// 이 게임 오브젝트는 충돌체크 가능

@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "ComSmallderon.h"
+#include "ComSmallderonAI.h"
 #include "ComObjMap.h"
 #include "ComFollowTarget.h"
 #include "IChrState.h"
@@ -7,16 +7,16 @@
 #include "ChrStateWalk.h"
 #include "ChrStateAttack.h"
 
-ComSmallderon::ComSmallderon(CString szName)
+ComSmallderonAI::ComSmallderonAI(CString szName)
 	:ComChrControl(szName)
 {
 }
 
-ComSmallderon::~ComSmallderon()
+ComSmallderonAI::~ComSmallderonAI()
 {
 }
 
-void ComSmallderon::Awake()
+void ComSmallderonAI::Awake()
 {
 	Init();
 	
@@ -59,39 +59,41 @@ void ComSmallderon::Awake()
 	vecKeyFrameAnimSet.clear();
 }
 
-void ComSmallderon::Update()
+void ComSmallderonAI::Update()
 {
-	if (m_pTarget->IsFollowing)
+	if (m_pFollow->pTarget && m_pFollow->IsFollowing)
 	{
 		GetHeight();
 		Walk(1);
 	}
-	else if (m_pTarget->AbleAttack)
+	else if (m_pFollow->pTarget && m_pFollow->AbleAttack)
 	{
 		// 공격 가능 거리
 		Attack1();
 	}
 	else
 		Stand();
+
+	CheckAttackTargetDeath();
 }
 
-void ComSmallderon::Render()
+void ComSmallderonAI::Render()
 {
 }
 
-void ComSmallderon::Stand()
+void ComSmallderonAI::Stand()
 {
 	// 현재 상태에서 Stand로
 	m_pCurrentState->Stand(eAniMon_Stand);
 }
 
-void ComSmallderon::Walk(float fDeltaZ)
+void ComSmallderonAI::Walk(float fDeltaZ)
 {
 	// 현재 상태에서 Walk로
 	m_pCurrentState->Walk(eAniMon_Walk);
 }
 
-void ComSmallderon::Attack1()
+void ComSmallderonAI::Attack1()
 {
 	// 현재 상태에서 Attack1로
 	m_pCurrentState->Attack1(eAniMon_Attack_1);

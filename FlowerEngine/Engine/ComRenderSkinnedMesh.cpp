@@ -78,18 +78,6 @@ void ComRenderSkinnedMesh::Clone(ComRenderSkinnedMesh* pExist)
 		&m_pAniControl);
 
 	++m_iReference;
-
-
-	/*someKey.Time = 0;
-	LPD3DXKEYFRAMEDANIMATIONSET pAnimSet = NULL;
-	m_pAniControl->GetAnimationSet(eAni_Attack_1, (LPD3DXANIMATIONSET*)&pAnimSet);
-
-	if (pAnimSet != NULL)
-	{
-		AddCallbackKeysAndCompress(m_pAniControl, pAnimSet, 1, &someKey, D3DXCOMPRESS_DEFAULT, .4f);
-
-		m_pCallbackHandler = new CBHandlerTiny();
-	}*/
 }
 
 void ComRenderSkinnedMesh::Awake()
@@ -105,6 +93,9 @@ void ComRenderSkinnedMesh::Awake()
 
 void ComRenderSkinnedMesh::Update()
 {
+	if (Enable == false)
+		return;
+
 	// 애니메이션 업데이트와 전환시 부드럽게하기 위해 블랜딩(Blending)
 	UpdateAnimation(m_pAniControl);
 
@@ -226,33 +217,6 @@ e_Exit:
 		pASNew->Release();
 
 	return hr;
-}
-
-void ComRenderSkinnedMesh::AniEvent(D3DXKEY_CALLBACK* pEvent)
-{
-	vector<LPD3DXKEYFRAMEDANIMATIONSET> vecKeyFrameAnimSet;
-	vecKeyFrameAnimSet.resize(eAni_COUNT);
-
-	for (int i = eAni_Attack_3; i < eAni_COUNT; ++i)
-		m_pAniControl->GetAnimationSet(i, (LPD3DXANIMATIONSET*)&vecKeyFrameAnimSet[i]);
-
-	// Register 하는 순서데로 Animation Index가 설정되기 때문에 미리 모두 Unregister 한다.
-	for (int i = eAni_Attack_3; i < eAni_COUNT; ++i)
-		m_pAniControl->UnregisterAnimationSet(vecKeyFrameAnimSet[i]);
-	
-	float fPeriod = vecKeyFrameAnimSet[eAni_Attack_1]->GetPeriod();
-	float fSrcTime = vecKeyFrameAnimSet[eAni_Attack_1]->GetSourceTicksPerSecond();	// 4800
-	
-	pEvent->Time = float(fPeriod / fSrcTime);
-
-	AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Attack_3], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
-	AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Attack_2], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
-	AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Attack_1], 1, pEvent, D3DXCOMPRESS_DEFAULT, 1.0f);
-	AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Walk], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
-	AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Stand], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
-		
-	vecKeyFrameAnimSet.clear();
-	SAFE_DELETE(pEvent);
 }
 
 DWORD ComRenderSkinnedMesh::GetAnimIndex(char sString[])

@@ -390,9 +390,6 @@
     <ClCompile Include="Application\StatusInfo.cpp">
       <Filter>Application\Datas</Filter>
     </ClCompile>
-    <ClCompile Include="Application\ComSmallderon.cpp">
-      <Filter>Application\Components\ComMonster</Filter>
-    </ClCompile>
     <ClCompile Include="Application\QuadTree.cpp">
       <Filter>Application\Components\ComMap</Filter>
     </ClCompile>
@@ -443,6 +440,9 @@
       <Filter>Engine\UI2</Filter>
     </ClCompile>
     <ClCompile Include="Engine\ComTexture.cpp" />
+    <ClCompile Include="Application\ComSmallderonAI.cpp">
+      <Filter>Application\Components\ComMonster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -634,9 +634,6 @@
     <ClInclude Include="Application\StatusInfo.h">
       <Filter>Application\Datas</Filter>
     </ClInclude>
-    <ClInclude Include="Application\ComSmallderon.h">
-      <Filter>Application\Components\ComMonster</Filter>
-    </ClInclude>
     <ClInclude Include="Application\QuadTree.h">
       <Filter>Application\Components\ComMap</Filter>
     </ClInclude>
@@ -690,6 +687,9 @@
       <Filter>Engine\UI2</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ComTexture.h" />
+    <ClInclude Include="Application\ComSmallderonAI.h">
+      <Filter>Application\Components\ComMonster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="game-controller.ico">
