@@ -259,12 +259,12 @@ GameObject * FactoryGameObject::CreateFromXFile(CString szName, CString szFolder
 	pGO->AddComponent(pComSkinnedMesh);
 	
 	// 이미 존재하는 게임 오브젝트라면 복제(Clone) 하여 메쉬를 공유하여 사용합니다.
-	if (pGOExist != NULL)
+	/*if (pGOExist != NULL)
 	{
 		ComRenderSkinnedMesh* pExist = (ComRenderSkinnedMesh*)pGOExist->GetComponent("ComRenderSkinnedMesh");
 		pComSkinnedMesh->Clone(pExist);
 	}
-	else
+	else*/
 		pComSkinnedMesh->Load(szFolderPath, szFileName);
 
 	return pGO;

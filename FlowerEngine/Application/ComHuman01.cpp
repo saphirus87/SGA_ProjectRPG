@@ -19,6 +19,18 @@ ComHuman01::~ComHuman01()
 void ComHuman01::Awake()
 {
 	Init();
+
+	GameObject* pUIBar = GameObject::Find("testUI");
+	ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");
+
+	uiDialog->AddProgressBar(1, "Resources/ui/6.tga");
+
+	m_pHPBar = uiDialog->GetProgressBar(1);
+	m_pHPBar->SetMaxValue(Status.HPMAX);
+	m_pHPBar->SetPosition(Vector3(300, 0, 0));
+
+	UpdateHPBar();
+
 	SetAniEvent();
 }
 
@@ -66,6 +78,11 @@ void ComHuman01::Update()
 
 void ComHuman01::Render()
 {
+}
+
+void ComHuman01::UpdateHPBar()
+{
+	m_pHPBar->SetCurValue(Status.HP);
 }
 
 void ComHuman01::OnTriggerEnter(ComCollider & collider)
