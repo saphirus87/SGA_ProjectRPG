@@ -43,13 +43,7 @@ void SceneGrid::CreateMapObject()
 	// 아이템 정보를 통하여 맵에 게임오브젝트(어깨 방어구) 생성
 	EquipmentShoulder* pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
 	pShoulder->Set(10, 10, 10, 10, eChrType_Human);
-
-	GameObject* pGOShoulder = factory.CreateEquipment(pShoulder, Vector3(3, 10, -8));
-	((ComEquipment*)pGOShoulder->GetComponent("ComEquipment"))->pItemInfo = pShoulder;
-	pGOShoulder->transform->SetPosition(-260, 15, -255);
-	ComCollider* pCollider = new ComCollider("ComCollider");
-	pGOShoulder->AddComponent(pCollider);
-	pCollider->Set(Vector3(0, 0, 0), Vector3(0.1, 0.1, 0.1), false);
+	GameObject* pGOShoulder = factory.CreateEquipmentToMap(pShoulder, Vector3(3, 10, -8), Vector3(-260, 15, -255));
 }
 
 void SceneGrid::CreateHuman()

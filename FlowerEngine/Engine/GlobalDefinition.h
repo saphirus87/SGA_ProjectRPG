@@ -157,6 +157,7 @@ enum eTag
 {
 	eTag_Chracter,
 	eTag_Monster,
+	eTag_Item,		// ¸Ê¿¡ ¶³±ÅÁ® ÀÖ´Â ¾ÆÀÌÅÛ
 };
 
 enum eUI

@@ -6,6 +6,7 @@
 ComTroll01::ComTroll01(CString szName)
 	:ComCharacter(szName)
 {
+	m_eType = eChrType_Troll;
 }
 
 ComTroll01::~ComTroll01()

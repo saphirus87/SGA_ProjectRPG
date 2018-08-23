@@ -25,6 +25,7 @@ public:
 	GameObject* CreateFromXFile(CString szName, CString szFolderPath, CString szFileName, Vector3& pos);
 	GameObject* CreateObjMap(CString szName, CString szFolderPath, CString szFileName);
 	GameObject* CreateEquipment(ItemInfo* pItemInfo, Vector3& pos, bool IsMirrored = false);
+	GameObject* CreateEquipmentToMap(ItemInfo* pItemInfo, Vector3& pos, Vector3& mapPos, bool IsMirrored = false);
 	GameObject* CreateCharacter(CString szName, CString szFolderPath, CString szFileName, Vector3& pos, ComCharacter* pComChr);
 	GameObject* CreateMonster(CString szName, CString szFolderPath, CString szFileName, Vector3& pos, Component* pComAI, GameObject* pTarget);
 	GameObject* CreateUIDialog(CString szName, float fPosX, float fPosY);

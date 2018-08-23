@@ -57,7 +57,6 @@ void ComChrEquipment::Awake()
 
 void ComChrEquipment::Update()
 {
-
 }
 
 void ComChrEquipment::Render()

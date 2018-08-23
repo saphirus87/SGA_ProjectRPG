@@ -291,27 +291,38 @@ GameObject * FactoryGameObject::CreateEquipment(ItemInfo * pItemInfo, Vector3 & 
 
 	GameObject* pGOEquipment = new GameObject(pItemInfo->Name);
 
-	ComEquipment* pMesh = new ComEquipment("ComEquipment");
-	pMesh->IsMirrored = IsMirrored;
-	pMesh->pItemInfo = pItemInfo;
+	ComEquipment* pEquipment = new ComEquipment("ComEquipment");
+	pEquipment->IsMirrored = IsMirrored;
+	pEquipment->pItemInfo = pItemInfo;
 
 	// 이미 존재하는 게임 오브젝트라면 복제(Clone) 하여 메쉬를 공유하여 사용합니다.
 	if (pGOExist == NULL)
-		pMesh->Load(pItemInfo->FolderPath, pItemInfo->XFileName);
+		pEquipment->Load(pItemInfo->FolderPath, pItemInfo->XFileName);
 	else
-		pMesh->Clone((ComEquipment*)pGOExist->GetComponent("ComEquipment"));
+		pEquipment->Clone((ComEquipment*)pGOExist->GetComponent("ComEquipment"));
 
 	// 변경된 텍스쳐 있을 경우 적용
 	if (pItemInfo->TextureName.IsEmpty() == false)
-		pMesh->ChangeTexture(0, pItemInfo->TextureName);
+		pEquipment->ChangeTexture(0, pItemInfo->TextureName);
 
 	// 크기를 100으로 맞춰주는 이유는 .X File Export시 본 크기가 0.01인듯함.
 	if (IsMirrored == true)
 		pGOEquipment->transform->SetScale(1, -1, 1); // .X File Export시 Frame이 Max축으로 되어있음 [z, x, y축]
 
-	pGOEquipment->AddComponent(pMesh);
+	pGOEquipment->AddComponent(pEquipment);
 	pGOEquipment->transform->SetPosition(pos);
 
+	return pGOEquipment;
+}
+
+GameObject * FactoryGameObject::CreateEquipmentToMap(ItemInfo * pItemInfo, Vector3 & pos, Vector3 & mapPos, bool IsMirrored)
+{
+	GameObject* pGOEquipment = CreateEquipment(pItemInfo, pos);
+	pGOEquipment->Tag = eTag_Item;
+	pGOEquipment->transform->SetPosition(mapPos);
+	ComCollider* pCollider = new ComCollider("ComCollider");
+	pGOEquipment->AddComponent(pCollider);
+	pCollider->Set(Vector3(0, 0, 0), Vector3(0.1, 0.1, 0.1), false);
 	return pGOEquipment;
 }
 
@@ -319,20 +330,17 @@ GameObject * FactoryGameObject::CreateCharacter(CString szName, CString szFolder
 {
 	GameObject* pGOChr = CreateFromXFile(szName, szFolderPath, szFileName, pos);
 	pGOChr->Tag = eTag_Chracter;
-
+	// 이 게임 오브젝트는 장비 장착 가능
+	pGOChr->AddComponent(new ComChrEquipment("ComChrEquipment"));
 	// 이 게임 오브젝트의 직업
 	pGOChr->AddComponent(pComChr);
 	// 이 게임 오브젝트는 대상을 따라다님
-	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
-	pGOChr->AddComponent(pComTarget);
+	pGOChr->AddComponent(new ComFollowTarget("ComFollowTarget"));
 	// 이 게임 오브젝트는 컨트롤 가능
 	pGOChr->AddComponent(new ComChrControl("ComChrControl"));
 	// 애니 콜백 함수 설정
 	ComRenderSkinnedMesh* pRenderSkinnedMesh = (ComRenderSkinnedMesh*)pGOChr->GetComponent("ComRenderSkinnedMesh");
 	pRenderSkinnedMesh->pCallbackHandler = new AttackHandler();
-	// 이 게임 오브젝트는 장비 장착 가능
-	ComChrEquipment* pEquipment = new ComChrEquipment("ComChrEquipment");
-	pGOChr->AddComponent(pEquipment);
 	// 이 게임 오브젝트는 충돌체크 가능
 	ComCollider* pCollider = new ComCollider("ComCollider");
 	pGOChr->AddComponent(pCollider);

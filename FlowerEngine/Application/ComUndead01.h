@@ -18,6 +18,8 @@ public:
 	// UI ฐüทร
 	void UpdateHPBar() override;
 
+	void SetAniEvent() override;
+
 private:
 	UIProgressBar * m_pHPBar;
 };
