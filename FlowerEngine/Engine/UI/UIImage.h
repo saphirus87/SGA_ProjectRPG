@@ -4,7 +4,7 @@
 class UIImage : public UIControl
 {
 private:
-	LPDIRECT3DTEXTURE9 m_pTexture;
+	LPDIRECT3DTEXTURE9 pTexture;
 	D3DXIMAGE_INFO m_imgInfo;
 
 public:

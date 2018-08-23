@@ -427,3 +427,4 @@ using namespace std;
 #include "../../Engine/UI/UIProgressBar.h"
 #include "../../Engine/UI/UICheckBox.h"
 #include "../../Engine/ComText3D.h"
+#include "../../Engine/ComTexture.h"

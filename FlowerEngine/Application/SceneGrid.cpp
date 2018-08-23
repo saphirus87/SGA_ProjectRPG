@@ -221,4 +221,7 @@ void SceneGrid::CreateUI()
 	//pComDialog->GetButton(1)->SetPosition(Vector3(50.0f, 0.0f, 0.0f));
 	//pComDialog->AddImage(2, "Resources/ui/btn-tower-up.png");
 
+	GameObject* pTexture = factory.CreateGameObject("Texture");
+	pTexture->transform->SetPosition(Vector3(-260, 15, -262));
+	pTexture->AddComponent(new ComTexture("ComTexture"));
 }
