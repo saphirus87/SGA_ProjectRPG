@@ -119,9 +119,6 @@ private:
 	// 부모 노드
 	GameObject* m_pParent;
 
-	// 월드 행렬
-	//Matrix4x4 m_matWorld;
-
 	// 활성화 여부
 	bool m_bIsActive;
 

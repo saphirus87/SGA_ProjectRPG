@@ -229,25 +229,6 @@ LPCSTR ComChrEquipment::GetFrameName(ItemInfo * itemInfo, eRenderEquipment rende
 		case eRenderEquipment_WeaponL:
 			return "character_scourge_male_scourgemale_hd_bone_52";
 		}
-
-		// ¿¹Àü°Í
-	default:
-		switch (renderType)
-		{
-		case eRenderEquipment_ShoulderR:
-			return "Shoulder_Right";
-		case eRenderEquipment_ShoulderL:
-			return "Shoulder_Left";
-		case eRenderEquipment_Helmet:
-			return "Helmet";
-		case eRenderEquipment_Shield:
-			return "Shield_Left";
-		case eRenderEquipment_WeaponR:
-			return "Weapon_Right";
-		case eRenderEquipment_WeaponL:
-			return "Weapon_Left";
-		}
-		break;
 	}
 
 	return "";

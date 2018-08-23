@@ -37,7 +37,7 @@ public:
 	// 렌더링 구성요소
 	ComEquipment* m_pRender;
 	// 애니메이션 포인터
-	ComRenderSkinnedMesh * m_pAnimation;
+	ComRenderSkinnedMesh* m_pAnimation;
 };
 
 class ComChrEquipment : public Component
