@@ -2,6 +2,7 @@
 #include "stdafx.h"
 
 class ItemInfo;
+class ComCharacter;
 
 class FactoryGameObject
 {

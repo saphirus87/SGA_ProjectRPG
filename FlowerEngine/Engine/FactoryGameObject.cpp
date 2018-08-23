@@ -317,7 +317,7 @@ GameObject * FactoryGameObject::CreateEquipment(ItemInfo * pItemInfo, Vector3 & 
 
 GameObject * FactoryGameObject::CreateCharacter(CString szName, CString szFolderPath, CString szFileName, Vector3 & pos, ComCharacter* pComChr)
 {
-	GameObject* pGOChr = CreateFromXFile("human_01", "Resources/character/human_01/", "human_01.X", Vector3(-260, 15, -260));
+	GameObject* pGOChr = CreateFromXFile(szName, szFolderPath, szFileName, pos);
 	pGOChr->Tag = eTag_Chracter;
 
 	// 이 게임 오브젝트의 직업
@@ -337,6 +337,8 @@ GameObject * FactoryGameObject::CreateCharacter(CString szName, CString szFolder
 	ComCollider* pCollider = new ComCollider("ComCollider");
 	pGOChr->AddComponent(pCollider);
 	pCollider->Set(Vector3(0, 0.5f, 0), Vector3(0.3, 0.6, 0.3), false);
+
+	return pGOChr;
 }
 
 GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPath, CString szFileName, Vector3 & pos, Component* pComAI, GameObject* pTarget)
