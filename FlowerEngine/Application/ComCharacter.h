@@ -21,9 +21,6 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
-	// Key Frame Event를 넣기 위해 애니메이션을 압축하고 새로 등록(Register)합니다. 
-	void AnimationCompress();
-
 	// 타겟을 공격합니다.
 	void AttackTarget(ComCharacter* pTarget);
 	
@@ -45,9 +42,6 @@ protected:
 
 	ComRenderSkinnedMesh * m_pAnimation;
 	
-	// 애니메이션
-	vector<LPD3DXKEYFRAMEDANIMATIONSET> m_vecKeyFrameAnimSet;
-
 	// 공격할 타겟
 	ComCharacter* m_pAttackTarget;
 

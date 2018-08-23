@@ -14,7 +14,6 @@ ComCharacter::ComCharacter(CString szName) :
 
 ComCharacter::~ComCharacter()
 {
-	m_vecKeyFrameAnimSet.clear();
 }
 
 void ComCharacter::Awake()
@@ -29,18 +28,6 @@ void ComCharacter::Update()
 
 void ComCharacter::Render()
 {
-}
-
-void ComCharacter::AnimationCompress()
-{
-	m_vecKeyFrameAnimSet.resize(eAni_COUNT);
-
-	for (int i = eAni_Attack_3; i < eAni_COUNT; ++i)
-		m_pAnimation->m_pAniControl->GetAnimationSet(i, (LPD3DXANIMATIONSET*)&m_vecKeyFrameAnimSet[i]);
-
-	// Register 하는 순서데로 Animation Index가 설정되기 때문에 미리 모두 Unregister 한다.
-	for (int i = eAni_Attack_3; i < eAni_COUNT; ++i)
-		m_pAnimation->m_pAniControl->UnregisterAnimationSet(m_vecKeyFrameAnimSet[i]);
 }
 
 void ComCharacter::AttackTarget(ComCharacter * pTarget)
