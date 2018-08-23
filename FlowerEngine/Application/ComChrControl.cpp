@@ -148,38 +148,12 @@ void ComChrControl::LookatTarget()
 
 void ComChrControl::CheckAttackTargetDeath()
 {
-	if (pAttackTarget)
+	// 공격 상대가 죽었으면
+	if (pAttackTarget && pAttackTarget->CheckDeath() == true)
 	{
-		// 공격 상대가 죽었으면
-		if (pAttackTarget->CheckDeath() == true)
-		{
-			pAttackTarget->gameObject->SetActive(false);
-			CancleAttackTarget();
-			Stand();
-			//// switch문으로 나누어 주지 않으면 몬스터에 의해 캐릭터 사망시에도 캐릭터들 Stand() 상태가 됨
-			//// 캐릭터 
-			//switch (gameObject->Tag)
-			//{
-			//case eTag_Chracter:
-			//{
-			//	/*	list<GameObject*> listChr = GameObject::FindAll(eTag_Chracter);
-			//	for (auto & chr : listChr)
-			//	{
-			//	ComChrControl* pControl = (ComChrControl*)(chr->GetComponent("ComChrControl"));
-			//	pControl->CancleAttackTarget();
-			//	pControl->Stand();
-			//	}*/
-			//}
-			//break;
-			//case eTag_Monster:
-			//{
-			//	// 몬스터 : 캐릭터 따라다니기 멈춤
-			//	ComFollowTarget* pFollow = (ComFollowTarget*)(gameObject->GetComponent("ComFollowTarget"));
-			//	pFollow->pTarget = NULL;
-			//}
-			//break;
-			//}
-		}
+		pAttackTarget->gameObject->SetActive(false);
+		CancleAttackTarget();
+		Stand();
 	}
 }
 
