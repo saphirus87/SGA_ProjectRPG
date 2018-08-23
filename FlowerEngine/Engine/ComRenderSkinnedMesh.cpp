@@ -25,6 +25,7 @@ ComRenderSkinnedMesh::~ComRenderSkinnedMesh()
 {
 	if (m_iReference < 1)
 	{
+		
 		D3DXFrameDestroy(m_pRootFrame, m_pAllocateHierarchy);
 		D3DXFrameDestroy(m_pSubRootFrame, m_pAllocateHierarchy);
 		SAFE_DELETE_ARRAY(m_pBoneMatrices);
@@ -32,7 +33,10 @@ ComRenderSkinnedMesh::~ComRenderSkinnedMesh()
 		SAFE_DELETE(pCallbackHandler);
 	}
 	else
+	{
+		SAFE_RELEASE(m_pAniControl);
 		--m_iReference;
+	}
 }
 
 void ComRenderSkinnedMesh::Load(CString szFolderPath, CString szFileName)
