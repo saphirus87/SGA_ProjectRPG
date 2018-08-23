@@ -119,4 +119,8 @@ void ComSmallderonAI::Death()
 
 	// 죽으면 따라가는 캐릭터를 NULL로
 	m_pFollow->pTarget = NULL;
+
+	// 충돌박스를 끈다
+	ComRenderCubePN* pCollider = (ComRenderCubePN*)gameObject->GetComponent("ComRenderCubePN");
+	pCollider->Enable = false;
 }

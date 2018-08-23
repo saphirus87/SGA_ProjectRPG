@@ -265,6 +265,10 @@ void ComChrControl::CheckPickingMon()
 	{
 		ComRenderCubePN* pCube = (ComRenderCubePN*)o->GetComponent("ComRenderCubePN");
 
+		// 죽었을 때는 몬스터 픽킹을 하지 않는다
+		if (pCube->Enable == false)
+			continue;
+
 		Ray ray = Ray::RayAtWorldSpace(mousePos.x, mousePos.y);
 
 		vector<Vector3>& vertices = pCube->GetVector();

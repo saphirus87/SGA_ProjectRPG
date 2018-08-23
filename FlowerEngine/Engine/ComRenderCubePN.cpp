@@ -39,7 +39,7 @@ void ComRenderCubePN::Update()
 
 void ComRenderCubePN::Render()
 {
-	if (IsRender == false)
+	if (IsRender == false || Enable == false)
 		return;
 
 	if (IsRenderShader)
