@@ -23,7 +23,6 @@ public:
 
 	// Key Frame Event를 넣기 위해 애니메이션을 압축하고 새로 등록(Register)합니다. 
 	void AnimationCompress();
-	virtual void SetAniEvent() {};
 
 	// 타겟을 공격합니다.
 	void AttackTarget(ComCharacter* pTarget);

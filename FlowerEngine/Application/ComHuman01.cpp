@@ -19,10 +19,13 @@ ComHuman01::~ComHuman01()
 void ComHuman01::Awake()
 {
 	Init();
+	SetAniEvent();
 }
 
 void ComHuman01::SetAniEvent()
 {
+	AnimationCompress();
+
 	// 초당 발생하는 애니메이션 키 프레임 틱의 수를 가져옵니다.
 	float fSrcTime = m_vecKeyFrameAnimSet[eAni_Attack_1]->GetSourceTicksPerSecond();	// 4800
 

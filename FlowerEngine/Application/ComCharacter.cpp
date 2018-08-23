@@ -82,9 +82,6 @@ void ComCharacter::Init()
 	// CPP ´ÙÇü¼º
 	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 	m_pChrEquipment = (ComChrEquipment*)gameObject->GetComponent("ComChrEquipment");
-	
-	AnimationCompress();
-	SetAniEvent();
 }
 
 HRESULT AttackHandler::HandleCallback(UINT Track, LPVOID pCallbackData)

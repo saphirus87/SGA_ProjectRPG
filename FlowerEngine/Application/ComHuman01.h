@@ -26,5 +26,5 @@ public:
 	// 다른 콜라이더에 충돌했을 때 호출되는 함수
 	virtual void OnTriggerEnter(ComCollider &collider) override;
 
-	void SetAniEvent() override;
+	void SetAniEvent();
 };

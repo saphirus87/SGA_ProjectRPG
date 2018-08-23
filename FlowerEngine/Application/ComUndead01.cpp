@@ -27,6 +27,13 @@ void ComUndead01::Awake()
 	m_pHPBar->SetMaxValue(m_status.HPMAX);
 	UpdateHPBar();
 
+	SetAniEvent();
+}
+
+void ComUndead01::SetAniEvent()
+{
+	AnimationCompress();
+
 	// 초당 발생하는 애니메이션 키 프레임 틱의 수를 가져옵니다.
 	float fSrcTime = m_vecKeyFrameAnimSet[eAni_Attack_1]->GetSourceTicksPerSecond();	// 4800
 
@@ -61,8 +68,4 @@ void ComUndead01::Render()
 void ComUndead01::UpdateHPBar()
 {
 	m_pHPBar->SetCurValue(m_status.HP);
-}
-
-void ComUndead01::SetAniEvent()
-{
 }
