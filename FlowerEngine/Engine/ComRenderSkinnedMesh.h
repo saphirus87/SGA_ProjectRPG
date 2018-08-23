@@ -114,15 +114,10 @@ private:
 
 	// 뼈대 행렬들
 	Matrix4x4* m_pBoneMatrices;
-	
-	// 뼈대 행렬들
-	multimap<CString, Matrix4x4> m_mapBoneMatrices;
 
 	// 이 컴포넌트를 사용하는 객체수 (Clone된)
 	int m_iReference;
 
 	// 현재 플레이중인 애니메이션 식별값
 	int m_iCurrentAniIndex;
-
-//	D3DXKEY_CALLBACK someKey;
 };

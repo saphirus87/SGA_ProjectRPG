@@ -28,7 +28,6 @@ ComRenderSkinnedMesh::~ComRenderSkinnedMesh()
 		D3DXFrameDestroy(m_pRootFrame, m_pAllocateHierarchy);
 		D3DXFrameDestroy(m_pSubRootFrame, m_pAllocateHierarchy);
 		SAFE_DELETE_ARRAY(m_pBoneMatrices);
-		m_mapBoneMatrices.clear();
 		SAFE_DELETE(m_pAllocateHierarchy);
 		SAFE_DELETE(pCallbackHandler);
 	}
@@ -64,7 +63,6 @@ void ComRenderSkinnedMesh::Clone(ComRenderSkinnedMesh* pExist)
 	m_pAllocateHierarchy = pExist->m_pAllocateHierarchy;
 	m_pRootFrame = pExist->m_pRootFrame;
 	m_pBoneMatrices = pExist->m_pBoneMatrices;
-	m_mapBoneMatrices = pExist->m_mapBoneMatrices;
 
 	m_pEffect = pExist->m_pEffect;
 
