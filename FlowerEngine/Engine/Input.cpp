@@ -15,6 +15,8 @@ Input::Input()
 
 Input::~Input()
 {
+	SAFE_DELETE(m_pMouse);
+	SAFE_DELETE(m_pKeyboard);
 }
 
 Input * Input::GetInstance()
@@ -23,6 +25,11 @@ Input * Input::GetInstance()
 		m_pInstance = new Input();
 
 	return m_pInstance;
+}
+
+void Input::Delete()
+{
+	SAFE_DELETE(m_pInstance);
 }
 
 void Input::Update()

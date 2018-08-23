@@ -22,6 +22,7 @@ ComEquipment::ComEquipment(CString szName) :
 
 ComEquipment::~ComEquipment()
 {
+	SAFE_DELETE(pItemInfo);
 	SAFE_RELEASE(m_pMesh);
 	m_vecMtrl.clear();
 }

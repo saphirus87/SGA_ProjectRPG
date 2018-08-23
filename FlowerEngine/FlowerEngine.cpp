@@ -472,6 +472,8 @@ void CALLBACK OnD3D9DestroyDevice(void* pUserContext)
 	Time::Get()->Delete();
 	Debug::Get()->Delete();
 	Shaders::GetInstance()->Delete();
+	Input::GetInstance()->Delete();
+
 	g_DialogResourceManager.OnD3D9DestroyDevice();
 	g_SettingsDlg.OnD3D9DestroyDevice();
 	SAFE_RELEASE(g_pEffect9);

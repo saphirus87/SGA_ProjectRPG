@@ -6,7 +6,7 @@ class Input
 public:
 
 	static Input* GetInstance();
-
+	static void Delete();
 	void Update();
 
 	static bool KeyDown(DWORD key) { return m_pKeyboard->KeyDown(key); }

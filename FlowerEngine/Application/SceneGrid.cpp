@@ -25,9 +25,10 @@ void SceneGrid::Init()
 	CreateMap();
 	CreateMapObject();
 	CreateHuman();
-	CreateUndead();
+	/*CreateUndead();
 	CreateTroll();
-	CreateMonster();
+	CreateMonster();*/
+
 	//CreateTest();
 }
 

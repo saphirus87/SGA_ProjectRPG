@@ -41,9 +41,7 @@ ComChrEquipment::ComChrEquipment(CString szName) :
 
 ComChrEquipment::~ComChrEquipment()
 {
-	// 장착된 아이템 메모리 해제
-	for (size_t i = 0; i < m_vecEquipedItems.size(); ++i)
-		SAFE_DELETE(m_vecEquipedItems[i]);
+	m_vecEquipedItems.clear();
 
 	// 장착된 아이템 렌더링 메모리 해제
 	for (size_t i = 0; i < m_vecRenderEquipments.size(); ++i)
