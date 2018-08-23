@@ -162,7 +162,9 @@ enum eTag
 
 enum eUI
 {
-	eUI_HPBar
+	eUI_HPBar_Human,
+	eUI_HPBar_Undead,
+	eUI_HPBar_Troll,
 };
 
 struct KEYBOARD_STATE

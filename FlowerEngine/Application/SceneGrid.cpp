@@ -130,8 +130,8 @@ void SceneGrid::CreateMonster()
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("undead_01"));
 	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-253, 15, -253),
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"));
-	//pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-253, 15, -253),
-	//	new ComSmallderon("ComSmallderon"), GameObject::Find("troll_01"));
+	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-256, 15, -256),
+		new ComSmallderonAI("ComChrControl"), GameObject::Find("troll_01"));
 }
 
 void SceneGrid::CreateTest()

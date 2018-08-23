@@ -16,6 +16,17 @@ ComTroll01::~ComTroll01()
 void ComTroll01::Awake()
 {
 	Init();
+
+	GameObject* pUIBar = GameObject::Find("testUI");
+	ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");
+
+	uiDialog->AddProgressBar(eUI_HPBar_Troll, "Resources/ui/6.tga");
+
+	m_pHPBar = uiDialog->GetProgressBar(eUI_HPBar_Troll);
+	m_pHPBar->SetPosition(Vector3(800, 0, 0));
+	m_pHPBar->SetMaxValue(Status.HPMAX);
+	UpdateHPBar();
+
 	SetAniEvent();
 }
 
@@ -25,6 +36,11 @@ void ComTroll01::Update()
 
 void ComTroll01::Render()
 {
+}
+
+void ComTroll01::UpdateHPBar()
+{
+	m_pHPBar->SetCurValue(Status.HP);
 }
 
 void ComTroll01::SetAniEvent()

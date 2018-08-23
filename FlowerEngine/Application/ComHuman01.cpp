@@ -23,11 +23,11 @@ void ComHuman01::Awake()
 	GameObject* pUIBar = GameObject::Find("testUI");
 	ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");
 
-	uiDialog->AddProgressBar(1, "Resources/ui/6.tga");
+	uiDialog->AddProgressBar(eUI_HPBar_Human, "Resources/ui/6.tga");
 
-	m_pHPBar = uiDialog->GetProgressBar(1);
+	m_pHPBar = uiDialog->GetProgressBar(eUI_HPBar_Human);
+	m_pHPBar->SetPosition(Vector3(100, 0, 0));
 	m_pHPBar->SetMaxValue(Status.HPMAX);
-	m_pHPBar->SetPosition(Vector3(300, 0, 0));
 
 	UpdateHPBar();
 

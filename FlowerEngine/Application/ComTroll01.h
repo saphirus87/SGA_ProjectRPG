@@ -13,6 +13,12 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
+	// UI ฐüทร
+	void UpdateHPBar() override;
+
 	void SetAniEvent();
+
+private:
+	UIProgressBar * m_pHPBar;
 };
 
