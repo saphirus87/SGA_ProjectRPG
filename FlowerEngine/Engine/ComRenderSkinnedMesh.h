@@ -56,7 +56,7 @@ public:
 	// 애니메이션 이벤트를 등록합니다.
 	HRESULT AddCallbackKeysAndCompress(LPD3DXKEYFRAMEDANIMATIONSET pAS,
 		DWORD dwNumCallbackKeys, D3DXKEY_CALLBACK aKeys[],
-		DWORD dwCompressionFlags, FLOAT fCompression);
+		DWORD dwCompressionFlags, FLOAT fCompression, D3DXPLAYBACK_TYPE playType = D3DXPLAY_LOOP);
 
 	// 기본 애니메이션 제어
 	AnimationController m_pAniControl;

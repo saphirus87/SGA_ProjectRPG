@@ -174,7 +174,7 @@ HRESULT ComRenderSkinnedMesh::AddCallbackKeysAndCompress(
 	DWORD dwNumCallbackKeys, 
 	D3DXKEY_CALLBACK aKeys[], 
 	DWORD dwCompressionFlags, 
-	FLOAT fCompression)
+	FLOAT fCompression, D3DXPLAYBACK_TYPE playType)
 {
 	HRESULT hr;
 	LPD3DXCOMPRESSEDANIMATIONSET pASNew = NULL;
@@ -189,7 +189,7 @@ HRESULT ComRenderSkinnedMesh::AddCallbackKeysAndCompress(
 	hr = D3DXCreateCompressedAnimationSet(
 		pAS->GetName(),
 		pAS->GetSourceTicksPerSecond(),
-		pAS->GetPlaybackType(),
+		playType,
 		pBufCompressed,
 		dwNumCallbackKeys,
 		aKeys,
