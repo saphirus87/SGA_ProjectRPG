@@ -72,8 +72,10 @@ void ComSmallderonAI::Awake()
 
 void ComSmallderonAI::Update()
 {
+	// 0.5초에 한번씩 Walk하는걸로 그렇지 않으면 Walk <-> Attack 왔다갔다 함
 	if (m_pFollow->pTarget && m_pFollow->IsFollowing)
 	{
+		m_pFollow->fMoveSpeed = m_pCharacter->Status.MOVE_SPEED;
 		GetHeight();
 		Walk(1);
 	}

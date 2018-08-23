@@ -4,6 +4,7 @@
 
 ComFollowTarget::ComFollowTarget(CString szName) :
 	Component(szName),
+	fMoveSpeed(0.02f),
 	accellation(0.0f),
 	m_fLerp(0.003f),
 	IsFollowing(false),
@@ -55,7 +56,7 @@ void ComFollowTarget::Update()
 		Vector3 move;
 
 		// 속도가 0.02f라면
-		vDir *= 0.02f;
+		vDir *= fMoveSpeed;
 
 		// 속도벡터 곱하는 방법
 		gameObject->transform->Translate(vDir);
