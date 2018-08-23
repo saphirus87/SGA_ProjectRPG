@@ -1,0 +1,51 @@
+-----humam01-----
+Stand		0-
+Walk 		0-
+WalkBackwards	0-
+Run		0-
+RotateLeft	0-
+RotateRight	0-
+Attack1		0-
+Attack2		0-
+Attack3		0-
+-----troll01-----
+Stand		0-
+Walk 		0-
+WalkBackwards	0-
+Run		0-
+RotateLeft	0-
+RotateRight	0-
+Attack1		0-
+Attack2		0-
+Attack3		0-
+-----undead_01-----
+Stand		0-80
+Walk 		0-32
+WalkBackwards	0-32
+Run		0-18
+RotateLeft	0-20
+RotateRight	0-20
+Attack1H	0-30
+Attack2H	0-30
+Attack3H	0-30
+Ready1H		0-40
+Parry1H		0-30
+
+-----smallderonO-----
+Stand		0-60(000-060)
+Walk 		0-31(061-092)
+WalkBackwards	0-
+Run		0-
+Rotate
+Rotate
+Attack1H	0-30(093-123)
+Death		0-94()
+-----smallderonB-----
+Stand		0-60()
+Walk 		0-31()
+WalkBackwards	0-
+Run		0-
+Rotate
+Rotate
+Attack1H	0-30()
+Death		0-94()
