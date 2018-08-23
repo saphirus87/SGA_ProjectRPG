@@ -139,6 +139,7 @@ enum eAni
 
 enum eAniMon
 {
+	eAniMon_Death,
 	eAniMon_Attack_1,
 	eAniMon_Walk,
 	eAniMon_Stand,

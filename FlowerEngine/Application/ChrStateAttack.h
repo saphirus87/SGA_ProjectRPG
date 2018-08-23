@@ -18,4 +18,5 @@ public:
 	virtual void Stand(int iIndex) override;
 	virtual void Walk(int iIndex) override;
 	virtual void Attack1(int iIndex) override;
+	virtual void Death(int iIndex) override;
 };

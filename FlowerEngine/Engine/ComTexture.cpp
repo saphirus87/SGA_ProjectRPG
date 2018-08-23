@@ -4,7 +4,8 @@
 ComTexture::ComTexture(CString szName)
 	:Component(szName), 
 	m_pVB(NULL), m_pIB(NULL), pTexture(NULL), 
-	m_iVertexCnt(0), m_iPrimitiveCnt(0)
+	m_iVertexCnt(0), m_iPrimitiveCnt(0),
+	IsBillboard(false)
 {
 	m_pDevice9 = GetD3D9Device();
 }
@@ -17,20 +18,16 @@ ComTexture::~ComTexture()
 
 void ComTexture::Awake()
 {
-	pTexture = Assets::GetTexture(L"Resources/ui/panel-info.png");
-
 	//정점 4개를 만듬
 	VERTEX_PT v0;
 	v0.p = Vector3(-0.5f, -0.5f, 0);
 	v0.t = Vector2(0, 1);
 	m_verticesPT.push_back(v0);
 
-
 	VERTEX_PT v1;
 	v1.p = Vector3(-0.5f, 0.5f, 0);
 	v1.t = Vector2(0, 0);
 	m_verticesPT.push_back(v1);
-
 
 	VERTEX_PT v2;
 	v2.p = Vector3(0.5f, 0.5f, 0);
@@ -76,16 +73,37 @@ void ComTexture::Awake()
 
 void ComTexture::Update()
 {
+	if (IsBillboard == true)
+	{
+		m_matBillboard = Camera::GetInstance()->GetViewMatrix();
+		// 역행렬을 구해준 후
+		D3DXMatrixInverse(&m_matBillboard, NULL, &m_matBillboard);
+
+		// 위치만 강제 셋팅
+		Vector3 vPos = gameObject->transform->GetPosition();
+		m_matBillboard._41 = vPos.x;
+		m_matBillboard._42 = vPos.y;
+		m_matBillboard._43 = vPos.z;
+	}
 }
 
 void ComTexture::Render()
 {
 	m_pDevice9->SetRenderState(D3DRS_LIGHTING, false);
-	m_pDevice9->SetTransform(D3DTS_WORLD, &gameObject->transform->GetWorldMatrix());
+	if (IsBillboard)
+		m_pDevice9->SetTransform(D3DTS_WORLD, &m_matBillboard);
+	else
+		m_pDevice9->SetTransform(D3DTS_WORLD, &gameObject->transform->GetWorldMatrix());
 	m_pDevice9->SetFVF(VERTEX_PT::FVF);
 	m_pDevice9->SetTexture(0, pTexture);
 	m_pDevice9->SetStreamSource(0, m_pVB, 0, sizeof(VERTEX_PT));
 	m_pDevice9->SetIndices(m_pIB);
 	m_pDevice9->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_iVertexCnt, 0, m_iPrimitiveCnt);
 	m_pDevice9->SetRenderState(D3DRS_LIGHTING, true);
+}
+
+void ComTexture::Set(Texture pTex, bool isBillboard)
+{
+	pTexture = pTex;
+	IsBillboard = isBillboard;
 }

@@ -33,3 +33,11 @@ void ChrStateWalk::Attack1(int iIndex)
 	m_pControl->SetState(iIndex);
 	m_pControl->Attack1();
 }
+
+void ChrStateWalk::Death(int iIndex)
+{
+	OutputDebugString(L"Walk -> Death 상태 변환\r\n");
+
+	m_pControl->SetState(iIndex);
+	m_pControl->Death();
+}

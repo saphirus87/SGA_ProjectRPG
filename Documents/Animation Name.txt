@@ -1,7 +1,0 @@
-Human_01
-
-Stand [0]	0 ~ 79
-Walk [1]	80 ~ 109
-Attack1H [92]	110 ~ 139
-AttackFL [230]	140 ~ 169
-AttackFL [234]	170 ~ 199

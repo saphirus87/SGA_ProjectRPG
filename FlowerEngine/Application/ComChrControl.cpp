@@ -149,7 +149,13 @@ void ComChrControl::CheckAttackTargetDeath()
 	// 공격 상대가 죽었으면
 	if (pAttackTarget && pAttackTarget->CheckDeath() == true)
 	{
-		pAttackTarget->gameObject->SetActive(false);
+		if (pAttackTarget->gameObject->Tag == eTag_Chracter)
+			pAttackTarget->gameObject->SetActive(false);
+		else
+		{
+			ComChrControl* pControl = (ComChrControl*)(pAttackTarget->gameObject->GetComponent("ComChrControl"));
+			pControl->Death();
+		}
 		CancleAttackTarget();
 		Stand();
 	}
@@ -216,6 +222,10 @@ void ComChrControl::Attack1()
 {
 	// 현재 상태에서 Attack1로
 	m_pCurrentState->Attack1(eAni_Attack_1);
+}
+
+void ComChrControl::Death()
+{
 }
 
 void ComChrControl::CheckPickingChr()

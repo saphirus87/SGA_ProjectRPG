@@ -223,5 +223,8 @@ void SceneGrid::CreateUI()
 
 	GameObject* pTexture = factory.CreateGameObject("Texture");
 	pTexture->transform->SetPosition(Vector3(-260, 15, -262));
-	pTexture->AddComponent(new ComTexture("ComTexture"));
+	
+	ComTexture* pComTex = new ComTexture("ComTexture");
+	pComTex->Set(Assets::GetTexture(L"Resources/ui/6.tga"), true);
+	pTexture->AddComponent(pComTex);
 }

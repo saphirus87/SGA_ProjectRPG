@@ -12,7 +12,12 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
-	Texture			pTexture;
+	void Set(Texture pTex, bool isBillboard = false);
+
+	Texture pTexture;
+
+	// 카메라를 바라봄
+	bool IsBillboard;
 
 private:
 	// 다이렉트X 디바이스
@@ -32,5 +37,8 @@ private:
 	int m_iVertexCnt;
 	// 삼각형 갯수
 	int m_iPrimitiveCnt;
+
+	// 카메라를 바라보게 하기 위해
+	Matrix4x4 m_matBillboard;
 };
 

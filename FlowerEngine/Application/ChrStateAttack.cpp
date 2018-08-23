@@ -32,3 +32,11 @@ void ChrStateAttack1::Attack1(int iIndex)
 {
 	m_pControl->pAnimation->PlayAnimation(iIndex);
 }
+
+void ChrStateAttack1::Death(int iIndex)
+{
+	OutputDebugString(L"Attack1 -> Death 상태 변환\r\n");
+
+	m_pControl->SetState(iIndex);
+	m_pControl->Death();
+}
