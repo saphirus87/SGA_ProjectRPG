@@ -107,9 +107,6 @@ void SceneGrid::CreateTroll()
 	// 휴먼 캐릭터 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
 	EquipmentShoulder*pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
 	pShoulder->Set(10, 10, 10, 10, eChrType_Troll);
-	pShoulder->Name = "Equipment_shoulder_ItemName01";
-	pShoulder->FolderPath = "Resources/character/Equipment/";
-	pShoulder->XFileName = "shoulder_01.X";
 	pShoulder->TextureName = "Resources/character/Equipment/shoulder_robe_b_03blue.png";
 	pEquipment->Equip(pShoulder);
 
