@@ -50,20 +50,20 @@ void ComCharacter::AttackTarget(ComCharacter * pTarget)
 	pControl->LookatTarget();
 
 	// 총 공격력 계산 (내 공격력 + 장비 공격력)
-	int dmg = m_status.ATK_PHY;
+	int dmg = Status.ATK_PHY;
 
-	pTarget->Defence(m_status.ATK_PHY);
+	pTarget->Defence(Status.ATK_PHY);
 }
 
 void ComCharacter::Defence(int dmg)
 {
 	// 총 방어력 계산 (내 방어력 + 장비 방어력)
-	int def = m_status.DEF_PHY;
+	int def = Status.DEF_PHY;
 
 	dmg -= def;
 
 	// HP 차감
-	m_status.HP -= dmg;
+	Status.HP -= dmg;
 	
 	// UI 갱신
 	UpdateHPBar();
@@ -71,7 +71,7 @@ void ComCharacter::Defence(int dmg)
 
 bool ComCharacter::CheckDeath()
 {
-	if (m_status.HP <= 0)
+	if (Status.HP <= 0)
 		return true;
 
 	return false;

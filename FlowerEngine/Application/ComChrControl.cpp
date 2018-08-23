@@ -113,8 +113,6 @@ void ComChrControl::GetHeight()
 	if (m_pMap == NULL)
 		return;
 
-	m_pMap->UpdateIndexBufferQuadTree();
-
 	Vector3 pos = gameObject->transform->GetPosition();
 	float fHeight = 0.f;
 	if (m_pMap->GetHeight(fHeight, pos) == true)
@@ -182,10 +180,8 @@ void ComChrControl::MoveToPoint()
 			float angleY = Vector::GetAngleY(&vDir);
 			gameObject->transform->SetRotation(0.0f, angleY, 0.0f);
 
-			Vector3 move;
-
-			// 속도가 0.02f라면
-			vDir *= 0.02f;
+			// 이동 속도
+			vDir *= m_pCharacter->Status.MOVE_SPEED;
 
 			// 속도벡터 곱하는 방법
 			gameObject->transform->Translate(vDir);
@@ -209,9 +205,10 @@ void ComChrControl::Walk(float fDeltaZ)
 	// 현재 상태에서 Walk로
 	m_pCurrentState->Walk(eAni_Walk);
 	GetHeight();
-	float fMoveSpeed = 0.10f;	//이동 속도
-	gameObject->transform->GetForward(m_vecForward);
-	Vector3 forward = fDeltaZ * m_vecForward * fMoveSpeed;
+
+	Vector3 vecForward;			
+	gameObject->transform->GetForward(vecForward);
+	Vector3 forward = fDeltaZ * vecForward * m_pCharacter->Status.MOVE_SPEED;
 	gameObject->transform->Translate(forward);
 }
 

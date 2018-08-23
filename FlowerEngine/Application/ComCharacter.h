@@ -51,9 +51,10 @@ protected:
 	// 공격할 타겟
 	ComCharacter* m_pAttackTarget;
 
-	// 능력치
-	StatusInfo m_status;
-
 	// 장비 장착
 	ComChrEquipment* m_pChrEquipment;
+
+public:
+	// 능력치
+	StatusInfo Status;
 };

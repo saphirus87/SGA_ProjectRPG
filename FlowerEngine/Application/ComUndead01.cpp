@@ -24,7 +24,7 @@ void ComUndead01::Awake()
 	uiDialog->AddProgressBar(eUI_HPBar, "Resources/ui/6.tga");
 
 	m_pHPBar = uiDialog->GetProgressBar(eUI_HPBar);
-	m_pHPBar->SetMaxValue(m_status.HPMAX);
+	m_pHPBar->SetMaxValue(Status.HPMAX);
 	UpdateHPBar();
 
 	SetAniEvent();
@@ -67,5 +67,5 @@ void ComUndead01::Render()
 
 void ComUndead01::UpdateHPBar()
 {
-	m_pHPBar->SetCurValue(m_status.HP);
+	m_pHPBar->SetCurValue(Status.HP);
 }

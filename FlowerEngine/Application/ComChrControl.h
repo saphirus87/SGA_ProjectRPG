@@ -50,9 +50,7 @@ protected:
 protected:
 	ComObjMap * m_pMap;
 	IChrState * m_pCurrentState;
-
-	Vector3 m_vecForward;			// æ’ πÊ«‚ ∫§≈Õ
-
+	
 	vector<IChrState*> m_vecState;
 
 	ComFollowTarget* m_pFollow;
