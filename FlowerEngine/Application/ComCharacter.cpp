@@ -97,7 +97,8 @@ bool ComCharacter::CheckDeath()
 
 void ComCharacter::HpRecovery()
 {
-	if (m_pTimerHPRec->GetTime() >= 1.0f)
+	// 1초마다 회복
+	if (m_pTimerHPRec->GetTime() >= 3.0f)
 	{
 		// 캐릭터가 죽어있지 않을 때와 HP가 꽉차있지 않으면
 		if (Status.HP > 0 && Status.HP < Status.HPMAX)
