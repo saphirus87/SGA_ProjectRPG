@@ -351,7 +351,7 @@ GameObject * FactoryGameObject::CreateCharacter(CString szName, CString szFolder
 	return pGOChr;
 }
 
-GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPath, CString szFileName, Vector3 & pos, Component* pComAI, GameObject* pTarget)
+GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPath, CString szFileName, Vector3 & pos, Component* pComAI, GameObject* pTarget, StatusInfo& status)
 {
 	// 몬스터 생성 (smallderon_orange)
 	GameObject* pGOMonX = CreateFromXFile(szName, szFolderPath, szFileName, pos);
@@ -362,7 +362,10 @@ GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPa
 	// 타겟을 따라다닌다.
 	pComTarget->pTarget = pTarget;
 
-	pGOMonX->AddComponent(new ComCharacter("ComCharacter"));
+	ComCharacter* pChrMon = new ComCharacter("ComCharacter");
+	pChrMon->Status = status;
+	pGOMonX->AddComponent(pChrMon);
+
 	pGOMonX->AddComponent(pComAI);
 
 	// pComAI 다음에

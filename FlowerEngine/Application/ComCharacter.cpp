@@ -2,6 +2,7 @@
 #include "ComCharacter.h"
 #include "ComChrControl.h"
 #include "ComFollowTarget.h"
+#include "ComChrEquipment.h"
 
 ComCharacter::ComCharacter(CString szName) : 
 	Component(szName),
@@ -38,17 +39,25 @@ void ComCharacter::AttackTarget(ComCharacter * pTarget)
 	pControl->LookatTarget();
 
 	// 총 공격력 계산 (내 공격력 + 장비 공격력)
-	int dmg = Status.ATK_PHY;
+	int equipmentDmg = 0;
+	if (m_pChrEquipment)
+		equipmentDmg = m_pChrEquipment->GetTotalATK_MIN();
 
-	pTarget->Defence(Status.ATK_PHY);
+	int dmg = Status.ATK_PHY + equipmentDmg;
+
+	pTarget->Defence(dmg);
 }
 
 void ComCharacter::Defence(int dmg)
 {
 	// 총 방어력 계산 (내 방어력 + 장비 방어력)
-	int def = Status.DEF_PHY;
+	int equipmentDef = 0;
+	if (m_pChrEquipment)
+		equipmentDef = m_pChrEquipment->GetTotalDEF_PHY();
 
-	dmg -= def;
+	int def = Status.DEF_PHY + equipmentDef;
+
+	dmg -= (def / 2);
 
 	// HP 차감
 	Status.HP -= dmg;

@@ -60,7 +60,13 @@ public:
 
 	// 장비를 장착합니다. (월드에서 아이템 획득시, 서버에서 데이터 받은경우, 초기 아이템 장착시 등)
 	void Equip(ItemInfo* pItem);
-	
+
+	// 총 장비 공격력을 반환합니다.
+	int GetTotalATK_MIN();
+
+	// 총 장비 방어력을 반환합니다.
+	int GetTotalDEF_PHY();
+
 private:
 	LPCSTR GetFrameName(ItemInfo* itemInfo, eRenderEquipment renderType);
 

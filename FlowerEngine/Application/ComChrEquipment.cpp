@@ -175,6 +175,38 @@ void ComChrEquipment::Equip(ItemInfo * pItem)
 	}
 }
 
+int ComChrEquipment::GetTotalATK_MIN()
+{
+	EquipmentWeapon* pWeaponL = (EquipmentWeapon*)m_vecEquipedItems[eItem_WeaponL];
+	EquipmentWeapon* pWeaponR = (EquipmentWeapon*)m_vecEquipedItems[eItem_WeaponR];
+
+	int totalAtk = 0;
+	
+	if (pWeaponL)
+		totalAtk += pWeaponL->ATK_MIN;
+
+	if (pWeaponR)
+		totalAtk += pWeaponR->ATK_MIN;
+
+	return totalAtk;
+}
+
+int ComChrEquipment::GetTotalDEF_PHY()
+{
+	EquipmentHelmet* pHelmet = (EquipmentHelmet*)m_vecEquipedItems[eItem_Helmet];
+	EquipmentShoulder* pShoulder = (EquipmentShoulder*)m_vecEquipedItems[eItem_Shoulder];
+
+	int totalDef = 0;
+
+	if (pHelmet)
+		totalDef += pHelmet->DEF_PHY;
+	
+	if (pShoulder)
+		totalDef += pShoulder->DEF_PHY;
+
+	return totalDef;
+}
+
 LPCSTR ComChrEquipment::GetFrameName(ItemInfo * itemInfo, eRenderEquipment renderType)
 {
 	switch (itemInfo->ChrType)

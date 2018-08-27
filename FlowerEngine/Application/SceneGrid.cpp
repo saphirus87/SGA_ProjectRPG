@@ -43,11 +43,11 @@ void SceneGrid::CreateMapObject()
 {
 	// 아이템 정보를 통하여 맵에 게임오브젝트(어깨 방어구) 생성
 	EquipmentShoulder* pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
-	pShoulder->Set(10, 10, 10, 10, eChrType_Human);
+	pShoulder->Set(10, 10, 1, 1, eChrType_Human);
 	GameObject* pGOShoulder = factory.CreateEquipmentToMap(pShoulder, Vector3(3, 10, -8), Vector3(-260, 15, -255));
 
 	EquipmentHelmet* pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X");
-	pHelmet->Set(10, 10, 10, 10, eChrType_Human);
+	pHelmet->Set(10, 10, 1, 1, eChrType_Human);
 	GameObject* pGOHelmet = factory.CreateEquipmentToMap(pHelmet, Vector3(3, 10, -8), Vector3(-260, 15, -253));
 
 	EquipmentShield* pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X");
@@ -76,12 +76,12 @@ void SceneGrid::CreateUndead()
 	ComChrEquipment* pEquipment = (ComChrEquipment*)pGOUndead->GetComponent("ComChrEquipment");
 
 	EquipmentShoulder* pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
-	pShoulder->Set(10, 10, 10, 10, eChrType_Undead);
+	pShoulder->Set(10, 10, 1, 1, eChrType_Undead);
 	pShoulder->TextureName = "Resources/character/Equipment/shoulder_robe_b_03blue.png";
 	pEquipment->Equip(pShoulder);
 
 	EquipmentHelmet* pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X");
-	pHelmet->Set(10, 10, 10, 10, eChrType_Undead);
+	pHelmet->Set(10, 10, 1, 1, eChrType_Undead);
 	pEquipment->Equip(pHelmet);
 
 	EquipmentShield* pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X");
@@ -102,12 +102,12 @@ void SceneGrid::CreateTroll()
 
 	// 휴먼 캐릭터 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
 	EquipmentShoulder*pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
-	pShoulder->Set(10, 10, 10, 10, eChrType_Troll);
+	pShoulder->Set(10, 10, 1, 1, eChrType_Troll);
 	pShoulder->TextureName = "Resources/character/Equipment/shoulder_robe_b_03blue.png";
 	pEquipment->Equip(pShoulder);
 
 	EquipmentHelmet* pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X");
-	pHelmet->Set(10, 10, 10, 10, eChrType_Troll);
+	pHelmet->Set(10, 10, 1, 1, eChrType_Troll);
 	pEquipment->Equip(pHelmet);
 
 	EquipmentShield* pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X");
@@ -121,20 +121,27 @@ void SceneGrid::CreateTroll()
 
 void SceneGrid::CreateMonster()
 {
+	StatusInfo monStatus;
+	monStatus.HP = 20;
+	monStatus.ATK_PHY = 5;
+
 	// 몬스터 생성 (smallderon_orange)
 	GameObject* pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-240, 15, -240),
-		new ComSmallderonAI("ComChrControl"), GameObject::Find("undead_01"));
+		new ComSmallderonAI("ComChrControl"), GameObject::Find("undead_01"), monStatus);
 	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-243, 15, -243),
-		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"));
+		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"), monStatus);
 	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-246, 15, -246),
-		new ComSmallderonAI("ComChrControl"), GameObject::Find("troll_01"));
+		new ComSmallderonAI("ComChrControl"), GameObject::Find("troll_01"), monStatus);
+
+	monStatus.HP = 30;
+	monStatus.ATK_PHY = 6;
 
 	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-220, 15, -220),
-		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"));
+		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"), monStatus);
 	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-223, 15, -223),
-		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"));
+		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"), monStatus);
 	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-226, 15, -226),
-		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"));
+		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"), monStatus);
 }
 
 void SceneGrid::CreateTest()
