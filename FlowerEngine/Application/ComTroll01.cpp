@@ -38,11 +38,6 @@ void ComTroll01::Render()
 {
 }
 
-void ComTroll01::UpdateHPBar()
-{
-	m_pHPBar->SetCurValue(Status.HP);
-}
-
 void ComTroll01::SetAniEvent()
 {
 	// 애니메이션 키프레임셋

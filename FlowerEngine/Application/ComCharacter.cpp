@@ -11,6 +11,7 @@ ComCharacter::ComCharacter(CString szName) :
 	m_pAnimation(NULL),
 	m_pChrEquipment(NULL),
 	m_pAttackTarget(NULL),
+	m_pHPBar(NULL),
 	m_eType(eChrType_COUNT) // 초기화 값으로 사용
 {
 }
@@ -92,6 +93,17 @@ bool ComCharacter::CheckDeath()
 		return true;
 
 	return false;
+}
+
+void ComCharacter::UpdateHPBar()
+{
+	if (m_pHPBar)
+	{
+		if (Status.HP < 0)
+			Status.HP = 0;
+
+		m_pHPBar->SetCurValue(Status.HP);
+	}
 }
 
 void ComCharacter::Init()

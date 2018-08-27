@@ -75,8 +75,3 @@ void ComUndead01::Update()
 void ComUndead01::Render()
 {
 }
-
-void ComUndead01::UpdateHPBar()
-{
-	m_pHPBar->SetCurValue(Status.HP);
-}

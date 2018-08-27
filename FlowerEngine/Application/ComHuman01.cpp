@@ -4,8 +4,7 @@
 #include "ComChrControl.h"
 
 ComHuman01::ComHuman01(CString szName) : 
-	ComCharacter(szName),
-	m_pHPBar(NULL)
+	ComCharacter(szName)
 {
 	m_eType = eChrType_Human;
 }
@@ -81,15 +80,4 @@ void ComHuman01::Update()
 
 void ComHuman01::Render()
 {
-}
-
-void ComHuman01::UpdateHPBar()
-{
-	if (m_pHPBar)
-	{
-		if (Status.HP < 0)
-			Status.HP = 0;
-
-		m_pHPBar->SetCurValue(Status.HP);
-	}
 }

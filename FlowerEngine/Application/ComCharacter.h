@@ -34,7 +34,7 @@ public:
 	bool CheckDeath();
 
 	// UI 관련
-	virtual void UpdateHPBar() {}
+	void UpdateHPBar();
 
 protected:
 	void Init();
@@ -43,7 +43,7 @@ protected:
 	// 캐릭터 타입
 	eChrType m_eType;
 
-	ComRenderSkinnedMesh * m_pAnimation;
+	ComRenderSkinnedMesh* m_pAnimation;
 	
 	// 공격할 타겟
 	ComCharacter* m_pAttackTarget;
@@ -54,4 +54,7 @@ protected:
 public:
 	// 능력치
 	StatusInfo Status;
+
+protected:
+	UIProgressBar* m_pHPBar;
 };
