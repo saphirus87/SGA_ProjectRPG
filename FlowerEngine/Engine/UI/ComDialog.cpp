@@ -98,3 +98,15 @@ void ComDialog::AddCheckBox(UINT id, CString szBoxImg, CString szCheckImg, LPD3D
 
 	m_Controls.insert(make_pair(id, box));
 }
+
+void ComDialog::AddRadioButton(UINT id, CString szButtonImg, CString szCheckImg, LPD3DXFONT pFont, CString szText)
+{
+	UIRadioButton* radio = new UIRadioButton;
+	radio->SetSprite(m_pSprite);
+	radio->SetParent(this);
+	radio->SetTexture(szButtonImg, szCheckImg);
+	radio->SetFont(pFont);
+	radio->AddRadioButton(szText);
+
+	m_Controls.insert(make_pair(id, radio));
+}

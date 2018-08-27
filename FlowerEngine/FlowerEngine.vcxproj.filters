@@ -443,6 +443,9 @@
     <ClCompile Include="Application\ComSmallderonAI.cpp">
       <Filter>Application\Components\ComMonster</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\UI\UIRadioButton.cpp">
+      <Filter>Engine\UI2</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -689,6 +692,9 @@
     <ClInclude Include="Engine\ComTexture.h" />
     <ClInclude Include="Application\ComSmallderonAI.h">
       <Filter>Application\Components\ComMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\UIRadioButton.h">
+      <Filter>Engine\UI2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

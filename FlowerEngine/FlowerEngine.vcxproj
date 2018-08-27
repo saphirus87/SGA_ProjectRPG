@@ -510,6 +510,7 @@
     <ClCompile Include="Engine\UI\UIControl.cpp" />
     <ClCompile Include="Engine\UI\UIImage.cpp" />
     <ClCompile Include="Engine\UI\UIProgressBar.cpp" />
+    <ClCompile Include="Engine\UI\UIRadioButton.cpp" />
     <ClCompile Include="Engine\UI\UIText.cpp" />
     <ClCompile Include="Engine\Vector.cpp" />
     <ClCompile Include="FlowerEngine.cpp" />
@@ -565,6 +566,7 @@
     <ClInclude Include="Engine\UI\UIControl.h" />
     <ClInclude Include="Engine\UI\UIImage.h" />
     <ClInclude Include="Engine\UI\UIProgressBar.h" />
+    <ClInclude Include="Engine\UI\UIRadioButton.h" />
     <ClInclude Include="Engine\UI\UIText.h" />
     <ClInclude Include="Engine\Vector.h" />
     <CLInclude Include="resource.h" />

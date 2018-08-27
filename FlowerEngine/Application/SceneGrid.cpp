@@ -210,7 +210,7 @@ void SceneGrid::CreateTest()
 void SceneGrid::CreateUI()
 {
 	GameObject* pUIBar = factory.CreateUIDialog("testUI", 20.0f, 20.0f);
-	Component* uiDialog = pUIBar->GetComponent("ComDialog");
+	ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");
 
 	//((ComDialog*)uiDialog)->AddButton(1, "Resources/ui/btn-med-up.png", "Resources/ui/btn-med-over.png", "Resources/ui/btn-med-down.png");
 	//((ComDialog*)uiDialog)->AddText(3, Assets::GetFont(Assets::FontType_NORMAL), "ÇÑ±Ûtest123!@#");
@@ -227,4 +227,9 @@ void SceneGrid::CreateUI()
 	ComTexture* pComTex = new ComTexture("ComTexture");
 	pComTex->Set(Assets::GetTexture(L"Resources/ui/6.tga"), true);
 	pTexture->AddComponent(pComTex);*/
+
+	/*uiDialog->AddRadioButton(100, "Resources/ui/Box.png", "Resources/ui/Checked.png", Assets::GetFont(Assets::FontType_NORMAL), "radio1");
+	uiDialog->GetRadioButton(100)->AddRadioButton("radio2");
+	uiDialog->GetRadioButton(100)->AddRadioButton("radio3");
+	uiDialog->GetRadioButton(100)->AddRadioButton("radio4");*/
 }

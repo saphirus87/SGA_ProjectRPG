@@ -426,5 +426,6 @@ using namespace std;
 #include "../../Engine/UI/UIButton.h"
 #include "../../Engine/UI/UIProgressBar.h"
 #include "../../Engine/UI/UICheckBox.h"
+#include "../../Engine/UI/UIRadioButton.h"
 #include "../../Engine/ComText3D.h"
 #include "../../Engine/ComTexture.h"
