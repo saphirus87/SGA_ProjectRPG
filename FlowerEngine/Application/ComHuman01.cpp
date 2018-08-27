@@ -89,7 +89,12 @@ void ComHuman01::Render()
 void ComHuman01::UpdateHPBar()
 {
 	if (m_pHPBar)
+	{
+		if (Status.HP < 0)
+			Status.HP = 0;
+
 		m_pHPBar->SetCurValue(Status.HP);
+	}
 }
 
 void ComHuman01::OnTriggerEnter(ComCollider & collider)
