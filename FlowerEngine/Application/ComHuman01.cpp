@@ -7,7 +7,8 @@
 #include "ComChrControl.h"
 
 ComHuman01::ComHuman01(CString szName) : 
-	ComCharacter(szName)
+	ComCharacter(szName),
+	m_pHPBar(NULL)
 {
 	m_eType = eChrType_Human;
 }
@@ -21,21 +22,26 @@ void ComHuman01::Awake()
 	Init();
 
 	GameObject* pUIBar = GameObject::Find("testUI");
-	ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");
+	if (pUIBar)
+	{
+		ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");
 
-	uiDialog->AddProgressBar(eUI_HPBar_Human, "Resources/ui/6.tga");
+		uiDialog->AddProgressBar(eUI_HPBar_Human, "Resources/ui/6.tga");
 
-	m_pHPBar = uiDialog->GetProgressBar(eUI_HPBar_Human);
-	m_pHPBar->SetPosition(Vector3(100, 0, 0));
-	m_pHPBar->SetMaxValue(Status.HPMAX);
+		m_pHPBar = uiDialog->GetProgressBar(eUI_HPBar_Human);
+		m_pHPBar->SetPosition(Vector3(100, 0, 0));
+		m_pHPBar->SetMaxValue(Status.HPMAX);
 
-	UpdateHPBar();
-
+		UpdateHPBar();
+	}
 	SetAniEvent();
 }
 
 void ComHuman01::SetAniEvent()
 {
+	if (m_pAnimation == NULL)
+		return;
+
 	// 애니메이션 키프레임셋
 	vector<LPD3DXKEYFRAMEDANIMATIONSET> vecKeyFrameAnimSet;
 
@@ -82,7 +88,8 @@ void ComHuman01::Render()
 
 void ComHuman01::UpdateHPBar()
 {
-	m_pHPBar->SetCurValue(Status.HP);
+	if (m_pHPBar)
+		m_pHPBar->SetCurValue(Status.HP);
 }
 
 void ComHuman01::OnTriggerEnter(ComCollider & collider)

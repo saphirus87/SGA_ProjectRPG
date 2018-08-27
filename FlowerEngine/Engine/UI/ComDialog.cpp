@@ -9,6 +9,9 @@ ComDialog::ComDialog(CString szName)
 ComDialog::~ComDialog()
 {
 	SAFE_RELEASE(m_pSprite);
+
+	for (auto & o : m_Controls)
+		SAFE_DELETE(o.second);
 }
 
 void ComDialog::Awake()

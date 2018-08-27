@@ -6,6 +6,7 @@
 ComCharacter::ComCharacter(CString szName) : 
 	Component(szName),
 	m_pAnimation(NULL),
+	m_pChrEquipment(NULL),
 	m_pAttackTarget(NULL),
 	m_eType(eChrType_COUNT) // 초기화 값으로 사용
 {

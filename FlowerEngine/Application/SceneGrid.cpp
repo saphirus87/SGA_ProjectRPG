@@ -65,9 +65,9 @@ void SceneGrid::CreateHuman()
 	EquipmentWeapon* pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
 	pEquipment->Equip(pWeaponR);
 
-	//EquipmentWeapon* pWeaponL = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
-	//pWeaponL->Type = eItem_WeaponL;
-	//pEquipment->Equip(pWeaponL);
+	EquipmentWeapon* pWeaponL = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
+	pWeaponL->Type = eItem_WeaponL;
+	pEquipment->Equip(pWeaponL);
 
 	// Ä«¸Þ¶ó
 	Camera::GetInstance()->SetTarget(&pGOHuman->transform->GetPosition());
