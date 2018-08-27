@@ -120,7 +120,7 @@ void SceneGrid::CreateTroll()
 void SceneGrid::CreateMonster()
 {
 	StatusInfo monStatus;
-	monStatus.HP = 30;
+	monStatus.HP = 50;
 	monStatus.ATK_PHY = 5;
 
 	// 몬스터 생성 (smallderon_orange)
@@ -131,7 +131,7 @@ void SceneGrid::CreateMonster()
 	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-246, 9.7184200, -246),
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("troll_01"), monStatus);
 
-	monStatus.HP = 30;
+	monStatus.HP = 50;
 	monStatus.ATK_PHY = 6;
 
 	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-220, 10.7184200, -220),
