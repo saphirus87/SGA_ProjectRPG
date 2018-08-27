@@ -45,6 +45,8 @@ protected:
 	void GetHeight();
 	// 맵을 클릭하면 해당 위치로 이동합니다.
 	void MoveToPoint();
+	// 공격할 대상을 찾습니다.
+	void FindAttackTarget();
 
 public:
 	// 이 객체가 픽킹되었는지 여부

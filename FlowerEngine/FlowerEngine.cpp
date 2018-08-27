@@ -12,7 +12,7 @@
 #include "SDKmesh.h"
 #include "resource.h"
 
-#include "Application\SceneGrid.h"
+#include "Application\SceneRPG.h"
 #include "Application\SceneAircraft.h"
 #include "Application\ScenePicking.h"
 
@@ -104,10 +104,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	DXUTCreateDevice(true, 1600, 900);
 	
 	Camera::GetInstance()->Init();
-	SceneManager::GetInstance()->AddScene(new SceneGrid("SceneGrid"));
-	SceneManager::GetInstance()->AddScene(new SceneAircraft("SceneAircraft"));
-	SceneManager::GetInstance()->AddScene(new ScenePicking("ScenePicking"));
-	SceneManager::GetInstance()->ChangeScene("SceneGrid");
+	SceneManager::GetInstance()->AddScene(new SceneRPG("SceneRPG"));
+	/*SceneManager::GetInstance()->AddScene(new SceneAircraft("SceneAircraft"));
+	SceneManager::GetInstance()->AddScene(new ScenePicking("ScenePicking"));*/
+	SceneManager::GetInstance()->ChangeScene("SceneRPG");
 	SceneManager::GetInstance()->Awake();
 	
 	DXUTMainLoop(); // Enter into the DXUT render loop

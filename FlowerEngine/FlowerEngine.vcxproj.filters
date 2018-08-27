@@ -327,9 +327,6 @@
     <ClCompile Include="Engine\SceneManager.cpp">
       <Filter>Engine\System</Filter>
     </ClCompile>
-    <ClCompile Include="Application\SceneGrid.cpp">
-      <Filter>Application\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Application\ComTestCubeControl.cpp">
       <Filter>Application\Components\ComGrid</Filter>
     </ClCompile>
@@ -445,6 +442,9 @@
     </ClCompile>
     <ClCompile Include="Engine\UI\UIRadioButton.cpp">
       <Filter>Engine\UI2</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SceneRPG.cpp">
+      <Filter>Application\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -571,9 +571,6 @@
     <ClInclude Include="Engine\SceneManager.h">
       <Filter>Engine\System</Filter>
     </ClInclude>
-    <ClInclude Include="Application\SceneGrid.h">
-      <Filter>Application\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Application\ComTestCubeControl.h">
       <Filter>Application\Components\ComGrid</Filter>
     </ClInclude>
@@ -695,6 +692,9 @@
     </ClInclude>
     <ClInclude Include="Engine\UI\UIRadioButton.h">
       <Filter>Engine\UI2</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SceneRPG.h">
+      <Filter>Application\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

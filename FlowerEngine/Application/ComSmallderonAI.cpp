@@ -29,7 +29,7 @@ void ComSmallderonAI::Awake()
 
 	m_pCurrentState = m_vecState[eAniMon_Stand];
 
-	static bool bOnce = false;
+	//static bool bOnce = false;
 
 	//if (bOnce == false)
 	{
@@ -66,12 +66,16 @@ void ComSmallderonAI::Awake()
 
 		vecKeyFrameAnimSet.clear();
 
-		bOnce = true;
+		//bOnce = true;
 	}
 }
 
 void ComSmallderonAI::Update()
 {
+	// 공격 대상이 없으면 공격 대상을 찾는다.
+	if (m_pFollow->pTarget == NULL)
+		FindAttackTarget();
+
 	// 0.5초에 한번씩 Walk하는걸로 그렇지 않으면 Walk <-> Attack 왔다갔다 함
 	if (m_pFollow->pTarget && m_pFollow->IsFollowing)
 	{

@@ -30,8 +30,8 @@ public:
 	// 방어를 합니다.
 	void Defence(int dmg);
 	
-	// 죽음을 검사합니다.
-	bool CheckDeath();
+	// 죽었는지 여부를 반환합니다.
+	bool IsDeath();
 
 	// 시간에 따라 HP가 회복됩니다.
 	void HpRecovery();

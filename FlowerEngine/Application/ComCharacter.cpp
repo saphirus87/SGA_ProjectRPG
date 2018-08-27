@@ -87,7 +87,7 @@ void ComCharacter::Defence(int dmg)
 	UpdateHPBar();
 }
 
-bool ComCharacter::CheckDeath()
+bool ComCharacter::IsDeath()
 {
 	if (Status.HP <= 0)
 		return true;

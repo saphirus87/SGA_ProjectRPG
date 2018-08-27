@@ -1,32 +1,35 @@
 #pragma once
 #include "stdafx.h"
 
-// 연습장
-class SceneGrid : public Scene
+// WOW 모델을 사용한 롤 플레잉 게임씬
+class SceneRPG : public Scene
 {
 public:
-	SceneGrid(CString szName);
-	~SceneGrid();
+	SceneRPG(CString szName);
+	~SceneRPG();
 
 	// Scene을(를) 통해 상속됨
 	virtual void Init() override;
 
+	// 게임이 끝났는지 여부
+	bool IsGameEnd;
+
 private:
-	// 1. 맵을 생성합니다.
+	// 1. UI 생성
+	void CreateUI();
+	// 2. 맵을 생성합니다.
 	void CreateMap();
-	// 2. 맵 오브젝트들을 생성합니다.
+	// 3. 맵 오브젝트들을 생성합니다.
 	void CreateMapObject();
-	// 3. 캐릭터를 생성합니다.
+	// 4. 캐릭터를 생성합니다.
 	void CreateHuman();
 	void CreateUndead();
 	void CreateTroll();
-	// 4. 몬스터를 생성합니다.
+	// 5. 몬스터를 생성합니다.
 	void CreateMonster();
-	// 5. 테스트 객체들을 생성합니다.
+	
+	// 6. 테스트 객체들을 생성합니다.
 	void CreateTest();
-
-	// 6. Test : UI 생성
-	void CreateUI();
 
 private:
 	FactoryGameObject factory;

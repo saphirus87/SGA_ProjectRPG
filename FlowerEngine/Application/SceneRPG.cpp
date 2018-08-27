@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "SceneGrid.h"
+#include "SceneRPG.h"
 #include "../Application/ComTestCubeControl.h"
 #include "../Application/ComHuman01.h"
 #include "../Application/ComChrEquipment.h"
@@ -11,15 +11,15 @@
 #include "../Application/ComEquipment.h"
 #include "../Application/ComFollowTarget.h"
 
-SceneGrid::SceneGrid(CString szName) : Scene(szName)
+SceneRPG::SceneRPG(CString szName) : Scene(szName)
 {
 }
 
-SceneGrid::~SceneGrid()
+SceneRPG::~SceneRPG()
 {
 }
 
-void SceneGrid::Init()
+void SceneRPG::Init()
 {
 	CreateUI();
 	CreateMap();
@@ -32,14 +32,14 @@ void SceneGrid::Init()
 	//CreateTest();
 }
 
-void SceneGrid::CreateMap()
+void SceneRPG::CreateMap()
 {
 	// Obj Map 테스트
 	GameObject* pObjMap = factory.CreateObjMap("ObjMap", "./Resources/obj/Map/TestMap/", "tempMap2.obj");
 	//GameObject* pObjMap = factory.CreateObjMap("ObjMap", "./Resources/obj/Map/TestMap/", "Terrain.obj");
 }
 
-void SceneGrid::CreateMapObject()
+void SceneRPG::CreateMapObject()
 {
 	// 휴먼 장비들
 	// 아이템 정보를 통하여 맵에 게임오브젝트(어깨 방어구) 생성
@@ -78,7 +78,7 @@ void SceneGrid::CreateMapObject()
 	factory.CreateEquipmentToMap(pWeaponR, Vector3(3, 10, -8), Vector3(-255, 15, -249));
 }
 
-void SceneGrid::CreateHuman()
+void SceneRPG::CreateHuman()
 {
 	GameObject* pGOHuman = factory.CreateCharacter("human_01", "Resources/character/human_01/", "human_01.X", Vector3(-260, 10.7184200, -260), new ComHuman01("ComCharacter"));
 
@@ -86,12 +86,12 @@ void SceneGrid::CreateHuman()
 	Camera::GetInstance()->SetTarget(&pGOHuman->transform->GetPosition());
 }
 
-void SceneGrid::CreateUndead()
+void SceneRPG::CreateUndead()
 {
 	GameObject* pGOUndead = factory.CreateCharacter("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(-260, 10.3810062, -261), new ComUndead01("ComCharacter"));
 }
 
-void SceneGrid::CreateTroll()
+void SceneRPG::CreateTroll()
 {
 	GameObject* pGOTroll = factory.CreateCharacter("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(-260, 10.0443125, -262), new ComTroll01("ComCharacter"));
 	
@@ -117,7 +117,7 @@ void SceneGrid::CreateTroll()
 	pEquipment->Equip(pWeaponR);
 }
 
-void SceneGrid::CreateMonster()
+void SceneRPG::CreateMonster()
 {
 	StatusInfo monStatus;
 	monStatus.HP = 50;
@@ -144,7 +144,7 @@ void SceneGrid::CreateMonster()
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"), monStatus);
 }
 
-void SceneGrid::CreateTest()
+void SceneRPG::CreateTest()
 {
 	GameObject* pGOGrid = factory.CreateGrid("Grid");
 
@@ -216,7 +216,7 @@ void SceneGrid::CreateTest()
 
 }
 
-void SceneGrid::CreateUI()
+void SceneRPG::CreateUI()
 {
 	GameObject* pUIBar = factory.CreateUIDialog("testUI", 20.0f, 20.0f);
 	ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");

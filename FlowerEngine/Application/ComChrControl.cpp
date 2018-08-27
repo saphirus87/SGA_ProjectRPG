@@ -152,7 +152,7 @@ void ComChrControl::LookatTarget()
 void ComChrControl::CheckAttackTargetDeath()
 {
 	// 공격 상대가 죽었으면
-	if (pAttackTarget && pAttackTarget->CheckDeath() == true)
+	if (pAttackTarget && pAttackTarget->IsDeath() == true)
 	{
 		if (pAttackTarget->gameObject->Tag == eTag_Chracter)
 			pAttackTarget->gameObject->SetActive(false);
@@ -196,6 +196,23 @@ void ComChrControl::MoveToPoint()
 
 			// 속도벡터 곱하는 방법
 			gameObject->transform->Translate(vDir);
+		}
+	}
+}
+
+void ComChrControl::FindAttackTarget()
+{
+	list<GameObject*> listGO = GameObject::FindAll(eTag_Chracter);
+
+	for (auto & chr : listGO)
+	{
+		ComCharacter* comChr = (ComCharacter*)chr->GetComponent("ComCharacter");
+
+		if (comChr->IsDeath() == false)
+		{
+			pAttackTarget = comChr;
+			m_pFollow->pTarget = comChr->gameObject;
+			break;
 		}
 	}
 }
