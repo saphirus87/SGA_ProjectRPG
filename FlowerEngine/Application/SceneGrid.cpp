@@ -45,6 +45,16 @@ void SceneGrid::CreateMapObject()
 	EquipmentShoulder* pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
 	pShoulder->Set(10, 10, 10, 10, eChrType_Human);
 	GameObject* pGOShoulder = factory.CreateEquipmentToMap(pShoulder, Vector3(3, 10, -8), Vector3(-260, 15, -255));
+
+	EquipmentHelmet* pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X");
+	pHelmet->Set(10, 10, 10, 10, eChrType_Human);
+	GameObject* pGOHelmet = factory.CreateEquipmentToMap(pHelmet, Vector3(3, 10, -8), Vector3(-260, 15, -253));
+
+	EquipmentShield* pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X");
+	GameObject* pGOShield = factory.CreateEquipmentToMap(pShield, Vector3(3, 10, -8), Vector3(-260, 15, -251));
+
+	EquipmentWeapon* pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
+	GameObject* pGOWeapon = factory.CreateEquipmentToMap(pWeaponR, Vector3(3, 10, -8), Vector3(-260, 15, -249));
 }
 
 void SceneGrid::CreateHuman()
@@ -53,21 +63,6 @@ void SceneGrid::CreateHuman()
 
 	// 이 게임 오브젝트는 장비 장착 가능
 	ComChrEquipment* pEquipment = (ComChrEquipment*)pGOHuman->GetComponent("ComChrEquipment");
-
-	// 장비 장착
-	EquipmentHelmet* pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X");
-	pHelmet->Set(10, 10, 10, 10, eChrType_Human);
-	pEquipment->Equip(pHelmet);
-
-	EquipmentShield* pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X");
-	pEquipment->Equip(pShield);
-
-	EquipmentWeapon* pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
-	pEquipment->Equip(pWeaponR);
-
-	EquipmentWeapon* pWeaponL = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
-	pWeaponL->Type = eItem_WeaponL;
-	pEquipment->Equip(pWeaponL);
 
 	// 카메라
 	Camera::GetInstance()->SetTarget(&pGOHuman->transform->GetPosition());
@@ -127,11 +122,11 @@ void SceneGrid::CreateTroll()
 void SceneGrid::CreateMonster()
 {
 	// 몬스터 생성 (smallderon_orange)
-	GameObject* pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-250, 15, -250),
+	GameObject* pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-240, 15, -240),
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("undead_01"));
-	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-253, 15, -253),
+	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-243, 15, -243),
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"));
-	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-256, 15, -256),
+	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-246, 15, -246),
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("troll_01"));
 }
 
