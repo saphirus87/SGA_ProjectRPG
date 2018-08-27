@@ -16,7 +16,8 @@ ComChrControl::ComChrControl(CString szName)
 	m_pFollow(NULL),
 	IsMoveToPoint(false),
 	vMoveToPoint(0, 0, 0),
-	pAttackTarget(NULL)
+	pAttackTarget(NULL),
+	IsGroud(false)
 {
 }
 
@@ -50,6 +51,9 @@ void ComChrControl::Awake()
 
 	m_pCurrentState = m_vecState[eAni_Stand];
 	Stand();
+
+	m_pMap->UpdateIndexBufferQuadTree();
+	GetHeight();
 }
 
 void ComChrControl::Update()
@@ -119,6 +123,7 @@ void ComChrControl::GetHeight()
 	{
 		pos.y = fHeight;
 		gameObject->transform->SetPosition(pos);
+		IsGroud = true;
 	}
 }
 

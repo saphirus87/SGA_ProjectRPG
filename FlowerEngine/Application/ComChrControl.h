@@ -66,4 +66,6 @@ protected:
 	Vector3 vMoveToPoint;
 	// 특정 좌표로 이동 여부
 	bool IsMoveToPoint;
+	// 초기 캐릭터 셋팅시 땅 위에 있는지 여부
+	bool IsGroud;
 };

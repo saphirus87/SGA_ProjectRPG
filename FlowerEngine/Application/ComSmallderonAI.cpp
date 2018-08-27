@@ -88,6 +88,9 @@ void ComSmallderonAI::Update()
 		Stand();
 
 	CheckAttackTargetDeath();
+
+	if (IsGroud == false)
+		GetHeight();
 }
 
 void ComSmallderonAI::Render()

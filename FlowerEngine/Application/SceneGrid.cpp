@@ -80,7 +80,7 @@ void SceneGrid::CreateMapObject()
 
 void SceneGrid::CreateHuman()
 {
-	GameObject* pGOHuman = factory.CreateCharacter("human_01", "Resources/character/human_01/", "human_01.X", Vector3(-260, 15, -260), new ComHuman01("ComCharacter"));
+	GameObject* pGOHuman = factory.CreateCharacter("human_01", "Resources/character/human_01/", "human_01.X", Vector3(-260, 10.7184200, -260), new ComHuman01("ComCharacter"));
 
 	// 카메라
 	Camera::GetInstance()->SetTarget(&pGOHuman->transform->GetPosition());
@@ -88,12 +88,12 @@ void SceneGrid::CreateHuman()
 
 void SceneGrid::CreateUndead()
 {
-	GameObject* pGOUndead = factory.CreateCharacter("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(-260, 15, -261), new ComUndead01("ComCharacter"));
+	GameObject* pGOUndead = factory.CreateCharacter("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(-260, 10.3810062, -261), new ComUndead01("ComCharacter"));
 }
 
 void SceneGrid::CreateTroll()
 {
-	GameObject* pGOTroll = factory.CreateCharacter("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(-260, 15, -262), new ComTroll01("ComCharacter"));
+	GameObject* pGOTroll = factory.CreateCharacter("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(-260, 10.0443125, -262), new ComTroll01("ComCharacter"));
 	
 	// 이 게임 오브젝트는 장비 장착 가능
 	ComChrEquipment* pEquipment = (ComChrEquipment*)pGOTroll->GetComponent("ComChrEquipment");
@@ -124,21 +124,21 @@ void SceneGrid::CreateMonster()
 	monStatus.ATK_PHY = 5;
 
 	// 몬스터 생성 (smallderon_orange)
-	GameObject* pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-240, 15, -240),
+	GameObject* pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-243, 7.7184200, -240),
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("undead_01"), monStatus);
-	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-243, 15, -243),
+	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-243, 10.7184200, -243),
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"), monStatus);
-	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-246, 15, -246),
+	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-246, 9.7184200, -246),
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("troll_01"), monStatus);
 
 	monStatus.HP = 30;
 	monStatus.ATK_PHY = 6;
 
-	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-220, 15, -220),
+	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-220, 10.7184200, -220),
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"), monStatus);
-	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-223, 15, -223),
+	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-223, 10.7184200, -223),
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"), monStatus);
-	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-226, 15, -226),
+	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-226, 10.7184200, -226),
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"), monStatus);
 }
 
