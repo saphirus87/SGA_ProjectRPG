@@ -19,7 +19,6 @@ ComCharacter::ComCharacter(CString szName) :
 
 ComCharacter::~ComCharacter()
 {
-	SAFE_DELETE(m_pTimerHPRec);
 }
 
 void ComCharacter::Awake()

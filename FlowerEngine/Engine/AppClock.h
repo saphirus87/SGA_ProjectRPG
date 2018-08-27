@@ -5,8 +5,8 @@ class IObserver;
 
 typedef std::deque <double> QDouble;
 typedef std::deque <double>::const_iterator QDIter;
-typedef std::vector <IObserver*> VObserver;
-typedef std::vector <IObserver*>::iterator VObIter;
+typedef std::list <IObserver*> VObserver;
+typedef std::list <IObserver*>::iterator VObIter;
 
 class CClock
 {

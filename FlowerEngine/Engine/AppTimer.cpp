@@ -14,7 +14,6 @@ CTimer::CTimer(CClock* clock)
 
 CTimer::~CTimer(void)
 {
-	Clock->RemoveObserver(this);
 }
 
 void CTimer::Notify()

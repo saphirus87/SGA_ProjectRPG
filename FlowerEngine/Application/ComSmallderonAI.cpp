@@ -16,7 +16,6 @@ ComSmallderonAI::ComSmallderonAI(CString szName)
 
 ComSmallderonAI::~ComSmallderonAI()
 {
-	SAFE_DELETE(m_pTimerAttack);
 }
 
 void ComSmallderonAI::Awake()

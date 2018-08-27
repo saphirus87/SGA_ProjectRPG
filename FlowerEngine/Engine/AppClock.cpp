@@ -14,6 +14,11 @@ CClock::~CClock(void)
 {
 	delete pTimeSource;
 	pTimeSource = NULL;
+
+	for (auto & timer : Observers)
+		SAFE_DELETE(timer);
+
+	Observers.clear();
 }
 
 void CClock::Delete()
@@ -120,9 +125,17 @@ void CClock::AddObserver(IObserver* pObserver)
 
 void CClock::RemoveObserver(IObserver* pObserver)
 {
-	Observers.clear();
-	// pObserver를 모두 삭제합니다.
-	/*Observers.erase(
+	/*VObIter iter;
+	for (iter = Observers.begin(); iter != Observers.end(); ++iter)
+	{
+		if (*iter == pObserver)
+		{
+			SAFE_DELETE(*iter);
+			iter = Observers.erase(iter);
+		}
+	}*/
+		
+	Observers.erase(
 		std::remove(Observers.begin(), Observers.end(), pObserver), 
-		Observers.end());*/
+		Observers.end());
 }
