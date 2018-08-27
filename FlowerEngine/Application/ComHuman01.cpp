@@ -32,7 +32,7 @@ void ComHuman01::Awake()
 
 		uiDialog->AddButton(eUI_SkillBtn1_Human, 
 			"Resources/ui/human_skill_1.png", 
-			"Resources/ui/human_skill_1.png", 
+			"Resources/ui/human_skill_1_over.png", 
 			"Resources/ui/human_skill_1.png");
 
 		UIButton* btnSkill = uiDialog->GetButton(eUI_SkillBtn1_Human);
@@ -40,7 +40,7 @@ void ComHuman01::Awake()
 
 		uiDialog->AddButton(eUI_SkillBtn2_Human,
 			"Resources/ui/human_skill_2.png",
-			"Resources/ui/human_skill_2.png",
+			"Resources/ui/human_skill_2_over.png",
 			"Resources/ui/human_skill_2.png");
 
 		btnSkill = uiDialog->GetButton(eUI_SkillBtn2_Human);
@@ -48,7 +48,7 @@ void ComHuman01::Awake()
 
 		uiDialog->AddButton(eUI_SkillBtn3_Human,
 			"Resources/ui/human_skill_3.png",
-			"Resources/ui/human_skill_3.png",
+			"Resources/ui/human_skill_3_over.png",
 			"Resources/ui/human_skill_3.png");
 
 		btnSkill = uiDialog->GetButton(eUI_SkillBtn3_Human);
