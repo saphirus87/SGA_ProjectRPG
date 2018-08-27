@@ -11,7 +11,8 @@
 #include "../Application/ComEquipment.h"
 #include "../Application/ComFollowTarget.h"
 
-SceneRPG::SceneRPG(CString szName) : Scene(szName)
+SceneRPG::SceneRPG(CString szName) : Scene(szName), 
+	IsGameEnd(false)
 {
 }
 

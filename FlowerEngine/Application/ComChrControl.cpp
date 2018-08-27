@@ -8,6 +8,7 @@
 #include "ChrStateWalk.h"
 #include "ChrStateAttack.h"
 #include "ComCharacter.h"
+#include "SceneRPG.h"
 
 ComChrControl::ComChrControl(CString szName)
 	:Component(szName), m_pMap(NULL),
@@ -202,8 +203,16 @@ void ComChrControl::MoveToPoint()
 
 void ComChrControl::FindAttackTarget()
 {
+	SceneRPG* sceneRPG = (SceneRPG*)SceneManager::GetInstance()->GetCurrentScene();
+	
+	// 게임 종료라면
+	if (sceneRPG->IsGameEnd)
+		return;
+
 	list<GameObject*> listGO = GameObject::FindAll(eTag_Chracter);
 
+	size_t chrCnt = listGO.size();
+	int deathCnt = 0;
 	for (auto & chr : listGO)
 	{
 		ComCharacter* comChr = (ComCharacter*)chr->GetComponent("ComCharacter");
@@ -214,7 +223,13 @@ void ComChrControl::FindAttackTarget()
 			m_pFollow->pTarget = comChr->gameObject;
 			break;
 		}
+		else
+			++deathCnt;
 	}
+
+	// 캐릭터 모두 사망시 게임 종료
+	if (deathCnt >= chrCnt)
+		sceneRPG->IsGameEnd = true;
 }
 
 void ComChrControl::SetState(int iIndex)

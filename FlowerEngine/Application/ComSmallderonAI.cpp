@@ -9,12 +9,14 @@
 #include "ComCharacter.h"
 
 ComSmallderonAI::ComSmallderonAI(CString szName)
-	:ComChrControl(szName)
+	:ComChrControl(szName),
+	m_pTimerAttack(NULL)
 {
 }
 
 ComSmallderonAI::~ComSmallderonAI()
 {
+	SAFE_DELETE(m_pTimerAttack);
 }
 
 void ComSmallderonAI::Awake()
@@ -28,6 +30,9 @@ void ComSmallderonAI::Awake()
 	m_vecState[eAniMon_Stand] = new ChrStateStand(this);
 
 	m_pCurrentState = m_vecState[eAniMon_Stand];
+
+	m_pTimerAttack = new CTimer(CClock::GetInstance());
+	m_pTimerAttack->Start();
 
 	//static bool bOnce = false;
 
@@ -72,11 +77,10 @@ void ComSmallderonAI::Awake()
 
 void ComSmallderonAI::Update()
 {
-	// 공격 대상이 없으면 공격 대상을 찾는다.
-	if (m_pFollow->pTarget == NULL)
+	// 몬스터가 죽지 않았고 공격 대상이 없으면 공격 대상을 찾는다.
+	if (m_pCharacter->IsDeath() == false && m_pFollow->pTarget == NULL)
 		FindAttackTarget();
 
-	// 0.5초에 한번씩 Walk하는걸로 그렇지 않으면 Walk <-> Attack 왔다갔다 함
 	if (m_pFollow->pTarget && m_pFollow->IsFollowing)
 	{
 		m_pFollow->fMoveSpeed = m_pCharacter->Status.MOVE_SPEED;
@@ -85,8 +89,13 @@ void ComSmallderonAI::Update()
 	}
 	else if (m_pFollow->pTarget && m_pFollow->AbleAttack)
 	{
-		// 공격 가능 거리
-		Attack1();
+		// 1초에 한번씩 Walk하는걸로 그렇지 않으면 Walk <-> Attack 왔다갔다 함
+		if (m_pTimerAttack->GetTime() >= 1.0f)
+		{
+			m_pTimerAttack->Reset();
+			// 공격 가능 거리
+			Attack1();
+		}
 	}
 	else
 		Stand();

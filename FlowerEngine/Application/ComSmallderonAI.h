@@ -28,5 +28,6 @@ public:
 
 private:
 	ComCharacter* m_pCharacter;
+	CTimer* m_pTimerAttack;
 };
 
