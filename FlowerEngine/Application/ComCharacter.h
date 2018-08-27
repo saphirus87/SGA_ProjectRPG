@@ -33,6 +33,9 @@ public:
 	// 죽음을 검사합니다.
 	bool CheckDeath();
 
+	// 시간에 따라 HP가 회복됩니다.
+	void HpRecovery();
+
 	// UI 관련
 	void UpdateHPBar();
 
@@ -57,4 +60,6 @@ public:
 
 protected:
 	UIProgressBar* m_pHPBar;
+	
+	CTimer* m_pTimerHPRec;
 };

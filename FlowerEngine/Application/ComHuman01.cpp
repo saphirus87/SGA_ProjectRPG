@@ -75,7 +75,7 @@ void ComHuman01::SetAniEvent()
 
 void ComHuman01::Update()
 {
-	
+	ComCharacter::Update();
 }
 
 void ComHuman01::Render()

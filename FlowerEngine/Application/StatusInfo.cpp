@@ -3,8 +3,8 @@
 
 
 StatusInfo::StatusInfo() :
-HP(10),
-HPMAX(10),
+HP(50),
+HPMAX(50),
 MP(10),
 MPMAX(10),
 ATK_PHY(3),

@@ -70,6 +70,7 @@ void ComUndead01::SetAniEvent()
 
 void ComUndead01::Update()
 {
+	ComCharacter::Update();
 }
 
 void ComUndead01::Render()

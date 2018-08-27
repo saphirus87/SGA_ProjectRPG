@@ -12,10 +12,10 @@ ComCharacter::ComCharacter(CString szName) :
 	m_pChrEquipment(NULL),
 	m_pAttackTarget(NULL),
 	m_pHPBar(NULL),
+	m_pTimerHPRec(NULL),
 	m_eType(eChrType_COUNT) // 초기화 값으로 사용
 {
 }
-
 
 ComCharacter::~ComCharacter()
 {
@@ -28,7 +28,7 @@ void ComCharacter::Awake()
 
 void ComCharacter::Update()
 {
-	
+	HpRecovery();
 }
 
 void ComCharacter::Render()
@@ -95,6 +95,20 @@ bool ComCharacter::CheckDeath()
 	return false;
 }
 
+void ComCharacter::HpRecovery()
+{
+	if (m_pTimerHPRec->GetTime() >= 1.0f)
+	{
+		// 캐릭터가 죽어있지 않을 때와 HP가 꽉차있지 않으면
+		if (Status.HP > 0 && Status.HP < Status.HPMAX)
+		{
+			Status.HP += 1;
+			UpdateHPBar();
+		}
+		m_pTimerHPRec->Reset();
+	}
+}
+
 void ComCharacter::UpdateHPBar()
 {
 	if (m_pHPBar)
@@ -111,6 +125,8 @@ void ComCharacter::Init()
 	// CPP 다형성
 	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 	m_pChrEquipment = (ComChrEquipment*)gameObject->GetComponent("ComChrEquipment");
+	m_pTimerHPRec = new CTimer(CClock::GetInstance());
+	m_pTimerHPRec->Start();
 }
 
 HRESULT AttackHandler::HandleCallback(UINT Track, LPVOID pCallbackData)

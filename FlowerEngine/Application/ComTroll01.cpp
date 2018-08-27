@@ -32,6 +32,7 @@ void ComTroll01::Awake()
 
 void ComTroll01::Update()
 {
+	ComCharacter::Update();
 }
 
 void ComTroll01::Render()
