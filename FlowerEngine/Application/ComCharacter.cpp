@@ -3,6 +3,8 @@
 #include "ComChrControl.h"
 #include "ComFollowTarget.h"
 #include "ComChrEquipment.h"
+#include "ItemInfo.h"
+#include "ComEquipment.h"
 
 ComCharacter::ComCharacter(CString szName) : 
 	Component(szName),
@@ -30,6 +32,24 @@ void ComCharacter::Update()
 
 void ComCharacter::Render()
 {
+}
+
+void ComCharacter::OnTriggerEnter(ComCollider & collider)
+{
+	if (collider.gameObject->Tag == eTag_Item)
+	{
+		if (m_pChrEquipment != NULL)
+		{
+			ComEquipment* pEquip = (ComEquipment*)collider.gameObject->GetComponent("ComEquipment");
+
+			// ÀåÂø Å¸ÀÔÀÌ °°À¸¸é ÀåÂø
+			if (pEquip->pItemInfo && m_eType == pEquip->pItemInfo->ChrType)
+			{
+				m_pChrEquipment->Equip(pEquip->pItemInfo);
+				collider.gameObject->SetActive(false);
+			}
+		}
+	}
 }
 
 void ComCharacter::AttackTarget(ComCharacter * pTarget)

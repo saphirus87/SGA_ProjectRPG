@@ -293,12 +293,13 @@ GameObject * FactoryGameObject::CreateEquipment(ItemInfo * pItemInfo, Vector3 & 
 
 	ComEquipment* pEquipment = new ComEquipment("ComEquipment");
 	pEquipment->IsMirrored = IsMirrored;
+	pEquipment->pItemInfo = pItemInfo;
+	++pItemInfo->Reference;
 
 	// 이미 존재하는 게임 오브젝트라면 복제(Clone) 하여 메쉬를 공유하여 사용합니다.
 	if (pGOExist == NULL)
 	{
 		pEquipment->Load(pItemInfo->FolderPath, pItemInfo->XFileName);
-		pEquipment->pItemInfo = pItemInfo;
 	}
 	else
 		pEquipment->Clone((ComEquipment*)pGOExist->GetComponent("ComEquipment"));
@@ -358,6 +359,7 @@ GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPa
 	pGOMonX->Tag = eTag_Monster;
 	
 	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
+	pComTarget->fRange = 10.0f;
 	pGOMonX->AddComponent(pComTarget);
 	// 타겟을 따라다닌다.
 	pComTarget->pTarget = pTarget;

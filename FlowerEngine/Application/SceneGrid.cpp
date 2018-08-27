@@ -41,28 +41,46 @@ void SceneGrid::CreateMap()
 
 void SceneGrid::CreateMapObject()
 {
+	// 휴먼 장비들
 	// 아이템 정보를 통하여 맵에 게임오브젝트(어깨 방어구) 생성
 	EquipmentShoulder* pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
 	pShoulder->Set(10, 10, 1, 1, eChrType_Human);
-	GameObject* pGOShoulder = factory.CreateEquipmentToMap(pShoulder, Vector3(3, 10, -8), Vector3(-260, 15, -255));
+	factory.CreateEquipmentToMap(pShoulder, Vector3(3, 10, -8), Vector3(-260, 15, -255));
 
 	EquipmentHelmet* pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X");
 	pHelmet->Set(10, 10, 1, 1, eChrType_Human);
-	GameObject* pGOHelmet = factory.CreateEquipmentToMap(pHelmet, Vector3(3, 10, -8), Vector3(-260, 15, -253));
+	factory.CreateEquipmentToMap(pHelmet, Vector3(3, 10, -8), Vector3(-260, 15, -253));
 
 	EquipmentShield* pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X");
-	GameObject* pGOShield = factory.CreateEquipmentToMap(pShield, Vector3(3, 10, -8), Vector3(-260, 15, -251));
+	pShield->Set(10, eChrType_Human);
+	factory.CreateEquipmentToMap(pShield, Vector3(3, 10, -8), Vector3(-260, 15, -251));
 
 	EquipmentWeapon* pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
-	GameObject* pGOWeapon = factory.CreateEquipmentToMap(pWeaponR, Vector3(3, 10, -8), Vector3(-260, 15, -249));
+	pWeaponR->Set(10, 20, eChrType_Human);
+	factory.CreateEquipmentToMap(pWeaponR, Vector3(3, 10, -8), Vector3(-260, 15, -249));
+
+	// 언데드 장비들
+	pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
+	pShoulder->Set(10, 10, 1, 1, eChrType_Undead);
+	pShoulder->TextureName = "Resources/character/Equipment/shoulder_robe_b_03blue.png";
+	factory.CreateEquipmentToMap(pShoulder, Vector3(3, 10, -8), Vector3(-255, 15, -255));
+
+	pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X");
+	pHelmet->Set(10, 10, 1, 1, eChrType_Undead);
+	factory.CreateEquipmentToMap(pHelmet, Vector3(3, 10, -8), Vector3(-255, 15, -253));
+
+	pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X");
+	pShield->Set(10, eChrType_Undead);
+	factory.CreateEquipmentToMap(pShield, Vector3(3, 10, -8), Vector3(-255, 15, -251));
+
+	pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
+	pWeaponR->Set(10, 20, eChrType_Undead);
+	factory.CreateEquipmentToMap(pWeaponR, Vector3(3, 10, -8), Vector3(-255, 15, -249));
 }
 
 void SceneGrid::CreateHuman()
 {
 	GameObject* pGOHuman = factory.CreateCharacter("human_01", "Resources/character/human_01/", "human_01.X", Vector3(-260, 15, -260), new ComHuman01("ComCharacter"));
-
-	// 이 게임 오브젝트는 장비 장착 가능
-	ComChrEquipment* pEquipment = (ComChrEquipment*)pGOHuman->GetComponent("ComChrEquipment");
 
 	// 카메라
 	Camera::GetInstance()->SetTarget(&pGOHuman->transform->GetPosition());
@@ -71,26 +89,6 @@ void SceneGrid::CreateHuman()
 void SceneGrid::CreateUndead()
 {
 	GameObject* pGOUndead = factory.CreateCharacter("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(-260, 15, -261), new ComUndead01("ComCharacter"));
-
-	// 이 게임 오브젝트는 장비 장착 가능
-	ComChrEquipment* pEquipment = (ComChrEquipment*)pGOUndead->GetComponent("ComChrEquipment");
-
-	EquipmentShoulder* pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X");
-	pShoulder->Set(10, 10, 1, 1, eChrType_Undead);
-	pShoulder->TextureName = "Resources/character/Equipment/shoulder_robe_b_03blue.png";
-	pEquipment->Equip(pShoulder);
-
-	EquipmentHelmet* pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X");
-	pHelmet->Set(10, 10, 1, 1, eChrType_Undead);
-	pEquipment->Equip(pHelmet);
-
-	EquipmentShield* pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X");
-	pShield->Set(10, eChrType_Undead);
-	pEquipment->Equip(pShield);
-
-	EquipmentWeapon* pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X");
-	pWeaponR->Set(10, 20, eChrType_Undead);
-	pEquipment->Equip(pWeaponR);
 }
 
 void SceneGrid::CreateTroll()
@@ -122,7 +120,7 @@ void SceneGrid::CreateTroll()
 void SceneGrid::CreateMonster()
 {
 	StatusInfo monStatus;
-	monStatus.HP = 20;
+	monStatus.HP = 30;
 	monStatus.ATK_PHY = 5;
 
 	// 몬스터 생성 (smallderon_orange)

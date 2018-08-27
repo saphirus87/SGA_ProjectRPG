@@ -22,7 +22,13 @@ ComEquipment::ComEquipment(CString szName) :
 
 ComEquipment::~ComEquipment()
 {
-	SAFE_DELETE(pItemInfo);
+	if (pItemInfo->Reference <= 1)
+	{
+		SAFE_DELETE(pItemInfo);
+	}
+	else
+		--pItemInfo->Reference;
+
 	SAFE_RELEASE(m_pMesh);
 	m_vecMtrl.clear();
 }

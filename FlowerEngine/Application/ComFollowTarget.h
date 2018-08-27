@@ -16,6 +16,8 @@ public:
 	Vector3 vDir;
 	// 속도
 	float fMoveSpeed;
+	// 이 범위 안에 있으면 따라감
+	float fRange;
 	// 따라가야 할 타겟
 	GameObject * pTarget;
 	// 타겟을 따라가는 중 여부

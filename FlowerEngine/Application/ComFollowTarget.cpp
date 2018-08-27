@@ -9,7 +9,8 @@ ComFollowTarget::ComFollowTarget(CString szName) :
 	m_fLerp(0.003f),
 	IsFollowing(false),
 	AbleAttack(false), 
-	pTarget(NULL)
+	pTarget(NULL),
+	fRange(20.0f)
 {
 }
 
@@ -42,7 +43,7 @@ void ComFollowTarget::Update()
 
 	if (fDistance < 1.0f)
 		AbleAttack = true;
-	else if (fDistance < 20.0f)
+	else if (fDistance < fRange)
 	{
 		IsFollowing = true;
 		// 플레이어를 바라보는 방향 벡터

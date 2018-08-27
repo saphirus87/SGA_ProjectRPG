@@ -42,6 +42,8 @@ public:
 	CString XFileName;
 	// 변경된 텍스쳐 이름, 텍스쳐 이름이 없으면 원본 사용
 	CString TextureName;
+
+	int Reference;
 };
 
 // 어깨 방어구 장비 아이템

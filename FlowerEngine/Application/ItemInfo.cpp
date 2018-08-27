@@ -4,7 +4,8 @@
 
 ItemInfo::ItemInfo() :
 	ID(0),
-	Type(eItem_None)
+	Type(eItem_None),
+	Reference(0)
 {
 	FolderPath = "Resources/character/Equipment/";
 }

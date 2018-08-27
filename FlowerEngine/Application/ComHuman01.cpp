@@ -1,8 +1,5 @@
 #include "stdafx.h"
 #include "ComHuman01.h"
-#include "ComChrEquipment.h"
-#include "ComEquipment.h"
-#include "ItemInfo.h"
 #include "ComCharacter.h"
 #include "ComChrControl.h"
 
@@ -94,18 +91,5 @@ void ComHuman01::UpdateHPBar()
 			Status.HP = 0;
 
 		m_pHPBar->SetCurValue(Status.HP);
-	}
-}
-
-void ComHuman01::OnTriggerEnter(ComCollider & collider)
-{
-	if (collider.gameObject->Tag == eTag_Item)
-	{
-		if (m_pChrEquipment != NULL)
-		{
-			ComEquipment* pEquip = (ComEquipment*)collider.gameObject->GetComponent("ComEquipment");
-			m_pChrEquipment->Equip(pEquip->pItemInfo);
-			collider.gameObject->SetActive(false);
-		}
 	}
 }

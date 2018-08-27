@@ -21,6 +21,9 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
+	// 다른 콜라이더에 충돌했을 때 호출되는 함수
+	virtual void OnTriggerEnter(ComCollider &collider) override;
+
 	// 타겟을 공격합니다.
 	void AttackTarget(ComCharacter* pTarget);
 	
