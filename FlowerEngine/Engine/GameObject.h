@@ -44,7 +44,7 @@ public:
 	void AddChild(GameObject* pGO);
 
 	// 구성요소를 반환합니다.
-	Component* GetComponent(const CString& familyID);
+	Component* GetComponent(const CString& szName);
 	
 	// 모든 구성요소를 파괴합니다.
 	void CleanUpComponent();

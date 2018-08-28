@@ -205,9 +205,9 @@ GameObject * GameObject::Find(CString szName)
 		return NULL;
 }
 
-Component* GameObject::GetComponent(const CString & familyID)
+Component* GameObject::GetComponent(const CString & szName)
 {
-	IterGOCom iter = m_Components.find(familyID);
+	IterGOCom iter = m_Components.find(szName);
 	if (iter != m_Components.end())
 		return iter->second;
 	else
