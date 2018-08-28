@@ -22,12 +22,15 @@ void ComHuman::Awake()
 	{
 		ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");
 
+		// 체력바
 		uiDialog->AddProgressBar(eUI_HPBar_Human, "Resources/ui/6.tga");
 
 		m_pHPBar = uiDialog->GetProgressBar(eUI_HPBar_Human);
 		m_pHPBar->SetPosition(Vector3(100, 0, 0));
 		m_pHPBar->SetMaxValue(Status.HPMAX);
+		UpdateHPBar();
 
+		// 스킬 버튼
 		float fScreenHeight = DXUTGetWindowHeight();
 
 		uiDialog->AddButton(eUI_SkillBtn1_Human, 
@@ -53,8 +56,6 @@ void ComHuman::Awake()
 
 		btnSkill = uiDialog->GetButton(eUI_SkillBtn3_Human);
 		btnSkill->SetPosition(Vector3(250, fScreenHeight - 150.0f, 0.0f));
-
-		UpdateHPBar();
 	}
 	SetAniEvent();
 }
