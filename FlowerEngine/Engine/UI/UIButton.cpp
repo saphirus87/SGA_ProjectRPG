@@ -2,9 +2,12 @@
 #include "UIButton.h"
 
 
-UIButton::UIButton()
+UIButton::UIButton(UIButtonDelegate* pDelegate, CString buttonName)
 	: UIControl(),
-	  m_ButtonState(eButtonState_Normal)
+	m_ButtonState(eButtonState_Normal),
+	m_pDelegate(pDelegate),
+	m_szButtonName(buttonName),
+	m_PressTimer(0.0f)
 {
 }
 
@@ -19,33 +22,40 @@ void UIButton::Awake()
 
 void UIButton::Update()
 {
-	RECT rc;
-	Vector3 pos = m_pParent->gameObject->transform->GetPosition() + m_Position;
-	SetRect(&rc, pos.x, pos.y, pos.x + m_Size.x, pos.y + m_Size.y);
-
-	POINT mousePos;
-	mousePos.x = Input::GetMousePosition().x;
-	mousePos.y = Input::GetMousePosition().y;
-
-	if (PtInRect(&rc, mousePos))
+	if (IsOnMouse())
 	{
 		if (Input::ButtonPress(VK_LBUTTON))
 		{
 			if (m_ButtonState == eButtonState_Mouseover)
 				m_ButtonState = eButtonState_Click;
+			else
+				m_PressTimer += Time::Get()->GetDeltaTime();
+
+			if (m_PressTimer > 1.0f && m_ButtonState != eButtonState_Press)
+			{
+				m_ButtonState = eButtonState_Press;
+				if (m_pDelegate != NULL) m_pDelegate->OnPress(this);
+			}
 		}
 		else
 		{
-			if (m_ButtonState == eButtonState_Click);	// 클릭시 실행할 부분 구현 필요
-			
+			if (m_ButtonState == eButtonState_Click)
+				if (m_pDelegate != NULL) m_pDelegate->OnClick(this);
+
 			m_ButtonState = eButtonState_Mouseover;
+			m_PressTimer = 0.0f;
 		}
 	}
 	else
 	{
 		if (Input::ButtonPress(VK_LBUTTON));
-		else m_ButtonState = eButtonState_Normal;
+		else
+		{
+			m_ButtonState = eButtonState_Normal;
+			m_PressTimer = 0.0f;
+		}
 	}
+
 }
 
 void UIButton::Render()
@@ -53,8 +63,12 @@ void UIButton::Render()
 	RECT rc;
 	SetRect(&rc, 0, 0, m_Size.x, m_Size.y);
 	Vector3 pos = m_pParent->gameObject->transform->GetPosition() + m_Position;
+	D3DXMATRIXA16 matS, matT;
+	D3DXMatrixScaling(&matS, m_Scale.x, m_Scale.y, m_Scale.z);
+	D3DXMatrixTranslation(&matT, pos.x, pos.y, pos.z);
 
-	m_pSprite->Draw(m_Textures[m_ButtonState], &rc, &m_Pivot, &pos, m_Color);
+	m_pSprite->SetTransform(&(matS * matT));
+	m_pSprite->Draw(m_Textures[m_ButtonState], &rc, &m_Pivot, &Vector3(0, 0, 0), m_Color);
 }
 
 void UIButton::SetTexture(CString szNormalImg, CString szMouseoverImg, CString szClickImg)

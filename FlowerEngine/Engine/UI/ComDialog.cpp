@@ -2,7 +2,8 @@
 #include "ComDialog.h"
 
 ComDialog::ComDialog(CString szName)
-	: Component(szName), m_pSprite(NULL)
+	: Component(szName), m_pSprite(NULL), m_ToggleKey(0),
+	m_IsVisible(false), m_Moveable(false), m_IsDrag(false)
 {
 }
 
@@ -21,6 +22,29 @@ void ComDialog::Awake()
 
 void ComDialog::Update()
 {
+	if (m_ToggleKey != 0)
+	{
+		if (Input::KeyDown(m_ToggleKey))
+			m_IsVisible = !m_IsVisible;
+	}
+
+	if (!m_IsVisible) return;
+
+	if (m_Moveable)
+	{
+		if (IsOnMouse())
+		{
+			if (Input::ButtonDown(VK_LBUTTON)) m_IsDrag = true;
+			else if ((m_IsDrag && Input::ButtonUp(VK_LBUTTON)) || Input::ButtonDoubleClick(VK_LBUTTON)) m_IsDrag = false;
+			else if (m_IsDrag) gameObject->transform->SetPosition(gameObject->transform->GetPosition() + Input::m_pMouse->GetDeltaPosition());
+		}
+		else
+		{
+			m_IsDrag = false;
+		}
+	}
+
+
 	for (auto p : m_Controls)
 	{
 		p.second->Update();
@@ -29,6 +53,8 @@ void ComDialog::Update()
 
 void ComDialog::Render()
 {
+	if (!m_IsVisible) return;
+
 	if (m_pSprite)
 	{
 		m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);
@@ -40,6 +66,16 @@ void ComDialog::Render()
 
 		m_pSprite->End();
 	}
+}
+
+bool ComDialog::IsOnMouse()
+{
+	for (auto p : m_Controls)
+	{
+		if (p.second->IsOnMouse()) return true;
+	}
+
+	return false;
 }
 
 void ComDialog::AddImage(UINT id, CString szFileName)
@@ -62,9 +98,9 @@ void ComDialog::AddText(UINT id, LPD3DXFONT pFont, CString szText)
 	m_Controls.insert(make_pair(id, text));
 }
 
-void ComDialog::AddButton(UINT id, CString szNormalImg, CString szMouseoverImg, CString szClickImg)
+void ComDialog::AddButton(UINT id, CString szNormalImg, CString szMouseoverImg, CString szClickImg, UIButtonDelegate* pDelegate, CString szButtonName)
 {
-	UIButton* button = new UIButton;
+	UIButton* button = new UIButton(pDelegate, szButtonName);
 	button->SetSprite(m_pSprite);
 	button->SetParent(this);
 	button->SetTexture(szNormalImg, szMouseoverImg, szClickImg);
@@ -78,7 +114,7 @@ void ComDialog::AddProgressBar(UINT id, CString szFileName)
 	bar->SetSprite(m_pSprite);
 	bar->SetParent(this);
 	bar->SetTexture(szFileName);
-	
+
 	bar->SetMaxValue(100);
 	bar->SetCurValue(100);
 	bar->SetMaxColor(D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f));

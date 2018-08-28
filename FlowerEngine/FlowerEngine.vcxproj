@@ -398,6 +398,7 @@
     <ClInclude Include="Application\ComChrEquipment.h" />
     <ClInclude Include="Application\ComFollowTarget.h" />
     <ClInclude Include="Application\ComHuman.h" />
+    <ClInclude Include="Application\ComInventory.h" />
     <ClInclude Include="Application\ComMissile.h" />
     <ClInclude Include="Application\ComObjMap.h" />
     <ClInclude Include="Application\ComEquipment.h" />
@@ -431,6 +432,7 @@
     <ClCompile Include="Application\ComChrEquipment.cpp" />
     <ClCompile Include="Application\ComFollowTarget.cpp" />
     <ClCompile Include="Application\ComHuman.cpp" />
+    <ClCompile Include="Application\ComInventory.cpp" />
     <ClCompile Include="Application\ComMissile.cpp" />
     <ClCompile Include="Application\ComObjMap.cpp" />
     <ClCompile Include="Application\ComEquipment.cpp" />
