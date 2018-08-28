@@ -3,7 +3,7 @@
 #include "../Application/ComTestCubeControl.h"
 #include "../Application/ComHuman.h"
 #include "../Application/ComChrEquipment.h"
-#include "../Application/ComUndead01.h"
+#include "../Application/ComUndead.h"
 #include "../Application/ComChrControl.h"
 #include "../Application/ComTroll01.h"
 #include "../Application/ComSmallderonAI.h"
@@ -89,7 +89,7 @@ void SceneRPG::CreateHuman()
 
 void SceneRPG::CreateUndead()
 {
-	GameObject* pGOUndead = factory.CreateCharacter("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(-260, 10.3810062, -261), new ComUndead01("ComCharacter"));
+	GameObject* pGOUndead = factory.CreateCharacter("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(-260, 10.3810062, -261), new ComUndead("ComCharacter"));
 }
 
 void SceneRPG::CreateTroll()

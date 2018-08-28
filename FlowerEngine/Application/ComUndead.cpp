@@ -1,20 +1,20 @@
 #include "stdafx.h"
-#include "ComUndead01.h"
+#include "ComUndead.h"
 #include "ChrStateStand.h"
 #include "ChrStateWalk.h"
 #include "ComCharacter.h"
 
-ComUndead01::ComUndead01(CString szName)
+ComUndead::ComUndead(CString szName)
 	:ComCharacter(szName)
 {
 	m_eType = eChrType_Undead;
 }
 
-ComUndead01::~ComUndead01()
+ComUndead::~ComUndead()
 {
 }
 
-void ComUndead01::Awake()
+void ComUndead::Awake()
 {
 	Init();
 	
@@ -31,7 +31,7 @@ void ComUndead01::Awake()
 	SetAniEvent();
 }
 
-void ComUndead01::SetAniEvent()
+void ComUndead::SetAniEvent()
 {
 	// 애니메이션 키프레임셋
 	vector<LPD3DXKEYFRAMEDANIMATIONSET> vecKeyFrameAnimSet;
@@ -68,11 +68,11 @@ void ComUndead01::SetAniEvent()
 	vecKeyFrameAnimSet.clear();
 }
 
-void ComUndead01::Update()
+void ComUndead::Update()
 {
 	ComCharacter::Update();
 }
 
-void ComUndead01::Render()
+void ComUndead::Render()
 {
 }

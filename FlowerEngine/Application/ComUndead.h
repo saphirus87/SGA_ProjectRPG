@@ -4,11 +4,11 @@
 
 class ChrState;
 
-class ComUndead01 : public ComCharacter
+class ComUndead : public ComCharacter
 {
 public:
-	ComUndead01(CString szName);
-	~ComUndead01();
+	ComUndead(CString szName);
+	~ComUndead();
 
 	// Component을(를) 통해 상속됨
 	virtual void Awake() override;
