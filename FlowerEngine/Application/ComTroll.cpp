@@ -2,6 +2,7 @@
 #include "ComTroll.h"
 #include "ComObjMap.h"
 #include "ComCharacter.h"
+#include "ComChrControl.h"
 
 ComTroll::ComTroll(CString szName)
 	:ComCharacter(szName)
@@ -25,6 +26,34 @@ void ComTroll::Awake()
 	m_pHPBar = uiDialog->GetProgressBar(eUI_HPBar_Troll);
 	m_pHPBar->SetPosition(Vector3(800, 0, 0));
 	m_pHPBar->SetMaxValue(Status.HPMAX);
+
+	float fScreenHeight = DXUTGetWindowHeight();
+	float fOffsetX = 700;
+
+	uiDialog->AddButton(eUI_SkillBtn1_Troll,
+		"Resources/ui/troll_skill_1.png",
+		"Resources/ui/troll_skill_1_over.png",
+		"Resources/ui/troll_skill_1.png", this, "troll_skill_1");
+
+	UIButton* btnSkill = uiDialog->GetButton(eUI_SkillBtn1_Troll);
+	btnSkill->SetPosition(Vector3(fOffsetX + 50, fScreenHeight - 150.0f, 0.0f));
+
+	uiDialog->AddButton(eUI_SkillBtn2_Troll,
+		"Resources/ui/troll_skill_2.png",
+		"Resources/ui/troll_skill_2_over.png",
+		"Resources/ui/troll_skill_2.png", this, "troll_skill_2");
+
+	btnSkill = uiDialog->GetButton(eUI_SkillBtn2_Troll);
+	btnSkill->SetPosition(Vector3(fOffsetX + 150, fScreenHeight - 150.0f, 0.0f));
+
+	uiDialog->AddButton(eUI_SkillBtn3_Troll,
+		"Resources/ui/troll_skill_3.png",
+		"Resources/ui/troll_skill_3_over.png",
+		"Resources/ui/troll_skill_3.png", this, "troll_skill_3");
+
+	btnSkill = uiDialog->GetButton(eUI_SkillBtn3_Troll);
+	btnSkill->SetPosition(Vector3(fOffsetX + 250, fScreenHeight - 150.0f, 0.0f));
+
 	UpdateHPBar();
 
 	SetAniEvent();
@@ -74,4 +103,24 @@ void ComTroll::SetAniEvent()
 	m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Stand], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
 
 	vecKeyFrameAnimSet.clear();
+}
+
+void ComTroll::OnClick(UIButton * pSender)
+{
+	if (pSender->GetButtonName() == "troll_skill_1")
+	{
+		((ComChrControl*)gameObject->GetComponent("ComChrControl"))->Attack1();
+	}
+	else if (pSender->GetButtonName() == "troll_skill_2")
+	{
+
+	}
+	else if (pSender->GetButtonName() == "troll_skill_3")
+	{
+
+	}
+}
+
+void ComTroll::OnPress(UIButton * pSender)
+{
 }

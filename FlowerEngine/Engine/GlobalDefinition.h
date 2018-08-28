@@ -172,6 +172,9 @@ enum eUI
 	eUI_SkillBtn1_Undead,
 	eUI_SkillBtn2_Undead,
 	eUI_SkillBtn3_Undead,
+	eUI_SkillBtn1_Troll,
+	eUI_SkillBtn2_Troll,
+	eUI_SkillBtn3_Troll,
 };
 
 struct KEYBOARD_STATE
