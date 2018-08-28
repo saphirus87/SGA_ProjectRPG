@@ -17,17 +17,45 @@ ComUndead::~ComUndead()
 void ComUndead::Awake()
 {
 	Init();
-	
-	GameObject* pUIBar = GameObject::Find("testUI");
-	ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");
+	{
+		GameObject* pUIBar = GameObject::Find("testUI");
+		ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");
 
-	uiDialog->AddProgressBar(eUI_HPBar_Undead, "Resources/ui/6.tga");
+		uiDialog->AddProgressBar(eUI_HPBar_Undead, "Resources/ui/6.tga");
 
-	m_pHPBar = uiDialog->GetProgressBar(eUI_HPBar_Undead);
-	m_pHPBar->SetPosition(Vector3(450, 0, 0));
-	m_pHPBar->SetMaxValue(Status.HPMAX);
-	UpdateHPBar();
+		m_pHPBar = uiDialog->GetProgressBar(eUI_HPBar_Undead);
+		m_pHPBar->SetPosition(Vector3(450, 0, 0));
+		m_pHPBar->SetMaxValue(Status.HPMAX);
+		UpdateHPBar();
 
+		// 스킬 버튼
+		float fScreenHeight = DXUTGetWindowHeight();
+		float fOffsetX = 350;
+
+		uiDialog->AddButton(eUI_SkillBtn1_Undead,
+			"Resources/ui/undead_skill_1.png",
+			"Resources/ui/undead_skill_1_over.png",
+			"Resources/ui/undead_skill_1.png", NULL, "undead_skill_1");
+
+		UIButton* btnSkill = uiDialog->GetButton(eUI_SkillBtn1_Undead);
+		btnSkill->SetPosition(Vector3(fOffsetX + 50, fScreenHeight - 150.0f, 0.0f));
+
+		uiDialog->AddButton(eUI_SkillBtn2_Undead,
+			"Resources/ui/undead_skill_2.png",
+			"Resources/ui/undead_skill_2_over.png",
+			"Resources/ui/undead_skill_2.png", NULL, "undead_skill_2");
+
+		btnSkill = uiDialog->GetButton(eUI_SkillBtn2_Undead);
+		btnSkill->SetPosition(Vector3(fOffsetX + 150, fScreenHeight - 150.0f, 0.0f));
+
+		uiDialog->AddButton(eUI_SkillBtn3_Undead,
+			"Resources/ui/undead_skill_3.png",
+			"Resources/ui/undead_skill_3_over.png",
+			"Resources/ui/undead_skill_3.png", NULL, "undead_skill_3");
+
+		btnSkill = uiDialog->GetButton(eUI_SkillBtn3_Undead);
+		btnSkill->SetPosition(Vector3(fOffsetX + 250, fScreenHeight - 150.0f, 0.0f));
+	}
 	SetAniEvent();
 }
 
@@ -52,7 +80,7 @@ void ComUndead::SetAniEvent()
 	// eAni_Attack_1 때릴때 애니 프레임 Number : 12
 	// 비례식 12 : 29 = x : 4800(SrcTime)
 	float x = fSrcTime * 12 / 29;
-	
+
 	// 키 이벤트 콜백
 	D3DXKEY_CALLBACK attackKey;
 	attackKey.pCallbackData = this;
