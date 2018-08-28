@@ -10,6 +10,7 @@
 #include "../Application/ItemInfo.h"
 #include "../Application/ComEquipment.h"
 #include "../Application/ComFollowTarget.h"
+#include "../Application/ComInventory.h"
 
 SceneRPG::SceneRPG(CString szName) : Scene(szName), 
 	IsGameEnd(false)
@@ -221,6 +222,7 @@ void SceneRPG::CreateUI()
 {
 	GameObject* pUIBar = factory.CreateUIDialog("testUI", 20.0f, 20.0f);
 	ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");
+	uiDialog->SetIsVisible(true);
 
 	//((ComDialog*)uiDialog)->AddButton(1, "Resources/ui/btn-med-up.png", "Resources/ui/btn-med-over.png", "Resources/ui/btn-med-down.png");
 	//((ComDialog*)uiDialog)->AddText(3, Assets::GetFont(Assets::FontType_NORMAL), "ÇÑ±Ûtest123!@#");
@@ -242,4 +244,21 @@ void SceneRPG::CreateUI()
 	uiDialog->GetRadioButton(100)->AddRadioButton("radio2");
 	uiDialog->GetRadioButton(100)->AddRadioButton("radio3");
 	uiDialog->GetRadioButton(100)->AddRadioButton("radio4");*/
+
+	GameObject* pUIInven = factory.CreateUIDialog("InvenUI", 120.0f, 120.0f);
+	ComInventory* pComInven = new ComInventory("ComInven");
+	pComInven->SetInvenSize(20);
+	pUIInven->AddComponent(pComInven);
+	uiDialog = (ComDialog*)pUIInven->GetComponent("ComDialog");
+
+	uiDialog->SetToggleKey('I');
+	uiDialog->SetMoveable(true);
+	uiDialog->AddImage(1, "Resources/ui/ui-bag-5x4.png");
+	uiDialog->AddImage(0, "Resources/ui/inv_misc_bag_08.png");
+	uiDialog->AddButton(2, "Resources/ui/ui-panel-minimizebutton-up.png", "Resources/ui/ui-panel-minimizebutton-up.png",
+		"Resources/ui/ui-panel-minimizebutton-down.png", pComInven, "InvenClose");
+	//uiDialog->GetButton(2)->SetScale(Vector3(2.5f, 2.5f, 1.0f));
+	uiDialog->GetButton(2)->SetPosition(Vector3(230, 8, 0));
+	uiDialog->GetImage(0)->SetScale(Vector3(0.5f, 0.5f, 1.0f));
+	uiDialog->GetImage(0)->SetPosition(Vector3(72.0f, 7.0f, 0.0f));
 }

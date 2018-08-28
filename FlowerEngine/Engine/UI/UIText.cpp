@@ -3,8 +3,8 @@
 
 UIText::UIText()
 	: UIControl(),
-	  m_pFont(NULL),
-	  m_drawTextFormat(DT_CENTER | DT_VCENTER)
+	m_pFont(NULL),
+	m_drawTextFormat(DT_CENTER | DT_VCENTER)
 {
 }
 

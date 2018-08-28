@@ -3,8 +3,8 @@
 
 UIProgressBar::UIProgressBar()
 	: UIControl(),
-	  m_CurValue(0),
-	  m_MaxValue(0)
+	m_CurValue(0),
+	m_MaxValue(0)
 {
 }
 
@@ -35,8 +35,12 @@ void UIProgressBar::Render()
 		RECT rc;
 		SetRect(&rc, 0, 0, m_Size.x * gaugePercent, m_Size.y);
 		Vector3 pos = m_pParent->gameObject->transform->GetPosition() + m_Position;
-		
-		m_pSprite->Draw(pTexture, &rc, &m_Pivot, &pos, gaugePercent * m_MaxColor + (1 - gaugePercent) * m_MinColor);
+		D3DXMATRIXA16 matS, matT;
+		D3DXMatrixScaling(&matS, m_Scale.x, m_Scale.y, m_Scale.z);
+		D3DXMatrixTranslation(&matT, pos.x, pos.y, pos.z);
+
+		m_pSprite->SetTransform(&(matS * matT));
+		m_pSprite->Draw(pTexture, &rc, &m_Pivot, &Vector3(0, 0, 0), gaugePercent * m_MaxColor + (1 - gaugePercent) * m_MinColor);
 	}
 }
 
