@@ -406,7 +406,7 @@
     <ClInclude Include="Application\ComTerrain.h" />
     <ClInclude Include="Application\ComTestCubeControl.h" />
     <ClInclude Include="Application\ComTestPicking.h" />
-    <ClInclude Include="Application\ComTroll01.h" />
+    <ClInclude Include="Application\ComTroll.h" />
     <ClInclude Include="Application\ComUIPanelDialog.h" />
     <ClInclude Include="Application\ComUndead.h" />
     <ClInclude Include="Application\IChrState.h" />
@@ -439,7 +439,7 @@
     <ClCompile Include="Application\ComTerrain.cpp" />
     <ClCompile Include="Application\ComTestCubeControl.cpp" />
     <ClCompile Include="Application\ComTestPicking.cpp" />
-    <ClCompile Include="Application\ComTroll01.cpp" />
+    <ClCompile Include="Application\ComTroll.cpp" />
     <ClCompile Include="Application\ComUIPanelDialog.cpp" />
     <ClCompile Include="Application\ComUndead.cpp" />
     <ClCompile Include="Application\ItemInfo.cpp" />

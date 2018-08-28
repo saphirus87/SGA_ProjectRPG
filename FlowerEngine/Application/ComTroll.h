@@ -2,11 +2,11 @@
 #include "stdafx.h"
 #include "ComCharacter.h"
 
-class ComTroll01 : public ComCharacter
+class ComTroll : public ComCharacter
 {
 public:
-	ComTroll01(CString szName);
-	~ComTroll01();
+	ComTroll(CString szName);
+	~ComTroll();
 
 	// Component을(를) 통해 상속됨
 	virtual void Awake() override;

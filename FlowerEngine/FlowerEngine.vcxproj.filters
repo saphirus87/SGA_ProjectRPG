@@ -369,9 +369,6 @@
     <ClCompile Include="Application\ComObjMap.cpp">
       <Filter>Application\Components\ComMap</Filter>
     </ClCompile>
-    <ClCompile Include="Application\ComTroll01.cpp">
-      <Filter>Application\Components\ComCharactor</Filter>
-    </ClCompile>
     <ClCompile Include="Application\ComChrControl.cpp">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClCompile>
@@ -444,6 +441,9 @@
       <Filter>Application\Components\ComCharactor</Filter>
     </ClCompile>
     <ClCompile Include="Application\ComUndead.cpp">
+      <Filter>Application\Components\ComCharactor</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ComTroll.cpp">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClCompile>
   </ItemGroup>
@@ -616,9 +616,6 @@
     <ClInclude Include="Application\ComObjMap.h">
       <Filter>Application\Components\ComMap</Filter>
     </ClInclude>
-    <ClInclude Include="Application\ComTroll01.h">
-      <Filter>Application\Components\ComCharactor</Filter>
-    </ClInclude>
     <ClInclude Include="Application\ComChrControl.h">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClInclude>
@@ -694,6 +691,9 @@
       <Filter>Application\Components\ComCharactor</Filter>
     </ClInclude>
     <ClInclude Include="Application\ComUndead.h">
+      <Filter>Application\Components\ComCharactor</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComTroll.h">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClInclude>
   </ItemGroup>

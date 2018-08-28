@@ -1,19 +1,19 @@
 #include "stdafx.h"
-#include "ComTroll01.h"
+#include "ComTroll.h"
 #include "ComObjMap.h"
 #include "ComCharacter.h"
 
-ComTroll01::ComTroll01(CString szName)
+ComTroll::ComTroll(CString szName)
 	:ComCharacter(szName)
 {
 	m_eType = eChrType_Troll;
 }
 
-ComTroll01::~ComTroll01()
+ComTroll::~ComTroll()
 {
 }
 
-void ComTroll01::Awake()
+void ComTroll::Awake()
 {
 	Init();
 
@@ -30,16 +30,16 @@ void ComTroll01::Awake()
 	SetAniEvent();
 }
 
-void ComTroll01::Update()
+void ComTroll::Update()
 {
 	ComCharacter::Update();
 }
 
-void ComTroll01::Render()
+void ComTroll::Render()
 {
 }
 
-void ComTroll01::SetAniEvent()
+void ComTroll::SetAniEvent()
 {
 	// 애니메이션 키프레임셋
 	vector<LPD3DXKEYFRAMEDANIMATIONSET> vecKeyFrameAnimSet;

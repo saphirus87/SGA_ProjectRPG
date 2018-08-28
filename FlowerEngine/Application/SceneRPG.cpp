@@ -5,7 +5,7 @@
 #include "../Application/ComChrEquipment.h"
 #include "../Application/ComUndead.h"
 #include "../Application/ComChrControl.h"
-#include "../Application/ComTroll01.h"
+#include "../Application/ComTroll.h"
 #include "../Application/ComSmallderonAI.h"
 #include "../Application/ItemInfo.h"
 #include "../Application/ComEquipment.h"
@@ -94,7 +94,7 @@ void SceneRPG::CreateUndead()
 
 void SceneRPG::CreateTroll()
 {
-	GameObject* pGOTroll = factory.CreateCharacter("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(-260, 10.0443125, -262), new ComTroll01("ComCharacter"));
+	GameObject* pGOTroll = factory.CreateCharacter("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(-260, 10.0443125, -262), new ComTroll("ComCharacter"));
 	
 	// 이 게임 오브젝트는 장비 장착 가능
 	ComChrEquipment* pEquipment = (ComChrEquipment*)pGOTroll->GetComponent("ComChrEquipment");
