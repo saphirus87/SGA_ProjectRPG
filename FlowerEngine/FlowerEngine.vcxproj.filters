@@ -369,9 +369,6 @@
     <ClCompile Include="Application\ComObjMap.cpp">
       <Filter>Application\Components\ComMap</Filter>
     </ClCompile>
-    <ClCompile Include="Application\ComHuman01.cpp">
-      <Filter>Application\Components\ComCharactor</Filter>
-    </ClCompile>
     <ClCompile Include="Application\ComUndead01.cpp">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClCompile>
@@ -445,6 +442,9 @@
     </ClCompile>
     <ClCompile Include="Application\SceneRPG.cpp">
       <Filter>Application\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ComHuman.cpp">
+      <Filter>Application\Components\ComCharactor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -616,9 +616,6 @@
     <ClInclude Include="Application\ComObjMap.h">
       <Filter>Application\Components\ComMap</Filter>
     </ClInclude>
-    <ClInclude Include="Application\ComHuman01.h">
-      <Filter>Application\Components\ComCharactor</Filter>
-    </ClInclude>
     <ClInclude Include="Application\ComUndead01.h">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClInclude>
@@ -695,6 +692,9 @@
     </ClInclude>
     <ClInclude Include="Application\SceneRPG.h">
       <Filter>Application\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComHuman.h">
+      <Filter>Application\Components\ComCharactor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

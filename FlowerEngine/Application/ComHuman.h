@@ -12,11 +12,11 @@ E-Mail	: hkn10004@naver.com
 
 class ComChrEquipment;
 
-class ComHuman01 : public ComCharacter
+class ComHuman : public ComCharacter
 {
 public:
-	ComHuman01(CString szName);
-	~ComHuman01();
+	ComHuman(CString szName);
+	~ComHuman();
 
 	// Component을(를) 통해 상속됨
 	virtual void Awake() override;

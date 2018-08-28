@@ -1,19 +1,19 @@
 #include "stdafx.h"
-#include "ComHuman01.h"
+#include "ComHuman.h"
 #include "ComCharacter.h"
 #include "ComChrControl.h"
 
-ComHuman01::ComHuman01(CString szName) : 
+ComHuman::ComHuman(CString szName) : 
 	ComCharacter(szName)
 {
 	m_eType = eChrType_Human;
 }
 
-ComHuman01::~ComHuman01()
+ComHuman::~ComHuman()
 {
 }
 
-void ComHuman01::Awake()
+void ComHuman::Awake()
 {
 	Init();
 
@@ -59,7 +59,7 @@ void ComHuman01::Awake()
 	SetAniEvent();
 }
 
-void ComHuman01::SetAniEvent()
+void ComHuman::SetAniEvent()
 {
 	if (m_pAnimation == NULL)
 		return;
@@ -99,11 +99,11 @@ void ComHuman01::SetAniEvent()
 	vecKeyFrameAnimSet.clear();
 }
 
-void ComHuman01::Update()
+void ComHuman::Update()
 {
 	ComCharacter::Update();
 }
 
-void ComHuman01::Render()
+void ComHuman::Render()
 {
 }

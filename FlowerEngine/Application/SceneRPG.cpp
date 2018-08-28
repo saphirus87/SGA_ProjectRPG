@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SceneRPG.h"
 #include "../Application/ComTestCubeControl.h"
-#include "../Application/ComHuman01.h"
+#include "../Application/ComHuman.h"
 #include "../Application/ComChrEquipment.h"
 #include "../Application/ComUndead01.h"
 #include "../Application/ComChrControl.h"
@@ -81,7 +81,7 @@ void SceneRPG::CreateMapObject()
 
 void SceneRPG::CreateHuman()
 {
-	GameObject* pGOHuman = factory.CreateCharacter("human_01", "Resources/character/human_01/", "human_01.X", Vector3(-260, 10.7184200, -260), new ComHuman01("ComCharacter"));
+	GameObject* pGOHuman = factory.CreateCharacter("human_01", "Resources/character/human_01/", "human_01.X", Vector3(-260, 10.7184200, -260), new ComHuman("ComCharacter"));
 
 	// Ä«¸Þ¶ó
 	Camera::GetInstance()->SetTarget(&pGOHuman->transform->GetPosition());
