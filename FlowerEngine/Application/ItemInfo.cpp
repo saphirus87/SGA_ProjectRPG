@@ -14,7 +14,17 @@ ItemInfo::~ItemInfo()
 {
 }
 
-EquipmentShoulder::EquipmentShoulder(CString szName, CString szXFileName) :
+ItemPotion::ItemPotion() : 
+	Count(1), CountMax(100)
+{
+}
+
+ItemPotion::~ItemPotion()
+{
+}
+
+
+EquipmentShoulder::EquipmentShoulder(CString szName, CString szXFileName, CString szIconName) :
 	HP(0),
 	MP(0),
 	DEF_PHY(0),
@@ -24,6 +34,7 @@ EquipmentShoulder::EquipmentShoulder(CString szName, CString szXFileName) :
 	ChrType = eChrType_Human;
 	Name = szName;
 	XFileName = szXFileName;
+	IconName = szIconName;
 }
 
 EquipmentShoulder::~EquipmentShoulder()
@@ -40,7 +51,7 @@ void EquipmentShoulder::Set(int iHP, int iMP, int iDEF_PHY, int iDEF_MGR, eChrTy
 	DEF_MGR = iDEF_MGR;
 }
 
-EquipmentHelmet::EquipmentHelmet(CString szName, CString szXFileName) :
+EquipmentHelmet::EquipmentHelmet(CString szName, CString szXFileName, CString szIconName) :
 	HP(0),
 	MP(0),
 	DEF_PHY(0),
@@ -50,6 +61,7 @@ EquipmentHelmet::EquipmentHelmet(CString szName, CString szXFileName) :
 	ChrType = eChrType_Human;
 	Name = szName;
 	XFileName = szXFileName;
+	IconName = szIconName;
 }
 
 EquipmentHelmet::~EquipmentHelmet()
@@ -66,13 +78,14 @@ void EquipmentHelmet::Set(int iHP, int iMP, int iDEF_PHY, int iDEF_MGR, eChrType
 	DEF_MGR = iDEF_MGR;
 }
 
-EquipmentShield::EquipmentShield(CString szName, CString szXFileName) :
+EquipmentShield::EquipmentShield(CString szName, CString szXFileName, CString szIconName) :
 	BLOCK_PER(10.0f)
 {
 	Type = eItem_Shield;
 	ChrType = eChrType_Human;
 	Name = szName;
 	XFileName = szXFileName;
+	IconName = szIconName;
 }
 
 EquipmentShield::~EquipmentShield()
@@ -86,7 +99,7 @@ void EquipmentShield::Set(int iBLOCK_PER, eChrType chrType)
 	BLOCK_PER = iBLOCK_PER;
 }
 
-EquipmentWeapon::EquipmentWeapon(CString szName, CString szXFileName) :
+EquipmentWeapon::EquipmentWeapon(CString szName, CString szXFileName, CString szIconName) :
 	ATK_MIN(3),
 	ATK_MAX(7)
 {
@@ -94,6 +107,7 @@ EquipmentWeapon::EquipmentWeapon(CString szName, CString szXFileName) :
 	ChrType = eChrType_Human;
 	Name = szName;
 	XFileName = szXFileName;
+	IconName = szIconName;
 }
 
 EquipmentWeapon::~EquipmentWeapon()

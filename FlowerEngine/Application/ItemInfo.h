@@ -51,11 +51,35 @@ public:
 	int Reference;
 };
 
+class ItemPotion : public ItemInfo
+{
+public:
+	ItemPotion();
+	~ItemPotion();
+
+	// 수량
+	UINT Count;			// 서버 DB에서 날라오는 값으로 설정
+	// 최대 수량
+	UINT CountMax;		// 파일에서 읽어서 설정
+};
+
+//class ItemQuest : public ItemInfo
+//{
+//public:
+//	ItemQuest();
+//	~ItemQuest();
+//
+//	// 수량
+//	UINT Count;
+//	// 최대 수량
+//	UINT CountMax;
+//};
+
 // 어깨 방어구 장비 아이템
 class EquipmentShoulder : public ItemInfo
 {
 public:
-	EquipmentShoulder(CString szName, CString szXFileName);
+	EquipmentShoulder(CString szName, CString szXFileName, CString szIconName);
 	~EquipmentShoulder();
 
 	void Set(int iHP, int iMP, int iDEF_PHY, int iDEF_MGR, eChrType chrType);
@@ -76,7 +100,7 @@ public:
 class EquipmentHelmet : public ItemInfo
 {
 public:
-	EquipmentHelmet(CString szName, CString szXFileName);
+	EquipmentHelmet(CString szName, CString szXFileName, CString szIconName);
 	~EquipmentHelmet();
 
 	void Set(int iHP, int iMP, int iDEF_PHY, int iDEF_MGR, eChrType chrType);
@@ -97,7 +121,7 @@ public:
 class EquipmentShield : public ItemInfo
 {
 public:
-	EquipmentShield(CString szName, CString szXFileName);
+	EquipmentShield(CString szName, CString szXFileName, CString szIconName);
 	~EquipmentShield();
 
 	void Set(int iBLOCK_PER, eChrType chrType);
@@ -111,7 +135,7 @@ public:
 class EquipmentWeapon : public ItemInfo
 {
 public:
-	EquipmentWeapon(CString szName, CString szXFileName);
+	EquipmentWeapon(CString szName, CString szXFileName, CString szIconName);
 	~EquipmentWeapon();
 
 	void Set(int iATK_MIN, int iATK_MAX, eChrType chrType);
