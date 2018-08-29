@@ -20,14 +20,28 @@ void ComInventory::Awake()
 	{
 		CString btnName;
 		btnName.Format(L"InvenSlot%d", i + 1);
-		uiDialog->AddButton(1001 + i, "Resources/ui/giftbox01.png", "Resources/ui/giftbox01.png", "Resources/ui/giftbox01.png", this, btnName);
+		uiDialog->AddButton(1001 + i, "None", "None", "None", this, btnName);
 		uiDialog->GetButton(1001 + i)->SetScale(Vector3(0.58f, 0.58f, 0.0f));
 		uiDialog->GetButton(1001 + i)->SetPosition(Vector3(81.5f + (float)(i % 4) * 41.5f, 51.5f + (float)(i / 4) * 41.0f, 0));
 	}
+
+	uiDialog->AddImage(2001, "None");
+	uiDialog->GetImage(2001)->SetScale(Vector3(0.58f, 0.58f, 0.0f));
+
+	for (int i = 0; i < m_InvenSize; ++i)
+	{
+		m_vecItem[i].first = "giftbox01";
+		m_vecItem[i].second = 1;
+	}
+
+	UpdateIcons();
 }
 
 void ComInventory::Update()
 {
+	Vector2 mousePos = Input::GetMousePosition();
+	ComDialog* uiDialog = (ComDialog*)gameObject->GetComponent("ComDialog");
+	uiDialog->GetImage(2001)->SetPosition(Vector3(mousePos.x - 16 - gameObject->transform->GetPosition().x, mousePos.y - 16 - gameObject->transform->GetPosition().y, 0));
 }
 
 void ComInventory::Render()
@@ -41,14 +55,42 @@ void ComInventory::OnClick(UIButton* pSender)
 		ComDialog* uiDialog = (ComDialog*)gameObject->GetComponent("ComDialog");
 		uiDialog->SetIsVisible(false);
 	}
+
+	if (m_PickedItem.first == "NoItem")
+	{
+
+	}
+	else
+	{
+		pair<CString, UINT> temp = m_PickedItem;
+
+		CString slotName;
+		for (int i = 0; i < m_InvenSize; i++)
+		{
+			slotName.Format(L"InvenSlot%d", i + 1);
+			if (pSender->GetButtonName() == slotName)
+			{
+				PickItem(i);
+				m_vecItem[i] = temp;
+				UpdateIcons();
+				break;
+			}
+		}
+	}
 }
 
 void ComInventory::OnPress(UIButton * pSender)
 {
-	if (pSender->GetButtonName() == "InvenSlot1")
+	CString slotName;
+	for (int i = 0; i < m_InvenSize; i++)
 	{
-		ComDialog* uiDialog = (ComDialog*)gameObject->GetComponent("ComDialog");
-		uiDialog->SetIsVisible(false);
+		slotName.Format(L"InvenSlot%d", i + 1);
+		if (pSender->GetButtonName() == slotName)
+		{
+			PickItem(i);
+			UpdateIcons();
+			break;
+		}
 	}
 }
 
@@ -101,7 +143,7 @@ pair<CString, UINT> ComInventory::DeleteItem(int InvenNum)
 	{
 		pair<CString, UINT> DeletedItem(m_vecItem[InvenNum]);
 		m_vecItem[InvenNum] = make_pair("NoItem", 0);
-		
+
 		return DeletedItem;
 	}
 
@@ -126,6 +168,31 @@ bool ComInventory::FindEmptySlot(int& StartIndex)
 	}
 
 	return false;
+}
+
+bool ComInventory::PickItem(int InvenNum)
+{
+	m_PickedItem = DeleteItem(InvenNum);
+
+	return true;
+}
+
+void ComInventory::UpdateIcons()
+{
+	ComDialog* uiDialog = (ComDialog*)gameObject->GetComponent("ComDialog");
+
+	for (int i = 0; i < m_vecItem.size(); i++)
+	{
+		if (m_vecItem[i].first == "NoItem")
+			uiDialog->GetButton(1001 + i)->SetTexture("None", "None", "None");
+		else if (m_vecItem[i].first == "giftbox01")
+			uiDialog->GetButton(1001 + i)->SetTexture("Resources/ui/giftbox01.png", "Resources/ui/giftbox01_over.png", "Resources/ui/giftbox01.png");
+	}
+
+	if (m_PickedItem.first == "NoItem")
+		uiDialog->GetImage(2001)->SetTexture("None");
+	else if (m_PickedItem.first == "giftbox01")
+		uiDialog->GetImage(2001)->SetTexture("Resources/ui/giftbox01.png");
 }
 
 bool ComInventory::SetInvenSize(UINT InvenSize)

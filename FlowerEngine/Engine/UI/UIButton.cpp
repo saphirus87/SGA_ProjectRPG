@@ -73,9 +73,16 @@ void UIButton::Render()
 
 void UIButton::SetTexture(CString szNormalImg, CString szMouseoverImg, CString szClickImg)
 {
-	m_Textures[eButtonState_Normal] = Assets::GetTexture(szNormalImg, &m_ImageInfo);
-	m_Textures[eButtonState_Mouseover] = Assets::GetTexture(szMouseoverImg, &m_ImageInfo);
-	m_Textures[eButtonState_Click] = Assets::GetTexture(szClickImg, &m_ImageInfo);
+	if (szNormalImg != "None") m_Textures[eButtonState_Normal] = Assets::GetTexture(szNormalImg, &m_ImageInfo);
+	else m_Textures[eButtonState_Normal] = NULL;
+
+	if (szMouseoverImg != "None") m_Textures[eButtonState_Mouseover] = Assets::GetTexture(szMouseoverImg, &m_ImageInfo);
+	else  m_Textures[eButtonState_Mouseover] = NULL;
+
+	if (szClickImg != "None") m_Textures[eButtonState_Click] = Assets::GetTexture(szClickImg, &m_ImageInfo);
+	else m_Textures[eButtonState_Click] = NULL;
+
+	m_Textures[eButtonState_Press] = m_Textures[eButtonState_Click];
 
 	m_Size.x = m_ImageInfo.Width;
 	m_Size.y = m_ImageInfo.Height;
