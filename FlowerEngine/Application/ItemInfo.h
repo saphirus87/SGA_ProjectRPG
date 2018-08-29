@@ -17,6 +17,9 @@ enum eItemType
 	eItem_Shield,
 	eItem_WeaponR,
 	eItem_WeaponL,
+	// 예제
+	eItem_Potion,	// 포션류
+	eItem_Quest,	// 퀘스트류 잡템
 	// 추가
 	eItem_COUNT
 };
@@ -42,6 +45,8 @@ public:
 	CString XFileName;
 	// 변경된 텍스쳐 이름, 텍스쳐 이름이 없으면 원본 사용
 	CString TextureName;
+	// 아이콘 이름
+	CString IconName;
 
 	int Reference;
 };

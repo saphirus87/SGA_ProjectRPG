@@ -10,7 +10,7 @@
 #include "../Application/ItemInfo.h"
 #include "../Application/ComEquipment.h"
 #include "../Application/ComFollowTarget.h"
-#include "../Application/ComInventory.h"
+#include "../Application/ComUIInventory.h"
 
 SceneRPG::SceneRPG(CString szName) : Scene(szName), 
 	IsGameEnd(false)
@@ -246,7 +246,7 @@ void SceneRPG::CreateUI()
 	uiDialog->GetRadioButton(100)->AddRadioButton("radio4");*/
 
 	GameObject* pUIInven = factory.CreateUIDialog("InvenUI", 120.0f, 120.0f);
-	ComInventory* pComInven = new ComInventory("ComInven");
+	ComUIInventory* pComInven = new ComUIInventory("ComUIInventory");
 	pComInven->SetInvenSize(20);
 	pUIInven->AddComponent(pComInven);
 	uiDialog = (ComDialog*)pUIInven->GetComponent("ComDialog");

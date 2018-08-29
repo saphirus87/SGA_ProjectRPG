@@ -78,9 +78,6 @@
     <Filter Include="Engine\UI2">
       <UniqueIdentifier>{be50b7c9-ecf4-49f9-a8d3-37d597ba3a2a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Components\ComInventory">
-      <UniqueIdentifier>{e8501778-243b-4979-98a7-beb82b9ee471}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -449,8 +446,8 @@
     <ClCompile Include="Application\ComTroll.cpp">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClCompile>
-    <ClCompile Include="Application\ComInventory.cpp">
-      <Filter>Application\Components\ComInventory</Filter>
+    <ClCompile Include="Application\ComUIInventory.cpp">
+      <Filter>Application\Components\ComUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -702,8 +699,8 @@
     <ClInclude Include="Application\ComTroll.h">
       <Filter>Application\Components\ComCharactor</Filter>
     </ClInclude>
-    <ClInclude Include="Application\ComInventory.h">
-      <Filter>Application\Components\ComInventory</Filter>
+    <ClInclude Include="Application\ComUIInventory.h">
+      <Filter>Application\Components\ComUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

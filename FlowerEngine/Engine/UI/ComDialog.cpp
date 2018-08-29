@@ -34,9 +34,17 @@ void ComDialog::Update()
 	{
 		if (IsOnMouse())
 		{
-			if (Input::ButtonDown(VK_LBUTTON)) m_IsDrag = true;
-			else if ((m_IsDrag && Input::ButtonUp(VK_LBUTTON)) || Input::ButtonDoubleClick(VK_LBUTTON)) m_IsDrag = false;
-			else if (m_IsDrag) gameObject->transform->SetPosition(gameObject->transform->GetPosition() + Input::m_pMouse->GetDeltaPosition());
+			if (Input::ButtonDown(VK_LBUTTON))
+				m_IsDrag = true;
+			else if ((m_IsDrag && Input::ButtonUp(VK_LBUTTON)) || Input::ButtonDoubleClick(VK_LBUTTON)) 
+				m_IsDrag = false;
+			else if (m_IsDrag)
+			{
+				Camera::GetInstance()->bUpdate = false;
+				gameObject->transform->SetPosition(gameObject->transform->GetPosition() + Input::m_pMouse->GetDeltaPosition());
+			}
+			else
+				Camera::GetInstance()->bUpdate = true;
 		}
 		else
 		{

@@ -3,11 +3,11 @@
 
 const UINT ItemMaxNum = 99;
 
-class ComInventory : public Component, public UIButtonDelegate
+class ComUIInventory : public Component, public UIButtonDelegate
 {
 public:
-	ComInventory(CString szName);
-	~ComInventory();
+	ComUIInventory(CString szName);
+	~ComUIInventory();
 
 	// Component을(를) 통해 상속됨
 	virtual void Awake() override;

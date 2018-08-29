@@ -1,16 +1,16 @@
 #include "stdafx.h"
-#include "ComInventory.h"
+#include "ComUIInventory.h"
 
-ComInventory::ComInventory(CString szName)
+ComUIInventory::ComUIInventory(CString szName)
 	: Component(szName), m_InvenSize(4)
 {
 }
 
-ComInventory::~ComInventory()
+ComUIInventory::~ComUIInventory()
 {
 }
 
-void ComInventory::Awake()
+void ComUIInventory::Awake()
 {
 	SetInvenSize(m_InvenSize);
 
@@ -37,18 +37,18 @@ void ComInventory::Awake()
 	UpdateIcons();
 }
 
-void ComInventory::Update()
+void ComUIInventory::Update()
 {
 	Vector2 mousePos = Input::GetMousePosition();
 	ComDialog* uiDialog = (ComDialog*)gameObject->GetComponent("ComDialog");
 	uiDialog->GetImage(2001)->SetPosition(Vector3(mousePos.x - 16 - gameObject->transform->GetPosition().x, mousePos.y - 16 - gameObject->transform->GetPosition().y, 0));
 }
 
-void ComInventory::Render()
+void ComUIInventory::Render()
 {
 }
 
-void ComInventory::OnClick(UIButton* pSender)
+void ComUIInventory::OnClick(UIButton* pSender)
 {
 	if (pSender->GetButtonName() == "InvenClose")
 	{
@@ -79,7 +79,7 @@ void ComInventory::OnClick(UIButton* pSender)
 	}
 }
 
-void ComInventory::OnPress(UIButton * pSender)
+void ComUIInventory::OnPress(UIButton * pSender)
 {
 	CString slotName;
 	for (int i = 0; i < m_InvenSize; i++)
@@ -94,7 +94,7 @@ void ComInventory::OnPress(UIButton * pSender)
 	}
 }
 
-bool ComInventory::AddItem(CString szItemName, UINT ItemNum)
+bool ComUIInventory::AddItem(CString szItemName, UINT ItemNum)
 {
 	int ItemIndex = 0;
 
@@ -137,7 +137,7 @@ bool ComInventory::AddItem(CString szItemName, UINT ItemNum)
 	return false;
 }
 
-pair<CString, UINT> ComInventory::DeleteItem(int InvenNum)
+pair<CString, UINT> ComUIInventory::DeleteItem(int InvenNum)
 {
 	if (InvenNum < m_vecItem.size())
 	{
@@ -150,7 +150,7 @@ pair<CString, UINT> ComInventory::DeleteItem(int InvenNum)
 	return make_pair("NoItem", 0);
 }
 
-bool ComInventory::FindItem(CString szItemName, int& StartIndex)
+bool ComUIInventory::FindItem(CString szItemName, int& StartIndex)
 {
 	for (; StartIndex < m_vecItem.size(); ++StartIndex)
 	{
@@ -160,7 +160,7 @@ bool ComInventory::FindItem(CString szItemName, int& StartIndex)
 	return false;
 }
 
-bool ComInventory::FindEmptySlot(int& StartIndex)
+bool ComUIInventory::FindEmptySlot(int& StartIndex)
 {
 	for (; StartIndex < m_vecItem.size(); ++StartIndex)
 	{
@@ -170,14 +170,14 @@ bool ComInventory::FindEmptySlot(int& StartIndex)
 	return false;
 }
 
-bool ComInventory::PickItem(int InvenNum)
+bool ComUIInventory::PickItem(int InvenNum)
 {
 	m_PickedItem = DeleteItem(InvenNum);
 
 	return true;
 }
 
-void ComInventory::UpdateIcons()
+void ComUIInventory::UpdateIcons()
 {
 	ComDialog* uiDialog = (ComDialog*)gameObject->GetComponent("ComDialog");
 
@@ -195,7 +195,7 @@ void ComInventory::UpdateIcons()
 		uiDialog->GetImage(2001)->SetTexture("Resources/ui/giftbox01.png");
 }
 
-bool ComInventory::SetInvenSize(UINT InvenSize)
+bool ComUIInventory::SetInvenSize(UINT InvenSize)
 {
 	if (m_InvenSize <= InvenSize)
 	{
