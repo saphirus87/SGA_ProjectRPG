@@ -47,8 +47,8 @@ void ComChrControl::Awake()
 	m_vecState[eAni_Stand] = new ChrStateStand(this);
 	m_vecState[eAni_Walk] = new ChrStateWalk(this);
 	m_vecState[eAni_Attack_1] = new ChrStateAttack1(this);
-	m_vecState[eAni_Attack_2] = new ChrStateAttack1(this);
-	m_vecState[eAni_Attack_3] = new ChrStateAttack1(this);
+	m_vecState[eAni_Skill_1] = new ChrStateSkill1(this);
+	m_vecState[eAni_Skill_2] = new ChrStateSkill2(this);
 
 	m_pCurrentState = m_vecState[eAni_Stand];
 	Stand();
@@ -263,6 +263,16 @@ void ComChrControl::Attack1()
 
 void ComChrControl::Death()
 {
+}
+
+void ComChrControl::Skill1()
+{
+	m_pCurrentState->Skill1(eAni_Skill_1);
+}
+
+void ComChrControl::Skill2()
+{
+	m_pCurrentState->Skill2(eAni_Skill_2);
 }
 
 void ComChrControl::CheckPickingChr()

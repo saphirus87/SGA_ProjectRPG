@@ -12,7 +12,8 @@ Camera::Camera() :
 	m_rotX(0),
 	m_rotY(0),
 	m_currRotX(0),
-	m_currRotY(0)
+	m_currRotY(0),
+	bUpdate(true)
 {
 	pDevice9 = GetD3D9Device();
 	D3DXMatrixIdentity(&m_matWorld);
@@ -62,6 +63,9 @@ void Camera::Delete()
 
 void Camera::Update(float fElapsedTime)
 {
+	if (bUpdate == false)
+		return;
+
 	// 마우스로 조절이 되게끔
 	if (Input::ButtonPress(VK_LBUTTON))
 	{

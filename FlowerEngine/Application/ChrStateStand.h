@@ -18,6 +18,8 @@ public:
 	virtual void Stand(int iIndex) override;
 	virtual void Walk(int iIndex) override;
 	virtual void Attack1(int iIndex) override;
+	virtual void Skill1(int iIndex) override;
+	virtual void Skill2(int iIndex) override;
 	virtual void Death(int iIndex) override;
 };
 
@@ -34,5 +36,7 @@ public:
 	virtual void Stand(int iIndex) override;
 	virtual void Walk(int iIndex) override;
 	virtual void Attack1(int iIndex) override;
+	virtual void Skill1(int iIndex) override;
+	virtual void Skill2(int iIndex) override;
 	virtual void Death(int iIndex) override;
 };

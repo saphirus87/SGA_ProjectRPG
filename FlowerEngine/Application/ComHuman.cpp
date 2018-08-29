@@ -36,7 +36,7 @@ void ComHuman::Awake()
 		uiDialog->AddButton(eUI_SkillBtn1_Human, 
 			"Resources/ui/human_skill_1.png", 
 			"Resources/ui/human_skill_1_over.png", 
-			"Resources/ui/human_skill_1.png", NULL, "human_skill_1");
+			"Resources/ui/human_skill_1.png", this, "human_skill_1");
 
 		UIButton* btnSkill = uiDialog->GetButton(eUI_SkillBtn1_Human);
 		btnSkill->SetPosition(Vector3(50, fScreenHeight - 150.0f, 0.0f));
@@ -44,7 +44,7 @@ void ComHuman::Awake()
 		uiDialog->AddButton(eUI_SkillBtn2_Human,
 			"Resources/ui/human_skill_2.png",
 			"Resources/ui/human_skill_2_over.png",
-			"Resources/ui/human_skill_2.png", NULL, "human_skill_2");
+			"Resources/ui/human_skill_2.png", this, "human_skill_2");
 
 		btnSkill = uiDialog->GetButton(eUI_SkillBtn2_Human);
 		btnSkill->SetPosition(Vector3(150, fScreenHeight - 150.0f, 0.0f));
@@ -52,7 +52,7 @@ void ComHuman::Awake()
 		uiDialog->AddButton(eUI_SkillBtn3_Human,
 			"Resources/ui/human_skill_3.png",
 			"Resources/ui/human_skill_3_over.png",
-			"Resources/ui/human_skill_3.png", NULL, "human_skill_3");
+			"Resources/ui/human_skill_3.png", this, "human_skill_3");
 
 		btnSkill = uiDialog->GetButton(eUI_SkillBtn3_Human);
 		btnSkill->SetPosition(Vector3(250, fScreenHeight - 150.0f, 0.0f));
@@ -70,11 +70,11 @@ void ComHuman::SetAniEvent()
 
 	vecKeyFrameAnimSet.resize(eAni_COUNT);
 
-	for (int i = eAni_Attack_3; i < eAni_COUNT; ++i)
+	for (int i = eAni_Skill_2; i < eAni_COUNT; ++i)
 		m_pAnimation->m_pAniControl->GetAnimationSet(i, (LPD3DXANIMATIONSET*)&vecKeyFrameAnimSet[i]);
 
 	// Register 하는 순서데로 Animation Index가 설정되기 때문에 미리 모두 Unregister 한다.
-	for (int i = eAni_Attack_3; i < eAni_COUNT; ++i)
+	for (int i = eAni_Skill_2; i < eAni_COUNT; ++i)
 		m_pAnimation->m_pAniControl->UnregisterAnimationSet(vecKeyFrameAnimSet[i]);
 
 	// 초당 발생하는 애니메이션 키 프레임 틱의 수를 가져옵니다.
@@ -91,8 +91,8 @@ void ComHuman::SetAniEvent()
 	attackKey.Time = x;
 
 	// eAni 순서데로 추가한다.
-	m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Attack_3], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
-	m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Attack_2], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
+	m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Skill_2], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f, D3DXPLAY_ONCE);
+	m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Skill_1], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f, D3DXPLAY_ONCE);
 	m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Attack_1], 1, &attackKey, D3DXCOMPRESS_DEFAULT, 1.0f);
 	m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Walk], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
 	m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Stand], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
@@ -106,5 +106,25 @@ void ComHuman::Update()
 }
 
 void ComHuman::Render()
+{
+}
+
+void ComHuman::OnClick(UIButton * pSender)
+{
+	if (pSender->GetButtonName() == "human_skill_1")
+	{
+		((ComChrControl*)gameObject->GetComponent("ComChrControl"))->Skill1();
+	}
+	else if (pSender->GetButtonName() == "human_skill_2")
+	{
+		((ComChrControl*)gameObject->GetComponent("ComChrControl"))->Skill2();
+	}
+	else if (pSender->GetButtonName() == "human_skill_3")
+	{
+
+	}
+}
+
+void ComHuman::OnPress(UIButton * pSender)
 {
 }

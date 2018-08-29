@@ -26,6 +26,9 @@ public:
 	bool FrustumCulling(Vector3* vPos, float fRadius = 0.f);
 	Matrix4x4 m_matWorld;
 
+	// 카메라 업데이트 할지 여부
+	bool bUpdate;
+
 private:
 	void UpdateFrustum();
 

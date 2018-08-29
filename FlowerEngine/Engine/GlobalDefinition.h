@@ -129,8 +129,8 @@ enum eCellType
 
 enum eAni
 {
-	eAni_Attack_3,
-	eAni_Attack_2,
+	eAni_Skill_2,
+	eAni_Skill_1,
 	eAni_Attack_1,
 	eAni_Walk,
 	eAni_Stand,			// Export ½Ã °Å²Ù·Î µÊ

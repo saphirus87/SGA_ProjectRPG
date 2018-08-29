@@ -27,6 +27,8 @@ public:
 	virtual void Walk(float fDeltaZ);
 	virtual void Attack1();
 	virtual void Death();
+	virtual void Skill1();
+	virtual void Skill2();
 
 	// 이 객체가 픽킹되었는지 여부를 검사합니다. (캐릭터, 몬스터, 맵)
 	void CheckPickingChr();

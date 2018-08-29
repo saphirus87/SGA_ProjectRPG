@@ -12,7 +12,7 @@ E-Mail	: hkn10004@naver.com
 
 class ComChrEquipment;
 
-class ComHuman : public ComCharacter
+class ComHuman : public ComCharacter, public UIButtonDelegate
 {
 public:
 	ComHuman(CString szName);
@@ -24,4 +24,8 @@ public:
 	virtual void Render() override;
 
 	void SetAniEvent();
+
+	// UIButtonDelegate을(를) 통해 상속됨
+	virtual void OnClick(UIButton * pSender) override;
+	virtual void OnPress(UIButton * pSender) override;
 };

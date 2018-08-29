@@ -41,6 +41,22 @@ void ChrStateStand::Death(int iIndex)
 	m_pControl->Death();
 }
 
+void ChrStateStand::Skill1(int iIndex)
+{
+	OutputDebugString(L"Stand -> Skill1 상태 변환\r\n");
+
+	m_pControl->SetState(iIndex);
+	m_pControl->Skill1();
+}
+
+void ChrStateStand::Skill2(int iIndex)
+{
+	OutputDebugString(L"Stand -> Skill2 상태 변환\r\n");
+
+	m_pControl->SetState(iIndex);
+	m_pControl->Skill2();
+}
+
 ChrStateDeath::ChrStateDeath(ComChrControl * pControl)
 {
 	m_pControl = pControl;
@@ -68,4 +84,14 @@ void ChrStateDeath::Attack1(int iIndex)
 void ChrStateDeath::Death(int iIndex)
 {
 	m_pControl->pAnimation->PlayAnimation(iIndex);
+}
+
+void ChrStateDeath::Skill1(int iIndex)
+{
+	// Death에서 Skill1로 변경 불가
+}
+
+void ChrStateDeath::Skill2(int iIndex)
+{
+	// Death에서 Skill2로 변경 불가
 }

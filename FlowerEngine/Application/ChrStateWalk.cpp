@@ -41,3 +41,19 @@ void ChrStateWalk::Death(int iIndex)
 	m_pControl->SetState(iIndex);
 	m_pControl->Death();
 }
+
+void ChrStateWalk::Skill1(int iIndex)
+{
+	OutputDebugString(L"Walk -> Skill1 상태 변환\r\n");
+
+	m_pControl->SetState(iIndex);
+	m_pControl->Skill1();
+}
+
+void ChrStateWalk::Skill2(int iIndex)
+{
+	OutputDebugString(L"Walk -> Skill2 상태 변환\r\n");
+
+	m_pControl->SetState(iIndex);
+	m_pControl->Skill2();
+}
