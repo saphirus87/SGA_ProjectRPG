@@ -91,6 +91,13 @@ void SceneRPG::CreateHuman()
 void SceneRPG::CreateUndead()
 {
 	GameObject* pGOUndead = factory.CreateCharacter("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(-260, 10.3810062, -261), new ComUndead("ComCharacter"));
+
+	/*GameObject* pTexture = factory.CreateGameObject("Texture");
+	pTexture->transform->SetPosition(pGOUndead->transform->GetPosition().x, pGOUndead->transform->GetPosition().y + 2, pGOUndead->transform->GetPosition().z);
+	
+	ComTexture* pComTex = new ComTexture("ComTexture");
+	pComTex->Set(Assets::GetTexture(L"Resources/ui/name/undead_name.png"), true);
+	pTexture->AddComponent(pComTex);*/
 }
 
 void SceneRPG::CreateTroll()
@@ -233,11 +240,12 @@ void SceneRPG::CreateUI()
 	//pComDialog->GetButton(1)->SetPosition(Vector3(50.0f, 0.0f, 0.0f));
 	//pComDialog->AddImage(2, "Resources/ui/btn-tower-up.png");
 
+	// -260, 15, -261
 	/*GameObject* pTexture = factory.CreateGameObject("Texture");
-	pTexture->transform->SetPosition(Vector3(-260, 15, -262));
+	pTexture->transform->SetPosition(Vector3(-260, 10, -261));
 	
 	ComTexture* pComTex = new ComTexture("ComTexture");
-	pComTex->Set(Assets::GetTexture(L"Resources/ui/6.tga"), true);
+	pComTex->Set(Assets::GetTexture(L"Resources/ui/name/undead_name.png"), true);
 	pTexture->AddComponent(pComTex);*/
 
 	/*uiDialog->AddRadioButton(100, "Resources/ui/Box.png", "Resources/ui/Checked.png", Assets::GetFont(Assets::FontType_NORMAL), "radio1");
