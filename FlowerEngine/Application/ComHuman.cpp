@@ -23,12 +23,21 @@ void ComHuman::Awake()
 	{
 		ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");
 
-		// 체력바
+		// HP바
 		uiDialog->AddProgressBar(eUI_HPBar_Human, "Resources/ui/6.tga");
 
 		m_pHPBar = uiDialog->GetProgressBar(eUI_HPBar_Human);
 		m_pHPBar->SetPosition(Vector3(100, 0, 0));
 		m_pHPBar->SetMaxValue(Status.HPMAX);
+		UpdateHPBar();
+
+		// MP바
+		uiDialog->AddProgressBar(eUI_MPBar_Human, "Resources/ui/6.tga");
+
+		m_pMPBar = uiDialog->GetProgressBar(eUI_MPBar_Human);
+		m_pMPBar->SetPosition(Vector3(100, 50, 0));
+		m_pMPBar->SetMaxValue(Status.MPMAX);
+		m_pMPBar->SetMaxColor(Color(0, 0, 1, 1));
 		UpdateHPBar();
 
 		// 스킬 버튼
@@ -61,7 +70,8 @@ void ComHuman::Awake()
 		// 스킬1 쿨타임 텍스트
 		uiDialog->AddText(eUI_SkillBtn1_Human_TextCoolTime, Assets::GetFont(Assets::FontType_NORMAL), "3.0");
 		uiTextCoolTimeSkill1 = uiDialog->GetText(eUI_SkillBtn1_Human_TextCoolTime);
-		uiTextCoolTimeSkill1->SetPosition(Vector3(-1, 0, 0));
+		uiTextCoolTimeSkill1->SetPosition(Vector3(50, fScreenHeight - 130.0f, 0.0f));
+		uiTextCoolTimeSkill1->SetDrawFormat(DT_CENTER);
 	}
 	SetAniEvent();
 }

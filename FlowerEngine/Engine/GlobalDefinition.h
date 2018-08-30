@@ -164,6 +164,7 @@ enum eTag
 enum eUI
 {
 	eUI_HPBar_Human,
+	eUI_MPBar_Human,
 	eUI_HPBar_Undead,
 	eUI_HPBar_Troll,
 	eUI_SkillBtn1_Human,

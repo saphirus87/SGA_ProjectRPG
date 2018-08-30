@@ -114,6 +114,7 @@ void ChrStateSkill1::Skill1(int iIndex)
 	
 	// MP »ç¿ë
 	m_pControl->m_pCharacter->Status.MP -= UseMP;
+	m_pControl->m_pCharacter->UpdateHPBar();
 
 	m_pControl->pAnimation->PlayAnimation(iIndex);
 	IsCoolTime = true;
