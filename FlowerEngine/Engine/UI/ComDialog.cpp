@@ -99,14 +99,10 @@ void ComDialog::AddImage(UINT id, CString szFileName)
 void ComDialog::AddText(UINT id, LPD3DXFONT pFont, CString szText)
 {
 	UIText* text = new UIText;
-	D3DXFONT_DESCW fontDesc;
 
 	text->SetSprite(m_pSprite);
 	text->SetParent(this);
 	text->SetText(pFont, szText);
-
-	pFont->GetDescW(&fontDesc);
-	text->SetSize(Vector2(fontDesc.Width * szText.GetLength() * 2, fontDesc.Height));
 
 	m_Controls.insert(make_pair(id, text));
 }
