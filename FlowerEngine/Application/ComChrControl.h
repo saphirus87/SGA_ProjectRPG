@@ -56,16 +56,16 @@ public:
 	ComRenderSkinnedMesh * pAnimation;
 	// 공격하고자 하는 타겟
 	ComCharacter* pAttackTarget;
+	ComCharacter* m_pCharacter;
+	// 상태들
+	vector<IChrState*> m_vecState;
 
 protected:
 	ComObjMap * m_pMap;
 	// 현재 상태
 	IChrState * m_pCurrentState;
-	// 상태들
-	vector<IChrState*> m_vecState;
 	// 타겟으로 따라감
 	ComFollowTarget* m_pFollow;
-	ComCharacter* m_pCharacter;
 	// 이동하고하 하는 위치
 	Vector3 vMoveToPoint;
 	// 특정 좌표로 이동 여부

@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "ComCharacter.h"
 #include "ComChrControl.h"
 #include "ChrStateAttack.h"
 #include "ChrStateStand.h"
@@ -59,14 +60,17 @@ void ChrStateAttack1::Skill2(int iIndex)
 
 ChrStateSkill1::ChrStateSkill1(ComChrControl * pControl) : 
 	m_pTimerAnim(NULL),
-	m_IsCoolTime(false),
-	CoolTime(3) // 일단 쿨타임 3초로 강제 셋팅
+	IsCoolTime(false),
+	CoolTime(3), // 일단 쿨타임 3초로 강제 셋팅
+	UseMP(3) // 일단 사용MP 3으로 강제 셋팅
 {
 	m_pControl = pControl;
 	m_pTimerAnim = new CTimer(CClock::GetInstance());
 	m_pTimerAnim->Start();
 	m_pTimerCool = new CTimer(CClock::GetInstance());
-	m_pTimerCool->Start();
+	
+	GameObject* pUIBar = GameObject::Find("testUI");
+	ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");
 }
 
 ChrStateSkill1::~ChrStateSkill1()
@@ -84,11 +88,6 @@ void ChrStateSkill1::Update()
 			m_pControl->SetState(eAni_Stand);
 			m_pControl->Stand();
 		}
-	}
-
-	if (m_pTimerCool->GetTime() >= CoolTime)
-	{
-		m_IsCoolTime = false;
 	}
 }
 
@@ -110,11 +109,16 @@ void ChrStateSkill1::Attack1(int iIndex)
 
 void ChrStateSkill1::Skill1(int iIndex)
 {
-	if (m_IsCoolTime == true)
+	if (IsCoolTime == true)
 		return;
+	
+	// MP 사용
+	m_pControl->m_pCharacter->Status.MP -= UseMP;
+
 	m_pControl->pAnimation->PlayAnimation(iIndex);
-	m_IsCoolTime = true;
+	IsCoolTime = true;
 	m_pTimerAnim->Reset();
+	m_pTimerCool->Start();
 	m_pTimerCool->Reset();
 }
 

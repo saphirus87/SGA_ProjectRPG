@@ -272,6 +272,11 @@ void ComChrControl::Death()
 
 void ComChrControl::Skill1()
 {
+	if (m_pCharacter->Status.MP < ((ChrStateSkill1*)m_vecState[eAni_Skill_1])->UseMP)
+	{
+		// UI 출력 : MP가 부족합니다.
+		return; // MP 부족으로 스킬 사용 불가
+	}
 	m_pCurrentState->Skill1(eAni_Skill_1);
 }
 

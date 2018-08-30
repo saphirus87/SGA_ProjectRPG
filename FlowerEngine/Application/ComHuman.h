@@ -28,4 +28,8 @@ public:
 	// UIButtonDelegate을(를) 통해 상속됨
 	virtual void OnClick(UIButton * pSender) override;
 	virtual void OnPress(UIButton * pSender) override;
+
+private:
+	// Skill1 쿨타임 텍스트
+	UIText * uiTextCoolTimeSkill1;
 };

@@ -60,6 +60,7 @@ public:
 
 protected:
 	UIProgressBar* m_pHPBar;
-	
+	UIProgressBar* m_pMPBar;
+
 	CTimer* m_pTimerHPRec;
 };

@@ -12,6 +12,7 @@ ComCharacter::ComCharacter(CString szName) :
 	m_pChrEquipment(NULL),
 	m_pAttackTarget(NULL),
 	m_pHPBar(NULL),
+	m_pMPBar(NULL),
 	m_pTimerHPRec(NULL),
 	m_eType(eChrType_COUNT) // 초기화 값으로 사용
 {
@@ -118,6 +119,14 @@ void ComCharacter::UpdateHPBar()
 			Status.HP = 0;
 
 		m_pHPBar->SetCurValue(Status.HP);
+	}
+
+	if (m_pMPBar)
+	{
+		if (Status.MP < 0)
+			Status.MP = 0;
+
+		m_pMPBar->SetCurValue(Status.MP);
 	}
 }
 

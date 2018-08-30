@@ -2,6 +2,7 @@
 #include "ComHuman.h"
 #include "ComCharacter.h"
 #include "ComChrControl.h"
+#include "ChrStateAttack.h"
 
 ComHuman::ComHuman(CString szName) : 
 	ComCharacter(szName)
@@ -41,16 +42,6 @@ void ComHuman::Awake()
 		UIButton* btnSkill = uiDialog->GetButton(eUI_SkillBtn1_Human);
 		btnSkill->SetPosition(Vector3(50, fScreenHeight - 150.0f, 0.0f));
 
-		CString szCoolTime;
-		szCoolTime.Format(L"%d", 3);
-		uiDialog->AddText(eUI_SkillBtn1_Human_TextCoolTime, Assets::GetFont(Assets::FontType_NORMAL), szCoolTime);
-
-		UIText* pText = uiDialog->GetText(eUI_SkillBtn1_Human_TextCoolTime);
-		pText->SetText(Assets::GetFont(Assets::FontType_NORMAL), L"1");
-		//pText->SetSize(Vector2(100, 50));
-		pText->SetPosition(Vector3(0, 0, 0.0f));
-
-
 		uiDialog->AddButton(eUI_SkillBtn2_Human,
 			"Resources/ui/human_skill_2.png",
 			"Resources/ui/human_skill_2_over.png",
@@ -66,6 +57,11 @@ void ComHuman::Awake()
 
 		btnSkill = uiDialog->GetButton(eUI_SkillBtn3_Human);
 		btnSkill->SetPosition(Vector3(250, fScreenHeight - 150.0f, 0.0f));
+
+		// 스킬1 쿨타임 텍스트
+		uiDialog->AddText(eUI_SkillBtn1_Human_TextCoolTime, Assets::GetFont(Assets::FontType_NORMAL), "3.0");
+		uiTextCoolTimeSkill1 = uiDialog->GetText(eUI_SkillBtn1_Human_TextCoolTime);
+		uiTextCoolTimeSkill1->SetPosition(Vector3(-1, 0, 0));
 	}
 	SetAniEvent();
 }
@@ -113,6 +109,31 @@ void ComHuman::SetAniEvent()
 void ComHuman::Update()
 {
 	ComCharacter::Update();
+
+	// 코드 리팩토링 필요
+	ComChrControl* chrControl = (ComChrControl*)gameObject->GetComponent("ComChrControl");
+	ChrStateSkill1* pStateSkill = dynamic_cast<ChrStateSkill1*>(chrControl->m_vecState[eAni_Skill_1]);
+	if (pStateSkill)
+	{
+		if (pStateSkill->m_pTimerCool->GetTime() >= pStateSkill->CoolTime)
+		{
+			pStateSkill->IsCoolTime = false;
+			pStateSkill->m_pTimerCool->Pause(true);
+		}
+
+		if (pStateSkill->IsCoolTime == false)
+		{
+			CString szCoolTime;
+			szCoolTime.Format(L"%.1f", pStateSkill->CoolTime);
+			uiTextCoolTimeSkill1->SetText(Assets::GetFont(Assets::FontType_NORMAL), szCoolTime);
+		}
+		else
+		{
+			CString szCoolTime;
+			szCoolTime.Format(L"%.1f", pStateSkill->CoolTime - pStateSkill->m_pTimerCool->GetTime());
+			uiTextCoolTimeSkill1->SetText(Assets::GetFont(Assets::FontType_NORMAL), szCoolTime);
+		}
+	}
 }
 
 void ComHuman::Render()
