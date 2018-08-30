@@ -167,6 +167,7 @@ enum eUI
 	eUI_HPBar_Undead,
 	eUI_HPBar_Troll,
 	eUI_SkillBtn1_Human,
+	eUI_SkillBtn1_Human_TextCoolTime,
 	eUI_SkillBtn2_Human,
 	eUI_SkillBtn3_Human,
 	eUI_SkillBtn1_Undead,

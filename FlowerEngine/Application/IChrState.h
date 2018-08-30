@@ -15,6 +15,8 @@ public:
 	IChrState(){}
 	virtual ~IChrState(){}
 
+	virtual void Update() {}
+
 	virtual void Stand(int iIndex) = 0;
 	virtual void Walk(int iIndex) = 0;
 	virtual void Attack1(int iIndex) = 0;

@@ -57,13 +57,39 @@ void ChrStateAttack1::Skill2(int iIndex)
 	m_pControl->Skill2();
 }
 
-ChrStateSkill1::ChrStateSkill1(ComChrControl * pControl)
+ChrStateSkill1::ChrStateSkill1(ComChrControl * pControl) : 
+	m_pTimerAnim(NULL),
+	m_IsCoolTime(false),
+	CoolTime(3) // 일단 쿨타임 3초로 강제 셋팅
 {
 	m_pControl = pControl;
+	m_pTimerAnim = new CTimer(CClock::GetInstance());
+	m_pTimerAnim->Start();
+	m_pTimerCool = new CTimer(CClock::GetInstance());
+	m_pTimerCool->Start();
 }
 
 ChrStateSkill1::~ChrStateSkill1()
 {
+}
+
+void ChrStateSkill1::Update()
+{
+	AnimationSet anim = NULL;
+	m_pControl->pAnimation->m_pAniControl->GetTrackAnimationSet(0, &anim);
+	if (anim != NULL)
+	{
+		if (m_pTimerAnim->GetTime() >= anim->GetPeriod())
+		{
+			m_pControl->SetState(eAni_Stand);
+			m_pControl->Stand();
+		}
+	}
+
+	if (m_pTimerCool->GetTime() >= CoolTime)
+	{
+		m_IsCoolTime = false;
+	}
 }
 
 void ChrStateSkill1::Stand(int iIndex)
@@ -84,7 +110,12 @@ void ChrStateSkill1::Attack1(int iIndex)
 
 void ChrStateSkill1::Skill1(int iIndex)
 {
+	if (m_IsCoolTime == true)
+		return;
 	m_pControl->pAnimation->PlayAnimation(iIndex);
+	m_IsCoolTime = true;
+	m_pTimerAnim->Reset();
+	m_pTimerCool->Reset();
 }
 
 void ChrStateSkill1::Skill2(int iIndex)

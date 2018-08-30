@@ -41,6 +41,16 @@ void ComHuman::Awake()
 		UIButton* btnSkill = uiDialog->GetButton(eUI_SkillBtn1_Human);
 		btnSkill->SetPosition(Vector3(50, fScreenHeight - 150.0f, 0.0f));
 
+		CString szCoolTime;
+		szCoolTime.Format(L"%d", 3);
+		uiDialog->AddText(eUI_SkillBtn1_Human_TextCoolTime, Assets::GetFont(Assets::FontType_NORMAL), szCoolTime);
+
+		UIText* pText = uiDialog->GetText(eUI_SkillBtn1_Human_TextCoolTime);
+		pText->SetText(Assets::GetFont(Assets::FontType_NORMAL), L"1");
+		pText->SetSize(Vector2(100, 50));
+		pText->SetPosition(Vector3(50, fScreenHeight - 180.0f, 0.0f));
+
+
 		uiDialog->AddButton(eUI_SkillBtn2_Human,
 			"Resources/ui/human_skill_2.png",
 			"Resources/ui/human_skill_2_over.png",

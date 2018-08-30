@@ -107,6 +107,8 @@ void ComChrControl::Update()
 
 	MoveToPoint();
 	CheckAttackTargetDeath();
+
+	m_pCurrentState->Update();
 }
 
 void ComChrControl::Render()
