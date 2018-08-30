@@ -48,7 +48,7 @@ void ComHuman::Awake()
 		UIText* pText = uiDialog->GetText(eUI_SkillBtn1_Human_TextCoolTime);
 		pText->SetText(Assets::GetFont(Assets::FontType_NORMAL), L"1");
 		//pText->SetSize(Vector2(100, 50));
-		pText->SetPosition(Vector3(0, 0, 0.0f));
+		pText->SetPosition(Vector3(50, fScreenHeight - 180.0f, 0.0f));
 
 
 		uiDialog->AddButton(eUI_SkillBtn2_Human,
