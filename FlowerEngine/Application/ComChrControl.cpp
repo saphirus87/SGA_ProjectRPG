@@ -245,6 +245,9 @@ void ComChrControl::Stand()
 
 void ComChrControl::Walk(float fDeltaZ)
 {
+	// 걸어갈 때는 마우스 이동 하지 않음 (마우스 이동시 키보드 이동하면 속도 2배되는 버그 방지)
+	IsMoveToPoint = false;
+
 	// 현재 상태에서 Walk로
 	m_pCurrentState->Walk(eAni_Walk);
 	GetHeight();
