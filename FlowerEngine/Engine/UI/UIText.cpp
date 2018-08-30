@@ -36,3 +36,34 @@ void UIText::Render()
 	m_pSprite->SetTransform(&(matS * matT));
 	m_pFont->DrawTextW(m_pSprite, m_Text, m_Text.GetLength(), &rc, m_drawTextFormat, m_Color);
 }
+
+void UIText::SetText(LPD3DXFONT font, CString szText)
+{
+	m_pFont = font;
+	m_Text = szText;
+
+	D3DXFONT_DESCW fontDesc;
+
+	m_pFont->GetDescW(&fontDesc);
+	SetSize(Vector2(fontDesc.Width * m_Text.GetLength() * 2, fontDesc.Height));
+}
+
+void UIText::SetText(CString szText)
+{
+	m_Text = szText;
+
+	D3DXFONT_DESCW fontDesc;
+
+	m_pFont->GetDescW(&fontDesc);
+	SetSize(Vector2(fontDesc.Width * m_Text.GetLength() * 2, fontDesc.Height));
+}
+
+void UIText::SetFont(LPD3DXFONT font)
+{
+	m_pFont = font;
+
+	D3DXFONT_DESCW fontDesc;
+
+	m_pFont->GetDescW(&fontDesc);
+	SetSize(Vector2(fontDesc.Width * m_Text.GetLength() * 2, fontDesc.Height));
+}
