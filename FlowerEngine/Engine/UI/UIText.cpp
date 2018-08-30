@@ -48,15 +48,15 @@ void UIText::SetText(LPD3DXFONT font, CString szText)
 	SetSize(Vector2(fontDesc.Width * m_Text.GetLength() * 2, fontDesc.Height));
 }
 
-void UIText::SetText(CString szText)
-{
-	m_Text = szText;
-
-	D3DXFONT_DESCW fontDesc;
-
-	m_pFont->GetDescW(&fontDesc);
-	SetSize(Vector2(fontDesc.Width * m_Text.GetLength() * 2, fontDesc.Height));
-}
+//void UIText::SetText(CString szText)
+//{
+//	m_Text = szText;
+//
+//	D3DXFONT_DESCW fontDesc;
+//
+//	m_pFont->GetDescW(&fontDesc);
+//	SetSize(Vector2(fontDesc.Width * m_Text.GetLength() * 2, fontDesc.Height));
+//}
 
 void UIText::SetFont(LPD3DXFONT font)
 {

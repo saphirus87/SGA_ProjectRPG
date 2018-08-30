@@ -18,6 +18,9 @@ public:
 	virtual void Render() override;
 
 	void SetText(LPD3DXFONT font, CString szText);
+	void SetText(CString szText) { m_Text = szText; }
+	void SetFont(LPD3DXFONT font);
+	void SetDrawFormat(DWORD format) { m_drawTextFormat = format; }
 	void SetSize(Vector2 size) { m_Size = size; }
 };
 
