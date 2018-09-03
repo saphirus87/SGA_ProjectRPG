@@ -48,9 +48,9 @@ void SceneManager::Render()
 		m_pCurrentScene->Render();
 }
 
-void SceneManager::AddScene(Scene * pScene)
+void SceneManager::AddScene(Scene * pScene, bool bCleanUp)
 {
-	if (m_pCurrentScene)
+	if (m_pCurrentScene && bCleanUp == true)
 		m_pCurrentScene->CleanUpGameObject();
 
 	m_mapScenes.insert(MScenePair(pScene->Name(), pScene));

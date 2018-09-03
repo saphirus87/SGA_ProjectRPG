@@ -23,16 +23,43 @@ SceneRPG::~SceneRPG()
 
 void SceneRPG::Init()
 {
-	/*GameObject* pUILoading = GameObject::Find("ScreenUI");
-	ComDialog* comDialog = (ComDialog*)pUILoading->GetComponent("ComDialog");*/
+	GameObject* pUILoading = GameObject::Find("ScreenUI");
+	ComDialog* comDialog = (ComDialog*)pUILoading->GetComponent("ComDialog");
+
+	UIProgressBar* pLoadingBar = comDialog->GetProgressBar(eUI_LoadingBar);
+	pLoadingBar->SetMaxValue(100);
+	pLoadingBar->SetCurValue(0);
+	pLoadingBar->Render();
 
 	CreateUI();
+	pLoadingBar->SetCurValue(10);
+	pLoadingBar->Render();
+
 	CreateMap();
+	pLoadingBar->SetCurValue(20);
+	pLoadingBar->Render();
+
 	CreateMapObject();
+	pLoadingBar->SetCurValue(40);
+	pLoadingBar->Render();
+
 	CreateHuman();
+	pLoadingBar->SetCurValue(60);
+	pLoadingBar->Render();
+
 	CreateUndead();
+	pLoadingBar->SetCurValue(80);
+	pLoadingBar->Render();
+
 	CreateTroll();
+	pLoadingBar->SetCurValue(85);
+	pLoadingBar->Render();
+
 	CreateMonster();
+	pLoadingBar->SetCurValue(100);
+	pLoadingBar->Render();
+
+	comDialog->SetIsVisible(false);
 
 	//CreateTest();
 }

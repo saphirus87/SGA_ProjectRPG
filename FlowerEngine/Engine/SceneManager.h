@@ -20,7 +20,7 @@ public:
 	void Update();
 	void Render();
 
-	void AddScene(Scene* pScene);
+	void AddScene(Scene* pScene, bool bCleanUp = true);
 	void RemoveScene(CString szName);
 	void ChangeScene(CString szName);
 

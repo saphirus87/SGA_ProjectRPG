@@ -165,6 +165,8 @@ enum eUI
 {
 	eUI_Loading,
 	eUI_LoadingBar,
+	eUI_StartBtn,
+	eUI_StartText,
 	eUI_HPBar_Human,
 	eUI_MPBar_Human,
 	eUI_HPBar_Undead,
