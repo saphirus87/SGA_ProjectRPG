@@ -39,18 +39,12 @@ void SceneManager::Awake()
 
 void SceneManager::Update()
 {
-	/*if (m_pUILoading)
-		m_pUILoading->Update();*/
-
 	if (m_pCurrentScene)
 		m_pCurrentScene->Update();
 }
 
 void SceneManager::Render()
 {
-	/*if (m_pUILoading)
-		m_pUILoading->Render();*/
-
 	if (m_pCurrentScene)
 		m_pCurrentScene->Render();
 }
@@ -79,18 +73,6 @@ void SceneManager::ChangeScene(CString szName)
 		FactoryGameObject factory;
 		factory.CreateSunLight();
 		Camera::GetInstance()->Init();
-
-		m_pUILoading = factory.CreateUIDialog("ScreenUI", 0, 0);
-		ComDialog* comDialog = (ComDialog*)m_pUILoading->GetComponent("ComDialog");
-		comDialog->AddImage(eUI_Loading, "./Resources/ui/loadingWide.png");
-		comDialog->AddProgressBar(eUI_LoadingBar, "./Resources/ui/6.tga");
-
-		if (m_pUILoading)
-		{
-			comDialog->SetIsVisible(true);
-			m_pUILoading->Update();
-			m_pUILoading->Render();
-		}
 
 		(*iter).second->Init();
 	}

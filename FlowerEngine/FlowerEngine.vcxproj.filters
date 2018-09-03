@@ -449,6 +449,7 @@
     <ClCompile Include="Application\ComUIInventory.cpp">
       <Filter>Application\Components\ComUI</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SceneLoading.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -702,6 +703,7 @@
     <ClInclude Include="Application\ComUIInventory.h">
       <Filter>Application\Components\ComUI</Filter>
     </ClInclude>
+    <ClInclude Include="Application\SceneLoading.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="game-controller.ico">

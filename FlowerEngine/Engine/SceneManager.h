@@ -33,6 +33,4 @@ private:
 	std::map<CString, Scene*> m_mapScenes;
 
 	bool m_bPause;
-
-	GameObject* m_pUILoading;
 };

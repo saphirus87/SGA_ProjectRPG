@@ -414,6 +414,7 @@
     <ClInclude Include="Application\ItemInfo.h" />
     <ClInclude Include="Application\QuadTree.h" />
     <ClInclude Include="Application\SceneAircraft.h" />
+    <ClInclude Include="Application\SceneLoading.h" />
     <ClInclude Include="Application\SceneRPG.h" />
     <ClInclude Include="Application\ScenePicking.h" />
     <ClInclude Include="Application\StatusInfo.h" />
@@ -447,6 +448,7 @@
     <ClCompile Include="Application\ItemInfo.cpp" />
     <ClCompile Include="Application\QuadTree.cpp" />
     <ClCompile Include="Application\SceneAircraft.cpp" />
+    <ClCompile Include="Application\SceneLoading.cpp" />
     <ClCompile Include="Application\SceneRPG.cpp" />
     <ClCompile Include="Application\ScenePicking.cpp" />
     <ClCompile Include="Application\StatusInfo.cpp" />
