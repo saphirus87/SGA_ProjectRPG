@@ -14,7 +14,7 @@
 
 SceneRPG::SceneRPG(CString szName) : Scene(szName), 
 	IsGameEnd(false),
-	fLoadingPer(0)
+	iLoadingPer(-1)
 {
 }
 
@@ -24,67 +24,72 @@ SceneRPG::~SceneRPG()
 
 void SceneRPG::Init()
 {
-	
-}
-
-void SceneRPG::Update()
-{
-	Scene::Update();
-	if (fLoadingPer >= 100)
-		return;
-
 	GameObject* pUILoading = GameObject::Find("ScreenUI");
 	ComDialog* comDialog = (ComDialog*)pUILoading->GetComponent("ComDialog");
 
 	UIProgressBar* pLoadingBar = comDialog->GetProgressBar(eUI_LoadingBar);
 	pLoadingBar->SetMaxValue(100);
 	pLoadingBar->SetCurValue(0);
-	pLoadingBar->Render();
+}
 
-	if (fLoadingPer < 10)
+void SceneRPG::Update()
+{
+	Scene::Update();
+
+	GameObject* pUILoading = GameObject::Find("ScreenUI");
+	ComDialog* comDialog = (ComDialog*)pUILoading->GetComponent("ComDialog");
+	UIProgressBar* pLoadingBar = comDialog->GetProgressBar(eUI_LoadingBar);
+
+	if (iLoadingPer >= 7)
+	{
+		// 로딩 완료
+		comDialog->SetIsVisible(false);
+		return;
+	}
+
+	if (iLoadingPer > 0)
 	{
 		CreateUI();
-		pLoadingBar->SetCurValue(fLoadingPer = 10);
+		pLoadingBar->SetCurValue(10);
 	}
-
-	if (fLoadingPer < 20)
+		
+	if (iLoadingPer > 1)
 	{
 		CreateMap();
-		pLoadingBar->SetCurValue(fLoadingPer = 20);
+		pLoadingBar->SetCurValue(20);
 	}
 
-	if (fLoadingPer < 30)
+	if (iLoadingPer > 2)
 	{
 		CreateMapObject();
-		pLoadingBar->SetCurValue(fLoadingPer = 30);
+		pLoadingBar->SetCurValue(30);
 	}
 
-	if (fLoadingPer < 40)
+	if (iLoadingPer > 3)
 	{
 		CreateHuman();
-		pLoadingBar->SetCurValue(fLoadingPer = 40);
+		pLoadingBar->SetCurValue(40);
 	}
 
-	if (fLoadingPer < 50)
+	if (iLoadingPer > 4)
 	{
 		CreateUndead();
-		pLoadingBar->SetCurValue(fLoadingPer = 50);
+		pLoadingBar->SetCurValue(50);
 	}
 
-	if (fLoadingPer < 60)
+	if (iLoadingPer > 5)
 	{
 		CreateTroll();
-		pLoadingBar->SetCurValue(fLoadingPer = 60);
+		pLoadingBar->SetCurValue(60);
 	}
 
-	if (fLoadingPer < 70)
+	if (iLoadingPer > 6)
 	{
 		CreateMonster();
-		pLoadingBar->SetCurValue(fLoadingPer = 70);
+		pLoadingBar->SetCurValue(100);
 	}
 
-	fLoadingPer = 100;
-	comDialog->SetIsVisible(false);
+	++iLoadingPer;
 
 	//CreateTest();
 }
