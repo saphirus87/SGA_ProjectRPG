@@ -14,6 +14,8 @@ protected:
 
 	ComDialog* m_pParent;
 
+	bool m_IsVisible;
+
 public:
 	UIControl();
 	~UIControl();
@@ -30,5 +32,6 @@ public:
 	void SetSize(Vector2 size) { m_Size = size; }
 	void SetScale(Vector3 scale) { m_Scale = scale; }
 	void SetParent(ComDialog* parent) { m_pParent = parent; }
+	void SetIsVisible(bool IsVisible) { m_IsVisible = IsVisible; }
 };
 

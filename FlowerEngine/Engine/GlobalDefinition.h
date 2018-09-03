@@ -179,6 +179,58 @@ enum eUI
 	eUI_SkillBtn3_Troll,
 };
 
+enum eInvenUI
+{
+	eInvenUI_CopperCoinImg = 101,
+	eInvenUI_SilverCoinImg,
+	eInvenUI_GoldCoinImg,
+	eInvenUI_CopperCoinText = 111,
+	eInvenUI_SilverCoinText,
+	eInvenUI_GoldCoinText,
+	eInvenUI_Slot1Btn = 1001,
+	eInvenUI_Slot2Btn,
+	eInvenUI_Slot3Btn,
+	eInvenUI_Slot4Btn,
+	eInvenUI_Slot5Btn,
+	eInvenUI_Slot6Btn,
+	eInvenUI_Slot7Btn,
+	eInvenUI_Slot8Btn,
+	eInvenUI_Slot9Btn,
+	eInvenUI_Slot10Btn,
+	eInvenUI_Slot11Btn,
+	eInvenUI_Slot12Btn,
+	eInvenUI_Slot13Btn,
+	eInvenUI_Slot14Btn,
+	eInvenUI_Slot15Btn,
+	eInvenUI_Slot16Btn,
+	eInvenUI_Slot17Btn,
+	eInvenUI_Slot18Btn,
+	eInvenUI_Slot19Btn,
+	eInvenUI_Slot20Btn,
+	eInvenUI_Slot1NumText = 1101,
+	eInvenUI_Slot2NumText,
+	eInvenUI_Slot3NumText,
+	eInvenUI_Slot4NumText,
+	eInvenUI_Slot5NumText,
+	eInvenUI_Slot6NumText,
+	eInvenUI_Slot7NumText,
+	eInvenUI_Slot8NumText,
+	eInvenUI_Slot9NumText,
+	eInvenUI_Slot10NumText,
+	eInvenUI_Slot11NumText,
+	eInvenUI_Slot12NumText,
+	eInvenUI_Slot13NumText,
+	eInvenUI_Slot14NumText,
+	eInvenUI_Slot15NumText,
+	eInvenUI_Slot16NumText,
+	eInvenUI_Slot17NumText,
+	eInvenUI_Slot18NumText,
+	eInvenUI_Slot19NumText,
+	eInvenUI_Slot20NumText,
+	eInvenUI_PickedItemImg = 2001,
+	eInvenUI_PickedItemNumText = 2101
+};
+
 struct KEYBOARD_STATE
 {
 	Vector3	deltaPos;

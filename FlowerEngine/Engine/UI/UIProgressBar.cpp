@@ -29,6 +29,8 @@ void UIProgressBar::Update()
 
 void UIProgressBar::Render()
 {
+	if (!m_IsVisible) return;
+
 	if (pTexture)
 	{
 		float gaugePercent = ((float)m_CurValue / (float)m_MaxValue);

@@ -18,7 +18,7 @@ public:
 	virtual void OnClick(UIButton * pSender) override;
 	virtual void OnPress(UIButton * pSender) override;
 
-	//
+	// Inventory 동작 관련
 	pair<ItemInfo*, UINT> AddItem(ItemInfo* Item, UINT ItemNum);
 	pair<ItemInfo*, UINT> InsertItemToSlot(ItemInfo* Item, UINT ItemNum, int InvenSlot);
 	//bool AddItem(ItemInfo*);
@@ -28,12 +28,17 @@ public:
 	bool FindItem(unsigned int ItemID, int& StartIndex);
 	bool FindEmptySlot(int& StartIndex);
 	bool PickItem(int InvenSlot);
+
+	void EarnMoney(UINT money);
+	bool SpendMoney(UINT money);
+
 	void UpdateIcons();
 
 	bool SetInvenSize(UINT InvenSize);
 
 private:
 	vector<pair<ItemInfo*, UINT>> m_vecItem;
+	UINT m_Money;
 
 	//vector<pair<ItemInfo*, UINT>> m_vecUIItem;
 

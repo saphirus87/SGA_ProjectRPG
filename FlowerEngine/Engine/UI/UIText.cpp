@@ -26,6 +26,8 @@ void UIText::Update()
 
 void UIText::Render()
 {
+	if (!m_IsVisible) return;
+
 	RECT rc;
 	SetRect(&rc, 0, 0, m_Size.x, m_Size.y);
 	Vector3 pos = m_pParent->gameObject->transform->GetPosition() + m_Position;
