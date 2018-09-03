@@ -23,20 +23,30 @@ void SceneLoading::Init()
 
 	// 배경 이미지
 	comDialog->AddImage(eUI_Loading, "./Resources/ui/loadingWide.png");
-	
+
+	// 로딩바 배경
+	comDialog->AddImage(eUI_LoadingBarFrame, "./Resources/ui/loading-barborder-frame-v2.png");
+	UIImage* pLoadingBarFrame = comDialog->GetImage(eUI_LoadingBarFrame);
+	pLoadingBarFrame->SetPosition(Vector3(fScreenWidth / 2 - 512, fScreenHeight - 100.0f, 0));
+
 	// 로딩바
-	comDialog->AddProgressBar(eUI_LoadingBar, "./Resources/ui/6.tga");
+	comDialog->AddProgressBar(eUI_LoadingBar, "./Resources/ui/loading-barfill.png");
 	UIProgressBar* pLoadingBar = comDialog->GetProgressBar(eUI_LoadingBar);
-	pLoadingBar->SetPosition(Vector3(fScreenWidth / 2 - 128, fScreenHeight - 100.0f, 0));
+	pLoadingBar->SetPosition(Vector3(fScreenWidth / 2 - 482, fScreenHeight - 85.0f, 0));
+	pLoadingBar->SetSize(Vector2(964.0f, 64.0f));
+	pLoadingBar->SetScale(Vector3(1.0f, 0.5f, 0.0f));
+	pLoadingBar->SetMaxColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	pLoadingBar->SetMinColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 	// 게임 시작 버튼
 	comDialog->AddButton(eUI_StartBtn,
-		"Resources/ui/btn-med-down.png",
-		"Resources/ui/btn-med-over.png",
-		"Resources/ui/btn-med-up.png", this, "start");
+		"Resources/ui/Button-up.png",
+		"Resources/ui/Button-up.png",
+		"Resources/ui/Button-down.png", this, "start");
 	UIButton* pBtnStart = comDialog->GetButton(eUI_StartBtn);
-	pBtnStart->SetPosition(Vector3(fScreenWidth / 2 - 128, fScreenHeight - 200.0f, 0.0f));
-	
+	pBtnStart->SetPosition(Vector3(fScreenWidth / 2 - 145, fScreenHeight - 200.0f, 0.0f));
+	pBtnStart->SetScale(Vector3(0.7f, 0.5f, 0.0f));
+
 	// 게임 시작 텍스트
 	comDialog->AddText(eUI_StartText, Assets::GetFont(Assets::FontType_NORMAL), "게임 시작");
 	UIText* uiTextStart = comDialog->GetText(eUI_StartText);

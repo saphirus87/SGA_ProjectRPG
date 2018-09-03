@@ -72,10 +72,7 @@ void UIButton::Render()
 	D3DXMatrixTranslation(&matT, pos.x, pos.y, pos.z);
 
 	m_pSprite->SetTransform(&(matS * matT));
-	if (m_ButtonState == eButtonState_Mouseover)
-		m_pSprite->Draw(m_Textures[m_ButtonState], &rc, &m_Pivot, &Vector3(0, 0, 0), D3DXCOLOR(0.6f, 0.6f, 0.6f, 0.6f));
-	else
-		m_pSprite->Draw(m_Textures[m_ButtonState], &rc, &m_Pivot, &Vector3(0, 0, 0), m_Color);
+	m_pSprite->Draw(m_Textures[m_ButtonState], &rc, &m_Pivot, &Vector3(0, 0, 0), m_Color);
 }
 
 void UIButton::SetTexture(CString szNormalImg, CString szMouseoverImg, CString szClickImg)
