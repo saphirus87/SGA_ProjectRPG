@@ -329,7 +329,7 @@ GameObject * FactoryGameObject::CreateEquipmentToMap(ItemInfo * pItemInfo, Vecto
 	return pGOEquipment;
 }
 
-GameObject * FactoryGameObject::CreateCharacter(CString szName, CString szFolderPath, CString szFileName, Vector3 & pos, ComCharacter* pComChr)
+GameObject * FactoryGameObject::CreateCharacter(CString szName, CString szFolderPath, CString szFileName, CString szChrName, Vector3& pos, ComCharacter* pComChr)
 {
 	GameObject* pGOChr = CreateFromXFile(szName, szFolderPath, szFileName, pos);
 	pGOChr->Tag = eTag_Chracter;
@@ -348,6 +348,16 @@ GameObject * FactoryGameObject::CreateCharacter(CString szName, CString szFolder
 	ComCollider* pCollider = new ComCollider("ComCollider");
 	pGOChr->AddComponent(pCollider);
 	pCollider->Set(Vector3(0, 0.5f, 0), Vector3(0.3, 0.6, 0.3), false);
+	// 이 게임 오브젝트는 이름추가 가능
+	ComText3D* pChrName = new ComText3D("ComText3D");
+	pChrName->SetChrName(szChrName);
+	pGOChr->AddComponent(pChrName);
+
+	//Test Code
+	Vector3 vPos = pos;
+	vPos.y += 1.0f;
+	pGOChr->transform->SetPosition(vPos);
+
 
 	return pGOChr;
 }

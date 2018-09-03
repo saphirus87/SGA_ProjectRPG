@@ -14,10 +14,15 @@ public:
 
 	HRESULT CreateD3DXTextMesh(LPD3DXMESH* ppMesh, TCHAR* pstrFont, DWORD dwSize, BOOL bBold, BOOL bItalic);
 
+	void SetChrName(CString szChrName);
+	CString GetChrName();
+
 private:
 	Device9 pDevice9;
 	Mesh m_pMesh3DText;
 	Material m_mtrl;
+
+	CString m_szChrName;
 	// 항상 카메라를 바라보게 하는 Y축 역행렬
 	Matrix4x4 m_matBillboard;
 };

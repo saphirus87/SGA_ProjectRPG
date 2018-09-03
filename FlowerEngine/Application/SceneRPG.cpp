@@ -112,7 +112,8 @@ void SceneRPG::CreateMapObject()
 
 void SceneRPG::CreateHuman()
 {
-	GameObject* pGOHuman = factory.CreateCharacter("human_01", "Resources/character/human_01/", "human_01.X", Vector3(-260, 10.7184200, -260), new ComHuman("ComCharacter"));
+	GameObject* pGOHuman = factory.CreateCharacter("human_01", "Resources/character/human_01/", "human_01.X", 
+		"Human", Vector3(-260, 10.7184200, -260), new ComHuman("ComCharacter"));
 
 	// 카메라
 	Camera::GetInstance()->SetTarget(&pGOHuman->transform->GetPosition());
@@ -120,7 +121,8 @@ void SceneRPG::CreateHuman()
 
 void SceneRPG::CreateUndead()
 {
-	GameObject* pGOUndead = factory.CreateCharacter("undead_01", "Resources/character/undead_01/", "undead_01.X", Vector3(-260, 10.3810062, -261), new ComUndead("ComCharacter"));
+	GameObject* pGOUndead = factory.CreateCharacter("undead_01", "Resources/character/undead_01/", "undead_01.X", 
+		"Undead", Vector3(-260, 10.3810062, -261), new ComUndead("ComCharacter"));
 
 	/*GameObject* pTexture = factory.CreateGameObject("Texture");
 	pTexture->transform->SetPosition(pGOUndead->transform->GetPosition().x, pGOUndead->transform->GetPosition().y + 2, pGOUndead->transform->GetPosition().z);
@@ -132,7 +134,8 @@ void SceneRPG::CreateUndead()
 
 void SceneRPG::CreateTroll()
 {
-	GameObject* pGOTroll = factory.CreateCharacter("troll_01", "Resources/character/troll_01/", "troll_01.X", Vector3(-260, 10.0443125, -262), new ComTroll("ComCharacter"));
+	GameObject* pGOTroll = factory.CreateCharacter("troll_01", "Resources/character/troll_01/", "troll_01.X", 
+		"Troll", Vector3(-260, 10.0443125, -262), new ComTroll("ComCharacter"));
 	
 	// 이 게임 오브젝트는 장비 장착 가능
 	ComChrEquipment* pEquipment = (ComChrEquipment*)pGOTroll->GetComponent("ComChrEquipment");

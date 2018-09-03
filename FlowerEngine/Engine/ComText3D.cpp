@@ -16,7 +16,7 @@ ComText3D::~ComText3D()
 
 void ComText3D::Awake()
 {
-	CreateD3DXTextMesh(&m_pMesh3DText, L"ssssss", 10, FALSE, FALSE);
+	CreateD3DXTextMesh(&m_pMesh3DText, L"±¼¸²", 10, FALSE, FALSE);
 
 	ZeroMemory(&m_mtrl, sizeof(D3DMATERIAL9));
 	m_mtrl.Diffuse.r = m_mtrl.Ambient.r = 0.0f;
@@ -24,11 +24,10 @@ void ComText3D::Awake()
 	m_mtrl.Diffuse.b = m_mtrl.Ambient.b = 1.0f;
 	m_mtrl.Diffuse.a = m_mtrl.Ambient.a = 1.0f;
 
-	GameObject* pGOChr = GameObject::Find("undead_01");
+	/*GameObject* pGOChr = GameObject::Find("undead_01");
 	Vector3 vPos = pGOChr->transform->GetPosition();
 	vPos.y += 1.0f;
-
-	gameObject->transform->SetPosition(vPos);
+	gameObject->transform->SetPosition(vPos);*/
 }
 
 void ComText3D::Update()
@@ -73,8 +72,7 @@ HRESULT ComText3D::CreateD3DXTextMesh(LPD3DXMESH * ppMesh, TCHAR * pstrFont, DWO
 
 	hFontOld = (HFONT)SelectObject(hdc, hFont);
 
-	hr = D3DXCreateText(pDevice9, hdc, L"This is calling D3DXCreateText",
-		0.001f, 0.4f, &pMeshNew, NULL, NULL);
+	hr = D3DXCreateText(pDevice9, hdc, GetChrName(), 0.001f, 0.4f, &pMeshNew, NULL, NULL);
 
 	SelectObject(hdc, hFontOld);
 	DeleteObject(hFont);
@@ -84,4 +82,14 @@ HRESULT ComText3D::CreateD3DXTextMesh(LPD3DXMESH * ppMesh, TCHAR * pstrFont, DWO
 		*ppMesh = pMeshNew;
 
 	return hr;
+}
+
+void ComText3D::SetChrName(CString szChrName)
+{
+	m_szChrName = szChrName;
+}
+
+CString ComText3D::GetChrName()
+{
+	return m_szChrName;
 }
