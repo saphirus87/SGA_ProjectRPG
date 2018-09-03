@@ -5,8 +5,7 @@
 SceneManager* SceneManager::m_pInstance = NULL;
 
 SceneManager::SceneManager() : 
-	m_pCurrentScene(NULL),
-	m_pUILoading(NULL)
+	m_pCurrentScene(NULL)
 {
 }
 
