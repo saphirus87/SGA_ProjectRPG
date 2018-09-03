@@ -13,7 +13,8 @@
 #include "../Application/ComUIInventory.h"
 
 SceneRPG::SceneRPG(CString szName) : Scene(szName), 
-	IsGameEnd(false)
+	IsGameEnd(false),
+	fLoadingPer(0)
 {
 }
 
@@ -23,6 +24,15 @@ SceneRPG::~SceneRPG()
 
 void SceneRPG::Init()
 {
+	
+}
+
+void SceneRPG::Update()
+{
+	Scene::Update();
+	if (fLoadingPer >= 100)
+		return;
+
 	GameObject* pUILoading = GameObject::Find("ScreenUI");
 	ComDialog* comDialog = (ComDialog*)pUILoading->GetComponent("ComDialog");
 
@@ -31,34 +41,49 @@ void SceneRPG::Init()
 	pLoadingBar->SetCurValue(0);
 	pLoadingBar->Render();
 
-	CreateUI();
-	pLoadingBar->SetCurValue(10);
-	pLoadingBar->Render();
+	if (fLoadingPer < 10)
+	{
+		CreateUI();
+		pLoadingBar->SetCurValue(fLoadingPer = 10);
+	}
 
-	CreateMap();
-	pLoadingBar->SetCurValue(20);
-	pLoadingBar->Render();
+	if (fLoadingPer < 20)
+	{
+		CreateMap();
+		pLoadingBar->SetCurValue(fLoadingPer = 20);
+	}
 
-	CreateMapObject();
-	pLoadingBar->SetCurValue(40);
-	pLoadingBar->Render();
+	if (fLoadingPer < 30)
+	{
+		CreateMapObject();
+		pLoadingBar->SetCurValue(fLoadingPer = 30);
+	}
 
-	CreateHuman();
-	pLoadingBar->SetCurValue(60);
-	pLoadingBar->Render();
+	if (fLoadingPer < 40)
+	{
+		CreateHuman();
+		pLoadingBar->SetCurValue(fLoadingPer = 40);
+	}
 
-	CreateUndead();
-	pLoadingBar->SetCurValue(80);
-	pLoadingBar->Render();
+	if (fLoadingPer < 50)
+	{
+		CreateUndead();
+		pLoadingBar->SetCurValue(fLoadingPer = 50);
+	}
 
-	CreateTroll();
-	pLoadingBar->SetCurValue(85);
-	pLoadingBar->Render();
+	if (fLoadingPer < 60)
+	{
+		CreateTroll();
+		pLoadingBar->SetCurValue(fLoadingPer = 60);
+	}
 
-	CreateMonster();
-	pLoadingBar->SetCurValue(100);
-	pLoadingBar->Render();
+	if (fLoadingPer < 70)
+	{
+		CreateMonster();
+		pLoadingBar->SetCurValue(fLoadingPer = 70);
+	}
 
+	fLoadingPer = 100;
 	comDialog->SetIsVisible(false);
 
 	//CreateTest();

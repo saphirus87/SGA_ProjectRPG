@@ -10,7 +10,7 @@ public:
 	virtual void Init() = 0;
 
 	// 필요시 재정의 해서 사용
-	void Update();
+	virtual void Update();
 	void Render();
 	inline CString& Name() { return m_szName; }
 

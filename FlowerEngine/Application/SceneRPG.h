@@ -10,6 +10,7 @@ public:
 
 	// Scene을(를) 통해 상속됨
 	virtual void Init() override;
+	void Update() override;
 
 	// 게임이 끝났는지 여부
 	bool IsGameEnd;
@@ -34,5 +35,7 @@ private:
 private:
 	FactoryGameObject factory;
 	D3DLIGHT9 m_lightPoint; // 포인트 라이트
+
+	float fLoadingPer;
 };
 
