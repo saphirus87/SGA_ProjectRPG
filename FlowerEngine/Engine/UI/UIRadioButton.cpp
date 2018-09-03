@@ -23,6 +23,8 @@ void UIRadioButton::Awake()
 
 void UIRadioButton::Update()
 {
+	if (!m_IsVisible) return;
+
 	for (int i = 0; i < m_vecRadioButton.size(); ++i)
 	{
 		if (IsOnMouse(i))

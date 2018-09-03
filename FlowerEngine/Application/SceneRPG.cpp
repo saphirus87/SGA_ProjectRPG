@@ -280,18 +280,15 @@ void SceneRPG::CreateUI()
 
 	GameObject* pUIInven = factory.CreateUIDialog("InvenUI", 120.0f, 120.0f);
 	ComUIInventory* pComInven = new ComUIInventory("ComUIInventory");
-	pComInven->SetInvenSize(20);
+	pComInven->SetInvenSize(16);
 	pUIInven->AddComponent(pComInven);
 	uiDialog = (ComDialog*)pUIInven->GetComponent("ComDialog");
 
 	uiDialog->SetToggleKey('I');
 	uiDialog->SetMoveable(true);
-	uiDialog->AddImage(1, "Resources/ui/ui-bag-5x4.png");
-	uiDialog->AddImage(0, "Resources/ui/inv_misc_bag_08.png");
+	uiDialog->AddImage(0, "Resources/ui/ui-backpackbackground.png");
 	uiDialog->AddButton(2, "Resources/ui/ui-panel-minimizebutton-up.png", "Resources/ui/ui-panel-minimizebutton-up.png",
 		"Resources/ui/ui-panel-minimizebutton-down.png", pComInven, "InvenClose");
 	//uiDialog->GetButton(2)->SetScale(Vector3(2.5f, 2.5f, 1.0f));
 	uiDialog->GetButton(2)->SetPosition(Vector3(230, 8, 0));
-	uiDialog->GetImage(0)->SetScale(Vector3(0.5f, 0.5f, 1.0f));
-	uiDialog->GetImage(0)->SetPosition(Vector3(72.0f, 7.0f, 0.0f));
 }

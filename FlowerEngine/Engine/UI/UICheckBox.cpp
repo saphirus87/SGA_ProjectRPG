@@ -24,6 +24,8 @@ void UICheckBox::Awake()
 
 void UICheckBox::Update()
 {
+	if (!m_IsVisible) return;
+
 	if (IsOnMouse())
 	{
 		if (Input::ButtonPress(VK_LBUTTON))
@@ -48,6 +50,8 @@ void UICheckBox::Update()
 
 void UICheckBox::Render()
 {
+	if (!m_IsVisible) return;
+
 	if (m_pBoxTex)
 	{
 		RECT rc;

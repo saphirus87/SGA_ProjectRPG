@@ -3,7 +3,7 @@
 #include "ItemInfo.h"
 
 ComUIInventory::ComUIInventory(CString szName)
-	: Component(szName), m_InvenSize(4)
+	: Component(szName), m_InvenSize(4), m_Money(0)
 {
 }
 
@@ -17,34 +17,66 @@ void ComUIInventory::Awake()
 
 	ComDialog* uiDialog = (ComDialog*)gameObject->GetComponent("ComDialog");
 
+	// Inventory Size에 맞게 버튼 생성(아이템 칸 마다)
 	for (int i = 0; i < m_InvenSize; ++i)
 	{
 		CString btnName;
 		btnName.Format(L"InvenSlot%d", i + 1);
-		uiDialog->AddButton(1001 + i, "None", "None", "None", this, btnName);
-		uiDialog->GetButton(1001 + i)->SetScale(Vector3(0.58f, 0.58f, 0.0f));
-		uiDialog->GetButton(1001 + i)->SetPosition(Vector3(81.5f + (float)(i % 4) * 41.5f, 51.5f + (float)(i / 4) * 41.0f, 0));
+		uiDialog->AddButton(eInvenUI_Slot1Btn + i, "None", "None", "None", this, btnName);
+		uiDialog->GetButton(eInvenUI_Slot1Btn + i)->SetScale(Vector3(0.58f, 0.58f, 0.0f));
+		uiDialog->GetButton(eInvenUI_Slot1Btn + i)->SetPosition(Vector3(81.5f + (float)(i % 4) * 41.5f, 65.5f + (float)(i / 4) * 41.0f, 0));
 
-		uiDialog->AddText(1101 + i, Assets::GetFont(Assets::FontType_NORMAL), "00");
-		uiDialog->GetText(1101 + i)->SetScale(Vector3(0.7f, 0.7f, 0.0f));
-		uiDialog->GetText(1101 + i)->SetPosition(Vector3(81.5f + (float)(i % 4) * 41.5f, 71.5f + (float)(i / 4) * 41.0f, 0));
-		uiDialog->GetText(1101 + i)->SetDrawFormat(DT_RIGHT | DT_VCENTER);
-		uiDialog->GetText(1101 + i)->SetText("");
+		uiDialog->AddText(eInvenUI_Slot1NumText + i, Assets::GetFont(Assets::FontType_NORMAL), "00");
+		uiDialog->GetText(eInvenUI_Slot1NumText + i)->SetScale(Vector3(0.7f, 0.7f, 0.0f));
+		uiDialog->GetText(eInvenUI_Slot1NumText + i)->SetPosition(Vector3(81.5f + (float)(i % 4) * 41.5f, 85.5f + (float)(i / 4) * 41.0f, 0));
+		uiDialog->GetText(eInvenUI_Slot1NumText + i)->SetDrawFormat(DT_RIGHT | DT_VCENTER);
+		uiDialog->GetText(eInvenUI_Slot1NumText + i)->SetText("");
 	}
 
-	uiDialog->AddImage(2001, "None");
-	uiDialog->GetImage(2001)->SetScale(Vector3(0.58f, 0.58f, 0.0f));
+	// 소지금 표시를 위한 이미지 및 텍스트 추가
+	uiDialog->AddImage(eInvenUI_CopperCoinImg, "Resources/ui/ui-coppericon.png");
+	uiDialog->AddImage(eInvenUI_SilverCoinImg, "Resources/ui/ui-silvericon.png");
+	uiDialog->AddImage(eInvenUI_GoldCoinImg, "Resources/ui/ui-goldicon.png");
 
-	uiDialog->AddText(2101, Assets::GetFont(Assets::FontType_NORMAL), "00");
-	uiDialog->GetText(2101)->SetScale(Vector3(0.7f, 0.7f, 0.0f));
-	uiDialog->GetText(2101)->SetDrawFormat(DT_RIGHT | DT_VCENTER);
-	uiDialog->GetText(2101)->SetText("");
+	uiDialog->AddText(eInvenUI_CopperCoinText, Assets::GetFont(Assets::FontType_Coin), "00");
+	uiDialog->AddText(eInvenUI_SilverCoinText, Assets::GetFont(Assets::FontType_Coin), "00");
+	uiDialog->AddText(eInvenUI_GoldCoinText, Assets::GetFont(Assets::FontType_Coin), "000000");
 
+	// 소지금 관련 이미지 텍스트 설정
+	uiDialog->GetImage(eInvenUI_CopperCoinImg)->SetPosition(Vector3(226, 229, 0));
+	uiDialog->GetText(eInvenUI_CopperCoinText)->SetPosition(Vector3(192, 229, 0));
+	uiDialog->GetText(eInvenUI_CopperCoinText)->SetDrawFormat(DT_RIGHT | DT_VCENTER);
+
+	uiDialog->GetImage(eInvenUI_SilverCoinImg)->SetPosition(Vector3(188, 229, 0));
+	uiDialog->GetText(eInvenUI_SilverCoinText)->SetPosition(Vector3(154, 229, 0));
+	uiDialog->GetText(eInvenUI_SilverCoinText)->SetDrawFormat(DT_RIGHT | DT_VCENTER);
+
+	uiDialog->GetImage(eInvenUI_GoldCoinImg)->SetPosition(Vector3(150, 229, 0));
+	uiDialog->GetText(eInvenUI_GoldCoinText)->SetPosition(Vector3(52, 229, 0));
+	uiDialog->GetText(eInvenUI_GoldCoinText)->SetDrawFormat(DT_RIGHT | DT_VCENTER);
+
+
+
+	// Mouse로 집고 있는 Item 표시를 위한 이미지 및 텍스트 추가(추후 다른곳으로 이동 필요)
+	uiDialog->AddImage(eInvenUI_PickedItemImg, "None");
+	uiDialog->GetImage(eInvenUI_PickedItemImg)->SetScale(Vector3(0.58f, 0.58f, 0.0f));
+
+	uiDialog->AddText(eInvenUI_PickedItemNumText, Assets::GetFont(Assets::FontType_NORMAL), "00");
+	uiDialog->GetText(eInvenUI_PickedItemNumText)->SetScale(Vector3(0.7f, 0.7f, 0.0f));
+	uiDialog->GetText(eInvenUI_PickedItemNumText)->SetDrawFormat(DT_RIGHT | DT_VCENTER);
+	uiDialog->GetText(eInvenUI_PickedItemNumText)->SetText("");
+
+
+	// 테스트 코드(테스트 후 삭제)
+	// 아이템 생성
 	for (int i = 0; i < m_InvenSize; ++i)
 	{
 		m_vecItem[i].first = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X", "Resources/ui/icon_shoulder_1.png");
 		m_vecItem[i].second = 20;
 	}
+	// 소지금 설정
+	//m_Money = 10101;
+	//******************************************************************************************************************************************
 
 	UpdateIcons();
 }
@@ -53,8 +85,8 @@ void ComUIInventory::Update()
 {
 	Vector2 mousePos = Input::GetMousePosition();
 	ComDialog* uiDialog = (ComDialog*)gameObject->GetComponent("ComDialog");
-	uiDialog->GetImage(2001)->SetPosition(Vector3(mousePos.x - 16 - gameObject->transform->GetPosition().x, mousePos.y - 16 - gameObject->transform->GetPosition().y, 0));
-	uiDialog->GetText(2101)->SetPosition(Vector3(mousePos.x - 16 - gameObject->transform->GetPosition().x, mousePos.y + 4 - gameObject->transform->GetPosition().y, 0));
+	uiDialog->GetImage(eInvenUI_PickedItemImg)->SetPosition(Vector3(mousePos.x - 16 - gameObject->transform->GetPosition().x, mousePos.y - 16 - gameObject->transform->GetPosition().y, 0));
+	uiDialog->GetText(eInvenUI_PickedItemNumText)->SetPosition(Vector3(mousePos.x - 16 - gameObject->transform->GetPosition().x, mousePos.y + 4 - gameObject->transform->GetPosition().y, 0));
 }
 
 void ComUIInventory::Render()
@@ -235,40 +267,93 @@ bool ComUIInventory::PickItem(int InvenSlot)
 	return true;
 }
 
+void ComUIInventory::EarnMoney(UINT money)
+{
+	m_Money += money;
+	UpdateIcons();
+}
+
+bool ComUIInventory::SpendMoney(UINT money)
+{
+	if (m_Money < money) return false;
+
+	m_Money -= money;
+	UpdateIcons();
+	return false;
+}
+
 void ComUIInventory::UpdateIcons()
 {
 	ComDialog* uiDialog = (ComDialog*)gameObject->GetComponent("ComDialog");
 
+	// Inventory Slot 이미지 및 텍스트 업데이트
 	for (int i = 0; i < m_vecItem.size(); i++)
 	{
 		if (m_vecItem[i].first == nullptr)
-			uiDialog->GetButton(1001 + i)->SetTexture("None", "None", "None");
+			uiDialog->GetButton(eInvenUI_Slot1Btn + i)->SetTexture("None", "None", "None");
 		else
-			uiDialog->GetButton(1001 + i)->SetTexture(m_vecItem[i].first->IconName, m_vecItem[i].first->IconName, m_vecItem[i].first->IconName);
+			uiDialog->GetButton(eInvenUI_Slot1Btn + i)->SetTexture(m_vecItem[i].first->IconName, m_vecItem[i].first->IconName, m_vecItem[i].first->IconName);
 
 		if (m_vecItem[i].second <= 1)
-			uiDialog->GetText(1101 + i)->SetText("");
+			uiDialog->GetText(eInvenUI_Slot1NumText + i)->SetText("");
 		else
 		{
 			CString num;
 			num.Format(L"%d", m_vecItem[i].second);
-			uiDialog->GetText(1101 + i)->SetText(num);
+			uiDialog->GetText(eInvenUI_Slot1NumText + i)->SetText(num);
 		}
 	}
 
+	// Mouse로 집고 있는 Item 이미지 및 텍스트 업데이트
 	if (m_PickedItem.first == nullptr)
-		uiDialog->GetImage(2001)->SetTexture("None");
+		uiDialog->GetImage(eInvenUI_PickedItemImg)->SetTexture("None");
 	else
-		uiDialog->GetImage(2001)->SetTexture(m_PickedItem.first->IconName);
+		uiDialog->GetImage(eInvenUI_PickedItemImg)->SetTexture(m_PickedItem.first->IconName);
 
 	if (m_PickedItem.second <= 1)
-		uiDialog->GetText(2101)->SetText("");
+		uiDialog->GetText(eInvenUI_PickedItemNumText)->SetText("");
 	else
 	{
 		CString num;
 		num.Format(L"%d", m_PickedItem.second);
-		uiDialog->GetText(2101)->SetText(num);
+		uiDialog->GetText(eInvenUI_PickedItemNumText)->SetText(num);
 	}
+
+	// 소지금 이미지 및 텍스트 업데이트
+	if (m_Money < 10000)
+	{
+		uiDialog->GetImage(eInvenUI_GoldCoinImg)->SetIsVisible(false);
+		uiDialog->GetText(eInvenUI_GoldCoinText)->SetIsVisible(false);
+	}
+
+	if (m_Money < 100)
+	{
+		uiDialog->GetImage(eInvenUI_SilverCoinImg)->SetIsVisible(false);
+		uiDialog->GetText(eInvenUI_SilverCoinText)->SetIsVisible(false);
+	}
+
+	if (m_Money > 10000)
+	{
+		CString gold;
+		gold.Format(L"%d", m_Money / 10000);
+		uiDialog->GetText(eInvenUI_GoldCoinText)->SetText(gold);
+
+		uiDialog->GetImage(eInvenUI_GoldCoinImg)->SetIsVisible(true);
+		uiDialog->GetText(eInvenUI_GoldCoinText)->SetIsVisible(true);
+	}
+	if (m_Money > 100)
+	{
+		CString silver;
+		silver.Format(L"%d", (m_Money / 100) % 100);
+		uiDialog->GetText(eInvenUI_SilverCoinText)->SetText(silver);
+
+		uiDialog->GetImage(eInvenUI_SilverCoinImg)->SetIsVisible(true);
+		uiDialog->GetText(eInvenUI_SilverCoinText)->SetIsVisible(true);
+	}
+
+	CString copper;
+	copper.Format(L"%d", m_Money % 100);
+	uiDialog->GetText(eInvenUI_CopperCoinText)->SetText(copper);
 }
 
 bool ComUIInventory::SetInvenSize(UINT InvenSize)

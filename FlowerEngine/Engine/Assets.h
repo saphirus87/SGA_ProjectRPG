@@ -6,7 +6,8 @@ public:
 	enum FontType
 	{
 		FontType_NORMAL,
-		FontType_QUEST
+		FontType_QUEST,
+		FontType_Coin
 	};
 
 	static void	Delete();

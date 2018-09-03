@@ -36,7 +36,7 @@ void ComDialog::Update()
 		{
 			if (Input::ButtonDown(VK_LBUTTON))
 				m_IsDrag = true;
-			else if ((m_IsDrag && Input::ButtonUp(VK_LBUTTON)) || Input::ButtonDoubleClick(VK_LBUTTON)) 
+			else if ((m_IsDrag && Input::ButtonUp(VK_LBUTTON)) || Input::ButtonDoubleClick(VK_LBUTTON))
 				m_IsDrag = false;
 			else if (m_IsDrag)
 			{

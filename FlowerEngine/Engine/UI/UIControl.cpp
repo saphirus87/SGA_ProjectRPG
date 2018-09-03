@@ -8,7 +8,8 @@ UIControl::UIControl()
 	m_Color(1.0f, 1.0f, 1.0f, 1.0f),
 	m_Position(0.0f, 0.0f, 0.0f),
 	m_Pivot(0.0f, 0.0f, 0.0f),
-	m_Scale(1.0f, 1.0f, 1.0f)
+	m_Scale(1.0f, 1.0f, 1.0f),
+	m_IsVisible(true)
 {
 }
 

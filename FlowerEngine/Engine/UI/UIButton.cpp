@@ -22,6 +22,8 @@ void UIButton::Awake()
 
 void UIButton::Update()
 {
+	if (!m_IsVisible) return;
+
 	if (IsOnMouse())
 	{
 		if (Input::ButtonPress(VK_LBUTTON))
@@ -60,6 +62,8 @@ void UIButton::Update()
 
 void UIButton::Render()
 {
+	if (!m_IsVisible) return;
+
 	RECT rc;
 	SetRect(&rc, 0, 0, m_Size.x, m_Size.y);
 	Vector3 pos = m_pParent->gameObject->transform->GetPosition() + m_Position;
@@ -68,7 +72,10 @@ void UIButton::Render()
 	D3DXMatrixTranslation(&matT, pos.x, pos.y, pos.z);
 
 	m_pSprite->SetTransform(&(matS * matT));
-	m_pSprite->Draw(m_Textures[m_ButtonState], &rc, &m_Pivot, &Vector3(0, 0, 0), m_Color);
+	if (m_ButtonState == eButtonState_Mouseover)
+		m_pSprite->Draw(m_Textures[m_ButtonState], &rc, &m_Pivot, &Vector3(0, 0, 0), D3DXCOLOR(0.6f, 0.6f, 0.6f, 0.6f));
+	else
+		m_pSprite->Draw(m_Textures[m_ButtonState], &rc, &m_Pivot, &Vector3(0, 0, 0), m_Color);
 }
 
 void UIButton::SetTexture(CString szNormalImg, CString szMouseoverImg, CString szClickImg)

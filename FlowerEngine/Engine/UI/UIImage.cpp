@@ -24,6 +24,8 @@ void UIImage::Update()
 
 void UIImage::Render()
 {
+	if (!m_IsVisible) return;
+
 	if (pTexture)
 	{
 		RECT rc;
