@@ -288,7 +288,7 @@ void SceneRPG::CreateTest()
 
 void SceneRPG::CreateUI()
 {
-	GameObject* pUIBar = factory.CreateUIDialog("testUI", Vector3(20.0f, 20.0f, 0.0f));
+	GameObject* pUIBar = factory.CreateUIDialog("testUI", Vector3(20.0f, 20.0f, 1.0f));
 	ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");
 	uiDialog->SetIsVisible(true);
 
@@ -314,7 +314,7 @@ void SceneRPG::CreateUI()
 	uiDialog->GetRadioButton(100)->AddRadioButton("radio3");
 	uiDialog->GetRadioButton(100)->AddRadioButton("radio4");*/
 
-	GameObject* pUIInven = factory.CreateUIDialog("InvenUI", Vector3(120.0f, 120.0f, 0.0f));
+	GameObject* pUIInven = factory.CreateUIDialog("InvenUI", Vector3(120.0f, 120.0f, 2.0f));
 	ComUIInventory* pComInven = new ComUIInventory("ComUIInventory");
 	pComInven->SetInvenSize(16);
 	pUIInven->AddComponent(pComInven);

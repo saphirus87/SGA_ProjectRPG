@@ -76,7 +76,7 @@ void Scene::Update()
 	
 	m_listRender.sort(CompareDist);
 	//m_listRender.push_back(m_pGOPostEffect);
-	m_listRenderUI.sort(CompareZ);
+	m_listRenderUI.sort(CompareDist);
 }
 
 void Scene::Render()

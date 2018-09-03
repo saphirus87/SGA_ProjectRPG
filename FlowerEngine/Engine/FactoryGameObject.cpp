@@ -397,7 +397,8 @@ GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPa
 GameObject * FactoryGameObject::CreateUIDialog(CString szName, Vector3& pos)
 {
 	GameObject* pGOUIDialog = CreateGameObject(szName);
-	pGOUIDialog->transform->SetPosition(pos);
+	pGOUIDialog->transform->SetPosition(pos.x, pos.y, 0.0f);
+	pGOUIDialog->fDistanceToCamera = pos.z;
 	pGOUIDialog->IsAlwaysRender = true;
 
 	ComDialog* pComDialog = new ComDialog("ComDialog");
