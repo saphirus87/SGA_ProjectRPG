@@ -125,6 +125,7 @@ void ComRenderSkinnedMesh::SeparateFrame(XFrame pFrame, CString szName, Animatio
 
 void ComRenderSkinnedMesh::PlayAnimation(int iIndex, bool isBlend)
 {
+	// 애니메이션 중복 재생 방지
 	if (m_iCurrentAniIndex == iIndex)
 		return;
 
@@ -211,7 +212,6 @@ HRESULT ComRenderSkinnedMesh::AddCallbackKeysAndCompress(
 
 	pASNew->Release();
 	pASNew = NULL;
-
 
 e_Exit:
 

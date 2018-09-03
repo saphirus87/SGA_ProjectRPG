@@ -107,7 +107,7 @@ void SceneRPG::CreateTroll()
 	// 이 게임 오브젝트는 장비 장착 가능
 	ComChrEquipment* pEquipment = (ComChrEquipment*)pGOTroll->GetComponent("ComChrEquipment");
 
-	// 휴먼 캐릭터 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
+	// 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
 	EquipmentShoulder*pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X", "icon_shoulder_1.png");
 	pShoulder->Set(10, 10, 1, 1, eChrType_Troll);
 	pShoulder->TextureName = "Resources/character/Equipment/shoulder_robe_b_03blue.png";
