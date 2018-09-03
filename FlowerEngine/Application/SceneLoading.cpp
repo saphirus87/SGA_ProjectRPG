@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "SceneLoading.h"
-
+#include "SceneRPG.h"
 
 SceneLoading::SceneLoading(CString szName) : 
 	Scene(szName)
@@ -24,4 +24,7 @@ void SceneLoading::Init()
 	{
 		comDialog->SetIsVisible(true);
 	}
+
+	SceneManager::GetInstance()->AddScene(new SceneRPG("SceneRPG"));
+	SceneManager::GetInstance()->ChangeScene("SceneRPG");
 }
