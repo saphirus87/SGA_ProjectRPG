@@ -23,13 +23,38 @@ SceneRPG::~SceneRPG()
 
 void SceneRPG::Init()
 {
+	GameObject* pUILoading = factory.CreateUIDialog("ScreenUI", 0, 0);
+	ComDialog* comDialog = (ComDialog*)pUILoading->GetComponent("ComDialog");
+
 	CreateUI();
+	comDialog->Update();
+	comDialog->Render();
+
 	CreateMap();
+	comDialog->Update();
+	comDialog->Render();
+
 	CreateMapObject();
+	comDialog->Update();
+	comDialog->Render();
+
 	CreateHuman();
+	comDialog->Update();
+	comDialog->Render();
+
 	CreateUndead();
+	comDialog->Update();
+	comDialog->Render();
+
 	CreateTroll();
+	comDialog->Update();
+	comDialog->Render();
+
 	CreateMonster();
+	comDialog->Update();
+	comDialog->Render();
+
+	comDialog->SetIsVisible(false);
 
 	//CreateTest();
 }

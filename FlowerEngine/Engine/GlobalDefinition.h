@@ -163,6 +163,8 @@ enum eTag
 
 enum eUI
 {
+	eUI_Loading,
+	eUI_LoadingBar,
 	eUI_HPBar_Human,
 	eUI_MPBar_Human,
 	eUI_HPBar_Undead,
