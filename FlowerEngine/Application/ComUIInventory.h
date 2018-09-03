@@ -19,20 +19,21 @@ public:
 	virtual void OnPress(UIButton * pSender) override;
 
 	//
-	bool AddItem(CString szItemName, UINT ItemNum);
+	pair<ItemInfo*, UINT> AddItem(ItemInfo* Item, UINT ItemNum);
+	pair<ItemInfo*, UINT> InsertItemToSlot(ItemInfo* Item, UINT ItemNum, int InvenSlot);
 	//bool AddItem(ItemInfo*);
 
-	pair<CString, UINT> DeleteItem(int InvenNum);
+	pair<ItemInfo*, UINT> DeleteItem(int InvenSlot, UINT ItemNum);
 	//pair<CString, UINT> DeleteItem(ItemInfo* pItem, int Num); // 어떤 아이템, 개수 몇개를 지운다
-	bool FindItem(CString szItemName, int& StartIndex);
+	bool FindItem(unsigned int ItemID, int& StartIndex);
 	bool FindEmptySlot(int& StartIndex);
-	bool PickItem(int InvenNum);
+	bool PickItem(int InvenSlot);
 	void UpdateIcons();
 
 	bool SetInvenSize(UINT InvenSize);
 
 private:
-	vector<pair<CString, UINT>> m_vecItem;
+	vector<pair<ItemInfo*, UINT>> m_vecItem;
 
 	//vector<pair<ItemInfo*, UINT>> m_vecUIItem;
 
@@ -41,6 +42,6 @@ private:
 	// (다형성) ((EquipShoulder*)pItemInfo)->ATK_MIN
 	UINT m_InvenSize;
 
-	pair<CString, UINT> m_PickedItem;
+	pair<ItemInfo*, UINT> m_PickedItem;
 };
 
