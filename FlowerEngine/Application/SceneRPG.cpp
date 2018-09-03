@@ -23,7 +23,7 @@ SceneRPG::~SceneRPG()
 
 void SceneRPG::Init()
 {
-	GameObject* pUILoading = factory.CreateUIDialog("ScreenUI", 0, 0);
+	GameObject* pUILoading = GameObject::Find("ScreenUI");
 	ComDialog* comDialog = (ComDialog*)pUILoading->GetComponent("ComDialog");
 
 	CreateUI();
