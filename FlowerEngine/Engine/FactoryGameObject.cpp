@@ -394,10 +394,10 @@ GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPa
 	return pGOMonX;
 }
 
-GameObject * FactoryGameObject::CreateUIDialog(CString szName, float fPosX, float fPosY)
+GameObject * FactoryGameObject::CreateUIDialog(CString szName, Vector3& pos)
 {
 	GameObject* pGOUIDialog = CreateGameObject(szName);
-	pGOUIDialog->transform->SetPosition(fPosX, fPosY, 0);
+	pGOUIDialog->transform->SetPosition(pos);
 	pGOUIDialog->IsAlwaysRender = true;
 
 	ComDialog* pComDialog = new ComDialog("ComDialog");

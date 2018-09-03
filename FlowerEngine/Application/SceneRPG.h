@@ -36,6 +36,8 @@ private:
 	FactoryGameObject factory;
 	D3DLIGHT9 m_lightPoint; // 포인트 라이트
 
+	ComDialog* m_pLoadingUI;
+	UIProgressBar* m_pLoadingBar;
 	int iLoadingPer;
 };
 

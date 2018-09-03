@@ -15,7 +15,7 @@ SceneLoading::~SceneLoading()
 void SceneLoading::Init()
 {
 	FactoryGameObject factory;
-	GameObject* m_pUILoading = factory.CreateUIDialog("ScreenUI", 0, 0);
+	GameObject* m_pUILoading = factory.CreateUIDialog("ScreenUI", Vector3(0, 0, 0));
 	ComDialog* comDialog = (ComDialog*)m_pUILoading->GetComponent("ComDialog");
 
 	float fScreenWidth = DXUTGetWindowWidth();

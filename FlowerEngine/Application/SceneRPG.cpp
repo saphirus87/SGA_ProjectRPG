@@ -14,7 +14,9 @@
 
 SceneRPG::SceneRPG(CString szName) : Scene(szName), 
 	IsGameEnd(false),
-	iLoadingPer(-1)
+	iLoadingPer(-1),
+	m_pLoadingUI(NULL),
+	m_pLoadingBar(NULL)
 {
 }
 
@@ -24,69 +26,65 @@ SceneRPG::~SceneRPG()
 
 void SceneRPG::Init()
 {
-	GameObject* pUILoading = GameObject::Find("ScreenUI");
-	ComDialog* comDialog = (ComDialog*)pUILoading->GetComponent("ComDialog");
+	GameObject* pLoadingUI = GameObject::Find("ScreenUI");
+	m_pLoadingUI = (ComDialog*)pLoadingUI->GetComponent("ComDialog");
 
-	UIProgressBar* pLoadingBar = comDialog->GetProgressBar(eUI_LoadingBar);
-	pLoadingBar->SetMaxValue(100);
-	pLoadingBar->SetCurValue(0);
+	m_pLoadingBar = m_pLoadingUI->GetProgressBar(eUI_LoadingBar);
+	m_pLoadingBar->SetMaxValue(100);
+	m_pLoadingBar->SetCurValue(0);
 }
 
 void SceneRPG::Update()
 {
 	Scene::Update();
 
-	GameObject* pUILoading = GameObject::Find("ScreenUI");
-	ComDialog* comDialog = (ComDialog*)pUILoading->GetComponent("ComDialog");
-	UIProgressBar* pLoadingBar = comDialog->GetProgressBar(eUI_LoadingBar);
-
 	if (iLoadingPer >= 7)
 	{
 		// 로딩 완료
-		comDialog->SetIsVisible(false);
+		m_pLoadingUI->SetIsVisible(false);
 		return;
 	}
 
 	if (iLoadingPer > 0)
 	{
 		CreateUI();
-		pLoadingBar->SetCurValue(10);
+		m_pLoadingBar->SetCurValue(10);
 	}
 		
 	if (iLoadingPer > 1)
 	{
 		CreateMap();
-		pLoadingBar->SetCurValue(20);
+		m_pLoadingBar->SetCurValue(30);
 	}
 
 	if (iLoadingPer > 2)
 	{
 		CreateMapObject();
-		pLoadingBar->SetCurValue(30);
+		m_pLoadingBar->SetCurValue(40);
 	}
 
 	if (iLoadingPer > 3)
 	{
 		CreateHuman();
-		pLoadingBar->SetCurValue(40);
+		m_pLoadingBar->SetCurValue(60);
 	}
 
 	if (iLoadingPer > 4)
 	{
 		CreateUndead();
-		pLoadingBar->SetCurValue(50);
+		m_pLoadingBar->SetCurValue(80);
 	}
 
 	if (iLoadingPer > 5)
 	{
 		CreateTroll();
-		pLoadingBar->SetCurValue(60);
+		m_pLoadingBar->SetCurValue(95);
 	}
 
 	if (iLoadingPer > 6)
 	{
 		CreateMonster();
-		pLoadingBar->SetCurValue(100);
+		m_pLoadingBar->SetCurValue(100);
 	}
 
 	++iLoadingPer;
@@ -290,7 +288,7 @@ void SceneRPG::CreateTest()
 
 void SceneRPG::CreateUI()
 {
-	GameObject* pUIBar = factory.CreateUIDialog("testUI", 20.0f, 20.0f);
+	GameObject* pUIBar = factory.CreateUIDialog("testUI", Vector3(20.0f, 20.0f, 0.0f));
 	ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");
 	uiDialog->SetIsVisible(true);
 
@@ -316,7 +314,7 @@ void SceneRPG::CreateUI()
 	uiDialog->GetRadioButton(100)->AddRadioButton("radio3");
 	uiDialog->GetRadioButton(100)->AddRadioButton("radio4");*/
 
-	GameObject* pUIInven = factory.CreateUIDialog("InvenUI", 120.0f, 120.0f);
+	GameObject* pUIInven = factory.CreateUIDialog("InvenUI", Vector3(120.0f, 120.0f, 0.0f));
 	ComUIInventory* pComInven = new ComUIInventory("ComUIInventory");
 	pComInven->SetInvenSize(16);
 	pUIInven->AddComponent(pComInven);
