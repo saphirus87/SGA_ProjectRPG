@@ -66,7 +66,6 @@ ChrStateSkill1::ChrStateSkill1(ComChrControl * pControl) :
 {
 	m_pControl = pControl;
 	m_pTimerAnim = new CTimer(CClock::GetInstance());
-	m_pTimerAnim->Start();
 	m_pTimerCool = new CTimer(CClock::GetInstance());
 }
 
@@ -111,10 +110,11 @@ void ChrStateSkill1::Skill1(int iIndex)
 	
 	// MP »ç¿ë
 	m_pControl->m_pCharacter->Status.MP -= UseMP;
-	m_pControl->m_pCharacter->UpdateHPBar();
+	m_pControl->m_pCharacter->UpdateHPMPBar();
 
 	m_pControl->pAnimation->PlayAnimation(iIndex);
 	IsCoolTime = true;
+	m_pTimerAnim->Start();
 	m_pTimerAnim->Reset();
 	m_pTimerCool->Start();
 	m_pTimerCool->Reset();

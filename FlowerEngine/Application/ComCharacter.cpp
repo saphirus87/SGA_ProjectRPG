@@ -14,6 +14,7 @@ ComCharacter::ComCharacter(CString szName) :
 	m_pHPBar(NULL),
 	m_pMPBar(NULL),
 	m_pTimerHPRec(NULL),
+	m_pTimerMPRec(NULL),
 	m_eType(eChrType_COUNT) // 초기화 값으로 사용
 {
 }
@@ -27,9 +28,21 @@ void ComCharacter::Awake()
 	Init();
 }
 
+void ComCharacter::Init()
+{
+	// CPP 다형성
+	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
+	m_pChrEquipment = (ComChrEquipment*)gameObject->GetComponent("ComChrEquipment");
+
+	m_pTimerHPRec = new CTimer(CClock::GetInstance());
+	m_pTimerHPRec->Start();
+	m_pTimerMPRec = new CTimer(CClock::GetInstance());
+	m_pTimerMPRec->Start();
+}
+
 void ComCharacter::Update()
 {
-	HpRecovery();
+	HPMPRecovery();
 }
 
 void ComCharacter::Render()
@@ -85,7 +98,7 @@ void ComCharacter::Defence(int dmg)
 	Status.HP -= dmg;
 	
 	// UI 갱신
-	UpdateHPBar();
+	UpdateHPMPBar();
 }
 
 bool ComCharacter::IsDeath()
@@ -96,22 +109,32 @@ bool ComCharacter::IsDeath()
 	return false;
 }
 
-void ComCharacter::HpRecovery()
+void ComCharacter::HPMPRecovery()
 {
-	// 1초마다 회복
-	if (m_pTimerHPRec->GetTime() >= 3.0f)
+	// 3초마다 회복
+	if (m_pTimerHPRec->GetTime() >= 3.0f) // 3.0 수치 -> STATUS로 수정 필요
 	{
 		// 캐릭터가 죽어있지 않을 때와 HP가 꽉차있지 않으면
 		if (Status.HP > 0 && Status.HP < Status.HPMAX)
 		{
 			Status.HP += 1;
-			UpdateHPBar();
+			UpdateHPMPBar();
 		}
 		m_pTimerHPRec->Reset();
 	}
+	// 3초마다 회복
+	if (m_pTimerMPRec->GetTime() >= 3.0f) // 3.0 수치 -> STATUS로 수정 필요
+	{
+		if (Status.MP < Status.MPMAX)
+		{
+			Status.MP += 1;
+			UpdateHPMPBar();
+		}
+		m_pTimerMPRec->Reset();
+	}
 }
 
-void ComCharacter::UpdateHPBar()
+void ComCharacter::UpdateHPMPBar()
 {
 	if (m_pHPBar)
 	{
@@ -128,15 +151,6 @@ void ComCharacter::UpdateHPBar()
 
 		m_pMPBar->SetCurValue(Status.MP);
 	}
-}
-
-void ComCharacter::Init()
-{
-	// CPP 다형성
-	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
-	m_pChrEquipment = (ComChrEquipment*)gameObject->GetComponent("ComChrEquipment");
-	m_pTimerHPRec = new CTimer(CClock::GetInstance());
-	m_pTimerHPRec->Start();
 }
 
 HRESULT AttackHandler::HandleCallback(UINT Track, LPVOID pCallbackData)

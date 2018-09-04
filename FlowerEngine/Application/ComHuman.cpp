@@ -30,7 +30,7 @@ void ComHuman::Awake()
 		m_pHPBar = uiDialog->GetProgressBar(eUI_HPBar_Human);
 		m_pHPBar->SetPosition(Vector3(100, 0, 0));
 		m_pHPBar->SetMaxValue(Status.HPMAX);
-		UpdateHPBar();
+		UpdateHPMPBar();
 
 		// MP바
 		uiDialog->AddProgressBar(eUI_MPBar_Human, "Resources/ui/6.tga");
@@ -39,7 +39,7 @@ void ComHuman::Awake()
 		m_pMPBar->SetPosition(Vector3(100, 50, 0));
 		m_pMPBar->SetMaxValue(Status.MPMAX);
 		m_pMPBar->SetMaxColor(Color(0, 0, 1, 1));
-		UpdateHPBar();
+		UpdateHPMPBar();
 
 		// 스킬 버튼
 		float fScreenHeight = DXUTGetWindowHeight();
@@ -71,7 +71,7 @@ void ComHuman::Awake()
 		// 스킬1 쿨타임 텍스트
 		uiDialog->AddText(eUI_SkillBtn1_Human_TextCoolTime, Assets::GetFont(Assets::FontType_NORMAL), "3.0");
 		uiTextCoolTimeSkill1 = uiDialog->GetText(eUI_SkillBtn1_Human_TextCoolTime);
-		//if (uiTextCoolTimeSkill1)
+		if (uiTextCoolTimeSkill1)
 		{
 			uiTextCoolTimeSkill1->SetPosition(Vector3(50, fScreenHeight - 130.0f, 0.0f));
 			uiTextCoolTimeSkill1->SetDrawFormat(DT_CENTER);
@@ -139,14 +139,14 @@ void ComHuman::Update()
 		{
 			CString szCoolTime;
 			szCoolTime.Format(L"%.1f", pStateSkill->CoolTime);
-			//if (uiTextCoolTimeSkill1)
+			if (uiTextCoolTimeSkill1)
 				uiTextCoolTimeSkill1->SetText(Assets::GetFont(Assets::FontType_NORMAL), szCoolTime);
 		}
 		else
 		{
 			CString szCoolTime;
 			szCoolTime.Format(L"%.1f", pStateSkill->CoolTime - pStateSkill->m_pTimerCool->GetTime());
-			//if (uiTextCoolTimeSkill1)
+			if (uiTextCoolTimeSkill1)
 				uiTextCoolTimeSkill1->SetText(Assets::GetFont(Assets::FontType_NORMAL), szCoolTime);
 		}
 	}

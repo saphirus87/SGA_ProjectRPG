@@ -34,10 +34,10 @@ public:
 	bool IsDeath();
 
 	// 시간에 따라 HP가 회복됩니다.
-	void HpRecovery();
+	void HPMPRecovery();
 
 	// UI 관련
-	void UpdateHPBar();
+	void UpdateHPMPBar();
 
 protected:
 	void Init();
@@ -63,4 +63,5 @@ protected:
 	UIProgressBar* m_pMPBar;
 
 	CTimer* m_pTimerHPRec;
+	CTimer* m_pTimerMPRec;
 };
