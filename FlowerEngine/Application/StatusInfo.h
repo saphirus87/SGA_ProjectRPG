@@ -29,6 +29,16 @@ public:
 	int DEF_PHY;
 	// 캐릭터는 기본적으로 마법 방어력이 있습니다.
 	int DEF_MGR;
+	
+	// HP 회복 시간
+	float REVTime_HP;
+	// HP 회복양
+	int REV_HP;
+	// MP 회복 시간
+	float REVTime_MP;
+	// MP 회복양
+	int REV_MP;
+
 	// 이동 속도
 	float MOVE_SPEED;
 	// 공격 속도

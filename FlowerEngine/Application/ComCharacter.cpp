@@ -111,23 +111,23 @@ bool ComCharacter::IsDeath()
 
 void ComCharacter::HPMPRecovery()
 {
-	// 3초마다 회복
-	if (m_pTimerHPRec->GetTime() >= 3.0f) // 3.0 수치 -> STATUS로 수정 필요
+	// N초마다 회복
+	if (m_pTimerHPRec->GetTime() >= Status.REVTime_HP)
 	{
 		// 캐릭터가 죽어있지 않을 때와 HP가 꽉차있지 않으면
 		if (Status.HP > 0 && Status.HP < Status.HPMAX)
 		{
-			Status.HP += 1;
+			Status.HP += Status.REV_HP; // 회복양
 			UpdateHPMPBar();
 		}
 		m_pTimerHPRec->Reset();
 	}
-	// 3초마다 회복
-	if (m_pTimerMPRec->GetTime() >= 3.0f) // 3.0 수치 -> STATUS로 수정 필요
+	// N초마다 회복
+	if (m_pTimerMPRec->GetTime() >= Status.REVTime_MP)
 	{
 		if (Status.MP < Status.MPMAX)
 		{
-			Status.MP += 1;
+			Status.MP += Status.REV_MP; // 회복양
 			UpdateHPMPBar();
 		}
 		m_pTimerMPRec->Reset();

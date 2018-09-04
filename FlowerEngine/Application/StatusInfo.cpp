@@ -13,7 +13,11 @@ DEF_PHY(1),
 DEF_MGR(1),
 MOVE_SPEED(0.02f),
 ATK_SPEED(0),
-CRI_PER(0)
+CRI_PER(0),
+REVTime_HP(3),
+REV_HP(1),
+REVTime_MP(3),
+REV_MP(1)
 {
 }
 
