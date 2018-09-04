@@ -68,9 +68,6 @@ ChrStateSkill1::ChrStateSkill1(ComChrControl * pControl) :
 	m_pTimerAnim = new CTimer(CClock::GetInstance());
 	m_pTimerAnim->Start();
 	m_pTimerCool = new CTimer(CClock::GetInstance());
-	
-	GameObject* pUIBar = GameObject::Find("testUI");
-	ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");
 }
 
 ChrStateSkill1::~ChrStateSkill1()

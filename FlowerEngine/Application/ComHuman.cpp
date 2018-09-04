@@ -5,7 +5,8 @@
 #include "ChrStateAttack.h"
 
 ComHuman::ComHuman(CString szName) : 
-	ComCharacter(szName)
+	ComCharacter(szName),
+	uiTextCoolTimeSkill1(NULL)
 {
 	m_eType = eChrType_Human;
 }
@@ -69,9 +70,12 @@ void ComHuman::Awake()
 
 		// 스킬1 쿨타임 텍스트
 		uiDialog->AddText(eUI_SkillBtn1_Human_TextCoolTime, Assets::GetFont(Assets::FontType_NORMAL), "3.0");
-		uiTextCoolTimeSkill1 = uiDialog->GetText(eUI_SkillBtn1_Human_TextCoolTime);
-		uiTextCoolTimeSkill1->SetPosition(Vector3(50, fScreenHeight - 130.0f, 0.0f));
-		uiTextCoolTimeSkill1->SetDrawFormat(DT_CENTER);
+		if (uiTextCoolTimeSkill1)
+		{
+			uiTextCoolTimeSkill1 = uiDialog->GetText(eUI_SkillBtn1_Human_TextCoolTime);
+			uiTextCoolTimeSkill1->SetPosition(Vector3(50, fScreenHeight - 130.0f, 0.0f));
+			uiTextCoolTimeSkill1->SetDrawFormat(DT_CENTER);
+		}
 	}
 	SetAniEvent();
 }
@@ -135,13 +139,15 @@ void ComHuman::Update()
 		{
 			CString szCoolTime;
 			szCoolTime.Format(L"%.1f", pStateSkill->CoolTime);
-			uiTextCoolTimeSkill1->SetText(Assets::GetFont(Assets::FontType_NORMAL), szCoolTime);
+			if (uiTextCoolTimeSkill1)
+				uiTextCoolTimeSkill1->SetText(Assets::GetFont(Assets::FontType_NORMAL), szCoolTime);
 		}
 		else
 		{
 			CString szCoolTime;
 			szCoolTime.Format(L"%.1f", pStateSkill->CoolTime - pStateSkill->m_pTimerCool->GetTime());
-			uiTextCoolTimeSkill1->SetText(Assets::GetFont(Assets::FontType_NORMAL), szCoolTime);
+			if (uiTextCoolTimeSkill1)
+				uiTextCoolTimeSkill1->SetText(Assets::GetFont(Assets::FontType_NORMAL), szCoolTime);
 		}
 	}
 }

@@ -53,8 +53,11 @@ void ComChrControl::Awake()
 	m_pCurrentState = m_vecState[eAni_Stand];
 	Stand();
 
-	m_pMap->UpdateIndexBufferQuadTree();
-	GetHeight();
+	if (m_pMap)
+	{
+		m_pMap->UpdateIndexBufferQuadTree();
+		GetHeight();
+	}
 }
 
 void ComChrControl::Update()
