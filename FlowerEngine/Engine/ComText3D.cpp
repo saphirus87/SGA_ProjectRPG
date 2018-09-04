@@ -33,9 +33,13 @@ void ComText3D::Awake()
 void ComText3D::Update()
 {
 	Matrix4x4 matView = Camera::GetInstance()->GetViewMatrix();
+	Matrix4x4 matS;
 
 	// 역행렬을 구해준 후
 	D3DXMatrixInverse(&m_matBillboard, NULL, &matView);
+	D3DXMatrixScaling(&matS, 0.5f, 0.5f, 0.5f);
+
+	m_matBillboard *= matS;
 
 	// 위치만 강제 셋팅
 	Vector3 vPos = gameObject->transform->GetPosition();
@@ -56,8 +60,8 @@ void ComText3D::Render()
 		pDevice9->SetRenderState(D3DRS_LIGHTING, false);
 		pDevice9->SetMaterial(&m_mtrl);
 		pDevice9->SetTransform(D3DTS_WORLD, &m_matBillboard);
-		m_pMesh3DText->DrawSubset(0);
 		pDevice9->SetRenderState(D3DRS_LIGHTING, true);
+		m_pMesh3DText->DrawSubset(0);
 	}
 }
 
