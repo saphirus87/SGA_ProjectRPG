@@ -16,18 +16,14 @@ ComText3D::~ComText3D()
 
 void ComText3D::Awake()
 {
-	CreateD3DXTextMesh(&m_pMesh3DText, L"맑은 고딕", 10, FALSE, FALSE);
+	CreateD3DXTextMesh(&m_pMesh3DText, L"맑은 고딕", 5, FALSE, FALSE);
 
 	ZeroMemory(&m_mtrl, sizeof(D3DMATERIAL9));
-	m_mtrl.Diffuse.r = m_mtrl.Ambient.r = 0.0f;
-	m_mtrl.Diffuse.g = m_mtrl.Ambient.g = 0.0f;
-	m_mtrl.Diffuse.b = m_mtrl.Ambient.b = 1.0f;
-	m_mtrl.Diffuse.a = m_mtrl.Ambient.a = 1.0f;
-
-	/*GameObject* pGOChr = GameObject::Find("undead_01");
-	Vector3 vPos = pGOChr->transform->GetPosition();
-	vPos.y += 1.0f;
-	gameObject->transform->SetPosition(vPos);*/
+	m_mtrl.Diffuse.r = m_mtrl.Emissive.r = 1.0f;
+	m_mtrl.Diffuse.g = m_mtrl.Emissive.g = 1.0f;
+	m_mtrl.Diffuse.b = m_mtrl.Emissive.b = 0.0f;
+	m_mtrl.Diffuse.a = m_mtrl.Emissive.a = 1.0f;
+	
 }
 
 void ComText3D::Update()
@@ -37,31 +33,27 @@ void ComText3D::Update()
 
 	// 역행렬을 구해준 후
 	D3DXMatrixInverse(&m_matBillboard, NULL, &matView);
-	D3DXMatrixScaling(&matS, 0.5f, 0.5f, 0.5f);
+	D3DXMatrixScaling(&matS, 0.20f, 0.20f, 0.20f);
 
 	m_matBillboard *= matS;
 
 	// 위치만 강제 셋팅
 	Vector3 vPos = gameObject->transform->GetPosition();
 	//Vector3 vPos = GetChrNamePos();
-	m_matBillboard._41 = vPos.x - 0.5f;
-	m_matBillboard._42 = vPos.y + 1;;
+	m_matBillboard._41 = vPos.x;
+	m_matBillboard._42 = vPos.y + 1.3f;;
 	m_matBillboard._43 = vPos.z;
-
-	/*m_matBillboard._11 *= 0.5f;
-	m_matBillboard._22 *= 0.5f;
-	m_matBillboard._23 *= 0.5f;*/
 }
 
 void ComText3D::Render()
 {
 	if (m_pMesh3DText != NULL)
 	{
-		pDevice9->SetRenderState(D3DRS_LIGHTING, false);
+		pDevice9->SetRenderState(D3DRS_LIGHTING, true);
 		pDevice9->SetMaterial(&m_mtrl);
 		pDevice9->SetTransform(D3DTS_WORLD, &m_matBillboard);
-		pDevice9->SetRenderState(D3DRS_LIGHTING, true);
 		m_pMesh3DText->DrawSubset(0);
+		pDevice9->SetRenderState(D3DRS_LIGHTING, false);
 	}
 }
 
