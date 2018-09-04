@@ -16,13 +16,16 @@ public:
 
 	void SetChrName(CString szChrName);
 	CString GetChrName();
+	void SetChrNamePos(Vector3& vChrNamePos);
+	Vector3& GetChrNamePos();
 
 private:
 	Device9 pDevice9;
 	Mesh m_pMesh3DText;
 	Material m_mtrl;
-
+	// 캐릭터 이름값, 위치값을 저장하는 변수
 	CString m_szChrName;
+	Vector3 m_vChrNamePos;
 	// 항상 카메라를 바라보게 하는 Y축 역행렬
 	Matrix4x4 m_matBillboard;
 };

@@ -16,7 +16,7 @@ ComText3D::~ComText3D()
 
 void ComText3D::Awake()
 {
-	CreateD3DXTextMesh(&m_pMesh3DText, L"±¼¸²", 10, FALSE, FALSE);
+	CreateD3DXTextMesh(&m_pMesh3DText, L"¸¼Àº °íµñ", 10, FALSE, FALSE);
 
 	ZeroMemory(&m_mtrl, sizeof(D3DMATERIAL9));
 	m_mtrl.Diffuse.r = m_mtrl.Ambient.r = 0.0f;
@@ -39,19 +39,25 @@ void ComText3D::Update()
 
 	// À§Ä¡¸¸ °­Á¦ ¼ÂÆÃ
 	Vector3 vPos = gameObject->transform->GetPosition();
-	m_matBillboard._41 = vPos.x;
-	m_matBillboard._42 = vPos.y;
+	//Vector3 vPos = GetChrNamePos();
+	m_matBillboard._41 = vPos.x - 0.5f;
+	m_matBillboard._42 = vPos.y + 1;;
 	m_matBillboard._43 = vPos.z;
+
+	/*m_matBillboard._11 *= 0.5f;
+	m_matBillboard._22 *= 0.5f;
+	m_matBillboard._23 *= 0.5f;*/
 }
 
 void ComText3D::Render()
 {
 	if (m_pMesh3DText != NULL)
 	{
+		pDevice9->SetRenderState(D3DRS_LIGHTING, false);
 		pDevice9->SetMaterial(&m_mtrl);
 		pDevice9->SetTransform(D3DTS_WORLD, &m_matBillboard);
-		
 		m_pMesh3DText->DrawSubset(0);
+		pDevice9->SetRenderState(D3DRS_LIGHTING, true);
 	}
 }
 
@@ -72,7 +78,7 @@ HRESULT ComText3D::CreateD3DXTextMesh(LPD3DXMESH * ppMesh, TCHAR * pstrFont, DWO
 
 	hFontOld = (HFONT)SelectObject(hdc, hFont);
 
-	hr = D3DXCreateText(pDevice9, hdc, GetChrName(), 0.001f, 0.4f, &pMeshNew, NULL, NULL);
+	hr = D3DXCreateText(pDevice9, hdc, GetChrName(), 0.001f, 0.001f, &pMeshNew, NULL, NULL);
 
 	SelectObject(hdc, hFontOld);
 	DeleteObject(hFont);
@@ -92,4 +98,14 @@ void ComText3D::SetChrName(CString szChrName)
 CString ComText3D::GetChrName()
 {
 	return m_szChrName;
+}
+
+void ComText3D::SetChrNamePos(Vector3 & vChrNamePos)
+{
+	m_vChrNamePos = vChrNamePos;
+}
+
+Vector3 & ComText3D::GetChrNamePos()
+{
+	return m_vChrNamePos;
 }

@@ -351,12 +351,13 @@ GameObject * FactoryGameObject::CreateCharacter(CString szName, CString szFolder
 	// 이 게임 오브젝트는 이름추가 가능
 	ComText3D* pChrName = new ComText3D("ComText3D");
 	pChrName->SetChrName(szChrName);
+	pChrName->SetChrNamePos(pos);
 	pGOChr->AddComponent(pChrName);
 
 	//Test Code
-	Vector3 vPos = pos;
-	vPos.y += 1.0f;
-	pGOChr->transform->SetPosition(vPos);
+	//Vector3 vPos = pos;
+	//vPos.y += 1.0f;
+	//pGOChr->transform->SetPosition(vPos);
 
 
 	return pGOChr;
