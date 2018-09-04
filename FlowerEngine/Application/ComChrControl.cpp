@@ -62,32 +62,35 @@ void ComChrControl::Awake()
 
 void ComChrControl::Update()
 {
-	// 캐릭터 회전
-	if (Input::KeyPress('A') || Input::KeyPress(VK_LEFT))
-		gameObject->transform->RotateY(-0.1f);
-	if (Input::KeyPress('D') || Input::KeyPress(VK_RIGHT))
-		gameObject->transform->RotateY(0.1f);
+	if (m_pCurrentState != m_vecState[eAni_Skill_1])
+	{
+		// 캐릭터 회전
+		if (Input::KeyPress('A') || Input::KeyPress(VK_LEFT))
+			gameObject->transform->RotateY(-0.1f);
+		if (Input::KeyPress('D') || Input::KeyPress(VK_RIGHT))
+			gameObject->transform->RotateY(0.1f);
 
-	// 캐릭터 이동
-	if (Input::KeyPress('W') || Input::KeyPress(VK_UP))
-	{
-		CancleAttackTarget();
-		Walk(1);
-	}
-	else if (Input::KeyUp('W') || Input::KeyUp(VK_UP))
-	{
-		CancleAttackTarget();
-		Stand();
-	}
-	if (Input::KeyPress('S') || Input::KeyPress(VK_DOWN))
-	{
-		CancleAttackTarget();
-		Walk(-1);
-	}
-	else if (Input::KeyUp('S') || Input::KeyUp(VK_DOWN))
-	{
-		CancleAttackTarget();
-		Stand();
+		// 캐릭터 이동
+		if (Input::KeyPress('W') || Input::KeyPress(VK_UP))
+		{
+			CancleAttackTarget();
+			Walk(1);
+		}
+		else if (Input::KeyUp('W') || Input::KeyUp(VK_UP))
+		{
+			CancleAttackTarget();
+			Stand();
+		}
+		if (Input::KeyPress('S') || Input::KeyPress(VK_DOWN))
+		{
+			CancleAttackTarget();
+			Walk(-1);
+		}
+		else if (Input::KeyUp('S') || Input::KeyUp(VK_DOWN))
+		{
+			CancleAttackTarget();
+			Stand();
+		}
 	}
 	
 	if (Input::ButtonDown(VK_LBUTTON))

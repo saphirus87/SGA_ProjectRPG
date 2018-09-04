@@ -80,10 +80,7 @@ void ChrStateSkill1::Update()
 	if (anim != NULL)
 	{
 		if (m_pTimerAnim->GetTime() >= anim->GetPeriod())
-		{
-			m_pControl->SetState(eAni_Stand);
 			m_pControl->Stand();
-		}
 	}
 }
 
