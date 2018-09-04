@@ -45,43 +45,43 @@ void SceneRPG::Update()
 		return;
 	}
 
-	if (iLoadingPer > 0)
+	if (iLoadingPer == 0)
 	{
 		CreateUI();
 		m_pLoadingBar->SetCurValue(10);
 	}
 		
-	if (iLoadingPer > 1)
+	if (iLoadingPer == 1)
 	{
 		CreateMap();
 		m_pLoadingBar->SetCurValue(30);
 	}
 
-	if (iLoadingPer > 2)
+	if (iLoadingPer == 2)
 	{
 		CreateMapObject();
 		m_pLoadingBar->SetCurValue(40);
 	}
 
-	if (iLoadingPer > 3)
+	if (iLoadingPer == 3)
 	{
 		CreateHuman();
 		m_pLoadingBar->SetCurValue(60);
 	}
 
-	if (iLoadingPer > 4)
+	if (iLoadingPer == 4)
 	{
 		CreateUndead();
 		m_pLoadingBar->SetCurValue(80);
 	}
 
-	if (iLoadingPer > 5)
+	if (iLoadingPer == 5)
 	{
 		CreateTroll();
 		m_pLoadingBar->SetCurValue(95);
 	}
 
-	if (iLoadingPer > 6)
+	if (iLoadingPer == 6)
 	{
 		CreateMonster();
 		m_pLoadingBar->SetCurValue(100);
