@@ -67,6 +67,9 @@ public:
 	// 총 장비 방어력을 반환합니다.
 	int GetTotalDEF_PHY();
 
+	// 장착된 아이템 정보를 반환합니다.
+	vector<ItemInfo*>& GetEquipedItems() { return m_vecEquipedItems; }
+
 private:
 	LPCSTR GetFrameName(ItemInfo* itemInfo, eRenderEquipment renderType);
 
