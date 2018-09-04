@@ -32,6 +32,7 @@ void SceneLoading::Init()
 	// ·Îµù¹Ù
 	comDialog->AddProgressBar(eUI_LoadingBar, "./Resources/ui/loading-barfill.png");
 	UIProgressBar* pLoadingBar = comDialog->GetProgressBar(eUI_LoadingBar);
+	pLoadingBar->SetCurValue(0);
 	pLoadingBar->SetPosition(Vector3(fScreenWidth / 2 - 482, fScreenHeight - 85.0f, 0));
 	pLoadingBar->SetSize(Vector2(964.0f, 64.0f));
 	pLoadingBar->SetScale(Vector3(1.0f, 0.5f, 0.0f));
