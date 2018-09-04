@@ -348,17 +348,13 @@ GameObject * FactoryGameObject::CreateCharacter(CString szName, CString szFolder
 	ComCollider* pCollider = new ComCollider("ComCollider");
 	pGOChr->AddComponent(pCollider);
 	pCollider->Set(Vector3(0, 0.5f, 0), Vector3(0.3, 0.6, 0.3), false);
+	// 이 게임 오브젝트는 뭔가 발사 가능(Skill사용시 필요한 구성요소)
+	pGOChr->AddComponent(new ComShooting("ComShooting"));
 	// 이 게임 오브젝트는 이름추가 가능
 	ComText3D* pChrName = new ComText3D("ComText3D");
 	pChrName->SetChrName(szChrName);
 	pChrName->SetChrNamePos(pos);
 	pGOChr->AddComponent(pChrName);
-
-	//Test Code
-	//Vector3 vPos = pos;
-	//vPos.y += 1.0f;
-	//pGOChr->transform->SetPosition(vPos);
-
 
 	return pGOChr;
 }

@@ -29,6 +29,10 @@ public:
 	virtual void OnClick(UIButton * pSender) override;
 	virtual void OnPress(UIButton * pSender) override;
 
+	void Skill1();
+	void Skill2();
+	void Skill3();
+
 private:
 	// Skill1 쿨타임 텍스트
 	UIText * uiTextCoolTimeSkill1;

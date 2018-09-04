@@ -175,3 +175,15 @@ void ComHuman::OnClick(UIButton * pSender)
 void ComHuman::OnPress(UIButton * pSender)
 {
 }
+
+void ComHuman::Skill1()
+{
+}
+
+void ComHuman::Skill2()
+{
+}
+
+void ComHuman::Skill3()
+{
+}
