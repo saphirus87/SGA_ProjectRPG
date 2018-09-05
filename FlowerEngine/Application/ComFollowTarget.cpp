@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "ComFollowTarget.h"
 
-
 ComFollowTarget::ComFollowTarget(CString szName) :
 	Component(szName),
 	fMoveSpeed(0.02f),
@@ -13,7 +12,6 @@ ComFollowTarget::ComFollowTarget(CString szName) :
 	fRange(20.0f)
 {
 }
-
 
 ComFollowTarget::~ComFollowTarget()
 {
