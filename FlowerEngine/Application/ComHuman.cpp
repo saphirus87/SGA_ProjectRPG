@@ -3,6 +3,7 @@
 #include "ComCharacter.h"
 #include "ComChrControl.h"
 #include "ChrStateAttack.h"
+#include "SkillInfo.h"
 
 ComHuman::ComHuman(CString szName) : 
 	ComCharacter(szName),
@@ -13,6 +14,8 @@ ComHuman::ComHuman(CString szName) :
 
 ComHuman::~ComHuman()
 {
+	for (auto & s : m_vecSkillInfo)
+		SAFE_DELETE(s);
 }
 
 void ComHuman::Awake()
@@ -67,6 +70,24 @@ void ComHuman::Awake()
 
 		btnSkill = uiDialog->GetButton(eUI_SkillBtn3_Human);
 		btnSkill->SetPosition(Vector3(250, fScreenHeight - 150.0f, 0.0f));
+
+		// 스킬 정보 생성 (파일 또는 엑셀에서 읽어야 하는 부분)
+		m_vecSkillInfo.resize(3);
+
+		SkillInfo* pSkillInfo = new SkillInfo();
+		pSkillInfo->szName = "스킬1";
+		pSkillInfo->UID = 1;
+		m_vecSkillInfo[0] = pSkillInfo;
+
+		pSkillInfo = new SkillInfo();
+		pSkillInfo->szName = "스킬2";
+		pSkillInfo->UID = 2;
+		m_vecSkillInfo[1] = pSkillInfo;
+
+		pSkillInfo = new SkillInfo();
+		pSkillInfo->szName = "스킬3";
+		pSkillInfo->UID = 3;
+		m_vecSkillInfo[2] = pSkillInfo;
 
 		// 스킬1 쿨타임 텍스트
 		uiDialog->AddText(eUI_SkillBtn1_Human_TextCoolTime, Assets::GetFont(Assets::FontType_NORMAL), "3.0");
@@ -129,7 +150,9 @@ void ComHuman::Update()
 	ChrStateSkill1* pStateSkill = dynamic_cast<ChrStateSkill1*>(chrControl->m_vecState[eAni_Skill_1]);
 	if (pStateSkill)
 	{
-		if (pStateSkill->m_pTimerCool->GetTime() >= pStateSkill->CoolTime)
+		float coolTime = m_vecSkillInfo[0]->fCoolTime;
+
+		if (pStateSkill->m_pTimerCool->GetTime() >= coolTime)
 		{
 			pStateSkill->IsCoolTime = false;
 			pStateSkill->m_pTimerCool->Pause(true);
@@ -138,14 +161,14 @@ void ComHuman::Update()
 		if (pStateSkill->IsCoolTime == false)
 		{
 			CString szCoolTime;
-			szCoolTime.Format(L"%.1f", pStateSkill->CoolTime);
+			szCoolTime.Format(L"%.1f", coolTime);
 			if (uiTextCoolTimeSkill1)
 				uiTextCoolTimeSkill1->SetText(Assets::GetFont(Assets::FontType_NORMAL), szCoolTime);
 		}
 		else
 		{
 			CString szCoolTime;
-			szCoolTime.Format(L"%.1f", pStateSkill->CoolTime - pStateSkill->m_pTimerCool->GetTime());
+			szCoolTime.Format(L"%.1f", coolTime - pStateSkill->m_pTimerCool->GetTime());
 			if (uiTextCoolTimeSkill1)
 				uiTextCoolTimeSkill1->SetText(Assets::GetFont(Assets::FontType_NORMAL), szCoolTime);
 		}
@@ -160,11 +183,12 @@ void ComHuman::OnClick(UIButton * pSender)
 {
 	if (pSender->GetButtonName() == "human_skill_1")
 	{
-		((ComChrControl*)gameObject->GetComponent("ComChrControl"))->Skill1();
+		//((ComChrControl*)gameObject->GetComponent("ComChrControl"))->Skill1();
+		Skill1();
 	}
 	else if (pSender->GetButtonName() == "human_skill_2")
 	{
-		((ComChrControl*)gameObject->GetComponent("ComChrControl"))->Skill2();
+//		((ComChrControl*)gameObject->GetComponent("ComChrControl"))->Skill2();
 	}
 	else if (pSender->GetButtonName() == "human_skill_3")
 	{
@@ -178,6 +202,26 @@ void ComHuman::OnPress(UIButton * pSender)
 
 void ComHuman::Skill1()
 {
+	ComChrControl* pChrControl = (ComChrControl*)gameObject->GetComponent("ComChrControl");
+	ChrStateSkill1* pStateSkill = dynamic_cast<ChrStateSkill1*>(pChrControl->m_vecState[eAni_Skill_1]);
+
+	if (pStateSkill->IsCoolTime == true)
+		return;
+
+	int useMP = m_vecSkillInfo[0]->iUseMP;
+
+	if (Status.MP < useMP)
+	{
+		// UI 출력 : MP가 부족합니다.
+		return; // MP 부족으로 스킬 사용 불가
+	}
+
+	pChrControl->SetState(eAni_Skill_1);
+	pChrControl->m_pCurrentState->Skill1(eAni_Skill_1);
+
+	// MP 사용
+	Status.MP -= m_vecSkillInfo[0]->iUseMP;
+	UpdateHPMPBar();
 }
 
 void ComHuman::Skill2()

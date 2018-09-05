@@ -417,6 +417,7 @@
     <ClInclude Include="Application\SceneLoading.h" />
     <ClInclude Include="Application\SceneRPG.h" />
     <ClInclude Include="Application\ScenePicking.h" />
+    <ClInclude Include="Application\SkillInfo.h" />
     <ClInclude Include="Application\StatusInfo.h" />
     <ClInclude Include="DXUT\Core\stdafx.h" />
     <ClInclude Include="DXUT\Core\DXUTenum.h" />
@@ -451,6 +452,7 @@
     <ClCompile Include="Application\SceneLoading.cpp" />
     <ClCompile Include="Application\SceneRPG.cpp" />
     <ClCompile Include="Application\ScenePicking.cpp" />
+    <ClCompile Include="Application\SkillInfo.cpp" />
     <ClCompile Include="Application\StatusInfo.cpp" />
     <ClCompile Include="DXUT\Core\stdafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

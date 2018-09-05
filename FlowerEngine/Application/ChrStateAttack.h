@@ -36,9 +36,9 @@ public:
 	// 쿨타임인지 여부
 	bool IsCoolTime;
 	// 쿨타임 외부에서 스킬 정보 셋팅 가능하게 수정할 것 (SkillInfo)
-	float CoolTime;
-	// 사용 MP 외부에서 스킬 정보 셋팅 가능하게 수정할 것 (SkillInfo)
-	int UseMP;
+	//float CoolTime;
+	//// 사용 MP 외부에서 스킬 정보 셋팅 가능하게 수정할 것 (SkillInfo)
+	//int UseMP;
 	
 public:
 	ChrStateSkill1(ComChrControl* pControl);

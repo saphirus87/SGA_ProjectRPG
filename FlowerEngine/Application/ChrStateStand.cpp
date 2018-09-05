@@ -46,7 +46,7 @@ void ChrStateStand::Skill1(int iIndex)
 	OutputDebugString(L"Stand -> Skill1 상태 변환\r\n");
 
 	m_pControl->SetState(iIndex);
-	m_pControl->Skill1();
+//	m_pControl->Skill1();
 }
 
 void ChrStateStand::Skill2(int iIndex)
@@ -54,7 +54,7 @@ void ChrStateStand::Skill2(int iIndex)
 	OutputDebugString(L"Stand -> Skill2 상태 변환\r\n");
 
 	m_pControl->SetState(iIndex);
-	m_pControl->Skill2();
+//	m_pControl->Skill2();
 }
 
 ChrStateDeath::ChrStateDeath(ComChrControl * pControl)

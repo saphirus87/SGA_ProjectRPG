@@ -456,6 +456,9 @@
     <ClCompile Include="Application\SceneLoading.cpp">
       <Filter>Application\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Application\SkillInfo.cpp">
+      <Filter>Application\Datas</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -715,6 +718,9 @@
     </ClInclude>
     <ClInclude Include="Application\SceneLoading.h">
       <Filter>Application\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SkillInfo.h">
+      <Filter>Application\Datas</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

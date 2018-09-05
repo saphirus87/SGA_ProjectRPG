@@ -47,7 +47,7 @@ void ChrStateAttack1::Skill1(int iIndex)
 	OutputDebugString(L"Attack1 -> Skill1 상태 변환\r\n");
 
 	m_pControl->SetState(iIndex);
-	m_pControl->Skill1();
+//	m_pControl->Skill1();
 }
 
 void ChrStateAttack1::Skill2(int iIndex)
@@ -55,14 +55,14 @@ void ChrStateAttack1::Skill2(int iIndex)
 	OutputDebugString(L"Attack1 -> Skill2 상태 변환\r\n");
 
 	m_pControl->SetState(iIndex);
-	m_pControl->Skill2();
+//	m_pControl->Skill2();
 }
 
 ChrStateSkill1::ChrStateSkill1(ComChrControl * pControl) : 
 	m_pTimerAnim(NULL),
-	IsCoolTime(false),
-	CoolTime(3), // 일단 쿨타임 3초로 강제 셋팅
-	UseMP(3) // 일단 사용MP 3으로 강제 셋팅
+	IsCoolTime(false)
+	//CoolTime(3), // 일단 쿨타임 3초로 강제 셋팅
+	//UseMP(3) // 일단 사용MP 3으로 강제 셋팅
 {
 	m_pControl = pControl;
 	m_pTimerAnim = new CTimer(CClock::GetInstance());
@@ -105,10 +105,6 @@ void ChrStateSkill1::Skill1(int iIndex)
 	if (IsCoolTime == true)
 		return;
 	
-	// MP 사용
-	m_pControl->m_pCharacter->Status.MP -= UseMP;
-	m_pControl->m_pCharacter->UpdateHPMPBar();
-
 	m_pControl->pAnimation->PlayAnimation(iIndex);
 	IsCoolTime = true;
 	m_pTimerAnim->Start();

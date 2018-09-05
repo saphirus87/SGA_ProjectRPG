@@ -27,8 +27,6 @@ public:
 	virtual void Walk(float fDeltaZ);
 	virtual void Attack1();
 	virtual void Death();
-	virtual void Skill1();
-	virtual void Skill2();
 
 	// 이 객체가 픽킹되었는지 여부를 검사합니다. (캐릭터, 몬스터, 맵)
 	void CheckPickingChr();
@@ -59,11 +57,11 @@ public:
 	ComCharacter* m_pCharacter;
 	// 상태들
 	vector<IChrState*> m_vecState;
+	// 현재 상태
+	IChrState * m_pCurrentState;
 
 protected:
 	ComObjMap * m_pMap;
-	// 현재 상태
-	IChrState * m_pCurrentState;
 	// 타겟으로 따라감
 	ComFollowTarget* m_pFollow;
 	// 이동하고하 하는 위치

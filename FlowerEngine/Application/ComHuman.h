@@ -11,6 +11,7 @@ E-Mail	: hkn10004@naver.com
 #include "ComCharacter.h"
 
 class ComChrEquipment;
+class SkillInfo;
 
 class ComHuman : public ComCharacter, public UIButtonDelegate
 {
@@ -33,7 +34,11 @@ public:
 	void Skill2();
 	void Skill3();
 
+
 private:
 	// Skill1 쿨타임 텍스트
 	UIText * uiTextCoolTimeSkill1;
+
+	// 스킬 정보들
+	vector<SkillInfo*> m_vecSkillInfo;
 };
