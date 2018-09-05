@@ -32,6 +32,7 @@ typedef LPD3DXANIMATIONCONTROLLER		AnimationController;
 typedef LPD3DXANIMATIONSET				AnimationSet;
 typedef LPD3DXMESHCONTAINER				XMeshContainer;
 typedef LPD3DXFRAME						XFrame;
+typedef D3DXIMAGE_INFO					ImgInfo;
 
 extern CString ASSET_PATH;
 extern CString SHADER_PATH;

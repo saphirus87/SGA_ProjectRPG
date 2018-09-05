@@ -4,7 +4,7 @@
 class UIImage : public UIControl
 {
 private:
-	LPDIRECT3DTEXTURE9 pTexture;
+	Texture pTexture;
 	D3DXIMAGE_INFO m_imgInfo;
 
 public:
@@ -16,6 +16,6 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
-	void SetTexture(CString szFileName);
+	void SetTexture(CString szFileName, bool isFullScreen = false);
 };
 

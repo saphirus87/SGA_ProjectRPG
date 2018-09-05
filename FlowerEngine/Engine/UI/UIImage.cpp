@@ -9,17 +9,14 @@ UIImage::UIImage()
 
 UIImage::~UIImage()
 {
-
 }
 
 void UIImage::Awake()
 {
-
 }
 
 void UIImage::Update()
 {
-
 }
 
 void UIImage::Render()
@@ -40,7 +37,7 @@ void UIImage::Render()
 	}
 }
 
-void UIImage::SetTexture(CString szFileName)
+void UIImage::SetTexture(CString szFileName, bool isFullScreen)
 {
 	if (szFileName == "None")
 	{
@@ -49,6 +46,25 @@ void UIImage::SetTexture(CString szFileName)
 		m_Size.x = 0.0f;
 		m_Size.y = 0.0f;
 	}
+	else if (isFullScreen)
+	{
+		RECT rcScreen;
+		GetClientRect(GetForegroundWindow(), &rcScreen);
+
+		// x는 구하고자 하는 배율
+		// 이미지 크기 * x = 해상도.width
+		// x = 해상도.width / 이미지 크기
+		pTexture = Assets::GetTexture(szFileName, &m_imgInfo);
+
+		float fX = rcScreen.right / (float)m_imgInfo.Width;
+		float fY = rcScreen.bottom / (float)m_imgInfo.Height;
+
+		m_Scale.x = fX;
+		m_Scale.y = fY;
+
+		m_Size.x = m_imgInfo.Width;
+		m_Size.y = m_imgInfo.Height;
+	}
 	else
 	{
 		pTexture = Assets::GetTexture(szFileName, &m_imgInfo);
@@ -56,4 +72,5 @@ void UIImage::SetTexture(CString szFileName)
 		m_Size.x = m_imgInfo.Width;
 		m_Size.y = m_imgInfo.Height;
 	}
+
 }

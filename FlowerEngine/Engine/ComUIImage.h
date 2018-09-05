@@ -18,7 +18,7 @@ public:
 	void SetFullScreen();
 
 private:
-	LPDIRECT3DTEXTURE9 m_pTex;
+	Texture m_pTex;
 	D3DXIMAGE_INFO m_imgInfo;
 	bool m_bMirrored;
 };

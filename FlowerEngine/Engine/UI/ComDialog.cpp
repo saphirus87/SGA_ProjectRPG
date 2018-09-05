@@ -86,12 +86,12 @@ bool ComDialog::IsOnMouse()
 	return false;
 }
 
-void ComDialog::AddImage(UINT id, CString szFileName)
+void ComDialog::AddImage(UINT id, CString szFileName, bool isFullScreen)
 {
 	UIImage* img = new UIImage;
 	img->SetSprite(m_pSprite);
 	img->SetParent(this);
-	img->SetTexture(szFileName);
+	img->SetTexture(szFileName, isFullScreen);
 
 	m_Controls.insert(make_pair(id, img));
 }

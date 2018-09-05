@@ -22,7 +22,7 @@ void SceneLoading::Init()
 	float fScreenHeight = DXUTGetWindowHeight();
 
 	// 배경 이미지
-	comDialog->AddImage(eUI_Loading, "./Resources/ui/loadingWide.png");
+	comDialog->AddImage(eUI_Loading, "./Resources/ui/loadingWide.png", true);
 
 	// 로딩바 배경
 	comDialog->AddImage(eUI_LoadingBarFrame, "./Resources/ui/loading-barborder-frame-v2.png");

@@ -35,7 +35,7 @@ public:
 	void SetMoveable(bool Moveable) { m_Moveable = Moveable; }
 	void SetToggleKey(DWORD ToggleKey) { m_ToggleKey = ToggleKey; }
 
-	void AddImage(UINT id, CString szFileName);
+	void AddImage(UINT id, CString szFileName, bool isFullScreen = false);
 	void AddText(UINT id, LPD3DXFONT pFont, CString szText);
 	void AddButton(UINT id, CString szNormalImg, CString szMouseoverImg, CString szClickImg, UIButtonDelegate* pDelegate, CString szButtonName);
 	void AddProgressBar(UINT id, CString szFileName);
