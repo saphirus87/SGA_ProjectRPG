@@ -44,6 +44,8 @@ void ComCharacter::Init()
 	m_pTimerMPRec->Start();
 
 	m_pAttackHandler = new AttackHandler();
+	m_pAnimation->pCallbackHandler = m_pAttackHandler;
+
 	m_pSkill1Handler = new Skill1Handler();
 }
 
@@ -88,6 +90,9 @@ void ComCharacter::AttackTarget(ComCharacter * pTarget)
 	int dmg = Status.ATK_PHY + equipmentDmg;
 
 	pTarget->Defence(dmg);
+
+	// 다시 기본 핸들러로
+	m_pAnimation->pCallbackHandler = m_pAttackHandler;
 }
 
 void ComCharacter::Defence(int dmg)

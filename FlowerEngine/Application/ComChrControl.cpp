@@ -270,7 +270,6 @@ void ComChrControl::Attack1()
 {
 	// 현재 상태에서 Attack1로
 	m_pCurrentState->Attack1(eAni_Attack_1);
-	m_pCharacter->m_pAnimation->pCallbackHandler = m_pCharacter->m_pAttackHandler;
 }
 
 void ComChrControl::Death()
