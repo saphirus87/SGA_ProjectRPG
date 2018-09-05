@@ -19,6 +19,9 @@ public:
 	void SetChrNamePos(Vector3& vChrNamePos);
 	Vector3& GetChrNamePos();
 
+	// 위쪽으로 보정값
+	float fOffsetPosY;
+
 private:
 	Device9 pDevice9;
 	Mesh m_pMesh3DText;

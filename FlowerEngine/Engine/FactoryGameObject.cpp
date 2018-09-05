@@ -388,6 +388,12 @@ GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPa
 	pGOMonX->AddComponent(pCollider);
 	pCollider->Set(Vector3(0, 0.7, 0), Vector3(0.5, 0.8, 0.5), false);
 
+	// 이 게임 오브젝트는 이름추가 가능
+	ComText3D* pChrName = new ComText3D("ComText3D");
+	pChrName->SetChrName(szName);
+	pChrName->fOffsetPosY = 2.0f;
+	pGOMonX->AddComponent(pChrName);
+
 	return pGOMonX;
 }
 

@@ -3,7 +3,8 @@
 
 ComText3D::ComText3D(CString szName)
 	:Component(szName), 
-	m_pMesh3DText(NULL)
+	m_pMesh3DText(NULL),
+	fOffsetPosY(1.3f)
 {
 	pDevice9 = GetD3D9Device();
 	D3DXMatrixIdentity(&m_matBillboard);
@@ -41,7 +42,7 @@ void ComText3D::Update()
 	Vector3 vPos = gameObject->transform->GetPosition();
 	//Vector3 vPos = GetChrNamePos();
 	m_matBillboard._41 = vPos.x;
-	m_matBillboard._42 = vPos.y + 1.3f;;
+	m_matBillboard._42 = vPos.y + fOffsetPosY;;
 	m_matBillboard._43 = vPos.z;
 }
 

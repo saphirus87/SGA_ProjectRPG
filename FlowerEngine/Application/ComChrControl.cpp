@@ -322,7 +322,7 @@ void ComChrControl::CheckPickingMon()
 	Mouse* pMouse = Input::GetInstance()->m_pMouse;
 	Vector3 mousePos = Input::GetInstance()->m_pMouse->GetPosition();
 
-	list<GameObject*> listMonster = GameObject::FindAll("Monster");
+	list<GameObject*> listMonster = GameObject::FindAll(eTag_Monster);
 
 	for (auto & o : listMonster)
 	{

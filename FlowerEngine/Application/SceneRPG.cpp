@@ -195,22 +195,22 @@ void SceneRPG::CreateMonster()
 	monStatus.ATK_PHY = 5;
 
 	// ¸ó½ºÅÍ »ý¼º (smallderon_orange)
-	GameObject* pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-243, 7.7184200, -240),
+	GameObject* pGOMonX = factory.CreateMonster("Æø¿°¸ó", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-243, 7.7184200, -240),
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("undead_01"), monStatus);
-	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-243, 10.7184200, -243),
+	pGOMonX = factory.CreateMonster("Æø¿°¸ó", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-243, 10.7184200, -243),
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"), monStatus);
-	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-246, 9.7184200, -246),
+	pGOMonX = factory.CreateMonster("Æø¿°¸ó", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-246, 9.7184200, -246),
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("troll_01"), monStatus);
 
 	monStatus.HP = 60;
 	monStatus.HPMAX = 60;
 	monStatus.ATK_PHY = 6;
 
-	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-220, 10.7184200, -220),
+	pGOMonX = factory.CreateMonster("Æø¿°¸ó", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-220, 10.7184200, -220),
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"), monStatus);
-	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-223, 10.7184200, -223),
+	pGOMonX = factory.CreateMonster("Æø¿°¸ó", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-223, 10.7184200, -223),
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"), monStatus);
-	pGOMonX = factory.CreateMonster("Monster", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-226, 10.7184200, -226),
+	pGOMonX = factory.CreateMonster("Æø¿°¸ó", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-226, 10.7184200, -226),
 		new ComSmallderonAI("ComChrControl"), GameObject::Find("human_01"), monStatus);
 }
 
