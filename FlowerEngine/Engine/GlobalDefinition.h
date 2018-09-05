@@ -66,8 +66,8 @@ namespace DXUtil
 	D3DLIGHT9 InitPoint(Vector3* pos, Color* c);
 	D3DLIGHT9 InitSpot(Vector3* dir, Vector3* pos, Color* c);
 
-	void InitVertexBuffer(LPDIRECT3DVERTEXBUFFER9 &pVB, LPVOID vertices, DWORD fvf, UINT vtxCnt, UINT stride);
-	void InitIndexBuffer(LPDIRECT3DINDEXBUFFER9 &pIB, LPVOID indices, UINT idxCnt, UINT stride);
+	void InitVertexBuffer(VertexBuffer &pVB, LPVOID vertices, DWORD fvf, UINT vtxCnt, UINT stride);
+	void InitIndexBuffer(IndexBuffer &pIB, LPVOID indices, UINT idxCnt, UINT stride);
 }
 
 #define SINGLETON(class_name)\
