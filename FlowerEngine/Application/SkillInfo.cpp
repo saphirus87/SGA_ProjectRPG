@@ -13,3 +13,13 @@ SkillInfo::SkillInfo() :
 SkillInfo::~SkillInfo()
 {
 }
+
+HumanSkill1::HumanSkill1() : 
+	iAddSkillDmg(1),
+	fRange(2.0f)
+{
+}
+
+HumanSkill1::~HumanSkill1()
+{
+}

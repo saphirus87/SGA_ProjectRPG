@@ -15,12 +15,16 @@ ComCharacter::ComCharacter(CString szName) :
 	m_pMPBar(NULL),
 	m_pTimerHPRec(NULL),
 	m_pTimerMPRec(NULL),
-	m_eType(eChrType_COUNT) // 초기화 값으로 사용
+	m_eType(eChrType_COUNT), // 초기화 값으로 사용
+	m_pAttackHandler(NULL),
+	m_pSkill1Handler(NULL)
 {
 }
 
 ComCharacter::~ComCharacter()
 {
+	SAFE_DELETE(m_pAttackHandler);
+	SAFE_DELETE(m_pSkill1Handler);
 }
 
 void ComCharacter::Awake()
@@ -38,6 +42,9 @@ void ComCharacter::Init()
 	m_pTimerHPRec->Start();
 	m_pTimerMPRec = new CTimer(CClock::GetInstance());
 	m_pTimerMPRec->Start();
+
+	m_pAttackHandler = new AttackHandler();
+	m_pSkill1Handler = new Skill1Handler();
 }
 
 void ComCharacter::Update()
@@ -160,7 +167,7 @@ HRESULT AttackHandler::HandleCallback(UINT Track, LPVOID pCallbackData)
 	ComChrControl* pControl = (ComChrControl*)pChr->gameObject->GetComponent("ComChrControl");
 
 	CString szDebug;
-	szDebug.Format(L"EventCallback Track : %d %s\r\n", Track, pChr->gameObject->Name());
+	szDebug.Format(L"AttackHandler Track : %d %s\r\n", Track, pChr->gameObject->Name());
 	OutputDebugString(szDebug);
 
 	// 죽어서 없으면
@@ -168,6 +175,25 @@ HRESULT AttackHandler::HandleCallback(UINT Track, LPVOID pCallbackData)
 		return S_OK;
 
 	pChr->AttackTarget(pControl->pAttackTarget);
+
+	return S_OK;
+}
+
+HRESULT Skill1Handler::HandleCallback(UINT Track, LPVOID pCallbackData)
+{
+	// 특정 프레임에서 공격
+	ComCharacter* pChr = (ComCharacter*)pCallbackData;
+	ComChrControl* pControl = (ComChrControl*)pChr->gameObject->GetComponent("ComChrControl");
+
+	CString szDebug;
+	szDebug.Format(L"Skill1Handler Track : %d %s\r\n", Track, pChr->gameObject->Name());
+	OutputDebugString(szDebug);
+
+	// 죽어서 없으면
+	if (pControl->pAttackTarget == NULL)
+		return S_OK;
+
+	pChr->AttackSkill1(pControl->pAttackTarget);
 
 	return S_OK;
 }

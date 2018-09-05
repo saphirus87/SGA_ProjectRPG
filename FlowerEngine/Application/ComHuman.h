@@ -34,6 +34,10 @@ public:
 	void Skill2();
 	void Skill3();
 
+	// 스킬을 사용하여 타겟을 공격합니다.
+	void AttackSkill1(ComCharacter* pTarget) override;
+	void AttackSkill2(ComCharacter* pTarget) override;
+	void AttackSkill3(ComCharacter* pTarget) override;
 
 private:
 	// Skill1 쿨타임 텍스트

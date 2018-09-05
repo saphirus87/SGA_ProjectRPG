@@ -18,3 +18,16 @@ public:
 	float fCoolTime;
 };
 
+// 휴먼 스킬1
+class HumanSkill1 : public SkillInfo
+{
+public:
+	HumanSkill1();
+	~HumanSkill1();
+
+	// 스킬 추가데미지
+	int iAddSkillDmg;
+
+	// 스킬 공격 거리
+	float fRange;
+};

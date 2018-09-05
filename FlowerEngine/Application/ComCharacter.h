@@ -7,6 +7,11 @@ class AttackHandler : public ID3DXAnimationCallbackHandler
 	HRESULT CALLBACK HandleCallback(THIS_ UINT Track, LPVOID pCallbackData);
 };
 
+class Skill1Handler : public ID3DXAnimationCallbackHandler
+{
+	HRESULT CALLBACK HandleCallback(THIS_ UINT Track, LPVOID pCallbackData);
+};
+
 class ComChrEquipment;
 
 // 캐릭터의 공통요소입니다.
@@ -27,6 +32,11 @@ public:
 	// 타겟을 공격합니다.
 	void AttackTarget(ComCharacter* pTarget);
 	
+	// 스킬을 사용하여 타겟을 공격합니다.
+	virtual void AttackSkill1(ComCharacter* pTarget) {}
+	virtual void AttackSkill2(ComCharacter* pTarget) {}
+	virtual void AttackSkill3(ComCharacter* pTarget) {}
+
 	// 방어를 합니다.
 	void Defence(int dmg);
 	
@@ -38,7 +48,7 @@ public:
 
 	// UI 관련
 	void UpdateHPMPBar();
-
+	
 protected:
 	void Init();
 
@@ -46,8 +56,6 @@ protected:
 	// 캐릭터 타입
 	eChrType m_eType;
 
-	ComRenderSkinnedMesh* m_pAnimation;
-	
 	// 공격할 타겟
 	ComCharacter* m_pAttackTarget;
 
@@ -57,6 +65,10 @@ protected:
 public:
 	// 능력치
 	StatusInfo Status;
+
+	ComRenderSkinnedMesh* m_pAnimation;
+	AttackHandler* m_pAttackHandler;
+	Skill1Handler* m_pSkill1Handler;
 
 protected:
 	UIProgressBar* m_pHPBar;

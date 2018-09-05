@@ -341,9 +341,6 @@ GameObject * FactoryGameObject::CreateCharacter(CString szName, CString szFolder
 	pGOChr->AddComponent(new ComFollowTarget("ComFollowTarget"));
 	// 이 게임 오브젝트는 컨트롤 가능
 	pGOChr->AddComponent(new ComChrControl("ComChrControl"));
-	// 애니 콜백 함수 설정
-	ComRenderSkinnedMesh* pRenderSkinnedMesh = (ComRenderSkinnedMesh*)pGOChr->GetComponent("ComRenderSkinnedMesh");
-	pRenderSkinnedMesh->pCallbackHandler = new AttackHandler();
 	// 이 게임 오브젝트는 충돌체크 가능
 	ComCollider* pCollider = new ComCollider("ComCollider");
 	pGOChr->AddComponent(pCollider);

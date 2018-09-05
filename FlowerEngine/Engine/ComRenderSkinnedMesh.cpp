@@ -30,7 +30,6 @@ ComRenderSkinnedMesh::~ComRenderSkinnedMesh()
 		D3DXFrameDestroy(m_pSubRootFrame, m_pAllocateHierarchy);
 		SAFE_DELETE_ARRAY(m_pBoneMatrices);
 		SAFE_DELETE(m_pAllocateHierarchy);
-		SAFE_DELETE(pCallbackHandler);
 	}
 	else
 	{
@@ -290,7 +289,10 @@ void ComRenderSkinnedMesh::UpdateAnimation(AnimationController pAniControl)
 {
 	float fDeltaTime = GetElapsedTime();
 
-	pAniControl->AdvanceTime(fDeltaTime, pCallbackHandler);
+	if (pCallbackHandler != NULL)
+		pAniControl->AdvanceTime(fDeltaTime, pCallbackHandler);
+	else
+		pAniControl->AdvanceTime(fDeltaTime, NULL);
 
 	// 애니메이션을 부드럽게 전환(Blend)
 	if (m_fPassedBlendTime <= m_fBlendTime)

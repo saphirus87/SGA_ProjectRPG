@@ -3,6 +3,7 @@
 #include "ComCharacter.h"
 #include "ComChrControl.h"
 #include "ChrStateAttack.h"
+#include "ComChrEquipment.h"
 #include "SkillInfo.h"
 
 ComHuman::ComHuman(CString szName) : 
@@ -74,20 +75,20 @@ void ComHuman::Awake()
 		// 스킬 정보 생성 (파일 또는 엑셀에서 읽어야 하는 부분)
 		m_vecSkillInfo.resize(3);
 
-		SkillInfo* pSkillInfo = new SkillInfo();
-		pSkillInfo->szName = "스킬1";
-		pSkillInfo->UID = 1;
-		m_vecSkillInfo[0] = pSkillInfo;
+		HumanSkill1* pSkillInfo1 = new HumanSkill1();
+		pSkillInfo1->szName = "스킬1";
+		pSkillInfo1->UID = 1;
+		m_vecSkillInfo[0] = pSkillInfo1;
 
-		pSkillInfo = new SkillInfo();
-		pSkillInfo->szName = "스킬2";
-		pSkillInfo->UID = 2;
-		m_vecSkillInfo[1] = pSkillInfo;
+		SkillInfo* pSkillInfo2 = new SkillInfo();
+		pSkillInfo2->szName = "스킬2";
+		pSkillInfo2->UID = 2;
+		m_vecSkillInfo[1] = pSkillInfo2;
 
-		pSkillInfo = new SkillInfo();
-		pSkillInfo->szName = "스킬3";
-		pSkillInfo->UID = 3;
-		m_vecSkillInfo[2] = pSkillInfo;
+		SkillInfo* pSkillInfo3 = new SkillInfo();
+		pSkillInfo3->szName = "스킬3";
+		pSkillInfo3->UID = 3;
+		m_vecSkillInfo[2] = pSkillInfo3;
 
 		// 스킬1 쿨타임 텍스트
 		uiDialog->AddText(eUI_SkillBtn1_Human_TextCoolTime, Assets::GetFont(Assets::FontType_NORMAL), "3.0");
@@ -131,9 +132,14 @@ void ComHuman::SetAniEvent()
 	attackKey.pCallbackData = this;
 	attackKey.Time = x;
 
+	// 키 이벤트 콜백
+	D3DXKEY_CALLBACK skill1Key;
+	skill1Key.pCallbackData = this;
+	skill1Key.Time = x;
+
 	// eAni 순서데로 추가한다.
 	m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Skill_2], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f, D3DXPLAY_ONCE);
-	m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Skill_1], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f, D3DXPLAY_ONCE);
+	m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Skill_1], 1, &skill1Key, D3DXCOMPRESS_DEFAULT, 1.0f, D3DXPLAY_ONCE);
 	m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Attack_1], 1, &attackKey, D3DXCOMPRESS_DEFAULT, 1.0f);
 	m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Walk], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
 	m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAni_Stand], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
@@ -203,7 +209,16 @@ void ComHuman::OnPress(UIButton * pSender)
 void ComHuman::Skill1()
 {
 	ComChrControl* pChrControl = (ComChrControl*)gameObject->GetComponent("ComChrControl");
+
+	// 공격 대상이 지정되어 있지 않으면
+	if (pChrControl->pAttackTarget == NULL)
+	{
+		// UI Message: 공격 대상이 지정되어 있지 않습니다.
+		return;
+	}
+		
 	ChrStateSkill1* pStateSkill = dynamic_cast<ChrStateSkill1*>(pChrControl->m_vecState[eAni_Skill_1]);
+	m_pAnimation->pCallbackHandler = m_pSkill1Handler;
 
 	if (pStateSkill->IsCoolTime == true)
 		return;
@@ -229,5 +244,39 @@ void ComHuman::Skill2()
 }
 
 void ComHuman::Skill3()
+{
+}
+
+void ComHuman::AttackSkill1(ComCharacter * pTarget)
+{
+	m_pAttackTarget = pTarget;
+	ComChrControl* pControl = (ComChrControl*)(gameObject->GetComponent("ComChrControl"));
+	pControl->LookatTarget();
+
+	HumanSkill1* pSkill1 = ((HumanSkill1*)m_vecSkillInfo[0]);
+
+	// 두 오브젝트 사이의 거리
+	float fDist = ComTransform::Distance(gameObject, m_pAttackTarget->gameObject);
+	
+	// 공격 거리가 안돼면 데미지 입지 않음
+	if (pSkill1->fRange < fDist)
+		return;
+
+	// 총 공격력 계산 (내 공격력 + 장비 공격력)
+	int equipmentDmg = 0;
+	if (m_pChrEquipment)
+		equipmentDmg = m_pChrEquipment->GetTotalATK_MIN();
+
+	// 스킬1 데미지 공식 = (캐릭터 기본 공격력 + 장비 공격력) * 1.5배 + 스킬 추가 데미지
+	int dmg = (Status.ATK_PHY + equipmentDmg) * 1.5f + pSkill1->iAddSkillDmg;
+
+	pTarget->Defence(dmg);
+}
+
+void ComHuman::AttackSkill2(ComCharacter * pTarget)
+{
+}
+
+void ComHuman::AttackSkill3(ComCharacter * pTarget)
 {
 }
