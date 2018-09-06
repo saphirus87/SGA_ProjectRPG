@@ -53,7 +53,7 @@ void ComText3D::Render()
 		if (m_bAlphaShade)
 		{
 			fAlpha -= 0.1f * fDeltaTime;
-			m_mtrl.Diffuse.a = m_mtrl.Ambient.a = m_mtrl.Specular.a = m_mtrl.Emissive.a = fAlpha;
+			m_mtrl.Diffuse.a = m_mtrl.Ambient.a = m_mtrl.Specular.a = m_mtrl.Emissive.a = 0.1f;
 		}
 
 		pDevice9->SetMaterial(&m_mtrl);
@@ -111,7 +111,12 @@ void ComText3D::SetText(CString szChrName)
 
 void ComText3D::SetText(CString szChrName, Color color, float fScale, bool bAlphaShade)
 {
-	SetText(szChrName);
+	m_szText = szChrName;
+
+	if (m_pMesh3DText)
+		m_pMesh3DText->Release();
+
+	CreateD3DXTextMesh(m_szText, &m_pMesh3DText, L"¸¼Àº °íµñ", 5, TRUE, FALSE);
 	
 	m_bAlphaShade = bAlphaShade;
 	fAlpha = color.a;
