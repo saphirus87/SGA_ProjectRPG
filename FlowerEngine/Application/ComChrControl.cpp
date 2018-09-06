@@ -99,8 +99,9 @@ void ComChrControl::Update()
 	if (Input::ButtonDown(VK_RBUTTON))
 	{
 		CancleAttackTarget();
-		CheckPickingMon();
-		CheckPickingMap();
+		// 몬스터가 Picking되지 않으면 Map으로 이동 (중복 픽킹 방지)
+		if (CheckPickingMon() == false)
+			CheckPickingMap();
 	}
 
 	if (m_pFollow != NULL && m_pFollow->IsFollowing)
@@ -299,10 +300,10 @@ void ComChrControl::CheckPickingChr()
 	}
 }
 
-void ComChrControl::CheckPickingMon()
+bool ComChrControl::CheckPickingMon()
 {
 	if (m_pFollow == NULL)
-		return;
+		return false;
 
 	Mouse* pMouse = Input::GetInstance()->m_pMouse;
 	Vector3 mousePos = Input::GetInstance()->m_pMouse->GetPosition();
@@ -330,9 +331,12 @@ void ComChrControl::CheckPickingMon()
 				// 몬스터를 따라간다.
 				m_pFollow->pTarget = o;
 				pAttackTarget = (ComCharacter*)o->GetComponent("ComCharacter");
+				return true;
 			}
 		}
 	}
+
+	return false;
 }
 
 void ComChrControl::CheckPickingMap()

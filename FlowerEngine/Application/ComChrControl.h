@@ -30,7 +30,7 @@ public:
 
 	// 이 객체가 픽킹되었는지 여부를 검사합니다. (캐릭터, 몬스터, 맵)
 	void CheckPickingChr();
-	void CheckPickingMon();
+	bool CheckPickingMon();
 	void CheckPickingMap();
 
 	// 공격대상을 취소합니다.
