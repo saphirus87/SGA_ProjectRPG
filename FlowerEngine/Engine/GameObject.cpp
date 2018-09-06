@@ -109,7 +109,10 @@ void GameObject::Update()
 	////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 	for (auto & com : m_Components)
-		com.second->Update();
+	{
+		if (com.second->Enable == true)
+			com.second->Update();
+	}
 }
 
 void GameObject::Render()
@@ -117,8 +120,11 @@ void GameObject::Render()
 	if (m_bIsActive == false)
 		return;
 
-	for (IterGOCom iter = m_Components.begin(); iter != m_Components.end(); ++iter)
-		(*iter).second->Render();
+	for (auto & com : m_Components)
+	{
+		if (com.second->Enable == true)
+			com.second->Render();
+	}
 }
 
 void GameObject::ResetDevice()

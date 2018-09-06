@@ -4,7 +4,10 @@
 ComText3D::ComText3D(CString szName)
 	:Component(szName), 
 	m_pMesh3DText(NULL),
-	fOffsetPosY(1.3f)
+	fOffsetPosY(1.3f),
+	m_vScale(0.2f, 0.2f, 0.2f),
+	fAlpha(1.0f),
+	m_bAlphaShade(false)
 {
 	pDevice9 = GetD3D9Device();
 	D3DXMatrixIdentity(&m_matBillboard);
@@ -27,7 +30,7 @@ void ComText3D::Update()
 
 	// 역행렬을 구해준 후
 	D3DXMatrixInverse(&m_matBillboard, NULL, &matView);
-	D3DXMatrixScaling(&matS, 0.20f, 0.20f, 0.20f);
+	D3DXMatrixScaling(&matS, m_vScale.x, m_vScale.y, m_vScale.z);
 
 	m_matBillboard *= matS;
 
@@ -41,9 +44,18 @@ void ComText3D::Update()
 
 void ComText3D::Render()
 {
+	float fDeltaTime = GetElapsedTime();
+
 	if (m_pMesh3DText != NULL)
 	{
 		//pDevice9->SetRenderState(D3DRS_LIGHTING, false);
+		
+		if (m_bAlphaShade)
+		{
+			fAlpha -= 0.1f * fDeltaTime;
+			m_mtrl.Diffuse.a = m_mtrl.Ambient.a = m_mtrl.Specular.a = m_mtrl.Emissive.a = fAlpha;
+		}
+
 		pDevice9->SetMaterial(&m_mtrl);
 		pDevice9->SetTransform(D3DTS_WORLD, &m_matBillboard);
 		m_pMesh3DText->DrawSubset(0);
@@ -97,9 +109,15 @@ void ComText3D::SetText(CString szChrName)
 	m_mtrl.Diffuse.a = m_mtrl.Emissive.a = 1.0f;
 }
 
-void ComText3D::SetText(CString szChrName, Color color)
+void ComText3D::SetText(CString szChrName, Color color, float fScale, bool bAlphaShade)
 {
 	SetText(szChrName);
+	
+	m_bAlphaShade = bAlphaShade;
+	fAlpha = color.a;
+
+	m_vScale.x = m_vScale.y = m_vScale.z = fScale;
+
 	ZeroMemory(&m_mtrl, sizeof(D3DMATERIAL9));
 	m_mtrl.Diffuse.r = m_mtrl.Emissive.r = color.r;
 	m_mtrl.Diffuse.g = m_mtrl.Emissive.g = color.g;

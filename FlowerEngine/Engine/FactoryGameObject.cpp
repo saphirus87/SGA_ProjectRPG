@@ -333,6 +333,11 @@ GameObject * FactoryGameObject::CreateCharacter(CString szName, CString szFolder
 {
 	GameObject* pGOChr = CreateFromXFile(szName, szFolderPath, szFileName, pos);
 	pGOChr->Tag = eTag_Chracter;
+	// 이 게임 오브젝트는 데미지 표시 가능
+	ComText3D* pUIDamage = new ComText3D("ComText3D_Damage");
+	pUIDamage->SetText("", Color(1, 0, 0, 1), 0.4f);
+	pUIDamage->fOffsetPosY = 1.5f;
+	pGOChr->AddComponent(pUIDamage);
 	// 이 게임 오브젝트는 장비 장착 가능
 	pGOChr->AddComponent(new ComChrEquipment("ComChrEquipment"));
 	// 이 게임 오브젝트의 직업
@@ -352,12 +357,7 @@ GameObject * FactoryGameObject::CreateCharacter(CString szName, CString szFolder
 	pChrName->SetText(szChrName);
 	pChrName->SetChrNamePos(pos);
 	pGOChr->AddComponent(pChrName);
-	// 이 게임 오브젝트는 데미지 표시 가능
-	ComText3D* pUIDamage = new ComText3D("ComText3D_Damage");
-	pUIDamage->SetText("", Color(1, 0, 0, 1));
-	pUIDamage->fOffsetPosY = 1.5f;
-	pGOChr->AddComponent(pUIDamage);
-
+	
 	return pGOChr;
 }
 
@@ -373,6 +373,12 @@ GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPa
 	// 타겟을 따라다닌다.
 	pComTarget->pTarget = pTarget;
 
+	// 이 게임 오브젝트는 데미지 표시 가능
+	ComText3D* pUIDamage = new ComText3D("ComText3D_Damage");
+	pUIDamage->SetText("", Color(1, 0, 0, 1), 0.4f);
+	pUIDamage->fOffsetPosY = 2.2f;
+	pGOMonX->AddComponent(pUIDamage);
+	
 	ComCharacter* pChrMon = new ComCharacter("ComCharacter");
 	pChrMon->Status = status;
 	pGOMonX->AddComponent(pChrMon);
@@ -396,11 +402,7 @@ GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPa
 	pChrName->fOffsetPosY = 2.0f;
 	pGOMonX->AddComponent(pChrName);
 
-	// 이 게임 오브젝트는 데미지 표시 가능
-	ComText3D* pUIDamage = new ComText3D("ComText3D_Damage");
-	pUIDamage->SetText("", Color(1, 0, 0, 1));
-	pUIDamage->fOffsetPosY = 2.1f;
-	pGOMonX->AddComponent(pUIDamage);
+
 
 	return pGOMonX;
 }

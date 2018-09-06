@@ -15,7 +15,7 @@ public:
 	HRESULT CreateD3DXTextMesh(CString szText, LPD3DXMESH* ppMesh, TCHAR* pstrFont, DWORD dwSize, BOOL bBold, BOOL bItalic);
 
 	void SetText(CString szChrName);
-	void SetText(CString szChrName, Color color);
+	void SetText(CString szChrName, Color color, float fScale, bool bAlphaShade = false);
 
 	CString GetText();
 	void SetChrNamePos(Vector3& vChrNamePos);
@@ -23,8 +23,16 @@ public:
 
 	// 위쪽으로 보정값
 	float fOffsetPosY;
+	// 텍스트 알파값
+	float fAlpha;
 
 private:
+	// 크기 배율
+	Vector3 m_vScale;
+
+	// 알파값이 서서히 사라지는 여부
+	bool m_bAlphaShade;
+	
 	Device9 pDevice9;
 	Mesh m_pMesh3DText;
 	Material m_mtrl;

@@ -13,6 +13,8 @@ ComCharacter::ComCharacter(CString szName) :
 	m_pAttackTarget(NULL),
 	m_pHPBar(NULL),
 	m_pMPBar(NULL),
+	m_pDamage(NULL),
+	m_pTimerDamage(NULL),
 	m_pTimerHPRec(NULL),
 	m_pTimerMPRec(NULL),
 	m_eType(eChrType_COUNT), // 초기화 값으로 사용
@@ -38,20 +40,24 @@ void ComCharacter::Init()
 	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 	m_pChrEquipment = (ComChrEquipment*)gameObject->GetComponent("ComChrEquipment");
 
-	m_pTimerHPRec = new CTimer(CClock::GetInstance());
-	m_pTimerHPRec->Start();
-	m_pTimerMPRec = new CTimer(CClock::GetInstance());
-	m_pTimerMPRec->Start();
+	m_pTimerHPRec = new CTimer(CClock::GetInstance()); m_pTimerHPRec->Start();
+	m_pTimerMPRec = new CTimer(CClock::GetInstance()); m_pTimerMPRec->Start();
+	m_pTimerDamage = new CTimer(CClock::GetInstance()); m_pTimerDamage->Start();
 
 	m_pAttackHandler = new AttackHandler();
 	m_pAnimation->pCallbackHandler = m_pAttackHandler;
 
 	m_pSkill1Handler = new Skill1Handler();
+
+	m_pDamage = (ComText3D*)gameObject->GetComponent("ComText3D_Damage");
 }
 
 void ComCharacter::Update()
 {
 	HPMPRecovery();
+
+	if (m_pTimerDamage->GetTime() > 1.f)
+		m_pDamage->Enable = false;
 }
 
 void ComCharacter::Render()
@@ -108,6 +114,16 @@ void ComCharacter::Defence(int dmg)
 
 	// HP 차감
 	Status.HP -= dmg;
+
+	// UI 데미지 표시
+	CString szDmg;
+	szDmg.Format(L"%d", dmg);
+	if (m_pDamage)
+	{
+		m_pDamage->SetText(szDmg, Color(1, 0, 0, 1), 0.4f, true);
+		m_pDamage->Enable = true;
+		m_pTimerDamage->Reset();
+	}
 	
 	// UI 갱신
 	UpdateHPMPBar();

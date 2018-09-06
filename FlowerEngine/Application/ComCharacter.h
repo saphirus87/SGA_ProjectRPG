@@ -74,9 +74,14 @@ public:
 	AttackHandler* m_pAttackHandler;
 	Skill1Handler* m_pSkill1Handler;
 
+	// UI
 protected:
 	UIProgressBar* m_pHPBar;
 	UIProgressBar* m_pMPBar;
+	
+	ComText3D* m_pDamage;
+	// 데미지 표시 시간
+	CTimer* m_pTimerDamage;
 
 	CTimer* m_pTimerHPRec;
 	CTimer* m_pTimerMPRec;
