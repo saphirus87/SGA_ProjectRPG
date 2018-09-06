@@ -32,17 +32,22 @@ StatusInfo::~StatusInfo()
 {
 }
 
-bool StatusInfo::CheckLevelUp()
+bool StatusInfo::GetEXPAndCheckLevelUp()
 {
 	// 레벨 제한 99
 	if (LEVEL <= 99)
 	{
+		// 경험치 증가
 		++EXP;
 
 		for (int i = LEVEL - 1; i < LEVEL; ++i)
 		{
+			// 레벨업
 			if (EXP >= vecEXPNext[LEVEL - 1])
+			{
+				++LEVEL;
 				return true;
+			}
 		}
 	}
 

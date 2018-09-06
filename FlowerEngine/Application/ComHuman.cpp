@@ -120,6 +120,17 @@ void ComHuman::SetUI()
 			m_pUILevel->SetDrawFormat(DT_LEFT);
 		}
 
+		//EXP 텍스트
+		CString szEXP;
+		szEXP.Format(L"EXP:%d/%d", Status.EXP, Status.NextEXP());
+		uiDialog->AddText(eUI_Human_Text_EXP, Assets::GetFont(Assets::FontType_NORMAL), szEXP);
+		m_pUIEXP = uiDialog->GetText(eUI_Human_Text_EXP);
+		if (m_pUIEXP)
+		{
+			m_pUIEXP->SetPosition(Vector3(10, 70, 0));
+			m_pUIEXP->SetDrawFormat(DT_LEFT);
+		}
+
 		// HP바
 		uiDialog->AddProgressBar(eUI_HPBar_Human, "Resources/ui/6.tga");
 

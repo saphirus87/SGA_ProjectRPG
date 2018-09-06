@@ -54,6 +54,6 @@ public:
 	int NextEXP() { return vecEXPNext[LEVEL - 1]; }
 	vector<int> vecEXPNext;
 	// 레벨업 여부를 확인합니다
-	bool CheckLevelUp();
+	bool GetEXPAndCheckLevelUp();
 };
 

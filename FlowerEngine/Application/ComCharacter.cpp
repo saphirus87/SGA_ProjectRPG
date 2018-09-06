@@ -13,6 +13,7 @@ ComCharacter::ComCharacter(CString szName) :
 	m_pAttackTarget(NULL),
 	m_pFace(NULL),
 	m_pUILevel(NULL),
+	m_pUIEXP(NULL),
 	m_pHPBar(NULL),
 	m_pMPBar(NULL),
 	m_pComUIDamage(NULL),
@@ -150,11 +151,15 @@ void ComCharacter::LevelUp()
 	Status.EXP = 0;
 
 	// UI °»½Å
-	if (m_pUILevel)
+	if (m_pUILevel && m_pUIEXP)
 	{
 		CString szLevel;
-		szLevel.Format(L"LV:%d", Status.LEVEL);
+		szLevel.Format(L"LV:%d\r\n%d/%d", Status.LEVEL, Status.EXP, Status.NextEXP());
 		m_pUILevel->SetText(szLevel);
+
+		CString szEXP;
+		szEXP.Format(L"EXP:%d/%d", Status.EXP, Status.NextEXP());
+		m_pUIEXP->SetText(szEXP);
 	}
 }
 

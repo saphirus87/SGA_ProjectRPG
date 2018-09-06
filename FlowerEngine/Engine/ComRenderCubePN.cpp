@@ -57,11 +57,14 @@ void ComRenderCubePN::Render()
 
 void ComRenderCubePN::RenderRambert()
 {
-	Vector3 offsetPos = pCollider->offsetPos;
 	Matrix4x4 matLocal;
 	D3DXMatrixIdentity(&matLocal);
-	D3DXMatrixTranslation(&matLocal, offsetPos.x, offsetPos.y, offsetPos.z);
 
+	if (pCollider)
+	{
+		Vector3 offsetPos = pCollider->offsetPos;
+		D3DXMatrixTranslation(&matLocal, offsetPos.x, offsetPos.y, offsetPos.z);
+	}
 	Matrix4x4 matWorld = matLocal * gameObject->transform->GetWorldMatrix();
 
 	m_pEffect->SetMatrix("gWorldMatrix", &matWorld);

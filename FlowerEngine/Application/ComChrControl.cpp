@@ -173,7 +173,7 @@ void ComChrControl::CheckAttackTargetDeath()
 			pControl->Death();
 
 			// 캐릭터 레벨업 처리
-			if (m_pCharacter->Status.CheckLevelUp())
+			if (m_pCharacter->Status.GetEXPAndCheckLevelUp())
 				m_pCharacter->LevelUp();
 		}
 		CancleAttackTarget();
@@ -335,6 +335,7 @@ bool ComChrControl::CheckPickingMon()
 			{
 				// 몬스터를 따라간다.
 				m_pFollow->pTarget = o;
+				m_pFollow->fMoveSpeed = m_pCharacter->Status.MOVE_SPEED;
 				pAttackTarget = (ComCharacter*)o->GetComponent("ComCharacter");
 				return true;
 			}

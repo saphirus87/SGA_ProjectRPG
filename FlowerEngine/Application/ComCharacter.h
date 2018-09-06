@@ -80,6 +80,7 @@ public:
 	// UI
 protected:
 	UIText* m_pUILevel;
+	UIText* m_pUIEXP;
 	UIProgressBar* m_pHPBar;
 	UIProgressBar* m_pMPBar;
 	UIImage* m_pFace;

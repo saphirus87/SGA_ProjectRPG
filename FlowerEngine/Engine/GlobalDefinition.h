@@ -179,6 +179,7 @@ enum eUI
 	eUI_SkillBtn3_Human,
 	eUI_Human_Img_Face,
 	eUI_Human_Text_LV,
+	eUI_Human_Text_EXP,
 
 	eUI_SkillBtn1_Undead,
 	eUI_SkillBtn2_Undead,
