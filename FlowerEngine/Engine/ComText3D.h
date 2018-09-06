@@ -12,10 +12,12 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
-	HRESULT CreateD3DXTextMesh(LPD3DXMESH* ppMesh, TCHAR* pstrFont, DWORD dwSize, BOOL bBold, BOOL bItalic);
+	HRESULT CreateD3DXTextMesh(CString szText, LPD3DXMESH* ppMesh, TCHAR* pstrFont, DWORD dwSize, BOOL bBold, BOOL bItalic);
 
-	void SetChrName(CString szChrName);
-	CString GetChrName();
+	void SetText(CString szChrName);
+	void SetText(CString szChrName, Color color);
+
+	CString GetText();
 	void SetChrNamePos(Vector3& vChrNamePos);
 	Vector3& GetChrNamePos();
 
@@ -27,7 +29,7 @@ private:
 	Mesh m_pMesh3DText;
 	Material m_mtrl;
 	// 캐릭터 이름값, 위치값을 저장하는 변수
-	CString m_szChrName;
+	CString m_szText;
 	Vector3 m_vChrNamePos;
 	// 항상 카메라를 바라보게 하는 Y축 역행렬
 	Matrix4x4 m_matBillboard;

@@ -349,9 +349,14 @@ GameObject * FactoryGameObject::CreateCharacter(CString szName, CString szFolder
 	pGOChr->AddComponent(new ComShooting("ComShooting"));
 	// 이 게임 오브젝트는 이름추가 가능
 	ComText3D* pChrName = new ComText3D("ComText3D");
-	pChrName->SetChrName(szChrName);
+	pChrName->SetText(szChrName);
 	pChrName->SetChrNamePos(pos);
 	pGOChr->AddComponent(pChrName);
+	// 이 게임 오브젝트는 데미지 표시 가능
+	ComText3D* pUIDamage = new ComText3D("ComText3D_Damage");
+	pUIDamage->SetText("", Color(1, 0, 0, 1));
+	pUIDamage->fOffsetPosY = 1.5f;
+	pGOChr->AddComponent(pUIDamage);
 
 	return pGOChr;
 }
@@ -387,9 +392,15 @@ GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPa
 
 	// 이 게임 오브젝트는 이름추가 가능
 	ComText3D* pChrName = new ComText3D("ComText3D");
-	pChrName->SetChrName(szName);
+	pChrName->SetText(szName);
 	pChrName->fOffsetPosY = 2.0f;
 	pGOMonX->AddComponent(pChrName);
+
+	// 이 게임 오브젝트는 데미지 표시 가능
+	ComText3D* pUIDamage = new ComText3D("ComText3D_Damage");
+	pUIDamage->SetText("", Color(1, 0, 0, 1));
+	pUIDamage->fOffsetPosY = 2.1f;
+	pGOMonX->AddComponent(pUIDamage);
 
 	return pGOMonX;
 }
