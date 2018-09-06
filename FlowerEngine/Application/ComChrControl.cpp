@@ -164,12 +164,17 @@ void ComChrControl::CheckAttackTargetDeath()
 	// 공격 상대가 죽었으면
 	if (pAttackTarget && pAttackTarget->IsDeath() == true)
 	{
+		// 캐릭터 죽음 처리
 		if (pAttackTarget->gameObject->Tag == eTag_Chracter)
 			pAttackTarget->gameObject->SetActive(false);
-		else
+		else // 몬스터 죽음 처리
 		{
 			ComChrControl* pControl = (ComChrControl*)(pAttackTarget->gameObject->GetComponent("ComChrControl"));
 			pControl->Death();
+
+			// 캐릭터 레벨업 처리
+			if (m_pCharacter->Status.CheckLevelUp())
+				m_pCharacter->LevelUp();
 		}
 		CancleAttackTarget();
 		Stand();

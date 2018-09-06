@@ -11,9 +11,11 @@ ComCharacter::ComCharacter(CString szName) :
 	m_pAnimation(NULL),
 	m_pChrEquipment(NULL),
 	m_pAttackTarget(NULL),
+	m_pFace(NULL),
+	m_pUILevel(NULL),
 	m_pHPBar(NULL),
 	m_pMPBar(NULL),
-	m_pDamage(NULL),
+	m_pComUIDamage(NULL),
 	m_pTimerDamage(NULL),
 	m_pTimerHPRec(NULL),
 	m_pTimerMPRec(NULL),
@@ -49,7 +51,7 @@ void ComCharacter::Init()
 
 	m_pSkill1Handler = new Skill1Handler();
 
-	m_pDamage = (ComText3D*)gameObject->GetComponent("ComText3D_Damage");
+	m_pComUIDamage = (ComText3D*)gameObject->GetComponent("ComText3D_Damage");
 }
 
 void ComCharacter::Update()
@@ -57,7 +59,7 @@ void ComCharacter::Update()
 	HPMPRecovery();
 
 	if (m_pTimerDamage->GetTime() > 1.f)
-		m_pDamage->Enable = false;
+		m_pComUIDamage->Enable = false;
 }
 
 void ComCharacter::Render()
@@ -118,10 +120,10 @@ void ComCharacter::Defence(int dmg)
 	// UI 데미지 표시
 	CString szDmg;
 	szDmg.Format(L"%d", dmg);
-	if (m_pDamage)
+	if (m_pComUIDamage)
 	{
-		m_pDamage->SetText(szDmg, Color(1, 0, 0, 1), 0.4f, true);
-		m_pDamage->Enable = true;
+		m_pComUIDamage->SetText(szDmg, Color(1, 0, 0, 1), 0.4f, true);
+		m_pComUIDamage->Enable = true;
 		m_pTimerDamage->Reset();
 	}
 	
@@ -135,6 +137,25 @@ bool ComCharacter::IsDeath()
 		return true;
 
 	return false;
+}
+
+void ComCharacter::LevelUp()
+{
+	// 레벨업시 처리
+
+	// 이동속도 증가
+	Status.MOVE_SPEED += 0.05f;
+
+	// 현재 EXP
+	Status.EXP = 0;
+
+	// UI 갱신
+	if (m_pUILevel)
+	{
+		CString szLevel;
+		szLevel.Format(L"LV:%d", Status.LEVEL);
+		m_pUILevel->SetText(szLevel);
+	}
 }
 
 void ComCharacter::HPMPRecovery()

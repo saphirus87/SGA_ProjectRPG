@@ -45,5 +45,15 @@ public:
 	float ATK_SPEED;
 	// 치명타(Critical) 확률
 	float CRI_PER;
+
+	// LEVEL 관련
+	int LEVEL;
+	// 현재 경험치
+	int EXP;
+	// 필요 경험치
+	int NextEXP() { return vecEXPNext[LEVEL - 1]; }
+	vector<int> vecEXPNext;
+	// 레벨업 여부를 확인합니다
+	bool CheckLevelUp();
 };
 

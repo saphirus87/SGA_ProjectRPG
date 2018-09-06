@@ -103,6 +103,23 @@ void ComHuman::SetUI()
 	{
 		ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");
 
+		m_pComUIDamage = (ComText3D*)gameObject->GetComponent("ComText3D_Damage");
+
+		uiDialog->AddImage(eUI_Human_Img_Face, "./Resources/ui/troll_skill_3_over.png");
+		m_pFace = uiDialog->GetImage(eUI_Human_Img_Face);
+		m_pFace->SetPosition(Vector3(10, 0, 0));
+
+		// LEVEL 텍스트
+		CString szLevel;
+		szLevel.Format(L"LV:%d", Status.LEVEL);
+		uiDialog->AddText(eUI_Human_Text_LV, Assets::GetFont(Assets::FontType_NORMAL), szLevel);
+		m_pUILevel = uiDialog->GetText(eUI_Human_Text_LV);
+		if (m_pUILevel)
+		{
+			m_pUILevel->SetPosition(Vector3(45, 50, 0));
+			m_pUILevel->SetDrawFormat(DT_LEFT);
+		}
+
 		// HP바
 		uiDialog->AddProgressBar(eUI_HPBar_Human, "Resources/ui/6.tga");
 

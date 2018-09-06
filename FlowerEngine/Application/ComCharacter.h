@@ -44,6 +44,9 @@ public:
 	// 죽었는지 여부를 반환합니다.
 	bool IsDeath();
 
+	// 레벨업
+	void LevelUp();
+
 	// 시간에 따라 HP가 회복됩니다.
 	void HPMPRecovery();
 
@@ -76,10 +79,12 @@ public:
 
 	// UI
 protected:
+	UIText* m_pUILevel;
 	UIProgressBar* m_pHPBar;
 	UIProgressBar* m_pMPBar;
-	
-	ComText3D* m_pDamage;
+	UIImage* m_pFace;
+
+	ComText3D* m_pComUIDamage;
 	// 데미지 표시 시간
 	CTimer* m_pTimerDamage;
 

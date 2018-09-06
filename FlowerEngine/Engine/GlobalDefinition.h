@@ -177,9 +177,13 @@ enum eUI
 	eUI_SkillBtn1_Human_TextCoolTime,
 	eUI_SkillBtn2_Human,
 	eUI_SkillBtn3_Human,
+	eUI_Human_Img_Face,
+	eUI_Human_Text_LV,
+
 	eUI_SkillBtn1_Undead,
 	eUI_SkillBtn2_Undead,
 	eUI_SkillBtn3_Undead,
+
 	eUI_SkillBtn1_Troll,
 	eUI_SkillBtn2_Troll,
 	eUI_SkillBtn3_Troll,

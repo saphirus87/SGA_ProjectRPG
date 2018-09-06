@@ -17,11 +17,34 @@ CRI_PER(0),
 REVTime_HP(3),
 REV_HP(1),
 REVTime_MP(3),
-REV_MP(1)
+REV_MP(1),
+LEVEL(1),
+EXP(0)
 {
+	vecEXPNext.resize(99);
+
+	for (int i = 0; i < 99; ++i)
+		vecEXPNext[i] = i + 1;
 }
 
 
 StatusInfo::~StatusInfo()
 {
+}
+
+bool StatusInfo::CheckLevelUp()
+{
+	// 레벨 제한 99
+	if (LEVEL <= 99)
+	{
+		++EXP;
+
+		for (int i = LEVEL - 1; i < LEVEL; ++i)
+		{
+			if (EXP >= vecEXPNext[LEVEL - 1])
+				return true;
+		}
+	}
+
+	return false;
 }
