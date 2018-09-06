@@ -23,83 +23,9 @@ void ComHuman::Awake()
 {
 	Init();
 
-	GameObject* pUIBar = GameObject::Find("testUI");
-	if (pUIBar)
-	{
-		ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");
-
-		// HP바
-		uiDialog->AddProgressBar(eUI_HPBar_Human, "Resources/ui/6.tga");
-
-		m_pHPBar = uiDialog->GetProgressBar(eUI_HPBar_Human);
-		m_pHPBar->SetPosition(Vector3(100, 0, 0));
-		m_pHPBar->SetMaxValue(Status.HPMAX);
-		UpdateHPMPBar();
-
-		// MP바
-		uiDialog->AddProgressBar(eUI_MPBar_Human, "Resources/ui/6.tga");
-
-		m_pMPBar = uiDialog->GetProgressBar(eUI_MPBar_Human);
-		m_pMPBar->SetPosition(Vector3(100, 50, 0));
-		m_pMPBar->SetMaxValue(Status.MPMAX);
-		m_pMPBar->SetMaxColor(Color(0, 0, 1, 1));
-		UpdateHPMPBar();
-
-		// 스킬 버튼
-		float fScreenHeight = DXUTGetWindowHeight();
-
-		uiDialog->AddButton(eUI_SkillBtn1_Human, 
-			"Resources/ui/human_skill_1.png", 
-			"Resources/ui/human_skill_1_over.png", 
-			"Resources/ui/human_skill_1.png", this, "human_skill_1");
-
-		UIButton* btnSkill = uiDialog->GetButton(eUI_SkillBtn1_Human);
-		btnSkill->SetPosition(Vector3(50, fScreenHeight - 150.0f, 0.0f));
-
-		uiDialog->AddButton(eUI_SkillBtn2_Human,
-			"Resources/ui/human_skill_2.png",
-			"Resources/ui/human_skill_2_over.png",
-			"Resources/ui/human_skill_2.png", this, "human_skill_2");
-
-		btnSkill = uiDialog->GetButton(eUI_SkillBtn2_Human);
-		btnSkill->SetPosition(Vector3(150, fScreenHeight - 150.0f, 0.0f));
-
-		uiDialog->AddButton(eUI_SkillBtn3_Human,
-			"Resources/ui/human_skill_3.png",
-			"Resources/ui/human_skill_3_over.png",
-			"Resources/ui/human_skill_3.png", this, "human_skill_3");
-
-		btnSkill = uiDialog->GetButton(eUI_SkillBtn3_Human);
-		btnSkill->SetPosition(Vector3(250, fScreenHeight - 150.0f, 0.0f));
-
-		// 스킬 정보 생성 (파일 또는 엑셀에서 읽어야 하는 부분)
-		m_vecSkillInfo.resize(3);
-
-		HumanSkill1* pSkillInfo1 = new HumanSkill1();
-		pSkillInfo1->szName = "스킬1";
-		pSkillInfo1->UID = 1;
-		m_vecSkillInfo[0] = pSkillInfo1;
-
-		SkillInfo* pSkillInfo2 = new SkillInfo();
-		pSkillInfo2->szName = "스킬2";
-		pSkillInfo2->UID = 2;
-		m_vecSkillInfo[1] = pSkillInfo2;
-
-		SkillInfo* pSkillInfo3 = new SkillInfo();
-		pSkillInfo3->szName = "스킬3";
-		pSkillInfo3->UID = 3;
-		m_vecSkillInfo[2] = pSkillInfo3;
-
-		// 스킬1 쿨타임 텍스트
-		uiDialog->AddText(eUI_SkillBtn1_Human_TextCoolTime, Assets::GetFont(Assets::FontType_NORMAL), "3.0");
-		uiTextCoolTimeSkill1 = uiDialog->GetText(eUI_SkillBtn1_Human_TextCoolTime);
-		if (uiTextCoolTimeSkill1)
-		{
-			uiTextCoolTimeSkill1->SetPosition(Vector3(50, fScreenHeight - 130.0f, 0.0f));
-			uiTextCoolTimeSkill1->SetDrawFormat(DT_CENTER);
-		}
-	}
+	SetUI();
 	SetAniEvent();
+	SetSkillInfo();
 }
 
 void ComHuman::SetAniEvent()
@@ -147,6 +73,91 @@ void ComHuman::SetAniEvent()
 	vecKeyFrameAnimSet.clear();
 }
 
+void ComHuman::SetSkillInfo()
+{
+	// 스킬 정보 생성 (파일 또는 엑셀에서 읽어야 하는 부분)
+	m_vecSkillInfo.resize(3);
+
+	HumanSkill1* pSkillInfo1 = new HumanSkill1();
+	pSkillInfo1->szName = "스킬1";
+	pSkillInfo1->UID = 1;
+	pSkillInfo1->iAddSkillDmg = 2;
+	pSkillInfo1->fRange = 3.0f;
+	m_vecSkillInfo[0] = pSkillInfo1;
+
+	SkillInfo* pSkillInfo2 = new SkillInfo();
+	pSkillInfo2->szName = "스킬2";
+	pSkillInfo2->UID = 2;
+	m_vecSkillInfo[1] = pSkillInfo2;
+
+	SkillInfo* pSkillInfo3 = new SkillInfo();
+	pSkillInfo3->szName = "스킬3";
+	pSkillInfo3->UID = 3;
+	m_vecSkillInfo[2] = pSkillInfo3;
+}
+
+void ComHuman::SetUI()
+{
+	GameObject* pUIBar = GameObject::Find("testUI");
+	if (pUIBar)
+	{
+		ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");
+
+		// HP바
+		uiDialog->AddProgressBar(eUI_HPBar_Human, "Resources/ui/6.tga");
+
+		m_pHPBar = uiDialog->GetProgressBar(eUI_HPBar_Human);
+		m_pHPBar->SetPosition(Vector3(100, 0, 0));
+		m_pHPBar->SetMaxValue(Status.HPMAX);
+		UpdateHPMPBar();
+
+		// MP바
+		uiDialog->AddProgressBar(eUI_MPBar_Human, "Resources/ui/6.tga");
+
+		m_pMPBar = uiDialog->GetProgressBar(eUI_MPBar_Human);
+		m_pMPBar->SetPosition(Vector3(100, 50, 0));
+		m_pMPBar->SetMaxValue(Status.MPMAX);
+		m_pMPBar->SetMaxColor(Color(0, 0, 1, 1));
+		UpdateHPMPBar();
+
+		// 스킬 버튼
+		float fScreenHeight = DXUTGetWindowHeight();
+
+		uiDialog->AddButton(eUI_SkillBtn1_Human,
+			"Resources/ui/human_skill_1.png",
+			"Resources/ui/human_skill_1_over.png",
+			"Resources/ui/human_skill_1.png", this, "human_skill_1");
+
+		UIButton* btnSkill = uiDialog->GetButton(eUI_SkillBtn1_Human);
+		btnSkill->SetPosition(Vector3(50, fScreenHeight - 150.0f, 0.0f));
+
+		uiDialog->AddButton(eUI_SkillBtn2_Human,
+			"Resources/ui/human_skill_2.png",
+			"Resources/ui/human_skill_2_over.png",
+			"Resources/ui/human_skill_2.png", this, "human_skill_2");
+
+		btnSkill = uiDialog->GetButton(eUI_SkillBtn2_Human);
+		btnSkill->SetPosition(Vector3(150, fScreenHeight - 150.0f, 0.0f));
+
+		uiDialog->AddButton(eUI_SkillBtn3_Human,
+			"Resources/ui/human_skill_3.png",
+			"Resources/ui/human_skill_3_over.png",
+			"Resources/ui/human_skill_3.png", this, "human_skill_3");
+
+		btnSkill = uiDialog->GetButton(eUI_SkillBtn3_Human);
+		btnSkill->SetPosition(Vector3(250, fScreenHeight - 150.0f, 0.0f));
+
+		// 스킬1 쿨타임 텍스트
+		uiDialog->AddText(eUI_SkillBtn1_Human_TextCoolTime, Assets::GetFont(Assets::FontType_NORMAL), "3.0");
+		uiTextCoolTimeSkill1 = uiDialog->GetText(eUI_SkillBtn1_Human_TextCoolTime);
+		if (uiTextCoolTimeSkill1)
+		{
+			uiTextCoolTimeSkill1->SetPosition(Vector3(50, fScreenHeight - 130.0f, 0.0f));
+			uiTextCoolTimeSkill1->SetDrawFormat(DT_CENTER);
+		}
+	}
+}
+
 void ComHuman::Update()
 {
 	ComCharacter::Update();
@@ -189,12 +200,10 @@ void ComHuman::OnClick(UIButton * pSender)
 {
 	if (pSender->GetButtonName() == "human_skill_1")
 	{
-		//((ComChrControl*)gameObject->GetComponent("ComChrControl"))->Skill1();
 		Skill1();
 	}
 	else if (pSender->GetButtonName() == "human_skill_2")
 	{
-//		((ComChrControl*)gameObject->GetComponent("ComChrControl"))->Skill2();
 	}
 	else if (pSender->GetButtonName() == "human_skill_3")
 	{
@@ -221,14 +230,17 @@ void ComHuman::Skill1()
 	m_pAnimation->pCallbackHandler = m_pSkill1Handler;
 
 	if (pStateSkill->IsCoolTime == true)
+	{
+		// UI Message : 쿨타임 중입니다.
 		return;
+	}
 
 	int useMP = m_vecSkillInfo[0]->iUseMP;
 
 	if (Status.MP < useMP)
 	{
-		// UI 출력 : MP가 부족합니다.
-		return; // MP 부족으로 스킬 사용 불가
+		// UI Message : MP가 부족합니다.
+		return;
 	}
 
 	pChrControl->SetState(eAni_Skill_1);
@@ -236,6 +248,8 @@ void ComHuman::Skill1()
 
 	// MP 사용
 	Status.MP -= m_vecSkillInfo[0]->iUseMP;
+
+	// UI 갱신
 	UpdateHPMPBar();
 }
 

@@ -5,12 +5,12 @@ public:
 	SkillInfo();
 	virtual ~SkillInfo();
 
-	// 스킬 이름
-	CString szName;
-
 	// 스킬 ID
 	unsigned int UID;
 
+	// 스킬 이름
+	CString szName;
+	
 	// 사용 MP
 	int iUseMP;
 

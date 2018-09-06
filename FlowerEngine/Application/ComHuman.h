@@ -25,6 +25,8 @@ public:
 	virtual void Render() override;
 
 	void SetAniEvent();
+	void SetSkillInfo();
+	void SetUI();
 
 	// UIButtonDelegate을(를) 통해 상속됨
 	virtual void OnClick(UIButton * pSender) override;
@@ -42,7 +44,4 @@ public:
 private:
 	// Skill1 쿨타임 텍스트
 	UIText * uiTextCoolTimeSkill1;
-
-	// 스킬 정보들
-	vector<SkillInfo*> m_vecSkillInfo;
 };

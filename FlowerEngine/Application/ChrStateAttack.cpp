@@ -61,8 +61,6 @@ void ChrStateAttack1::Skill2(int iIndex)
 ChrStateSkill1::ChrStateSkill1(ComChrControl * pControl) : 
 	m_pTimerAnim(NULL),
 	IsCoolTime(false)
-	//CoolTime(3), // 일단 쿨타임 3초로 강제 셋팅
-	//UseMP(3) // 일단 사용MP 3으로 강제 셋팅
 {
 	m_pControl = pControl;
 	m_pTimerAnim = new CTimer(CClock::GetInstance());

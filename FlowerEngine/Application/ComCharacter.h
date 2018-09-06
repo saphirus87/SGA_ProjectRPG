@@ -13,6 +13,7 @@ class Skill1Handler : public ID3DXAnimationCallbackHandler
 };
 
 class ComChrEquipment;
+class SkillInfo;
 
 // 캐릭터의 공통요소입니다.
 class ComCharacter : public Component
@@ -61,6 +62,9 @@ protected:
 
 	// 장비 장착
 	ComChrEquipment* m_pChrEquipment;
+
+	// 스킬 정보들
+	vector<SkillInfo*> m_vecSkillInfo;
 
 public:
 	// 능력치
