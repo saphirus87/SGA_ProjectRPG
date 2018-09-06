@@ -26,7 +26,7 @@ void ComUndead::Awake()
 		m_pHPBar = uiDialog->GetProgressBar(eUI_HPBar_Undead);
 		m_pHPBar->SetPosition(Vector3(450, 0, 0));
 		m_pHPBar->SetMaxValue(Status.HPMAX);
-		UpdateHPMPBar();
+		UpdateUI();
 
 		// 스킬 버튼
 		float fScreenHeight = DXUTGetWindowHeight();

@@ -129,7 +129,7 @@ void ComCharacter::Defence(int dmg)
 	}
 	
 	// UI 갱신
-	UpdateHPMPBar();
+	UpdateUI();
 }
 
 bool ComCharacter::IsDeath()
@@ -149,18 +149,6 @@ void ComCharacter::LevelUp()
 
 	// 현재 EXP
 	Status.EXP = 0;
-
-	// UI 갱신
-	if (m_pUILevel && m_pUIEXP)
-	{
-		CString szLevel;
-		szLevel.Format(L"LV:%d\r\n%d/%d", Status.LEVEL, Status.EXP, Status.NextEXP());
-		m_pUILevel->SetText(szLevel);
-
-		CString szEXP;
-		szEXP.Format(L"EXP:%d/%d", Status.EXP, Status.NextEXP());
-		m_pUIEXP->SetText(szEXP);
-	}
 }
 
 void ComCharacter::HPMPRecovery()
@@ -172,7 +160,7 @@ void ComCharacter::HPMPRecovery()
 		if (Status.HP > 0 && Status.HP < Status.HPMAX)
 		{
 			Status.HP += Status.REV_HP; // 회복양
-			UpdateHPMPBar();
+			UpdateUI();
 		}
 		m_pTimerHPRec->Reset();
 	}
@@ -182,13 +170,13 @@ void ComCharacter::HPMPRecovery()
 		if (Status.MP < Status.MPMAX)
 		{
 			Status.MP += Status.REV_MP; // 회복양
-			UpdateHPMPBar();
+			UpdateUI();
 		}
 		m_pTimerMPRec->Reset();
 	}
 }
 
-void ComCharacter::UpdateHPMPBar()
+void ComCharacter::UpdateUI()
 {
 	if (m_pHPBar)
 	{
@@ -204,6 +192,17 @@ void ComCharacter::UpdateHPMPBar()
 			Status.MP = 0;
 
 		m_pMPBar->SetCurValue(Status.MP);
+	}
+
+	if (m_pUILevel && m_pUIEXP)
+	{
+		CString szLevel;
+		szLevel.Format(L"LV:%d\r\n%d/%d", Status.LEVEL, Status.EXP, Status.NextEXP());
+		m_pUILevel->SetText(szLevel);
+
+		CString szEXP;
+		szEXP.Format(L"EXP:%d/%d", Status.EXP, Status.NextEXP());
+		m_pUIEXP->SetText(szEXP);
 	}
 }
 

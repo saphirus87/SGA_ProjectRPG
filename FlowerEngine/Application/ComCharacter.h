@@ -51,7 +51,7 @@ public:
 	void HPMPRecovery();
 
 	// UI ฐüทร
-	void UpdateHPMPBar();
+	void UpdateUI();
 	
 protected:
 	void Init();

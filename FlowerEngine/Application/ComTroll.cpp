@@ -54,7 +54,7 @@ void ComTroll::Awake()
 	btnSkill = uiDialog->GetButton(eUI_SkillBtn3_Troll);
 	btnSkill->SetPosition(Vector3(fOffsetX + 250, fScreenHeight - 150.0f, 0.0f));
 
-	UpdateHPMPBar();
+	UpdateUI();
 
 	SetAniEvent();
 }

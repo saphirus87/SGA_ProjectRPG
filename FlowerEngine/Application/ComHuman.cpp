@@ -137,7 +137,7 @@ void ComHuman::SetUI()
 		m_pHPBar = uiDialog->GetProgressBar(eUI_HPBar_Human);
 		m_pHPBar->SetPosition(Vector3(100, 0, 0));
 		m_pHPBar->SetMaxValue(Status.HPMAX);
-		UpdateHPMPBar();
+		UpdateUI();
 
 		// MP바
 		uiDialog->AddProgressBar(eUI_MPBar_Human, "Resources/ui/6.tga");
@@ -146,7 +146,7 @@ void ComHuman::SetUI()
 		m_pMPBar->SetPosition(Vector3(100, 50, 0));
 		m_pMPBar->SetMaxValue(Status.MPMAX);
 		m_pMPBar->SetMaxColor(Color(0, 0, 1, 1));
-		UpdateHPMPBar();
+		UpdateUI();
 
 		// 스킬 버튼
 		float fScreenHeight = DXUTGetWindowHeight();
@@ -278,7 +278,7 @@ void ComHuman::Skill1()
 	Status.MP -= m_vecSkillInfo[0]->iUseMP;
 
 	// UI 갱신
-	UpdateHPMPBar();
+	UpdateUI();
 }
 
 void ComHuman::Skill2()
