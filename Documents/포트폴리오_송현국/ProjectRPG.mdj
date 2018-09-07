@@ -10300,7 +10300,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFlf7iiNCfO05Q="
 							},
-							"name": "UpdateHPMPBar"
+							"name": "UpdateUI"
 						}
 					]
 				},
@@ -20217,7 +20217,7 @@
 											"top": 637,
 											"width": 233.95556640625,
 											"height": 13,
-											"text": "+UpdateHPMPBar()",
+											"text": "+UpdateUI()",
 											"horizontalAlignment": 0
 										}
 									],
