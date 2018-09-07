@@ -29,7 +29,10 @@ public:
 	int DEF_PHY;
 	// 캐릭터는 기본적으로 마법 방어력이 있습니다.
 	int DEF_MGR;
+	// 치명타(Critical) 확률
+	float CRI_PER;
 	
+	/// HP/MP 회복 관련
 	// HP 회복 시간
 	float REVTime_HP;
 	// HP 회복양
@@ -38,15 +41,18 @@ public:
 	float REVTime_MP;
 	// MP 회복양
 	int REV_MP;
+	// HP를 Value 만큼 회복합니다.
+	bool RecoveryHP(int iValue);
+	// MP를 Value 만큼 회복합니다.
+	bool RecoveryMP(int iValue);
 
+	/// 이동 속도/ 공격 속도 관련
 	// 이동 속도
 	float MOVE_SPEED;
 	// 공격 속도
 	float ATK_SPEED;
-	// 치명타(Critical) 확률
-	float CRI_PER;
-
-	// LEVEL 관련
+	
+	/// LEVEL 관련
 	int LEVEL;
 	// 현재 경험치
 	int EXP;

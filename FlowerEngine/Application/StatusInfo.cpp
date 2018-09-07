@@ -32,6 +32,29 @@ StatusInfo::~StatusInfo()
 {
 }
 
+bool StatusInfo::RecoveryHP(int iValue)
+{
+	// 캐릭터가 죽어있지 않을 때와 HP가 꽉차있지 않으면
+	if (HP > 0 && HP < HPMAX)
+	{
+		HP += iValue; // 회복양
+		return true;
+	}
+
+	return false;
+}
+
+bool StatusInfo::RecoveryMP(int iValue)
+{
+	if (MP < MPMAX)
+	{
+		MP += iValue; // 회복양
+		return true;
+	}
+
+	return false;
+}
+
 bool StatusInfo::GetEXPAndCheckLevelUp()
 {
 	// 레벨 제한 99

@@ -160,23 +160,20 @@ void ComCharacter::HPMPRecovery()
 	// N초마다 회복
 	if (m_pTimerHPRec->GetTime() >= Status.REVTime_HP)
 	{
-		// 캐릭터가 죽어있지 않을 때와 HP가 꽉차있지 않으면
-		if (Status.HP > 0 && Status.HP < Status.HPMAX)
+		if (Status.RecoveryHP(Status.REV_HP))
 		{
-			Status.HP += Status.REV_HP; // 회복양
 			UpdateUI();
+			m_pTimerHPRec->Reset();
 		}
-		m_pTimerHPRec->Reset();
 	}
 	// N초마다 회복
 	if (m_pTimerMPRec->GetTime() >= Status.REVTime_MP)
 	{
-		if (Status.MP < Status.MPMAX)
+		if (Status.RecoveryMP(Status.REV_MP))
 		{
-			Status.MP += Status.REV_MP; // 회복양
 			UpdateUI();
+			m_pTimerMPRec->Reset();
 		}
-		m_pTimerMPRec->Reset();
 	}
 }
 
