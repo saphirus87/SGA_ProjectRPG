@@ -5,6 +5,7 @@
 #include "ComChrEquipment.h"
 #include "ItemInfo.h"
 #include "ComEquipment.h"
+#include "ComUIInventory.h"
 
 ComCharacter::ComCharacter(CString szName) : 
 	Component(szName),
@@ -78,7 +79,10 @@ void ComCharacter::OnTriggerEnter(ComCollider & collider)
 			// ÀåÂø Å¸ÀÔÀÌ °°À¸¸é ÀåÂø
 			if (pEquip->pItemInfo && m_eType == pEquip->pItemInfo->ChrType)
 			{
-				m_pChrEquipment->Equip(pEquip->pItemInfo);
+				ComUIInventory* pInven = (ComUIInventory*)GameObject::Find("InvenUI_Undead")->GetComponent("ComUIInventory");
+
+				//m_pChrEquipment->Equip(pEquip->pItemInfo);
+				pInven->AddItem(pEquip->pItemInfo, 1);
 				collider.gameObject->SetActive(false);
 			}
 		}

@@ -322,7 +322,7 @@ void SceneRPG::CreateUI()
 	uiDialog->GetRadioButton(100)->AddRadioButton("radio3");
 	uiDialog->GetRadioButton(100)->AddRadioButton("radio4");*/
 
-	GameObject* pUIInven = factory.CreateUIDialog("InvenUI", Vector3(120.0f, 120.0f, 2.0f));
+	GameObject* pUIInven = factory.CreateUIDialog("InvenUI_Undead", Vector3(120.0f, 120.0f, 2.0f));
 	ComUIInventory* pComInven = new ComUIInventory("ComUIInventory");
 	pComInven->SetInvenSize(16);
 	pUIInven->AddComponent(pComInven);

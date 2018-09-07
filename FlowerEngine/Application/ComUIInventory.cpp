@@ -69,11 +69,11 @@ void ComUIInventory::Awake()
 
 	// 테스트 코드(테스트 후 삭제)
 	// 아이템 생성
-	for (int i = 0; i < m_InvenSize; ++i)
+	/*for (int i = 0; i < m_InvenSize; ++i)
 	{
-		m_vecItem[i].first = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X", "Resources/ui/icon_shoulder_1.png");
-		m_vecItem[i].second = 20;
-	}
+	m_vecItem[i].first = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X", "Resources/ui/icon_shoulder_1.png");
+	m_vecItem[i].second = 20;
+	}*/
 	// 소지금 설정
 	//m_Money = 10101;
 	//******************************************************************************************************************************************
@@ -244,6 +244,7 @@ bool ComUIInventory::FindItem(unsigned int ItemID, int& StartIndex)
 {
 	for (; StartIndex < m_vecItem.size(); ++StartIndex)
 	{
+		if (m_vecItem[StartIndex].first == NULL) continue;
 		if (m_vecItem[StartIndex].first->ID == ItemID) return true;
 	}
 
