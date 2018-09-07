@@ -70,16 +70,33 @@ HRESULT ComText3D::CreateD3DXTextMesh(CString szText, LPD3DXMESH * ppMesh, TCHAR
 	HDC hdc = CreateCompatibleDC(NULL);
 	if (hdc == NULL)
 		return E_OUTOFMEMORY;
+
+	// MulDiv(int nNumber, int nNumerator, int nDenominator)
+	/*
+		nNumber * nNumerator / nDenominator 을 계산해 성공할 경우 계산결과를 
+		반환, 오버플로우가 발생하거나 나누는 값이 0인 경우는 -1을 반환한다.
+	*/
 	INT nHeight = -MulDiv(dwSize, GetDeviceCaps(hdc, LOGPIXELSY), 72);
 	HFONT hFont;
 	HFONT hFontOld;
 
+	// CreateFont()
+	/*
+		(int 문자 폭, int 문자 높이, int 문자 기울기, int 문자 방향, int 문자 굵기, 
+		DWORD 기울기, DWORD 밑줄, DWORD 취소선, DWORD 문자셋, DWORD 출력 정확도, 
+		DWORD 클리핑 정확도, DWORD 출력의 질, 자간, LPCWSTR 폰트 이름)
+	*/
 	hFont = CreateFont(nHeight, 0, 0, 0, bBold ? FW_BOLD : FW_NORMAL, bItalic, FALSE, FALSE, DEFAULT_CHARSET,
 		OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE,
 		pstrFont);
 
 	hFontOld = (HFONT)SelectObject(hdc, hFont);
 
+	// D3DXCreateText()
+	/*
+		(디바이스 포인터, DC핸들, 생성할 문자열, 트루타입 폰트 외곽선부터의 최대 편차, 텍스트의 깊이값, 
+		텍스트를 저장할 메쉬 포인터, 인접정보를 저장할 버퍼의 포인터, 폰트의 정보를 저장할 구조체 포인터(NULL))
+	*/
 	hr = D3DXCreateText(pDevice9, hdc, szText, 0.001f, 0.001f, &pMeshNew, NULL, NULL);
 
 	SelectObject(hdc, hFontOld);
