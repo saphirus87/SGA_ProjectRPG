@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ComDialog.h"
+#include "../../Application/UIBtnInvenIcon.h"
 
 ComDialog::ComDialog(CString szName)
 	: Component(szName), m_pSprite(NULL), m_ToggleKey(0),
@@ -123,6 +124,18 @@ void ComDialog::AddText(UINT id, LPD3DXFONT pFont, CString szText)
 void ComDialog::AddButton(UINT id, CString szNormalImg, CString szMouseoverImg, CString szClickImg, UIButtonDelegate* pDelegate, CString szButtonName)
 {
 	UIButton* button = new UIButton(pDelegate, szButtonName);
+	button->UID = id;
+	button->SetSprite(m_pSprite);
+	button->SetParent(this);
+	button->SetTexture(szNormalImg, szMouseoverImg, szClickImg);
+
+	m_Controls.insert(make_pair(id, button));
+}
+
+void ComDialog::AddBtnInvenIcon(UINT id, CString szNormalImg, CString szMouseoverImg, CString szClickImg, UIButtonDelegate * pDelegate, CString szButtonName)
+{
+	UIBtnInvenIcon* button = new UIBtnInvenIcon(pDelegate, szButtonName);
+	button->UID = id;
 	button->SetSprite(m_pSprite);
 	button->SetParent(this);
 	button->SetTexture(szNormalImg, szMouseoverImg, szClickImg);

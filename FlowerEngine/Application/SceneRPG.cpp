@@ -340,7 +340,7 @@ void SceneRPG::CreateUI()
 	pUIInven->AddComponent(pComInven);
 	uiDialog = (ComDialog*)pUIInven->GetComponent("ComDialog");
 	RECT rc;
-	SetRect(&rc, 80, 10, 280, 100);
+	SetRect(&rc, 80, 10, 280, 50);
 
 	uiDialog->SetToggleKey('I');
 	uiDialog->SetMoveable(true);

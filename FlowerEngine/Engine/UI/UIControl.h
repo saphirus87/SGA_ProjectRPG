@@ -3,6 +3,9 @@
 
 class UIControl
 {
+public:
+	unsigned int UID;
+
 protected:
 	LPD3DXSPRITE m_pSprite;
 	D3DXCOLOR m_Color;

@@ -2,6 +2,7 @@
 #include "stdafx.h"
 
 const UINT ItemMaxNum = 99;
+class UIBtnInvenIcon;
 
 class ComUIInventory : public Component, public UIButtonDelegate
 {
@@ -19,7 +20,7 @@ public:
 	virtual void OnPress(UIButton * pSender) override;
 
 	// Inventory 동작 관련
-	pair<ItemInfo*, UINT> AddItem(ItemInfo* Item, UINT ItemNum);
+	bool AddItem(ItemInfo* Item, UINT ItemNum);
 	pair<ItemInfo*, UINT> InsertItemToSlot(ItemInfo* Item, UINT ItemNum, int InvenSlot);
 	//bool AddItem(ItemInfo*);
 
@@ -37,7 +38,7 @@ public:
 	bool SetInvenSize(UINT InvenSize);
 
 private:
-	vector<pair<ItemInfo*, UINT>> m_vecItem;
+	//vector<pair<ItemInfo*, UINT>> m_vecItem;
 	UINT m_Money;
 
 	//vector<pair<ItemInfo*, UINT>> m_vecUIItem;
@@ -48,5 +49,12 @@ private:
 	UINT m_InvenSize;
 
 	pair<ItemInfo*, UINT> m_PickedItem;
+
+
+	// HELP 송현국
+	ComDialog* uiDialog;
+	
+	map<CString, UIBtnInvenIcon*> m_mapButtons;
+	UIBtnInvenIcon* m_pBtnPicked;
 };
 

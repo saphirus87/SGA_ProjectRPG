@@ -1,9 +1,13 @@
 #include "stdafx.h"
 #include "ComUIInventory.h"
 #include "ItemInfo.h"
+#include "UIBtnInvenIcon.h"
+#include "ComChrEquipment.h"
 
 ComUIInventory::ComUIInventory(CString szName)
-	: Component(szName), m_InvenSize(4), m_Money(0)
+	: Component(szName), m_InvenSize(4), m_Money(0),
+	uiDialog(NULL),
+	m_pBtnPicked(NULL)
 {
 }
 
@@ -15,22 +19,29 @@ void ComUIInventory::Awake()
 {
 	SetInvenSize(m_InvenSize);
 
-	ComDialog* uiDialog = (ComDialog*)gameObject->GetComponent("ComDialog");
+	uiDialog = (ComDialog*)gameObject->GetComponent("ComDialog");
 
 	// Inventory Size에 맞게 버튼 생성(아이템 칸 마다)
 	for (int i = 0; i < m_InvenSize; ++i)
 	{
 		CString btnName;
 		btnName.Format(L"InvenSlot%d", i + 1);
-		uiDialog->AddButton(eInvenUI_Slot1Btn + i, "None", "None", "None", this, btnName);
-		uiDialog->GetButton(eInvenUI_Slot1Btn + i)->SetScale(Vector3(0.58f, 0.58f, 0.0f));
-		uiDialog->GetButton(eInvenUI_Slot1Btn + i)->SetPosition(Vector3(81.5f + (float)(i % 4) * 41.5f, 65.5f + (float)(i / 4) * 41.0f, 0));
+		uiDialog->AddBtnInvenIcon(eInvenUI_Slot1Btn + i, "None", "None", "None", this, btnName);
+		
+		// 맵 자료구조에 버튼 넣어둠
+		UIBtnInvenIcon* pBtn = (UIBtnInvenIcon*)uiDialog->GetButton(eInvenUI_Slot1Btn + i);
+		m_mapButtons.insert(map<CString, UIBtnInvenIcon*>::value_type(btnName, pBtn));
+
+		pBtn->SetScale(Vector3(0.58f, 0.58f, 0.0f));
+		pBtn->SetPosition(Vector3(81.5f + (float)(i % 4) * 41.5f, 65.5f + (float)(i / 4) * 41.0f, 0));
 
 		uiDialog->AddText(eInvenUI_Slot1NumText + i, Assets::GetFont(Assets::FontType_NORMAL), "00");
-		uiDialog->GetText(eInvenUI_Slot1NumText + i)->SetScale(Vector3(0.7f, 0.7f, 0.0f));
-		uiDialog->GetText(eInvenUI_Slot1NumText + i)->SetPosition(Vector3(81.5f + (float)(i % 4) * 41.5f, 85.5f + (float)(i / 4) * 41.0f, 0));
-		uiDialog->GetText(eInvenUI_Slot1NumText + i)->SetDrawFormat(DT_RIGHT | DT_VCENTER);
-		uiDialog->GetText(eInvenUI_Slot1NumText + i)->SetText("");
+
+		UIText* pText = uiDialog->GetText(eInvenUI_Slot1NumText + i);
+		pText->SetScale(Vector3(0.7f, 0.7f, 0.0f));
+		pText->SetPosition(Vector3(81.5f + (float)(i % 4) * 41.5f, 85.5f + (float)(i / 4) * 41.0f, 0));
+		pText->SetDrawFormat(DT_RIGHT | DT_VCENTER);
+		pText->SetText("");
 	}
 
 	// 소지금 표시를 위한 이미지 및 텍스트 추가
@@ -83,48 +94,98 @@ void ComUIInventory::Awake()
 
 void ComUIInventory::Update()
 {
-	Vector2 mousePos = Input::GetMousePosition();
-	ComDialog* uiDialog = (ComDialog*)gameObject->GetComponent("ComDialog");
-	uiDialog->GetImage(eInvenUI_PickedItemImg)->SetPosition(Vector3(mousePos.x - 16 - gameObject->transform->GetPosition().x, mousePos.y - 16 - gameObject->transform->GetPosition().y, 0));
+	/*uiDialog->GetImage(eInvenUI_PickedItemImg)->SetPosition(Vector3(mousePos.x - 16 - gameObject->transform->GetPosition().x, mousePos.y - 16 - gameObject->transform->GetPosition().y, 0));
 	uiDialog->GetText(eInvenUI_PickedItemNumText)->SetPosition(Vector3(mousePos.x - 16 - gameObject->transform->GetPosition().x, mousePos.y + 4 - gameObject->transform->GetPosition().y, 0));
+*/
+
+	// 선택된 아이템이 있을 때 위치 이동
+	if (m_pBtnPicked && m_pBtnPicked->pItem)
+	{
+		Vector2 mousePos = Input::GetMousePosition();
+		UIImage* pImage = uiDialog->GetImage(eInvenUI_PickedItemImg);
+		pImage->SetTexture(m_pBtnPicked->pItem->IconName);
+		pImage->SetPosition(Vector3(mousePos.x - 16 - gameObject->transform->GetPosition().x, mousePos.y - 16 - gameObject->transform->GetPosition().y, 0));
+	}
 }
 
 void ComUIInventory::Render()
 {
+	for (auto & btn : m_mapButtons)
+		btn.second->Render();
 }
 
 void ComUIInventory::OnClick(UIButton* pSender)
 {
+	// 인벤토리 닫기
 	if (pSender->GetButtonName() == "InvenClose")
 	{
 		ComDialog* uiDialog = (ComDialog*)gameObject->GetComponent("ComDialog");
 		uiDialog->SetIsVisible(false);
+		return;
 	}
 
-	if (m_PickedItem.first == nullptr)
-	{
+	//if (m_PickedItem.first == nullptr)
+	//{
 
-	}
-	else
+	//}
+	//else
+	//{
+	//	// 인벤토리 내에서 아이콘끼리 위치 변경
+	//	CString slotName;
+	//	for (int i = 0; i < m_InvenSize; i++)
+	//	{
+	//		slotName.Format(L"InvenSlot%d", i + 1);
+	//		if (pSender->GetButtonName() == slotName)
+	//		{
+	//			m_PickedItem = InsertItemToSlot(m_PickedItem.first, m_PickedItem.second, i);
+
+	//			UpdateIcons();
+	//			break;
+	//		}
+	//	}
+	//}
+
+	// 송현국
+	
+	// 이동중인 아이템이 있으면 처리
+	if (m_pBtnPicked)
 	{
-		CString slotName;
-		for (int i = 0; i < m_InvenSize; i++)
+		// 이동중인 아이템이 슬롯 영역에 있는가? 체크
+
+		for (auto & btn : m_mapButtons)
 		{
-			slotName.Format(L"InvenSlot%d", i + 1);
-			if (pSender->GetButtonName() == slotName)
-			{
-				m_PickedItem = InsertItemToSlot(m_PickedItem.first, m_PickedItem.second, i);
-
-				UpdateIcons();
-				break;
-			}
 		}
+
+		return;
+	}
+
+
+
+
+	// 아이템 장착 부분
+	UIBtnInvenIcon* pBtn = m_mapButtons[pSender->GetButtonName()];
+	if (pBtn->pItem == NULL)
+		return;
+
+	// STEP2. TODO : 인벤토리에서 해당 아이템을 클릭했을 때 판매UI를 출력
+
+	// STEP3. 확인 버튼을 클릭했을 때 해당 캐릭터에 장비 장착, 취소 버튼 눌렀을 때는 아무 동작 안함
+	// 3-1. 캐릭터 타입으로 캐릭터를 찾는다. (ComChrEquipment)
+	switch (pBtn->pItem->ChrType)
+	{
+	case eChrType_Undead:
+		ComChrEquipment* pChrEquipment = (ComChrEquipment*)GameObject::Find("undead_01")->GetComponent("ComChrEquipment");
+		pChrEquipment->Equip(pBtn->pItem);
+
+		// 해당 버튼은 아이템 없음
+		pBtn->pItem = NULL;
+		break;
 	}
 }
 
 void ComUIInventory::OnPress(UIButton * pSender)
 {
-	CString slotName;
+	/*CString slotName;
 	for (int i = 0; i < m_InvenSize; i++)
 	{
 		slotName.Format(L"InvenSlot%d", i + 1);
@@ -134,65 +195,85 @@ void ComUIInventory::OnPress(UIButton * pSender)
 			UpdateIcons();
 			break;
 		}
-	}
+	}*/
+
+	m_pBtnPicked = m_mapButtons[pSender->GetButtonName()];
+	m_pBtnPicked->SetIsVisible(false);
 }
 
-pair<ItemInfo*, UINT> ComUIInventory::AddItem(ItemInfo* Item, UINT ItemNum)
+bool ComUIInventory::AddItem(ItemInfo* Item, UINT ItemNum)
 {
-	int ItemIndex = 0;
+	//int ItemIndex = 0;
 
-	// 해당 아이템이 없으면
-	if (false == FindItem(Item->UID, ItemIndex))
+	//// 해당 아이템이 없으면
+	//if (false == FindItem(Item->UID, ItemIndex))
+	//{
+	//	ItemIndex = 0;
+	//	// 빈슬롯을 찾아서 없으면
+	//	if (false == FindEmptySlot(ItemIndex))
+	//	{
+	//		// UI Message : 인벤토리가 꽉 찼습니다.
+	//		return make_pair(Item, ItemNum);
+	//	}
+	//	// 빈슬롯이 있으면
+	//	else
+	//	{
+	//		m_vecItem[ItemIndex] = make_pair(Item, ItemNum);
+	//		// UI 업데이트
+	//		UpdateIcons();
+	//		return make_pair(nullptr, 0);
+	//	}
+	//}
+	//else
+	//{
+	//	do
+	//	{
+	//		m_vecItem[ItemIndex].second += ItemNum;
+
+	//		if (m_vecItem[ItemIndex].second > ItemMaxNum)
+	//		{
+	//			ItemNum = m_vecItem[ItemIndex].second - ItemMaxNum;
+	//			m_vecItem[ItemIndex].second = ItemMaxNum;
+	//		}
+	//		else
+	//		{
+	//			ItemNum = 0;
+	//			return make_pair(nullptr, 0);
+	//		}
+	//	} while (FindItem(Item->UID, ItemIndex) && ItemNum > 0);
+
+	//	ItemIndex = 0;
+	//	if (!FindEmptySlot(ItemIndex)) return make_pair(Item, ItemNum);
+	//	else
+	//	{
+	//		m_vecItem[ItemIndex] = make_pair(Item, ItemNum);
+	//		return make_pair(nullptr, 0);
+	//	}
+	//}
+
+	//return make_pair(Item, ItemNum);
+
+
+	
+	if (m_mapButtons.size() > m_InvenSize)
 	{
-		ItemIndex = 0;
-		// 빈슬롯을 찾아서 없으면
-		if (false == FindEmptySlot(ItemIndex))
+		// UI Message : 인벤토리가 꽉 찼습니다.
+		return false;
+	}
+
+	for (auto & btn : m_mapButtons)
+	{
+		if (btn.second->pItem == NULL)
 		{
-			// UI Message : 인벤토리가 꽉 찼습니다.
-			return make_pair(Item, ItemNum);
-		}
-		// 빈슬롯이 있으면
-		else
-		{
-			m_vecItem[ItemIndex] = make_pair(Item, ItemNum);
-			// UI 업데이트
-			UpdateIcons();
-			return make_pair(nullptr, 0);
+			btn.second->pItem = Item;
+			break;
 		}
 	}
-	else
-	{
-		do
-		{
-			m_vecItem[ItemIndex].second += ItemNum;
-
-			if (m_vecItem[ItemIndex].second > ItemMaxNum)
-			{
-				ItemNum = m_vecItem[ItemIndex].second - ItemMaxNum;
-				m_vecItem[ItemIndex].second = ItemMaxNum;
-			}
-			else
-			{
-				ItemNum = 0;
-				return make_pair(nullptr, 0);
-			}
-		} while (FindItem(Item->UID, ItemIndex) && ItemNum > 0);
-
-		ItemIndex = 0;
-		if (!FindEmptySlot(ItemIndex)) return make_pair(Item, ItemNum);
-		else
-		{
-			m_vecItem[ItemIndex] = make_pair(Item, ItemNum);
-			return make_pair(nullptr, 0);
-		}
-	}
-
-	return make_pair(Item, ItemNum);
 }
 
 pair<ItemInfo*, UINT> ComUIInventory::InsertItemToSlot(ItemInfo * Item, UINT ItemNum, int InvenSlot)
 {
-	if (m_vecItem[InvenSlot].first == nullptr)
+	/*if (m_vecItem[InvenSlot].first == nullptr)
 	{
 		m_vecItem[InvenSlot] = make_pair(Item, ItemNum);
 
@@ -222,12 +303,14 @@ pair<ItemInfo*, UINT> ComUIInventory::InsertItemToSlot(ItemInfo * Item, UINT Ite
 		m_vecItem[InvenSlot] = make_pair(Item, ItemNum);
 
 		return invenItem;
-	}
+	}*/
+
+	return make_pair(Item, ItemNum);
 }
 
 pair<ItemInfo*, UINT> ComUIInventory::DeleteItem(int InvenSlot, UINT ItemNum)
 {
-	if (InvenSlot < m_vecItem.size())
+	/*if (InvenSlot < m_vecItem.size())
 	{
 		pair<ItemInfo*, UINT> DeletedItem;
 
@@ -245,30 +328,30 @@ pair<ItemInfo*, UINT> ComUIInventory::DeleteItem(int InvenSlot, UINT ItemNum)
 
 		return DeletedItem;
 	}
-
+	*/
 	return make_pair(nullptr, 0);
 }
 
 bool ComUIInventory::FindItem(unsigned int ItemID, int& StartIndex)
 {
-	for (; StartIndex < m_vecItem.size(); ++StartIndex)
+	/*for (; StartIndex < m_vecItem.size(); ++StartIndex)
 	{
 		if (m_vecItem[StartIndex].first == NULL) 
 			continue;
 		if (m_vecItem[StartIndex].first->UID == ItemID) 
 			return true;
 	}
-
+	*/
 	return false;
 }
 
 bool ComUIInventory::FindEmptySlot(int& StartIndex)
 {
-	for (; StartIndex < m_vecItem.size(); ++StartIndex)
+	/*for (; StartIndex < m_vecItem.size(); ++StartIndex)
 	{
 		if (m_vecItem[StartIndex].first == nullptr) return true;
 	}
-
+	*/
 	return false;
 }
 
@@ -296,25 +379,24 @@ bool ComUIInventory::SpendMoney(UINT money)
 
 void ComUIInventory::UpdateIcons()
 {
-	ComDialog* uiDialog = (ComDialog*)gameObject->GetComponent("ComDialog");
+	//// Inventory Slot 이미지 및 텍스트 업데이트
+	//for (int i = 0; i < m_vecItem.size(); i++)
+	//{
+	//	// 텍스쳐 변경 부분
+	//	if (m_vecItem[i].first == nullptr)
+	//		uiDialog->GetButton(eInvenUI_Slot1Btn + i)->SetTexture("None", "None", "None");
+	//	else
+	//		uiDialog->GetButton(eInvenUI_Slot1Btn + i)->SetTexture(m_vecItem[i].first->IconName, m_vecItem[i].first->IconName, m_vecItem[i].first->IconName);
 
-	// Inventory Slot 이미지 및 텍스트 업데이트
-	for (int i = 0; i < m_vecItem.size(); i++)
-	{
-		if (m_vecItem[i].first == nullptr)
-			uiDialog->GetButton(eInvenUI_Slot1Btn + i)->SetTexture("None", "None", "None");
-		else
-			uiDialog->GetButton(eInvenUI_Slot1Btn + i)->SetTexture(m_vecItem[i].first->IconName, m_vecItem[i].first->IconName, m_vecItem[i].first->IconName);
-
-		if (m_vecItem[i].second <= 1)
-			uiDialog->GetText(eInvenUI_Slot1NumText + i)->SetText("");
-		else
-		{
-			CString num;
-			num.Format(L"%d", m_vecItem[i].second);
-			uiDialog->GetText(eInvenUI_Slot1NumText + i)->SetText(num);
-		}
-	}
+	//	if (m_vecItem[i].second <= 1)
+	//		uiDialog->GetText(eInvenUI_Slot1NumText + i)->SetText("");
+	//	else
+	//	{
+	//		CString num;
+	//		num.Format(L"%d", m_vecItem[i].second);
+	//		uiDialog->GetText(eInvenUI_Slot1NumText + i)->SetText(num);
+	//	}
+	//}
 
 	// Mouse로 집고 있는 Item 이미지 및 텍스트 업데이트
 	if (m_PickedItem.first == nullptr)
@@ -370,7 +452,7 @@ void ComUIInventory::UpdateIcons()
 
 bool ComUIInventory::SetInvenSize(UINT InvenSize)
 {
-	if (m_InvenSize <= InvenSize)
+	/*if (m_InvenSize <= InvenSize)
 	{
 		m_vecItem.resize(InvenSize, make_pair(nullptr, 0));
 		m_InvenSize = InvenSize;
@@ -388,5 +470,7 @@ bool ComUIInventory::SetInvenSize(UINT InvenSize)
 		m_InvenSize = InvenSize;
 
 		return true;
-	}
+	}*/
+
+	return true;
 }

@@ -9,6 +9,7 @@ UIButton::UIButton(UIButtonDelegate* pDelegate, CString buttonName)
 	m_szButtonName(buttonName),
 	m_PressTimer(0.0f)
 {
+	m_Size = Vector2(0, 0);
 }
 
 
@@ -24,7 +25,18 @@ void UIButton::Update()
 {
 	if (!m_IsVisible) return;
 
-	if (IsOnMouse())
+	RECT rc;
+	// parent Pos = ComDialog의 위치 + 자신의 위치
+	Vector3 pos = m_pParent->gameObject->transform->GetPosition() + m_Position;
+	SetRect(&rc, pos.x, pos.y, pos.x + (m_Size.x * m_Scale.x), pos.y + (m_Size.y * m_Scale.y));
+
+	POINT mousePos;
+	mousePos.x = Input::GetMousePosition().x;
+	mousePos.y = Input::GetMousePosition().y;
+
+	bool IsOnMouse = PtInRect(&rc, mousePos);
+
+	if (IsOnMouse)
 	{
 		if (Input::ButtonPress(VK_LBUTTON))
 		{
@@ -77,17 +89,37 @@ void UIButton::Render()
 
 void UIButton::SetTexture(CString szNormalImg, CString szMouseoverImg, CString szClickImg)
 {
-	if (szNormalImg != "None") m_Textures[eButtonState_Normal] = Assets::GetTexture(szNormalImg, &m_ImageInfo);
-	else m_Textures[eButtonState_Normal] = NULL;
+	bool bHaveImg = true;
 
-	if (szMouseoverImg != "None") m_Textures[eButtonState_Mouseover] = Assets::GetTexture(szMouseoverImg, &m_ImageInfo);
-	else  m_Textures[eButtonState_Mouseover] = NULL;
+	if (szNormalImg != "None") 
+		m_Textures[eButtonState_Normal] = Assets::GetTexture(szNormalImg, &m_ImageInfo);
+	else 
+	{
+		m_Textures[eButtonState_Normal] = NULL;
+		bHaveImg = false;
+	}
 
-	if (szClickImg != "None") m_Textures[eButtonState_Click] = Assets::GetTexture(szClickImg, &m_ImageInfo);
-	else m_Textures[eButtonState_Click] = NULL;
+	if (szMouseoverImg != "None")
+		m_Textures[eButtonState_Mouseover] = Assets::GetTexture(szMouseoverImg, &m_ImageInfo);
+	else 
+	{
+		m_Textures[eButtonState_Mouseover] = NULL;
+		bHaveImg = false;
+	}
+
+	if (szClickImg != "None") 
+		m_Textures[eButtonState_Click] = Assets::GetTexture(szClickImg, &m_ImageInfo);
+	else 
+	{
+		m_Textures[eButtonState_Click] = NULL; 
+		bHaveImg = false;
+	}
 
 	m_Textures[eButtonState_Press] = m_Textures[eButtonState_Click];
 
-	m_Size.x = m_ImageInfo.Width;
-	m_Size.y = m_ImageInfo.Height;
+	if (bHaveImg)
+	{
+		m_Size.x = m_ImageInfo.Width;
+		m_Size.y = m_ImageInfo.Height;
+	}
 }

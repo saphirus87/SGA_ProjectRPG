@@ -462,6 +462,9 @@
     <ClCompile Include="Application\ComUICharacterInfo.cpp">
       <Filter>Application\Components\ComUI</Filter>
     </ClCompile>
+    <ClCompile Include="Application\UIBtnInvenIcon.cpp">
+      <Filter>Application\Components\ComUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -726,6 +729,9 @@
       <Filter>Application\Datas</Filter>
     </ClInclude>
     <ClInclude Include="Application\ComUICharacterInfo.h">
+      <Filter>Application\Components\ComUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\UIBtnInvenIcon.h">
       <Filter>Application\Components\ComUI</Filter>
     </ClInclude>
   </ItemGroup>

@@ -40,6 +40,7 @@ public:
 	void AddImage(UINT id, CString szFileName, bool isFullScreen = false);
 	void AddText(UINT id, LPD3DXFONT pFont, CString szText);
 	void AddButton(UINT id, CString szNormalImg, CString szMouseoverImg, CString szClickImg, UIButtonDelegate* pDelegate, CString szButtonName);
+	void AddBtnInvenIcon(UINT id, CString szNormalImg, CString szMouseoverImg, CString szClickImg, UIButtonDelegate* pDelegate, CString szButtonName);
 	void AddProgressBar(UINT id, CString szFileName);
 	void AddCheckBox(UINT id, CString szBoxImg, CString szCheckImg, LPD3DXFONT pFont, CString szText);
 	void AddRadioButton(UINT id, CString szButtonImg, CString szCheckImg, LPD3DXFONT pFont, CString szText);
