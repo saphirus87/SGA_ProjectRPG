@@ -26,7 +26,8 @@ void ComUIInventory::Awake()
 	{
 		CString btnName;
 		btnName.Format(L"InvenSlot%d", i + 1);
-		uiDialog->AddBtnInvenIcon(eInvenUI_Slot1Btn + i, "None", "None", "None", this, btnName);
+		uiDialog->AddBtnInvenIcon(eInvenUI_Slot1Btn + i,
+			"Resources/ui/icon_sword_1.png", "Resources/ui/icon_sword_1.png", "Resources/ui/icon_sword_1.png", this, btnName);
 		
 		// 맵 자료구조에 버튼 넣어둠
 		UIBtnInvenIcon* pBtn = (UIBtnInvenIcon*)uiDialog->GetButton(eInvenUI_Slot1Btn + i);
