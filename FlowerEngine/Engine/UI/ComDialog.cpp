@@ -18,6 +18,7 @@ ComDialog::~ComDialog()
 void ComDialog::Awake()
 {
 	D3DXCreateSprite(GetD3D9Device(), &m_pSprite);
+	SetRect(&m_DragArea, 0, 0, 0, 0);
 }
 
 void ComDialog::Update()
@@ -78,10 +79,22 @@ void ComDialog::Render()
 
 bool ComDialog::IsOnMouse()
 {
-	for (auto p : m_Controls)
+	/*for (auto p : m_Controls)
 	{
-		if (p.second->IsOnMouse()) return true;
+	if (p.second->IsOnMouse()) return true;
 	}
+
+	return false;*/
+
+	RECT rc;
+	Vector3 pos = gameObject->transform->GetPosition();
+	SetRect(&rc, pos.x + m_DragArea.left, pos.y + m_DragArea.top, pos.x + (m_DragArea.right - m_DragArea.left), pos.y + (m_DragArea.bottom - m_DragArea.top));
+
+	POINT mousePos;
+	mousePos.x = Input::GetMousePosition().x;
+	mousePos.y = Input::GetMousePosition().y;
+
+	if (PtInRect(&rc, mousePos)) return true;
 
 	return false;
 }
