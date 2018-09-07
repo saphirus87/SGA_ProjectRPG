@@ -459,6 +459,9 @@
     <ClCompile Include="Application\SkillInfo.cpp">
       <Filter>Application\Datas</Filter>
     </ClCompile>
+    <ClCompile Include="Application\ComUICharacterInfo.cpp">
+      <Filter>Application\Components\ComUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -721,6 +724,9 @@
     </ClInclude>
     <ClInclude Include="Application\SkillInfo.h">
       <Filter>Application\Datas</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ComUICharacterInfo.h">
+      <Filter>Application\Components\ComUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

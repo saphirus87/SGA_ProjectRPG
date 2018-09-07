@@ -242,6 +242,29 @@ enum eInvenUI
 	eInvenUI_PickedItemNumText = 2101
 };
 
+enum eEquipUI
+{
+	eEquipUI_HelmetBtn = 1001,
+	eEquipUI_NecklaceBtn,
+	eEquipUI_ShoulderBtn,
+	eEquipUI_CloakBtn,
+	eEquipUI_ChestBtn,
+	eEquipUI_ShirtBtn,
+	eEquipUI_TabardBtn,
+	eEquipUI_WristBtn,
+	eEquipUI_HandBtn,
+	eEquipUI_WaistBtn,
+	eEquipUI_LegBtn,
+	eEquipUI_FootBtn,
+	eEquipUI_Finger1Btn,
+	eEquipUI_Finger2Btn,
+	eEquipUI_Trinket1Btn,
+	eEquipUI_Trinket2Btn,
+	eEquipUI_MainHandBtn,
+	eEquipUI_SecondaryHandBtn,
+	eEquipUI_RelicBtn,
+};
+
 struct KEYBOARD_STATE
 {
 	Vector3	deltaPos;

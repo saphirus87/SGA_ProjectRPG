@@ -11,6 +11,7 @@
 #include "../Application/ComEquipment.h"
 #include "../Application/ComFollowTarget.h"
 #include "../Application/ComUIInventory.h"
+#include "../Application/ComUICharacterInfo.h"
 
 SceneRPG::SceneRPG(CString szName) : Scene(szName), 
 	IsGameEnd(false),
@@ -145,6 +146,13 @@ void SceneRPG::CreateHuman()
 
 	// 카메라
 	Camera::GetInstance()->SetTarget(&pGOHuman->transform->GetPosition());
+
+	ComChrEquipment* pEquipment = (ComChrEquipment*)pGOHuman->GetComponent("ComChrEquipment");
+
+	GameObject* pCharacterInfo = GameObject::Find("CharacterInfoUI");
+	ComUICharacterInfo* pComChrInfo = (ComUICharacterInfo*)pCharacterInfo->GetComponent("ComUICharacterInfo");
+	pComChrInfo->SetChrEquip(pEquipment);
+	pComChrInfo->UpdateIcons();
 }
 
 void SceneRPG::CreateUndead()
@@ -327,4 +335,19 @@ void SceneRPG::CreateUI()
 		"Resources/ui/ui-panel-minimizebutton-down.png", pComInven, "InvenClose");
 	//uiDialog->GetButton(2)->SetScale(Vector3(2.5f, 2.5f, 1.0f));
 	uiDialog->GetButton(2)->SetPosition(Vector3(230, 8, 0));
+
+	// 캐릭터 장비 정보 창 추가(캐릭터 mesh 보이게 추가 필요)
+	GameObject* pUICharacterInfo = factory.CreateUIDialog("CharacterInfoUI", Vector3(200.0f, 200.0f, 0));
+	ComUICharacterInfo* pComCharacterInfo = new ComUICharacterInfo("ComUICharacterInfo");
+	uiDialog = (ComDialog*)pUICharacterInfo->GetComponent("ComDialog");
+	pUICharacterInfo->AddComponent(pComCharacterInfo);
+
+	uiDialog->SetToggleKey('C');
+	uiDialog->SetMoveable(true);
+	uiDialog->AddImage(0, "Resources/ui/CharacterFrame.png");
+	uiDialog->AddButton(1, "Resources/ui/ui-panel-minimizebutton-up.png", "Resources/ui/ui-panel-minimizebutton-up.png",
+		"Resources/ui/ui-panel-minimizebutton-down.png", pComCharacterInfo, "CharacterInfoClose");
+	uiDialog->GetButton(1)->SetPosition(Vector3(330, 16, 0));
+
+	GameObject* pCharacter3 = GameObject::Find("troll_01");
 }
