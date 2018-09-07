@@ -141,13 +141,22 @@ pair<ItemInfo*, UINT> ComUIInventory::AddItem(ItemInfo* Item, UINT ItemNum)
 {
 	int ItemIndex = 0;
 
-	if (!FindItem(Item->ID, ItemIndex))
+	// 해당 아이템이 없으면
+	if (false == FindItem(Item->UID, ItemIndex))
 	{
 		ItemIndex = 0;
-		if (!FindEmptySlot(ItemIndex)) return make_pair(Item, ItemNum);
+		// 빈슬롯을 찾아서 없으면
+		if (false == FindEmptySlot(ItemIndex))
+		{
+			// UI Message : 인벤토리가 꽉 찼습니다.
+			return make_pair(Item, ItemNum);
+		}
+		// 빈슬롯이 있으면
 		else
 		{
 			m_vecItem[ItemIndex] = make_pair(Item, ItemNum);
+			// UI 업데이트
+			UpdateIcons();
 			return make_pair(nullptr, 0);
 		}
 	}
@@ -167,7 +176,7 @@ pair<ItemInfo*, UINT> ComUIInventory::AddItem(ItemInfo* Item, UINT ItemNum)
 				ItemNum = 0;
 				return make_pair(nullptr, 0);
 			}
-		} while (FindItem(Item->ID, ItemIndex) && ItemNum > 0);
+		} while (FindItem(Item->UID, ItemIndex) && ItemNum > 0);
 
 		ItemIndex = 0;
 		if (!FindEmptySlot(ItemIndex)) return make_pair(Item, ItemNum);
@@ -190,7 +199,7 @@ pair<ItemInfo*, UINT> ComUIInventory::InsertItemToSlot(ItemInfo * Item, UINT Ite
 		return make_pair(nullptr, 0);
 	}
 
-	if (Item->ID == m_vecItem[InvenSlot].first->ID && m_vecItem[InvenSlot].second < ItemMaxNum)
+	if (Item->UID == m_vecItem[InvenSlot].first->UID && m_vecItem[InvenSlot].second < ItemMaxNum)
 	{
 		if (ItemNum + m_vecItem[InvenSlot].second < ItemMaxNum)
 		{
@@ -244,8 +253,10 @@ bool ComUIInventory::FindItem(unsigned int ItemID, int& StartIndex)
 {
 	for (; StartIndex < m_vecItem.size(); ++StartIndex)
 	{
-		if (m_vecItem[StartIndex].first == NULL) continue;
-		if (m_vecItem[StartIndex].first->ID == ItemID) return true;
+		if (m_vecItem[StartIndex].first == NULL) 
+			continue;
+		if (m_vecItem[StartIndex].first->UID == ItemID) 
+			return true;
 	}
 
 	return false;

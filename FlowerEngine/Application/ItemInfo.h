@@ -32,7 +32,7 @@ public:
 	virtual ~ItemInfo();
 
 	// 아이템 아이디 
-	unsigned int ID;
+	unsigned int UID;
 	// 아이템 타입
 	eItemType Type;
 	// 장착 캐릭터 타입

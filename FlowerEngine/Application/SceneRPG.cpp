@@ -104,37 +104,45 @@ void SceneRPG::CreateMapObject()
 {
 	// 휴먼 장비들
 	// 아이템 정보를 통하여 맵에 게임오브젝트(어깨 방어구) 생성
-	EquipmentShoulder* pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X", "icon_shoulder_1.png");
+	EquipmentShoulder* pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X", "Resources/ui/icon_shoulder_1.png");
+	pShoulder->UID = 1;
 	pShoulder->Set(10, 10, 1, 1, eChrType_Human);
 	factory.CreateEquipmentToMap(pShoulder, Vector3(3, 10, -8), Vector3(-260, 15, -255));
 
-	EquipmentHelmet* pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X", "icon_helmet_1.png");
+	EquipmentHelmet* pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X", "Resources/ui/icon_helmet_1.png");
+	pHelmet->UID = 2;
 	pHelmet->Set(10, 10, 1, 1, eChrType_Human);
 	factory.CreateEquipmentToMap(pHelmet, Vector3(3, 10, -8), Vector3(-260, 15, -253));
 
-	EquipmentShield* pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X", "icon_shield_1.png");
+	EquipmentShield* pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X", "Resources/ui/icon_shield_1.png");
+	pShield->UID = 3;
 	pShield->Set(10, eChrType_Human);
 	factory.CreateEquipmentToMap(pShield, Vector3(3, 10, -8), Vector3(-260, 15, -251));
 
-	EquipmentWeapon* pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X", "icon_sword_1.png");
+	EquipmentWeapon* pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X", "Resources/ui/icon_sword_1.png");
+	pWeaponR->UID = 4;
 	pWeaponR->Set(10, 20, eChrType_Human);
 	factory.CreateEquipmentToMap(pWeaponR, Vector3(3, 10, -8), Vector3(-260, 15, -249));
 
 	// 언데드 장비들
-	pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X", "icon_shoulder_1.png");
+	pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X", "Resources/ui/icon_shoulder_1.png");
+	pShoulder->UID = 5;
 	pShoulder->Set(10, 10, 1, 1, eChrType_Undead);
 	pShoulder->TextureName = "Resources/character/Equipment/shoulder_robe_b_03blue.png";
 	factory.CreateEquipmentToMap(pShoulder, Vector3(3, 10, -8), Vector3(-255, 15, -255));
 
-	pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X", "icon_helmet_1.png");
+	pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X", "Resources/ui/icon_helmet_1.png");
+	pHelmet->UID = 6;
 	pHelmet->Set(10, 10, 1, 1, eChrType_Undead);
 	factory.CreateEquipmentToMap(pHelmet, Vector3(3, 10, -8), Vector3(-255, 15, -253));
 
-	pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X", "icon_shield_1.png");
+	pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X", "Resources/ui/icon_shield_1.png");
+	pShield->UID = 7;
 	pShield->Set(10, eChrType_Undead);
 	factory.CreateEquipmentToMap(pShield, Vector3(3, 10, -8), Vector3(-255, 15, -251));
 
-	pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X", "icon_sword_1.png");
+	pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X", "Resources/ui/icon_sword_1.png");
+	pWeaponR->UID = 8;
 	pWeaponR->Set(10, 20, eChrType_Undead);
 	factory.CreateEquipmentToMap(pWeaponR, Vector3(3, 10, -8), Vector3(-255, 15, -249));
 }
@@ -177,20 +185,24 @@ void SceneRPG::CreateTroll()
 	ComChrEquipment* pEquipment = (ComChrEquipment*)pGOTroll->GetComponent("ComChrEquipment");
 
 	// 장비 장착 테스트(추후 게임 도중 장착으로 수정할 예정)
-	EquipmentShoulder*pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X", "icon_shoulder_1.png");
+	EquipmentShoulder*pShoulder = new EquipmentShoulder("Equipment_shoulder_ItemName01", "shoulder_01.X", "Resources/ui/icon_shoulder_1.png");
+	pShoulder->UID = 9;
 	pShoulder->Set(10, 10, 1, 1, eChrType_Troll);
 	pShoulder->TextureName = "Resources/character/Equipment/shoulder_robe_b_03blue.png";
 	pEquipment->Equip(pShoulder);
 
-	EquipmentHelmet* pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X", "icon_helmet_1.png");
+	EquipmentHelmet* pHelmet = new EquipmentHelmet("Equipment_Helmet", "Helmet_01.X", "Resources/ui/icon_helmet_1.png");
+	pHelmet->UID = 10;
 	pHelmet->Set(10, 10, 1, 1, eChrType_Troll);
 	pEquipment->Equip(pHelmet);
 
-	EquipmentShield* pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X", "icon_shield_1.png");
+	EquipmentShield* pShield = new EquipmentShield("Equipment_Shield", "Shield_01.X", "Resources/ui/icon_shield_1.png");
+	pShield->UID = 11;
 	pShield->Set(10, eChrType_Troll);
 	pEquipment->Equip(pShield);
 
-	EquipmentWeapon* pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X", "icon_sword_1.png");
+	EquipmentWeapon* pWeaponR = new EquipmentWeapon("Equipment_weapon", "Sword_01.X", "Resources/ui/icon_sword_1.png");
+	pWeaponR->UID = 12;
 	pWeaponR->Set(10, 20, eChrType_Troll);
 	pEquipment->Equip(pWeaponR);
 }

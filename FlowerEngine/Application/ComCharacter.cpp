@@ -76,14 +76,18 @@ void ComCharacter::OnTriggerEnter(ComCollider & collider)
 		{
 			ComEquipment* pEquip = (ComEquipment*)collider.gameObject->GetComponent("ComEquipment");
 
-			// 장착 타입이 같으면 장착
+			// 장착 타입이 같으면 인벤토리에 넣기
 			if (pEquip->pItemInfo && m_eType == pEquip->pItemInfo->ChrType)
 			{
-				ComUIInventory* pInven = (ComUIInventory*)GameObject::Find("InvenUI_Undead")->GetComponent("ComUIInventory");
-
-				//m_pChrEquipment->Equip(pEquip->pItemInfo);
-				pInven->AddItem(pEquip->pItemInfo, 1);
-				collider.gameObject->SetActive(false);
+				// 캐릭터 타입별로 인벤토리 가지고 있음
+				switch (m_eType)
+				{
+				case eChrType_Undead:
+					ComUIInventory * pInven = (ComUIInventory*)GameObject::Find("InvenUI_Undead")->GetComponent("ComUIInventory");
+					pInven->AddItem(pEquip->pItemInfo, 1);
+					collider.gameObject->SetActive(false);
+					break;
+				}
 			}
 		}
 	}

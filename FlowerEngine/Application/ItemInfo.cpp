@@ -3,7 +3,7 @@
 
 
 ItemInfo::ItemInfo() :
-	ID(0),
+	UID(0),
 	Type(eItem_None),
 	Reference(0)
 {
