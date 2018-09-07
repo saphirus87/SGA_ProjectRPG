@@ -339,9 +339,12 @@ void SceneRPG::CreateUI()
 	pComInven->SetInvenSize(16);
 	pUIInven->AddComponent(pComInven);
 	uiDialog = (ComDialog*)pUIInven->GetComponent("ComDialog");
+	RECT rc;
+	SetRect(&rc, 80, 10, 280, 100);
 
 	uiDialog->SetToggleKey('I');
 	uiDialog->SetMoveable(true);
+	uiDialog->SetDragArea(rc);
 	uiDialog->AddImage(0, "Resources/ui/ui-backpackbackground.png");
 	uiDialog->AddButton(2, "Resources/ui/ui-panel-minimizebutton-up.png", "Resources/ui/ui-panel-minimizebutton-up.png",
 		"Resources/ui/ui-panel-minimizebutton-down.png", pComInven, "InvenClose");
@@ -353,9 +356,11 @@ void SceneRPG::CreateUI()
 	ComUICharacterInfo* pComCharacterInfo = new ComUICharacterInfo("ComUICharacterInfo");
 	uiDialog = (ComDialog*)pUICharacterInfo->GetComponent("ComDialog");
 	pUICharacterInfo->AddComponent(pComCharacterInfo);
+	SetRect(&rc, 80, 10, 380, 100);
 
 	uiDialog->SetToggleKey('C');
 	uiDialog->SetMoveable(true);
+	uiDialog->SetDragArea(rc);
 	uiDialog->AddImage(0, "Resources/ui/CharacterFrame.png");
 	uiDialog->AddButton(1, "Resources/ui/ui-panel-minimizebutton-up.png", "Resources/ui/ui-panel-minimizebutton-up.png",
 		"Resources/ui/ui-panel-minimizebutton-down.png", pComCharacterInfo, "CharacterInfoClose");

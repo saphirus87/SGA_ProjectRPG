@@ -18,6 +18,7 @@ private:
 
 	DWORD m_ToggleKey;
 	bool m_IsVisible;
+	RECT m_DragArea;
 	bool m_Moveable;
 	bool m_IsDrag;
 
@@ -32,6 +33,7 @@ public:
 
 	bool IsOnMouse();
 	void SetIsVisible(bool IsVisible) { m_IsVisible = IsVisible; }
+	void SetDragArea(RECT Area) { m_DragArea = Area; }
 	void SetMoveable(bool Moveable) { m_Moveable = Moveable; }
 	void SetToggleKey(DWORD ToggleKey) { m_ToggleKey = ToggleKey; }
 
