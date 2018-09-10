@@ -76,3 +76,12 @@ bool StatusInfo::GetEXPAndCheckLevelUp()
 
 	return false;
 }
+
+void StatusInfo::LevelUP(float UpSpeed)
+{
+	// 이동속도 증가
+	MOVE_SPEED += UpSpeed;
+
+	// 현재 EXP
+	EXP = 0;
+}

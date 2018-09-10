@@ -198,7 +198,7 @@ void ComCharacter::CheckMonDeath()
 
 		// 캐릭터 레벨업 처리
 		if (Status.GetEXPAndCheckLevelUp())
-			LevelUp();
+			Status.LevelUP(0.05f);
 
 		CancleAttackTarget();
 		Stand();
@@ -279,17 +279,6 @@ bool ComCharacter::IsDeath()
 		return true;
 
 	return false;
-}
-
-void ComCharacter::LevelUp()
-{
-	// 레벨업시 처리
-
-	// 이동속도 증가
-	Status.MOVE_SPEED += 0.05f;
-
-	// 현재 EXP
-	Status.EXP = 0;
 }
 
 void ComCharacter::HPMPRecovery()

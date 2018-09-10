@@ -37,31 +37,27 @@ public:
 	virtual void OnTriggerEnter(ComCollider &collider) override;
 
 	/// 전투 관련
+	/// 공격 관련
 	// 타겟을 공격합니다.
 	void AttackTarget(ComCharacter* pTarget);
-	// 공격 대상을 바라봅니다.
-	void LookatTarget();
-	// 공격 대상을 취소합니다.
-	void CancleAttackTarget();
-	// 공격 대상이 죽었을 때 처리를 합니다.
-	void CheckMonDeath();
-	// 이 객체가 픽킹되었는지 여부를 검사합니다. (캐릭터, 몬스터, 맵)
-	bool CheckPickingMon();
-	
 	// 스킬을 사용하여 타겟을 공격합니다.
 	virtual void AttackSkill1(ComCharacter* pTarget) {}
 	virtual void AttackSkill2(ComCharacter* pTarget) {}
 	virtual void AttackSkill3(ComCharacter* pTarget) {}
-
+	// 공격 대상을 바라봅니다.
+	void LookatTarget();
+	// 공격 대상을 취소합니다.
+	void CancleAttackTarget();
+	/// 방어 관련
 	// 방어를 합니다.
 	void Defence(int dmg);
-	
+	/// 죽음 관련
 	// 죽었는지 여부를 반환합니다.
 	bool IsDeath();
-
-	// 레벨업
-	void LevelUp();
-
+	// 공격 대상이 죽었을 때 처리를 합니다.
+	void CheckMonDeath();
+	// 이 객체가 픽킹되었는지 여부를 검사합니다. (캐릭터, 몬스터, 맵)
+	bool CheckPickingMon();
 	// 시간에 따라 HP가 회복됩니다.
 	void HPMPRecovery();
 

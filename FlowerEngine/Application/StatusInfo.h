@@ -61,6 +61,8 @@ public:
 	vector<int> vecEXPNext;
 	// 레벨업 여부를 확인합니다
 	bool GetEXPAndCheckLevelUp();
+	// 레벨업시 처리
+	void LevelUP(float UpSpeed);
 };
 
 // MonStatInfo
