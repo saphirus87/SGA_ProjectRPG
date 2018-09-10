@@ -18,6 +18,16 @@ class ComObjMap;
 class ComFollowTarget;
 class IChrState;
 
+class Damage
+{
+public:
+	Damage(int value, bool isCritical);
+	~Damage() {}
+
+	int Value;
+	bool IsCritial;
+};
+
 // 캐릭터의 공통요소입니다.
 class ComCharacter : public Component
 {
@@ -50,7 +60,7 @@ public:
 	void CancleAttackTarget();
 	/// 방어 관련
 	// 방어를 합니다.
-	void Defence(int dmg);
+	void Defence(Damage& dmg);
 	/// 죽음 관련
 	// 죽었는지 여부를 반환합니다.
 	bool IsDeath();

@@ -380,6 +380,7 @@ void      WINAPI DXUTDestroyState(); // Optional method to destroy DXUT's memory
 #include <assert.h>
 #include <fstream>
 #include <atlstr.h>
+#include <ctime>
 
 // ¼±¾ð
 using namespace std;

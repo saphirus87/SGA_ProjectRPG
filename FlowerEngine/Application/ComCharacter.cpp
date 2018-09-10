@@ -163,8 +163,15 @@ void ComCharacter::AttackTarget(ComCharacter * pTarget)
 	if (m_pChrEquipment)
 		equipmentDmg = m_pChrEquipment->GetTotalATK_MIN();
 
-	int dmg = Status->ATK_PHY + equipmentDmg;
-
+	bool IsCritical = false;
+	srand((unsigned int)time(NULL));
+	int iRandom = rand() % 100;
+	if (iRandom < 20) // 크리티컬 확률 20%
+	{
+		IsCritical = true;
+	}
+	Damage dmg (Status->ATK_PHY + equipmentDmg, IsCritical);
+	
 	pTarget->Defence(dmg);
 
 	// 다시 기본 핸들러로
@@ -250,7 +257,7 @@ bool ComCharacter::CheckPickingMon()
 	return false;
 }
 
-void ComCharacter::Defence(int dmg)
+void ComCharacter::Defence(Damage& dmg)
 {
 	// 총 방어력 계산 (내 방어력 + 장비 방어력)
 	int equipmentDef = 0;
@@ -259,17 +266,29 @@ void ComCharacter::Defence(int dmg)
 
 	int def = Status->DEF_PHY + equipmentDef;
 
-	dmg -= (def / 2);
+	dmg.Value -= (def / 2);
 
 	// HP 차감
-	Status->HP -= dmg;
+	if (dmg.IsCritial) // 크리티컬시 2배 데미지
+		Status->HP -= dmg.Value * 2.0f;
+	else
+		Status->HP -= dmg.Value;
 
 	// UI 데미지 표시
-	CString szDmg;
-	szDmg.Format(L"%d", dmg);
 	if (m_pComUIDamage)
 	{
-		m_pComUIDamage->SetText(szDmg, Color(1, 0, 0, 1), 0.4f, true);
+		if (dmg.IsCritial) // 크리티컬시 노란색 데미지 표시
+		{
+			CString szDmg;
+			szDmg.Format(L"%d", (int)(dmg.Value * 2.0f));
+			m_pComUIDamage->SetText(szDmg, Color(1, 1, 0, 1), 0.6f, true);
+		}
+		else
+		{
+			CString szDmg;
+			szDmg.Format(L"%d", dmg.Value);
+			m_pComUIDamage->SetText(szDmg, Color(1, 0, 0, 1), 0.4f, true);
+		}
 		m_pComUIDamage->Enable = true;
 		m_pTimerDamage->Reset();
 	}
@@ -404,4 +423,10 @@ HRESULT Skill1Handler::HandleCallback(UINT Track, LPVOID pCallbackData)
 	pChr->AttackSkill1(pChr->pAttackTarget);
 
 	return S_OK;
+}
+
+Damage::Damage(int value, bool isCritical) :
+	Value(value),
+	IsCritial(isCritical)
+{
 }

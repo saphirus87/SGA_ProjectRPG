@@ -309,7 +309,8 @@ void ComHuman::AttackSkill1(ComCharacter * pTarget)
 		equipmentDmg = m_pChrEquipment->GetTotalATK_MIN();
 
 	// 스킬1 데미지 공식 = (캐릭터 기본 공격력 + 장비 공격력) * 1.5배 + 스킬 추가 데미지
-	int dmg = (Status->ATK_PHY + equipmentDmg) * 1.5f + pSkill1->iAddSkillDmg;
+	int iDmg = (Status->ATK_PHY + equipmentDmg) * 1.5f + pSkill1->iAddSkillDmg;
+	Damage dmg(iDmg, false);
 
 	pTarget->Defence(dmg);
 }
