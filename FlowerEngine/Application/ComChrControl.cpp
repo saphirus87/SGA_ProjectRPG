@@ -22,20 +22,14 @@ ComChrControl::~ComChrControl()
 {
 }
 
-void ComChrControl::Init()
+void ComChrControl::Awake()
 {
 	GameObject* pObjMap = GameObject::Find("ObjMap");
 	if (pObjMap != NULL)
 		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
-	pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 
 	m_pFollow = (ComFollowTarget*)gameObject->GetComponent("ComFollowTarget");
 	m_pCharacter = (ComCharacter*)gameObject->GetComponent("ComCharacter");
-}
-
-void ComChrControl::Awake()
-{
-	Init();
 }
 
 void ComChrControl::Update()
@@ -136,39 +130,6 @@ void ComChrControl::MoveToPoint()
 		}
 	}
 }
-
-//void ComChrControl::SetState(int iIndex)
-//{
-//	m_pCurrentState = m_vecState[iIndex];
-//}
-//
-//void ComChrControl::Stand()
-//{
-//	// 현재 상태에서 Stand로
-//	m_pCurrentState->Stand(eAni_Stand);
-//}
-//
-//void ComChrControl::Walk(float fDeltaZ)
-//{
-//	// 현재 상태에서 Walk로
-//	//m_pCurrentState->Walk(eAni_Walk);
-//	//m_pCharacter->GetHeight();
-//
-//	//Vector3 vecForward;			
-//	//gameObject->transform->GetForward(vecForward);
-//	//Vector3 forward = fDeltaZ * vecForward * m_pCharacter->Status.MOVE_SPEED;
-//	//gameObject->transform->Translate(forward);
-//}
-
-//void ComChrControl::Attack1()
-//{
-//	// 현재 상태에서 Attack1로
-//	m_pCurrentState->Attack1(eAni_Attack_1);
-//}
-//
-//void ComChrControl::Death()
-//{
-//}
 
 void ComChrControl::CheckPickingChr()
 {
