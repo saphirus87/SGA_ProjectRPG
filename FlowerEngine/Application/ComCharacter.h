@@ -23,6 +23,9 @@ public:
 	ComCharacter(CString szName);
 	virtual ~ComCharacter();
 
+protected: void Init();
+
+public:
 	// Component을(를) 통해 상속됨
 	virtual void Awake() override;
 	virtual void Update() override;
@@ -54,12 +57,6 @@ public:
 	// 시간에 따라 HP가 회복됩니다.
 	void HPMPRecovery();
 
-	// UI 관련
-	void UpdateUI();
-	
-protected:
-	void Init();
-
 	/// 맵 관련
 	// 맵에서 높이를 얻어옵니다.
 public:	void GetHeight();
@@ -89,18 +86,28 @@ public:
 	AttackHandler* m_pAttackHandler;
 	Skill1Handler* m_pSkill1Handler;
 
-	// UI
+	/// UI 관련
 protected:
-	UIText* m_pUILevel;
-	UIText* m_pUIEXP;
-	UIProgressBar* m_pHPBar;
-	UIProgressBar* m_pMPBar;
-	UIImage* m_pFace;
+	void UpdateUI();
 
+protected:
+	/// 캐릭터 정보
+	// 캐릭터 레벨 텍스트 표시
+	UIText* m_pUILevel;
+	// 캐릭터 경험치 텍스트 표시
+	UIText* m_pUIEXP;
+	// 캐릭터 얼굴 이미지
+	UIImage* m_pFace;
+	/// 데미지 표시
+	// 머리위에 데미지 표시
 	ComText3D* m_pComUIDamage;
 	// 데미지 표시 시간
 	CTimer* m_pTimerDamage;
-
+	/// HP/MP 관련
+	// HP/MP바
+	UIProgressBar* m_pHPBar;
+	UIProgressBar* m_pMPBar;
+	// HP/MP 회복시간 체크하기 위한
 	CTimer* m_pTimerHPRec;
 	CTimer* m_pTimerMPRec;
 };
