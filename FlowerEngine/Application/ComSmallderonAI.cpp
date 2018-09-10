@@ -11,7 +11,8 @@
 
 ComSmallderonAI::ComSmallderonAI(CString szName)
 	:ComChrControl(szName),
-	m_pTimerAttack(NULL)
+	m_pTimerAttack(NULL),
+	m_pFollow(NULL)
 {
 }
 
@@ -23,6 +24,8 @@ void ComSmallderonAI::Awake()
 {
 	Init();
 	
+	m_pFollow = (ComFollowTarget*)gameObject->GetComponent("ComFollowTarget");
+
 	m_vecState.resize(eAniMon_COUNT);
 	m_vecState[eAniMon_Death] = new ChrStateDeath(this);
 	m_vecState[eAniMon_Attack_1] = new ChrStateAttack1(this);

@@ -37,5 +37,7 @@ public:
 private:
 	ComCharacter* m_pCharacter;
 	CTimer* m_pTimerAttack;
+	// 타겟으로 따라감
+	ComFollowTarget* m_pFollow;
 };
 

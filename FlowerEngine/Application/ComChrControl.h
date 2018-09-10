@@ -56,10 +56,12 @@ public:
 
 protected:
 	ComObjMap * m_pMap;
-	// 타겟으로 따라감
-	ComFollowTarget* m_pFollow;
 	// 이동하고하 하는 위치
 	Vector3 vMoveToPoint;
 	// 특정 좌표로 이동 여부
 	bool IsMoveToPoint;
+
+private:
+	// 타겟으로 따라감
+	ComFollowTarget* m_pFollow;
 };
