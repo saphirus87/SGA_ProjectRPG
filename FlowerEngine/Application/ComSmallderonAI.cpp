@@ -6,14 +6,13 @@
 #include "ChrStateStand.h"
 #include "ChrStateWalk.h"
 #include "ChrStateAttack.h"
-#include "ComCharacter.h"
 #include "SceneRPG.h"
 
 ComSmallderonAI::ComSmallderonAI(CString szName)
-	:ComChrControl(szName),
+	:ComCharacter(szName),
 	m_pTimerAttack(NULL),
-	m_pFollow(NULL),
-	pAttackTarget(NULL)
+	m_pFollow(NULL)/*,
+	pAttackTarget(NULL)*/
 {
 }
 
@@ -23,7 +22,7 @@ ComSmallderonAI::~ComSmallderonAI()
 
 void ComSmallderonAI::Awake()
 {
-	pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
+	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 	m_pFollow = (ComFollowTarget*)gameObject->GetComponent("ComFollowTarget");
 	m_pFollow->pTarget = NULL;
 
@@ -46,11 +45,11 @@ void ComSmallderonAI::Awake()
 		vecKeyFrameAnimSet.resize(eAniMon_COUNT);
 
 		for (int i = eAniMon_Death; i < eAniMon_COUNT; ++i)
-			pAnimation->m_pAniControl->GetAnimationSet(i, (LPD3DXANIMATIONSET*)&vecKeyFrameAnimSet[i]);
+			m_pAnimation->m_pAniControl->GetAnimationSet(i, (LPD3DXANIMATIONSET*)&vecKeyFrameAnimSet[i]);
 
 		// Register 하는 순서데로 Animation Index가 설정되기 때문에 미리 모두 Unregister 한다.
 		for (int i = eAniMon_Death; i < eAniMon_COUNT; ++i)
-			pAnimation->m_pAniControl->UnregisterAnimationSet(vecKeyFrameAnimSet[i]);
+			m_pAnimation->m_pAniControl->UnregisterAnimationSet(vecKeyFrameAnimSet[i]);
 
 		float fPeriod = vecKeyFrameAnimSet[eAniMon_Attack_1]->GetPeriod();
 		// 초당 발생하는 애니메이션 키 프레임 틱의 수를 가져옵니다.
@@ -68,10 +67,10 @@ void ComSmallderonAI::Awake()
 		attackKey.Time = x;
 
 		// eAni 순서데로 추가한다.
-		pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAniMon_Death], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f, D3DXPLAY_ONCE);
-		pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAniMon_Attack_1], 1, &attackKey, D3DXCOMPRESS_DEFAULT, 1.0f);
-		pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAniMon_Walk], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
-		pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAniMon_Stand], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
+		m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAniMon_Death], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f, D3DXPLAY_ONCE);
+		m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAniMon_Attack_1], 1, &attackKey, D3DXCOMPRESS_DEFAULT, 1.0f);
+		m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAniMon_Walk], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
+		m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAniMon_Stand], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
 
 		vecKeyFrameAnimSet.clear();
 

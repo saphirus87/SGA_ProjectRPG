@@ -3,15 +3,15 @@
 #include "IChrState.h"
 
 class IChrState;
-class ComChrControl;
+class ComCharacter;
 
 class ChrStateWalk : public IChrState
 {
 private:
-	ComChrControl * m_pControl;
+	ComCharacter * m_pControl;
 
 public:
-	ChrStateWalk(ComChrControl* pControl);
+	ChrStateWalk(ComCharacter* pControl);
 	~ChrStateWalk();
 
 	// IChrState을(를) 통해 상속됨

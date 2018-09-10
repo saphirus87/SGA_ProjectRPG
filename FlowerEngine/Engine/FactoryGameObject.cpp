@@ -378,11 +378,11 @@ GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPa
 	pUIDamage->fOffsetPosY = 2.2f;
 	pGOMonX->AddComponent(pUIDamage);
 	
-	ComCharacter* pChrMon = new ComCharacter("ComCharacter");
+	ComCharacter* pChrMon = (ComCharacter*)pComAI;
 	pChrMon->Status = status;
 	pGOMonX->AddComponent(pChrMon);
 
-	pGOMonX->AddComponent(pComAI);
+	//pGOMonX->AddComponent(pComAI);
 
 	// pComAI ´ÙÀ½¿¡
 	ComRenderSkinnedMesh* pRenderSkinnedMesh = (ComRenderSkinnedMesh*)pGOMonX->GetComponent("ComRenderSkinnedMesh");

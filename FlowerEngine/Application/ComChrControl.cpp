@@ -3,15 +3,14 @@
 #include "ComObjMap.h"
 #include "ComFollowTarget.h"
 #include "ComTerrain.h"
+#include "ComCharacter.h"
 #include "IChrState.h"
 #include "ChrStateStand.h"
 #include "ChrStateWalk.h"
 #include "ChrStateAttack.h"
-#include "ComCharacter.h"
 
 ComChrControl::ComChrControl(CString szName)
 	:Component(szName), m_pMap(NULL),
-	m_pCurrentState(NULL),
 	IsPicking(false),
 	m_pFollow(NULL),
 	IsMoveToPoint(false),
@@ -21,8 +20,6 @@ ComChrControl::ComChrControl(CString szName)
 
 ComChrControl::~ComChrControl()
 {
-	for (size_t i = 0; i < m_vecState.size(); ++i)
-		SAFE_DELETE(m_vecState[i]);
 }
 
 void ComChrControl::Init()
@@ -39,21 +36,11 @@ void ComChrControl::Init()
 void ComChrControl::Awake()
 {
 	Init();
-
-	m_vecState.resize(eAni_COUNT);
-	m_vecState[eAni_Stand] = new ChrStateStand(this);
-	m_vecState[eAni_Walk] = new ChrStateWalk(this);
-	m_vecState[eAni_Attack_1] = new ChrStateAttack1(this);
-	m_vecState[eAni_Skill_1] = new ChrStateSkill1(this);
-	m_vecState[eAni_Skill_2] = new ChrStateSkill2(this);
-
-	m_pCurrentState = m_vecState[eAni_Stand];
-	Stand();
 }
 
 void ComChrControl::Update()
 {
-	if (m_pCurrentState != m_vecState[eAni_Skill_1])
+	if (m_pCharacter->m_pCurrentState != m_pCharacter->m_vecState[eAni_Skill_1])
 	{
 		// 캐릭터 회전
 		if (Input::KeyPress('A') || Input::KeyPress(VK_LEFT))
@@ -65,22 +52,26 @@ void ComChrControl::Update()
 		if (Input::KeyPress('W') || Input::KeyPress(VK_UP))
 		{
 			m_pCharacter->CancleAttackTarget();
-			Walk(1);
+			m_pCharacter->Walk(1);
+			// 걸어갈 때는 마우스 이동 하지 않음 (마우스 이동시 키보드 이동하면 속도 2배되는 버그 방지)
+			IsMoveToPoint = false;
 		}
 		else if (Input::KeyUp('W') || Input::KeyUp(VK_UP))
 		{
 			m_pCharacter->CancleAttackTarget();
-			Stand();
+			m_pCharacter->Stand();
 		}
 		if (Input::KeyPress('S') || Input::KeyPress(VK_DOWN))
 		{
 			m_pCharacter->CancleAttackTarget();
-			Walk(-1);
+			m_pCharacter->Walk(-1);
+			// 걸어갈 때는 마우스 이동 하지 않음 (마우스 이동시 키보드 이동하면 속도 2배되는 버그 방지)
+			IsMoveToPoint = false;
 		}
 		else if (Input::KeyUp('S') || Input::KeyUp(VK_DOWN))
 		{
 			m_pCharacter->CancleAttackTarget();
-			Stand();
+			m_pCharacter->Stand();
 		}
 	}
 	
@@ -97,17 +88,17 @@ void ComChrControl::Update()
 
 	if (m_pFollow != NULL && m_pFollow->IsFollowing)
 	{
-		m_pCurrentState->Walk(eAni_Walk);
+		m_pCharacter->m_pCurrentState->Walk(eAni_Walk);
 		m_pCharacter->GetHeight();
 	}
 	else if (m_pFollow != NULL && m_pFollow->AbleAttack)
-		Attack1();
+		m_pCharacter->Attack1();
 
 	MoveToPoint();
 	if (m_pCharacter->CheckMonDeath())
-		Stand();
+		m_pCharacter->Stand();
 
-	m_pCurrentState->Update();
+	m_pCharacter->m_pCurrentState->Update();
 }
 
 void ComChrControl::Render()
@@ -124,11 +115,11 @@ void ComChrControl::MoveToPoint()
 		if (fDistToPoint < 1.0f)
 		{
 			IsMoveToPoint = false;
-			Stand();
+			m_pCharacter->Stand();
 		}
 		else
 		{
-			m_pCurrentState->Walk(eAni_Walk);
+			m_pCharacter->m_pCurrentState->Walk(eAni_Walk);
 			m_pCharacter->GetHeight();
 
 			// 플레이어를 바라보는 방향 벡터
@@ -148,41 +139,38 @@ void ComChrControl::MoveToPoint()
 	}
 }
 
-void ComChrControl::SetState(int iIndex)
-{
-	m_pCurrentState = m_vecState[iIndex];
-}
+//void ComChrControl::SetState(int iIndex)
+//{
+//	m_pCurrentState = m_vecState[iIndex];
+//}
+//
+//void ComChrControl::Stand()
+//{
+//	// 현재 상태에서 Stand로
+//	m_pCurrentState->Stand(eAni_Stand);
+//}
+//
+//void ComChrControl::Walk(float fDeltaZ)
+//{
+//	// 현재 상태에서 Walk로
+//	//m_pCurrentState->Walk(eAni_Walk);
+//	//m_pCharacter->GetHeight();
+//
+//	//Vector3 vecForward;			
+//	//gameObject->transform->GetForward(vecForward);
+//	//Vector3 forward = fDeltaZ * vecForward * m_pCharacter->Status.MOVE_SPEED;
+//	//gameObject->transform->Translate(forward);
+//}
 
-void ComChrControl::Stand()
-{
-	// 현재 상태에서 Stand로
-	m_pCurrentState->Stand(eAni_Stand);
-}
-
-void ComChrControl::Walk(float fDeltaZ)
-{
-	// 걸어갈 때는 마우스 이동 하지 않음 (마우스 이동시 키보드 이동하면 속도 2배되는 버그 방지)
-	IsMoveToPoint = false;
-
-	// 현재 상태에서 Walk로
-	m_pCurrentState->Walk(eAni_Walk);
-	m_pCharacter->GetHeight();
-
-	Vector3 vecForward;			
-	gameObject->transform->GetForward(vecForward);
-	Vector3 forward = fDeltaZ * vecForward * m_pCharacter->Status.MOVE_SPEED;
-	gameObject->transform->Translate(forward);
-}
-
-void ComChrControl::Attack1()
-{
-	// 현재 상태에서 Attack1로
-	m_pCurrentState->Attack1(eAni_Attack_1);
-}
-
-void ComChrControl::Death()
-{
-}
+//void ComChrControl::Attack1()
+//{
+//	// 현재 상태에서 Attack1로
+//	m_pCurrentState->Attack1(eAni_Attack_1);
+//}
+//
+//void ComChrControl::Death()
+//{
+//}
 
 void ComChrControl::CheckPickingChr()
 {

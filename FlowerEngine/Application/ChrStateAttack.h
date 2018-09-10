@@ -3,15 +3,15 @@
 #include "IChrState.h"
 
 class IChrState;
-class ComChrControl;
+class ComCharacter;
 
 class ChrStateAttack1 : public IChrState
 {
 private:
-	ComChrControl * m_pControl;
+	ComCharacter * m_pControl;
 
 public:
-	ChrStateAttack1(ComChrControl* pControl);
+	ChrStateAttack1(ComCharacter* pControl);
 	~ChrStateAttack1();
 
 	// IChrState을(를) 통해 상속됨
@@ -26,7 +26,7 @@ public:
 class ChrStateSkill1 : public IChrState
 {
 private:
-	ComChrControl * m_pControl;
+	ComCharacter * m_pControl;
 	
 public:
 	// 애니메이션 끝남 체크용
@@ -37,7 +37,7 @@ public:
 	bool IsCoolTime;
 	
 public:
-	ChrStateSkill1(ComChrControl* pControl);
+	ChrStateSkill1(ComCharacter* pControl);
 	~ChrStateSkill1();
 
 	void Update() override;
@@ -54,10 +54,10 @@ public:
 class ChrStateSkill2 : public IChrState
 {
 private:
-	ComChrControl * m_pControl;
+	ComCharacter * m_pControl;
 
 public:
-	ChrStateSkill2(ComChrControl* pControl);
+	ChrStateSkill2(ComCharacter* pControl);
 	~ChrStateSkill2();
 
 	// IChrState을(를) 통해 상속됨

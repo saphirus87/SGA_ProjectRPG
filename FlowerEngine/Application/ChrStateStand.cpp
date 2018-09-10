@@ -1,10 +1,10 @@
 #include "stdafx.h"
-#include "ComChrControl.h"
+#include "ComCharacter.h"
 #include "ChrStateStand.h"
 #include "ChrStateWalk.h"
 #include "ChrStateAttack.h"
 
-ChrStateStand::ChrStateStand(ComChrControl* pControl)
+ChrStateStand::ChrStateStand(ComCharacter* pControl)
 {
 	m_pControl = pControl;
 }
@@ -15,7 +15,7 @@ ChrStateStand::~ChrStateStand()
 
 void ChrStateStand::Stand(int iIndex)
 {
-	m_pControl->pAnimation->PlayAnimation(iIndex);
+	m_pControl->m_pAnimation->PlayAnimation(iIndex);
 }
 
 void ChrStateStand::Walk(int iIndex)
@@ -57,7 +57,7 @@ void ChrStateStand::Skill2(int iIndex)
 //	m_pControl->Skill2();
 }
 
-ChrStateDeath::ChrStateDeath(ComChrControl * pControl)
+ChrStateDeath::ChrStateDeath(ComCharacter * pControl)
 {
 	m_pControl = pControl;
 }
@@ -83,7 +83,7 @@ void ChrStateDeath::Attack1(int iIndex)
 
 void ChrStateDeath::Death(int iIndex)
 {
-	m_pControl->pAnimation->PlayAnimation(iIndex);
+	m_pControl->m_pAnimation->PlayAnimation(iIndex);
 }
 
 void ChrStateDeath::Skill1(int iIndex)

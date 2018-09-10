@@ -109,11 +109,11 @@ void ComTroll::OnClick(UIButton * pSender)
 {
 	if (pSender->GetButtonName() == "troll_skill_1")
 	{
-		((ComChrControl*)gameObject->GetComponent("ComChrControl"))->Attack1();
+//		((ComChrControl*)gameObject->GetComponent("ComChrControl"))->Attack1();
 	}
 	else if (pSender->GetButtonName() == "troll_skill_2")
 	{
-		((ComChrControl*)gameObject->GetComponent("ComChrControl"))->Stand();
+//		((ComChrControl*)gameObject->GetComponent("ComChrControl"))->Stand();
 	}
 	else if (pSender->GetButtonName() == "troll_skill_3")
 	{

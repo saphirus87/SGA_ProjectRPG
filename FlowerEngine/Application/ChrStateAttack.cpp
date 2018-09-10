@@ -1,11 +1,10 @@
 #include "stdafx.h"
 #include "ComCharacter.h"
-#include "ComChrControl.h"
 #include "ChrStateAttack.h"
 #include "ChrStateStand.h"
 #include "ChrStateWalk.h"
 
-ChrStateAttack1::ChrStateAttack1(ComChrControl* pControl)
+ChrStateAttack1::ChrStateAttack1(ComCharacter* pControl)
 {
 	m_pControl = pControl;
 }
@@ -31,7 +30,7 @@ void ChrStateAttack1::Walk(int iIndex)
 
 void ChrStateAttack1::Attack1(int iIndex)
 {
-	m_pControl->pAnimation->PlayAnimation(iIndex);
+	m_pControl->m_pAnimation->PlayAnimation(iIndex);
 }
 
 void ChrStateAttack1::Death(int iIndex)
@@ -58,7 +57,7 @@ void ChrStateAttack1::Skill2(int iIndex)
 //	m_pControl->Skill2();
 }
 
-ChrStateSkill1::ChrStateSkill1(ComChrControl * pControl) : 
+ChrStateSkill1::ChrStateSkill1(ComCharacter * pControl) :
 	m_pTimerAnim(NULL),
 	IsCoolTime(false)
 {
@@ -74,7 +73,7 @@ ChrStateSkill1::~ChrStateSkill1()
 void ChrStateSkill1::Update()
 {
 	AnimationSet anim = NULL;
-	m_pControl->pAnimation->m_pAniControl->GetTrackAnimationSet(0, &anim);
+	m_pControl->m_pAnimation->m_pAniControl->GetTrackAnimationSet(0, &anim);
 	if (anim != NULL)
 	{
 		if (m_pTimerAnim->GetTime() >= anim->GetPeriod())
@@ -103,7 +102,7 @@ void ChrStateSkill1::Skill1(int iIndex)
 	if (IsCoolTime == true)
 		return;
 	
-	m_pControl->pAnimation->PlayAnimation(iIndex);
+	m_pControl->m_pAnimation->PlayAnimation(iIndex);
 	IsCoolTime = true;
 	m_pTimerAnim->Start();
 	m_pTimerAnim->Reset();
@@ -123,7 +122,7 @@ void ChrStateSkill1::Death(int iIndex)
 	m_pControl->Death();
 }
 
-ChrStateSkill2::ChrStateSkill2(ComChrControl * pControl)
+ChrStateSkill2::ChrStateSkill2(ComCharacter * pControl)
 {
 	m_pControl = pControl;
 }
@@ -154,7 +153,7 @@ void ChrStateSkill2::Skill1(int iIndex)
 
 void ChrStateSkill2::Skill2(int iIndex)
 {
-	m_pControl->pAnimation->PlayAnimation(iIndex);
+	m_pControl->m_pAnimation->PlayAnimation(iIndex);
 }
 
 void ChrStateSkill2::Death(int iIndex)

@@ -16,6 +16,7 @@ class ComChrEquipment;
 class SkillInfo;
 class ComObjMap;
 class ComFollowTarget;
+class IChrState;
 
 // 캐릭터의 공통요소입니다.
 class ComCharacter : public Component
@@ -96,6 +97,17 @@ public:
 	ComRenderSkinnedMesh* m_pAnimation;
 	AttackHandler* m_pAttackHandler;
 	Skill1Handler* m_pSkill1Handler;
+
+	/// 상태기계 관련
+	// 상태들
+	vector<IChrState*> m_vecState;
+	// 현재 상태
+	IChrState * m_pCurrentState;
+	void SetState(int iIndex);
+	virtual void Stand();
+	virtual void Walk(float fDeltaZ);
+	virtual void Attack1();
+	virtual void Death();
 
 	/// UI 관련
 protected:

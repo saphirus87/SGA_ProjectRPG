@@ -8,6 +8,11 @@
 #include "ComEquipment.h"
 #include "ComUIInventory.h"
 #include "ComSmallderonAI.h"
+#include "IChrState.h"
+#include "ChrStateStand.h"
+#include "ChrStateWalk.h"
+#include "ChrStateAttack.h"
+#include "ComSmallderonAI.h"
 
 ComCharacter::ComCharacter(CString szName) : 
 	Component(szName),
@@ -15,6 +20,7 @@ ComCharacter::ComCharacter(CString szName) :
 	m_pAnimation(NULL),
 	m_pChrEquipment(NULL),
 	pAttackTarget(NULL),
+	m_pCurrentState(NULL),
 	m_pFollow(NULL),
 	m_pFace(NULL),
 	m_pUILevel(NULL),
@@ -34,6 +40,9 @@ ComCharacter::ComCharacter(CString szName) :
 
 ComCharacter::~ComCharacter()
 {
+	for (size_t i = 0; i < m_vecState.size(); ++i)
+		SAFE_DELETE(m_vecState[i]);
+
 	SAFE_DELETE(m_pAttackHandler);
 	SAFE_DELETE(m_pSkill1Handler);
 }
@@ -41,6 +50,8 @@ ComCharacter::~ComCharacter()
 void ComCharacter::Awake()
 {
 	Init();
+
+	Stand();
 }
 
 void ComCharacter::Init()
@@ -68,6 +79,15 @@ void ComCharacter::Init()
 	m_pSkill1Handler = new Skill1Handler();
 
 	m_pComUIDamage = (ComText3D*)gameObject->GetComponent("ComText3D_Damage");
+
+	m_vecState.resize(eAni_COUNT);
+	m_vecState[eAni_Stand] = new ChrStateStand(this);
+	m_vecState[eAni_Walk] = new ChrStateWalk(this);
+	m_vecState[eAni_Attack_1] = new ChrStateAttack1(this);
+	m_vecState[eAni_Skill_1] = new ChrStateSkill1(this);
+	m_vecState[eAni_Skill_2] = new ChrStateSkill2(this);
+
+	m_pCurrentState = m_vecState[eAni_Stand];
 }
 
 void ComCharacter::GetHeight()
@@ -174,8 +194,10 @@ bool ComCharacter::CheckMonDeath()
 	if (pAttackTarget && pAttackTarget->IsDeath() == true)
 	{
 		// 몬스터 죽음 처리
-		ComChrControl* pControl = (ComChrControl*)(pAttackTarget->gameObject->GetComponent("ComChrControl"));
-		pControl->Death();
+		/*ComChrControl* pControl = (ComChrControl*)(pAttackTarget->gameObject->GetComponent("ComChrControl"));
+		pControl->Death();*/
+
+		dynamic_cast<ComSmallderonAI*>(pAttackTarget)->Death();
 
 		// 캐릭터 레벨업 처리
 		if (Status.GetEXPAndCheckLevelUp())
@@ -220,7 +242,7 @@ bool ComCharacter::CheckPickingMon()
 				// 몬스터를 따라간다.
 				m_pFollow->pTarget = o;
 				m_pFollow->fMoveSpeed = Status.MOVE_SPEED;
-				pAttackTarget = (ComCharacter*)o->GetComponent("ComCharacter");
+				pAttackTarget = (ComSmallderonAI*)o->GetComponent("ComCharacter");
 				return true;
 			}
 		}
@@ -298,6 +320,39 @@ void ComCharacter::HPMPRecovery()
 	}
 }
 
+void ComCharacter::SetState(int iIndex)
+{
+	m_pCurrentState = m_vecState[iIndex];
+}
+
+void ComCharacter::Stand()
+{
+	// 현재 상태에서 Stand로
+	m_pCurrentState->Stand(eAni_Stand);
+}
+
+void ComCharacter::Walk(float fDeltaZ)
+{
+	// 현재 상태에서 Walk로
+	m_pCurrentState->Walk(eAni_Walk);
+	GetHeight();
+
+	Vector3 vecForward;
+	gameObject->transform->GetForward(vecForward);
+	Vector3 forward = fDeltaZ * vecForward * Status.MOVE_SPEED;
+	gameObject->transform->Translate(forward);
+}
+
+void ComCharacter::Attack1()
+{
+	// 현재 상태에서 Attack1로
+	m_pCurrentState->Attack1(eAni_Attack_1);
+}
+
+void ComCharacter::Death()
+{
+}
+
 void ComCharacter::UpdateUI()
 {
 	if (m_pHPBar)
@@ -337,26 +392,31 @@ HRESULT AttackHandler::HandleCallback(UINT Track, LPVOID pCallbackData)
 	szDebug.Format(L"AttackHandler Track : %d %s\r\n", Track, pChr->gameObject->Name());
 	OutputDebugString(szDebug);
 
-	switch (pChr->gameObject->Tag)
-	{
-	case eTag_Chracter:
-		// 죽어서 없으면
-		if (pChr->pAttackTarget == NULL)
-			return S_OK;
-		pChr->AttackTarget(pChr->pAttackTarget);
-		break;
+	// 죽어서 없으면
+	if (pChr->pAttackTarget == NULL)
+		return S_OK;
+	pChr->AttackTarget(pChr->pAttackTarget);
 
-		// ComCharacter로 상속받을 때 이부분 수정할 것
-	case eTag_Monster:
-	{
-		ComSmallderonAI* pMon = (ComSmallderonAI*)pChr->gameObject->GetComponent("ComChrControl");
-		if (pMon->pAttackTarget == NULL)
-			return S_OK;
-		pChr->AttackTarget(pMon->pAttackTarget);
-		break;
+	//switch (pChr->gameObject->Tag)
+	//{
+	//case eTag_Chracter:
+	//	// 죽어서 없으면
+	//	if (pChr->pAttackTarget == NULL)
+	//		return S_OK;
+	//	pChr->AttackTarget(pChr->pAttackTarget);
+	//	break;
 
-	}
-	}
+	//	// ComCharacter로 상속받을 때 이부분 수정할 것
+	//case eTag_Monster:
+	//{
+	//	ComSmallderonAI* pMon = (ComSmallderonAI*)pChr->gameObject->GetComponent("ComCharacter");
+	//	if (pMon->pAttackTarget == NULL)
+	//		return S_OK;
+	//	pChr->AttackTarget(pMon->pAttackTarget);
+	//	break;
+
+	//}
+	//}
 	
 	return S_OK;
 }

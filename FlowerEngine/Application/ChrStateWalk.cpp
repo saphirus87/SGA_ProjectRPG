@@ -1,10 +1,10 @@
 #include "stdafx.h"
-#include "ComChrControl.h"
+#include "ComCharacter.h"
 #include "ChrStateWalk.h"
 #include "ChrStateStand.h"
 #include "ChrStateAttack.h"
 
-ChrStateWalk::ChrStateWalk(ComChrControl* pControl)
+ChrStateWalk::ChrStateWalk(ComCharacter* pControl)
 {
 	m_pControl = pControl;
 }
@@ -23,7 +23,7 @@ void ChrStateWalk::Stand(int iIndex)
 
 void ChrStateWalk::Walk(int iIndex)
 {
-	m_pControl->pAnimation->PlayAnimation(iIndex);
+	m_pControl->m_pAnimation->PlayAnimation(iIndex);
 }
 
 void ChrStateWalk::Attack1(int iIndex)

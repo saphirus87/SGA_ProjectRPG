@@ -192,7 +192,7 @@ void ComHuman::Update()
 
 	// 코드 리팩토링 필요
 	ComChrControl* chrControl = (ComChrControl*)gameObject->GetComponent("ComChrControl");
-	ChrStateSkill1* pStateSkill = dynamic_cast<ChrStateSkill1*>(chrControl->m_vecState[eAni_Skill_1]);
+	ChrStateSkill1* pStateSkill = dynamic_cast<ChrStateSkill1*>(m_vecState[eAni_Skill_1]);
 	if (pStateSkill)
 	{
 		float coolTime = m_vecSkillInfo[0]->fCoolTime;
@@ -254,7 +254,7 @@ void ComHuman::Skill1()
 		return;
 	}
 		
-	ChrStateSkill1* pStateSkill = dynamic_cast<ChrStateSkill1*>(pChrControl->m_vecState[eAni_Skill_1]);
+	ChrStateSkill1* pStateSkill = dynamic_cast<ChrStateSkill1*>(m_vecState[eAni_Skill_1]);
 	m_pAnimation->pCallbackHandler = m_pSkill1Handler;
 
 	if (pStateSkill->IsCoolTime == true)
@@ -271,8 +271,8 @@ void ComHuman::Skill1()
 		return;
 	}
 
-	pChrControl->SetState(eAni_Skill_1);
-	pChrControl->m_pCurrentState->Skill1(eAni_Skill_1);
+	SetState(eAni_Skill_1);
+	m_pCurrentState->Skill1(eAni_Skill_1);
 
 	// MP 사용
 	Status.MP -= m_vecSkillInfo[0]->iUseMP;

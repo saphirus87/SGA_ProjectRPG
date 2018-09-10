@@ -1,15 +1,14 @@
 #pragma once
 #include "stdafx.h"
-#include "ComChrControl.h"
+#include "ComCharacter.h"
 #include "StatusInfo.h"
 
 class ComObjMap;
 class ComFollowTarget;
 class IChrState;
-class ComCharacter;
 
 // Smallderon의 인공지능(AI)
-class ComSmallderonAI : public ComChrControl
+class ComSmallderonAI : public ComCharacter
 {
 public:
 	ComSmallderonAI(CString szName);
@@ -36,7 +35,7 @@ public:
 	bool IsGroud;
 	void GetHeight();
 	
-	ComCharacter* pAttackTarget;
+	//ComCharacter* pAttackTarget;
 private:
 	ComCharacter* m_pCharacter;
 	CTimer* m_pTimerAttack;
