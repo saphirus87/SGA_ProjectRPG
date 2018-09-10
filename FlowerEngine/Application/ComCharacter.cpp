@@ -13,7 +13,8 @@ ComCharacter::ComCharacter(CString szName) :
 	m_pMap(NULL),
 	m_pAnimation(NULL),
 	m_pChrEquipment(NULL),
-	m_pAttackTarget(NULL),
+	pAttackTarget(NULL),
+	m_pFollow(NULL),
 	m_pFace(NULL),
 	m_pUILevel(NULL),
 	m_pUIEXP(NULL),
@@ -52,7 +53,7 @@ void ComCharacter::Init()
 		GetHeight();
 	}
 
-	// CPP 다형성
+	m_pFollow = (ComFollowTarget*)gameObject->GetComponent("ComFollowTarget");
 	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 	m_pChrEquipment = (ComChrEquipment*)gameObject->GetComponent("ComChrEquipment");
 
@@ -128,7 +129,7 @@ void ComCharacter::OnTriggerEnter(ComCollider & collider)
 
 void ComCharacter::AttackTarget(ComCharacter * pTarget)
 {
-	m_pAttackTarget = pTarget;
+	pAttackTarget = pTarget;
 	LookatTarget();
 
 	// 총 공격력 계산 (내 공격력 + 장비 공격력)
@@ -146,16 +147,85 @@ void ComCharacter::AttackTarget(ComCharacter * pTarget)
 
 void ComCharacter::LookatTarget()
 {
-	if (m_pAttackTarget == NULL)
+	if (pAttackTarget == NULL)
 		return;
 
 	// 플레이어를 바라보는 방향 벡터
-	Vector3 vDir = m_pAttackTarget->gameObject->transform->GetPosition() - gameObject->transform->GetPosition();
+	Vector3 vDir = pAttackTarget->gameObject->transform->GetPosition() - gameObject->transform->GetPosition();
 	D3DXVec3Normalize(&vDir, &vDir);
 
 	// 일단은 Y축으로만 회전하자
 	float angleY = Vector::GetAngleY(&vDir);
 	gameObject->transform->SetRotation(0.0f, angleY, 0.0f);
+}
+
+void ComCharacter::CancleAttackTarget()
+{
+	pAttackTarget = NULL;
+	m_pFollow->IsFollowing = false;
+	m_pFollow->AbleAttack = false;
+	m_pFollow->pTarget = NULL;
+}
+
+bool ComCharacter::CheckMonDeath()
+{
+	// 공격 상대가 죽었으면
+	if (pAttackTarget && pAttackTarget->IsDeath() == true)
+	{
+		// 몬스터 죽음 처리
+		ComChrControl* pControl = (ComChrControl*)(pAttackTarget->gameObject->GetComponent("ComChrControl"));
+		pControl->Death();
+
+		// 캐릭터 레벨업 처리
+		if (Status.GetEXPAndCheckLevelUp())
+			LevelUp();
+
+		CancleAttackTarget();
+		return true;
+		//Stand();
+	}
+
+	return false;
+}
+
+bool ComCharacter::CheckPickingMon()
+{
+	if (m_pFollow == NULL)
+		return false;
+
+	Mouse* pMouse = Input::GetInstance()->m_pMouse;
+	Vector3 mousePos = Input::GetInstance()->m_pMouse->GetPosition();
+
+	list<GameObject*> listMonster = GameObject::FindAll(eTag_Monster);
+
+	for (auto & o : listMonster)
+	{
+		ComRenderCubePN* pCube = (ComRenderCubePN*)o->GetComponent("ComRenderCubePN");
+
+		// 죽었을 때는 몬스터 픽킹을 하지 않는다
+		if (pCube->Enable == false)
+			continue;
+
+		Ray ray = Ray::RayAtWorldSpace(mousePos.x, mousePos.y);
+
+		vector<Vector3>& vertices = pCube->GetVector();
+		for (size_t i = 0; i < vertices.size(); i += 3)
+		{
+			float dist = 0;
+			bool pickMon = ray.CalcIntersectTri(&vertices[i], &dist);
+
+			if (pickMon == true)
+			{
+				// 몬스터를 따라간다.
+				m_pFollow->pTarget = o;
+				m_pFollow->fMoveSpeed = Status.MOVE_SPEED;
+				pAttackTarget = (ComCharacter*)o->GetComponent("ComCharacter");
+				return true;
+			}
+		}
+	}
+
+	return false;
 }
 
 void ComCharacter::Defence(int dmg)
@@ -267,12 +337,23 @@ HRESULT AttackHandler::HandleCallback(UINT Track, LPVOID pCallbackData)
 	szDebug.Format(L"AttackHandler Track : %d %s\r\n", Track, pChr->gameObject->Name());
 	OutputDebugString(szDebug);
 
-	// 죽어서 없으면
-	if (pControl->pAttackTarget == NULL)
-		return S_OK;
+	switch (pChr->gameObject->Tag)
+	{
+	case eTag_Chracter:
+		// 죽어서 없으면
+		if (pChr->pAttackTarget == NULL)
+			return S_OK;
+		pChr->AttackTarget(pChr->pAttackTarget);
+		break;
 
-	pChr->AttackTarget(pControl->pAttackTarget);
-
+		// ComCharacter로 상속받을 때 이부분 수정할 것
+	case eTag_Monster:
+		if (pControl->pAttackTarget == NULL)
+			return S_OK;
+		pChr->AttackTarget(pControl->pAttackTarget);
+		break;
+	}
+	
 	return S_OK;
 }
 

@@ -65,22 +65,22 @@ void ComChrControl::Update()
 		// 캐릭터 이동
 		if (Input::KeyPress('W') || Input::KeyPress(VK_UP))
 		{
-			CancleAttackTarget();
+			m_pCharacter->CancleAttackTarget();
 			Walk(1);
 		}
 		else if (Input::KeyUp('W') || Input::KeyUp(VK_UP))
 		{
-			CancleAttackTarget();
+			m_pCharacter->CancleAttackTarget();
 			Stand();
 		}
 		if (Input::KeyPress('S') || Input::KeyPress(VK_DOWN))
 		{
-			CancleAttackTarget();
+			m_pCharacter->CancleAttackTarget();
 			Walk(-1);
 		}
 		else if (Input::KeyUp('S') || Input::KeyUp(VK_DOWN))
 		{
-			CancleAttackTarget();
+			m_pCharacter->CancleAttackTarget();
 			Stand();
 		}
 	}
@@ -90,9 +90,9 @@ void ComChrControl::Update()
 
 	if (Input::ButtonDown(VK_RBUTTON))
 	{
-		CancleAttackTarget();
+		m_pCharacter->CancleAttackTarget();
 		// 몬스터가 Picking되지 않으면 Map으로 이동 (중복 픽킹 방지)
-		if (CheckPickingMon() == false)
+		if (m_pCharacter->CheckPickingMon() == false)
 			CheckPickingMap();
 	}
 
@@ -105,39 +105,14 @@ void ComChrControl::Update()
 		Attack1();
 
 	MoveToPoint();
-	CheckMonDeath();
+	if (m_pCharacter->CheckMonDeath())
+		Stand();
 
 	m_pCurrentState->Update();
 }
 
 void ComChrControl::Render()
 {
-}
-
-void ComChrControl::CancleAttackTarget()
-{
-	pAttackTarget = NULL;
-	m_pFollow->IsFollowing = false;
-	m_pFollow->AbleAttack = false;
-	m_pFollow->pTarget = NULL;
-}
-
-void ComChrControl::CheckMonDeath()
-{
-	// 공격 상대가 죽었으면
-	if (pAttackTarget && pAttackTarget->IsDeath() == true)
-	{
-		// 몬스터 죽음 처리
-		ComChrControl* pControl = (ComChrControl*)(pAttackTarget->gameObject->GetComponent("ComChrControl"));
-		pControl->Death();
-
-		// 캐릭터 레벨업 처리
-		if (m_pCharacter->Status.GetEXPAndCheckLevelUp())
-			m_pCharacter->LevelUp();
-
-		CancleAttackTarget();
-		Stand();
-	}
 }
 
 void ComChrControl::MoveToPoint()
@@ -231,46 +206,6 @@ void ComChrControl::CheckPickingChr()
 			break;
 		}
 	}
-}
-
-bool ComChrControl::CheckPickingMon()
-{
-	if (m_pFollow == NULL)
-		return false;
-
-	Mouse* pMouse = Input::GetInstance()->m_pMouse;
-	Vector3 mousePos = Input::GetInstance()->m_pMouse->GetPosition();
-
-	list<GameObject*> listMonster = GameObject::FindAll(eTag_Monster);
-
-	for (auto & o : listMonster)
-	{
-		ComRenderCubePN* pCube = (ComRenderCubePN*)o->GetComponent("ComRenderCubePN");
-
-		// 죽었을 때는 몬스터 픽킹을 하지 않는다
-		if (pCube->Enable == false)
-			continue;
-
-		Ray ray = Ray::RayAtWorldSpace(mousePos.x, mousePos.y);
-
-		vector<Vector3>& vertices = pCube->GetVector();
-		for (size_t i = 0; i < vertices.size(); i += 3)
-		{
-			float dist = 0;
-			bool pickMon = ray.CalcIntersectTri(&vertices[i], &dist);
-
-			if (pickMon == true)
-			{
-				// 몬스터를 따라간다.
-				m_pFollow->pTarget = o;
-				m_pFollow->fMoveSpeed = m_pCharacter->Status.MOVE_SPEED;
-				pAttackTarget = (ComCharacter*)o->GetComponent("ComCharacter");
-				return true;
-			}
-		}
-	}
-
-	return false;
 }
 
 void ComChrControl::CheckPickingMap()

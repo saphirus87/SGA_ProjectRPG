@@ -15,6 +15,7 @@ class Skill1Handler : public ID3DXAnimationCallbackHandler
 class ComChrEquipment;
 class SkillInfo;
 class ComObjMap;
+class ComFollowTarget;
 
 // 캐릭터의 공통요소입니다.
 class ComCharacter : public Component
@@ -37,8 +38,14 @@ public:
 	/// 전투 관련
 	// 타겟을 공격합니다.
 	void AttackTarget(ComCharacter* pTarget);
-	// 대상을 바라봅니다.
+	// 공격 대상을 바라봅니다.
 	void LookatTarget();
+	// 공격 대상을 취소합니다.
+	void CancleAttackTarget();
+	// 공격 대상이 죽었을 때 처리를 합니다.
+	bool CheckMonDeath();
+	// 이 객체가 픽킹되었는지 여부를 검사합니다. (캐릭터, 몬스터, 맵)
+	bool CheckPickingMon();
 	
 	// 스킬을 사용하여 타겟을 공격합니다.
 	virtual void AttackSkill1(ComCharacter* pTarget) {}
@@ -70,7 +77,11 @@ protected:
 	eChrType m_eType;
 
 	// 공격할 타겟
-	ComCharacter* m_pAttackTarget;
+public: ComCharacter* pAttackTarget;
+
+	// 타겟으로 따라감
+private: ComFollowTarget * m_pFollow;
+protected:
 
 	// 장비 장착
 	ComChrEquipment* m_pChrEquipment;

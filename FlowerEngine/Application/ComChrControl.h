@@ -30,13 +30,7 @@ public:
 
 	// 이 객체가 픽킹되었는지 여부를 검사합니다. (캐릭터, 몬스터, 맵)
 	void CheckPickingChr();
-	bool CheckPickingMon();
 	void CheckPickingMap();
-
-	// 공격대상을 취소합니다.
-	void CancleAttackTarget();
-	// 공격대상이 죽었을 때 처리를 합니다.
-	void CheckMonDeath();
 
 protected:
 	// 맵을 클릭하면 해당 위치로 이동합니다.
@@ -46,7 +40,7 @@ public:
 	// 이 객체가 픽킹되었는지 여부
 	bool IsPicking;
 	ComRenderSkinnedMesh * pAnimation;
-	// 공격하고자 하는 타겟
+	// 공격할 타겟
 	ComCharacter* pAttackTarget;
 	ComCharacter* m_pCharacter;
 	// 상태들

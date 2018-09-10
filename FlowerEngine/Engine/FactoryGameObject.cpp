@@ -340,10 +340,10 @@ GameObject * FactoryGameObject::CreateCharacter(CString szName, CString szFolder
 	pGOChr->AddComponent(pUIDamage);
 	// 이 게임 오브젝트는 장비 장착 가능
 	pGOChr->AddComponent(new ComChrEquipment("ComChrEquipment"));
-	// 이 게임 오브젝트의 직업
-	pGOChr->AddComponent(pComChr);
 	// 이 게임 오브젝트는 대상을 따라다님
 	pGOChr->AddComponent(new ComFollowTarget("ComFollowTarget"));
+	// 이 게임 오브젝트의 직업
+	pGOChr->AddComponent(pComChr);
 	// 이 게임 오브젝트는 컨트롤 가능
 	pGOChr->AddComponent(new ComChrControl("ComChrControl"));
 	// 이 게임 오브젝트는 충돌체크 가능

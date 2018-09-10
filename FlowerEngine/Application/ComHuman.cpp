@@ -291,13 +291,13 @@ void ComHuman::Skill3()
 
 void ComHuman::AttackSkill1(ComCharacter * pTarget)
 {
-	m_pAttackTarget = pTarget;
+	pAttackTarget = pTarget;
 	LookatTarget();
 
 	HumanSkill1* pSkill1 = ((HumanSkill1*)m_vecSkillInfo[0]);
 
 	// 두 오브젝트 사이의 거리
-	float fDist = ComTransform::Distance(gameObject, m_pAttackTarget->gameObject);
+	float fDist = ComTransform::Distance(gameObject, pAttackTarget->gameObject);
 	
 	// 공격 거리가 안돼면 데미지 입지 않음
 	if (pSkill1->fRange < fDist)
