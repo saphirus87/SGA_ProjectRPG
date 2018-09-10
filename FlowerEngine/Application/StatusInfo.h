@@ -52,7 +52,7 @@ public:
 	// 공격 속도
 	float ATK_SPEED;
 	
-	/// LEVEL 관련
+	/// LEVEL 관련 -> ChrStatInfo로 수정
 	int LEVEL;
 	// 현재 경험치
 	int EXP;
@@ -63,3 +63,7 @@ public:
 	bool GetEXPAndCheckLevelUp();
 };
 
+// MonStatInfo
+// GetEXP // 얻을 수 있는 경험치
+// GetGold
+// ItemInfo* GetItems()
