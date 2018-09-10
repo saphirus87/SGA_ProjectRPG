@@ -14,6 +14,7 @@ class Skill1Handler : public ID3DXAnimationCallbackHandler
 
 class ComChrEquipment;
 class SkillInfo;
+class ComObjMap;
 
 // 캐릭터의 공통요소입니다.
 class ComCharacter : public Component
@@ -55,6 +56,14 @@ public:
 	
 protected:
 	void Init();
+
+	/// 맵 관련
+	// 맵에서 높이를 얻어옵니다.
+public:	void GetHeight();
+protected:
+	ComObjMap * m_pMap;
+	// 초기 캐릭터 셋팅시 땅 위에 있는지 여부
+	bool IsGroud;
 
 protected:
 	// 캐릭터 타입

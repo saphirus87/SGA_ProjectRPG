@@ -17,8 +17,7 @@ ComChrControl::ComChrControl(CString szName)
 	m_pFollow(NULL),
 	IsMoveToPoint(false),
 	vMoveToPoint(0, 0, 0),
-	pAttackTarget(NULL),
-	IsGroud(false)
+	pAttackTarget(NULL)
 {
 }
 
@@ -52,12 +51,6 @@ void ComChrControl::Awake()
 
 	m_pCurrentState = m_vecState[eAni_Stand];
 	Stand();
-
-	if (m_pMap)
-	{
-		m_pMap->UpdateIndexBufferQuadTree();
-		GetHeight();
-	}
 }
 
 void ComChrControl::Update()
@@ -107,7 +100,7 @@ void ComChrControl::Update()
 	if (m_pFollow != NULL && m_pFollow->IsFollowing)
 	{
 		m_pCurrentState->Walk(eAni_Walk);
-		GetHeight();
+		m_pCharacter->GetHeight();
 	}
 	else if (m_pFollow != NULL && m_pFollow->AbleAttack)
 		Attack1();
@@ -120,21 +113,6 @@ void ComChrControl::Update()
 
 void ComChrControl::Render()
 {
-}
-
-void ComChrControl::GetHeight()
-{
-	if (m_pMap == NULL)
-		return;
-
-	Vector3 pos = gameObject->transform->GetPosition();
-	float fHeight = 0.f;
-	if (m_pMap->GetHeight(fHeight, pos) == true)
-	{
-		pos.y = fHeight;
-		gameObject->transform->SetPosition(pos);
-		IsGroud = true;
-	}
 }
 
 void ComChrControl::CancleAttackTarget()
@@ -196,7 +174,7 @@ void ComChrControl::MoveToPoint()
 		else
 		{
 			m_pCurrentState->Walk(eAni_Walk);
-			GetHeight();
+			m_pCharacter->GetHeight();
 
 			// 플레이어를 바라보는 방향 벡터
 			Vector3 vDir = vMoveToPoint - gameObject->transform->GetPosition();
@@ -264,7 +242,7 @@ void ComChrControl::Walk(float fDeltaZ)
 
 	// 현재 상태에서 Walk로
 	m_pCurrentState->Walk(eAni_Walk);
-	GetHeight();
+	m_pCharacter->GetHeight();
 
 	Vector3 vecForward;			
 	gameObject->transform->GetForward(vecForward);

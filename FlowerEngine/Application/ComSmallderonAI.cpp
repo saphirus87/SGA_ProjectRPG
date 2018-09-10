@@ -105,6 +105,26 @@ void ComSmallderonAI::Update()
 		GetHeight();
 }
 
+void ComSmallderonAI::GetHeight()
+{
+	GameObject* pObjMap = GameObject::Find("ObjMap");
+	ComObjMap* m_pMap = NULL;
+	if (pObjMap != NULL)
+		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
+
+	if (m_pMap == NULL)
+		return;
+
+	Vector3 pos = gameObject->transform->GetPosition();
+	float fHeight = 0.f;
+	if (m_pMap->GetHeight(fHeight, pos) == true)
+	{
+		pos.y = fHeight;
+		gameObject->transform->SetPosition(pos);
+		IsGroud = true;
+	}
+}
+
 void ComSmallderonAI::Render()
 {
 }

@@ -26,6 +26,11 @@ public:
 	void Attack1() override;
 	void Death() override;
 
+	/// ComCharacter에서 상속받으면 지울 것들
+	// 초기 캐릭터 셋팅시 땅 위에 있는지 여부
+	bool IsGroud;
+	void GetHeight();
+
 private:
 	ComCharacter* m_pCharacter;
 	CTimer* m_pTimerAttack;

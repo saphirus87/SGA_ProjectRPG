@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ComCharacter.h"
+#include "ComObjMap.h"
 #include "ComChrControl.h"
 #include "ComFollowTarget.h"
 #include "ComChrEquipment.h"
@@ -9,6 +10,7 @@
 
 ComCharacter::ComCharacter(CString szName) : 
 	Component(szName),
+	m_pMap(NULL),
 	m_pAnimation(NULL),
 	m_pChrEquipment(NULL),
 	m_pAttackTarget(NULL),
@@ -23,7 +25,8 @@ ComCharacter::ComCharacter(CString szName) :
 	m_pTimerMPRec(NULL),
 	m_eType(eChrType_COUNT), // 초기화 값으로 사용
 	m_pAttackHandler(NULL),
-	m_pSkill1Handler(NULL)
+	m_pSkill1Handler(NULL),
+	IsGroud(false)
 {
 }
 
@@ -40,6 +43,15 @@ void ComCharacter::Awake()
 
 void ComCharacter::Init()
 {
+	GameObject* pObjMap = GameObject::Find("ObjMap");
+	if (pObjMap != NULL)
+		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
+	if (m_pMap)
+	{
+		m_pMap->UpdateIndexBufferQuadTree();
+		GetHeight();
+	}
+
 	// CPP 다형성
 	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 	m_pChrEquipment = (ComChrEquipment*)gameObject->GetComponent("ComChrEquipment");
@@ -54,6 +66,21 @@ void ComCharacter::Init()
 	m_pSkill1Handler = new Skill1Handler();
 
 	m_pComUIDamage = (ComText3D*)gameObject->GetComponent("ComText3D_Damage");
+}
+
+void ComCharacter::GetHeight()
+{
+	if (m_pMap == NULL)
+		return;
+
+	Vector3 pos = gameObject->transform->GetPosition();
+	float fHeight = 0.f;
+	if (m_pMap->GetHeight(fHeight, pos) == true)
+	{
+		pos.y = fHeight;
+		gameObject->transform->SetPosition(pos);
+		IsGroud = true;
+	}
 }
 
 void ComCharacter::Update()

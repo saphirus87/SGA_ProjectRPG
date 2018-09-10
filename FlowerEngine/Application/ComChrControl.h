@@ -41,8 +41,6 @@ public:
 	void CheckAttackTargetDeath();
 
 protected:
-	// 맵에서 높이를 얻어옵니다.
-	void GetHeight();
 	// 맵을 클릭하면 해당 위치로 이동합니다.
 	void MoveToPoint();
 	// 공격할 대상을 찾습니다.
@@ -68,6 +66,4 @@ protected:
 	Vector3 vMoveToPoint;
 	// 특정 좌표로 이동 여부
 	bool IsMoveToPoint;
-	// 초기 캐릭터 셋팅시 땅 위에 있는지 여부
-	bool IsGroud;
 };
