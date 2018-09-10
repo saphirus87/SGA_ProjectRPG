@@ -26,6 +26,9 @@ public:
 	void Attack1() override;
 	void Death() override;
 
+	// 공격할 대상을 찾습니다.
+	void FindAttackTarget();
+
 	/// ComCharacter에서 상속받으면 지울 것들
 	// 초기 캐릭터 셋팅시 땅 위에 있는지 여부
 	bool IsGroud;

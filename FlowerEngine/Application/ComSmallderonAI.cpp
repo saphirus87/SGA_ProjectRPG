@@ -7,6 +7,7 @@
 #include "ChrStateWalk.h"
 #include "ChrStateAttack.h"
 #include "ComCharacter.h"
+#include "SceneRPG.h"
 
 ComSmallderonAI::ComSmallderonAI(CString szName)
 	:ComChrControl(szName),
@@ -158,4 +159,35 @@ void ComSmallderonAI::Death()
 	// 충돌박스를 꺼서 공격 대상에서 제외한다.
 	ComRenderCubePN* pCollider = (ComRenderCubePN*)gameObject->GetComponent("ComRenderCubePN");
 	pCollider->Enable = false;
+}
+
+void ComSmallderonAI::FindAttackTarget()
+{
+	SceneRPG* sceneRPG = (SceneRPG*)SceneManager::GetInstance()->GetCurrentScene();
+
+	// 게임 종료라면
+	if (sceneRPG->IsGameEnd)
+		return;
+
+	list<GameObject*> listGO = GameObject::FindAll(eTag_Chracter);
+
+	size_t chrCnt = listGO.size();
+	int deathCnt = 0;
+	for (auto & chr : listGO)
+	{
+		ComCharacter* comChr = (ComCharacter*)chr->GetComponent("ComCharacter");
+
+		if (comChr->IsDeath() == false)
+		{
+			pAttackTarget = comChr;
+			m_pFollow->pTarget = comChr->gameObject;
+			break;
+		}
+		else
+			++deathCnt;
+	}
+
+	// 캐릭터 모두 사망시 게임 종료
+	if (deathCnt >= chrCnt)
+		sceneRPG->IsGameEnd = true;
 }
