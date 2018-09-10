@@ -41,7 +41,7 @@ public:
 	bool IsPicking;
 	ComRenderSkinnedMesh * pAnimation;
 	// 공격할 타겟
-	ComCharacter* pAttackTarget;
+	//ComCharacter* pAttackTarget;
 	ComCharacter* m_pCharacter;
 	// 상태들
 	vector<IChrState*> m_vecState;

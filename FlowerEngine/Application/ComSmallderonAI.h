@@ -35,7 +35,8 @@ public:
 	// 초기 캐릭터 셋팅시 땅 위에 있는지 여부
 	bool IsGroud;
 	void GetHeight();
-
+	
+	ComCharacter* pAttackTarget;
 private:
 	ComCharacter* m_pCharacter;
 	CTimer* m_pTimerAttack;

@@ -17,6 +17,7 @@
 #include "../Application/ItemInfo.h"
 #include "../Application/ComCharacter.h"
 #include "../Application/ComChrControl.h"
+#include "../Application/ComSmallderonAI.h"
 
 FactoryGameObject::FactoryGameObject()
 {
@@ -361,7 +362,7 @@ GameObject * FactoryGameObject::CreateCharacter(CString szName, CString szFolder
 	return pGOChr;
 }
 
-GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPath, CString szFileName, Vector3 & pos, Component* pComAI, GameObject* pTarget, StatusInfo& status)
+GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPath, CString szFileName, Vector3 & pos, Component* pComAI, StatusInfo& status)
 {
 	// 몬스터 생성 (smallderon_orange)
 	GameObject* pGOMonX = CreateFromXFile(szName, szFolderPath, szFileName, pos);
@@ -370,9 +371,7 @@ GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPa
 	ComFollowTarget* pComTarget = new ComFollowTarget("ComFollowTarget");
 	pComTarget->fRange = 10.0f;
 	pGOMonX->AddComponent(pComTarget);
-	// 타겟을 따라다닌다.
-	pComTarget->pTarget = pTarget;
-
+	
 	// 이 게임 오브젝트는 데미지 표시 가능
 	ComText3D* pUIDamage = new ComText3D("ComText3D_Damage");
 	pUIDamage->SetText("", Color(1, 0, 0, 1), 0.4f);
@@ -388,9 +387,7 @@ GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPa
 	// pComAI 다음에
 	ComRenderSkinnedMesh* pRenderSkinnedMesh = (ComRenderSkinnedMesh*)pGOMonX->GetComponent("ComRenderSkinnedMesh");
 	pRenderSkinnedMesh->pCallbackHandler = new AttackHandler();
-	// 공격 타겟
-	((ComChrControl*)pComAI)->pAttackTarget = (ComCharacter*)(pTarget->GetComponent("ComCharacter"));
-
+	
 	// 이 게임 오브젝트는 충돌체크 가능
 	ComCollider* pCollider = new ComCollider("ComCollider");
 	pGOMonX->AddComponent(pCollider);
@@ -401,8 +398,6 @@ GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPa
 	pChrName->SetText(szName);
 	pChrName->fOffsetPosY = 2.0f;
 	pGOMonX->AddComponent(pChrName);
-
-
 
 	return pGOMonX;
 }

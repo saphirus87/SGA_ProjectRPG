@@ -15,8 +15,7 @@ ComChrControl::ComChrControl(CString szName)
 	IsPicking(false),
 	m_pFollow(NULL),
 	IsMoveToPoint(false),
-	vMoveToPoint(0, 0, 0),
-	pAttackTarget(NULL)
+	vMoveToPoint(0, 0, 0)
 {
 }
 

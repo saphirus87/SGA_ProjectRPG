@@ -7,6 +7,7 @@
 #include "ItemInfo.h"
 #include "ComEquipment.h"
 #include "ComUIInventory.h"
+#include "ComSmallderonAI.h"
 
 ComCharacter::ComCharacter(CString szName) : 
 	Component(szName),
@@ -331,7 +332,6 @@ HRESULT AttackHandler::HandleCallback(UINT Track, LPVOID pCallbackData)
 {
 	// 특정 프레임에서 공격
 	ComCharacter* pChr = (ComCharacter*)pCallbackData;
-	ComChrControl* pControl = (ComChrControl*)pChr->gameObject->GetComponent("ComChrControl");
 
 	CString szDebug;
 	szDebug.Format(L"AttackHandler Track : %d %s\r\n", Track, pChr->gameObject->Name());
@@ -348,10 +348,14 @@ HRESULT AttackHandler::HandleCallback(UINT Track, LPVOID pCallbackData)
 
 		// ComCharacter로 상속받을 때 이부분 수정할 것
 	case eTag_Monster:
-		if (pControl->pAttackTarget == NULL)
+	{
+		ComSmallderonAI* pMon = (ComSmallderonAI*)pChr->gameObject->GetComponent("ComChrControl");
+		if (pMon->pAttackTarget == NULL)
 			return S_OK;
-		pChr->AttackTarget(pControl->pAttackTarget);
+		pChr->AttackTarget(pMon->pAttackTarget);
 		break;
+
+	}
 	}
 	
 	return S_OK;
