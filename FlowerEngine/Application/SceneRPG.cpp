@@ -12,6 +12,7 @@
 #include "../Application/ComFollowTarget.h"
 #include "../Application/ComUIInventory.h"
 #include "../Application/ComUICharacterInfo.h"
+#include "../Application/ComUIItemInfo.h"
 
 SceneRPG::SceneRPG(CString szName) : Scene(szName), 
 	IsGameEnd(false),
@@ -334,6 +335,14 @@ void SceneRPG::CreateUI()
 	uiDialog->GetRadioButton(100)->AddRadioButton("radio3");
 	uiDialog->GetRadioButton(100)->AddRadioButton("radio4");*/
 
+	// 아이템 정보 창
+	GameObject* pUIItemInfo = factory.CreateUIDialog("ItemInfoUI", Vector3(100.0f, 100.0f, 0.0f));
+	ComUIItemInfo* pComUIItemInfo = new ComUIItemInfo("ComUIItemInfo");
+	pUIItemInfo->AddComponent(pComUIItemInfo);
+	uiDialog = (ComDialog*)pUIItemInfo->GetComponent("ComDialog");
+
+	uiDialog->SetToggleKey('T');
+
 	GameObject* pUIInven = factory.CreateUIDialog("InvenUI_Undead", Vector3(120.0f, 120.0f, 2.0f));
 	ComUIInventory* pComInven = new ComUIInventory("ComUIInventory");
 	pComInven->SetInvenSize(16);
@@ -345,11 +354,7 @@ void SceneRPG::CreateUI()
 	uiDialog->SetToggleKey('I');
 	uiDialog->SetMoveable(true);
 	uiDialog->SetDragArea(rc);
-	uiDialog->AddImage(0, "Resources/ui/ui-backpackbackground.png");
-	uiDialog->AddButton(2, "Resources/ui/ui-panel-minimizebutton-up.png", "Resources/ui/ui-panel-minimizebutton-up.png",
-		"Resources/ui/ui-panel-minimizebutton-down.png", pComInven, "InvenClose");
-	//uiDialog->GetButton(2)->SetScale(Vector3(2.5f, 2.5f, 1.0f));
-	uiDialog->GetButton(2)->SetPosition(Vector3(230, 8, 0));
+
 
 	// 캐릭터 장비 정보 창 추가(캐릭터 mesh 보이게 추가 필요)
 	GameObject* pUICharacterInfo = factory.CreateUIDialog("CharacterInfoUI", Vector3(200.0f, 200.0f, 0));
@@ -365,6 +370,4 @@ void SceneRPG::CreateUI()
 	uiDialog->AddButton(1, "Resources/ui/ui-panel-minimizebutton-up.png", "Resources/ui/ui-panel-minimizebutton-up.png",
 		"Resources/ui/ui-panel-minimizebutton-down.png", pComCharacterInfo, "CharacterInfoClose");
 	uiDialog->GetButton(1)->SetPosition(Vector3(330, 16, 0));
-
-	GameObject* pCharacter3 = GameObject::Find("troll_01");
 }

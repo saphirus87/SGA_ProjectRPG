@@ -265,6 +265,20 @@ enum eEquipUI
 	eEquipUI_RelicBtn,
 };
 
+enum eItemInfoUI
+{
+	eItemInfoUI_Border,
+	eItemInfoUI_BorderTopLeft,
+	eItemInfoUI_BorderTop,
+	eItemInfoUI_BorderTopRight,
+	eItemInfoUI_BorderLeft,
+	eItemInfoUI_BorderRight,
+	eItemInfoUI_BorderBottomLeft,
+	eItemInfoUI_BorderBottom,
+	eItemInfoUI_BorderBottomRight,
+	eItemInfoUI_ItemNameText,
+};
+
 struct KEYBOARD_STATE
 {
 	Vector3	deltaPos;
