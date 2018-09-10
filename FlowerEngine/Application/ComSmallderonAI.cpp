@@ -22,8 +22,7 @@ ComSmallderonAI::~ComSmallderonAI()
 
 void ComSmallderonAI::Awake()
 {
-	Init();
-	
+	pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 	m_pFollow = (ComFollowTarget*)gameObject->GetComponent("ComFollowTarget");
 
 	m_vecState.resize(eAniMon_COUNT);
