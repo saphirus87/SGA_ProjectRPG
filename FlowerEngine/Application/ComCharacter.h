@@ -44,7 +44,7 @@ public:
 	// 공격 대상을 취소합니다.
 	void CancleAttackTarget();
 	// 공격 대상이 죽었을 때 처리를 합니다.
-	bool CheckMonDeath();
+	void CheckMonDeath();
 	// 이 객체가 픽킹되었는지 여부를 검사합니다. (캐릭터, 몬스터, 맵)
 	bool CheckPickingMon();
 	

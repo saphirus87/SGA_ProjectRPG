@@ -95,9 +95,7 @@ void ComChrControl::Update()
 		m_pCharacter->Attack1();
 
 	MoveToPoint();
-	if (m_pCharacter->CheckMonDeath())
-		m_pCharacter->Stand();
-
+	m_pCharacter->CheckMonDeath();
 	m_pCharacter->m_pCurrentState->Update();
 }
 

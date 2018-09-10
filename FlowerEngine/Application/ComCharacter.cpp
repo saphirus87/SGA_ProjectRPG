@@ -188,7 +188,7 @@ void ComCharacter::CancleAttackTarget()
 	m_pFollow->pTarget = NULL;
 }
 
-bool ComCharacter::CheckMonDeath()
+void ComCharacter::CheckMonDeath()
 {
 	// 공격 상대가 죽었으면
 	if (pAttackTarget && pAttackTarget->IsDeath() == true)
@@ -204,11 +204,8 @@ bool ComCharacter::CheckMonDeath()
 			LevelUp();
 
 		CancleAttackTarget();
-		return true;
-		//Stand();
+		Stand();
 	}
-
-	return false;
 }
 
 bool ComCharacter::CheckPickingMon()
@@ -397,27 +394,6 @@ HRESULT AttackHandler::HandleCallback(UINT Track, LPVOID pCallbackData)
 		return S_OK;
 	pChr->AttackTarget(pChr->pAttackTarget);
 
-	//switch (pChr->gameObject->Tag)
-	//{
-	//case eTag_Chracter:
-	//	// 죽어서 없으면
-	//	if (pChr->pAttackTarget == NULL)
-	//		return S_OK;
-	//	pChr->AttackTarget(pChr->pAttackTarget);
-	//	break;
-
-	//	// ComCharacter로 상속받을 때 이부분 수정할 것
-	//case eTag_Monster:
-	//{
-	//	ComSmallderonAI* pMon = (ComSmallderonAI*)pChr->gameObject->GetComponent("ComCharacter");
-	//	if (pMon->pAttackTarget == NULL)
-	//		return S_OK;
-	//	pChr->AttackTarget(pMon->pAttackTarget);
-	//	break;
-
-	//}
-	//}
-	
 	return S_OK;
 }
 
@@ -425,7 +401,6 @@ HRESULT Skill1Handler::HandleCallback(UINT Track, LPVOID pCallbackData)
 {
 	// 특정 프레임에서 공격
 	ComCharacter* pChr = (ComCharacter*)pCallbackData;
-	//ComChrControl* pControl = (ComChrControl*)pChr->gameObject->GetComponent("ComChrControl");
 
 	CString szDebug;
 	szDebug.Format(L"Skill1Handler Track : %d %s\r\n", Track, pChr->gameObject->Name());

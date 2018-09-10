@@ -25,6 +25,8 @@ void ComSmallderonAI::Awake()
 	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
 	m_pFollow = (ComFollowTarget*)gameObject->GetComponent("ComFollowTarget");
 	m_pFollow->pTarget = NULL;
+	m_pComUIDamage = (ComText3D*)gameObject->GetComponent("ComText3D_Damage");
+	m_pTimerDamage = new CTimer(CClock::GetInstance()); m_pTimerDamage->Start();
 
 	m_vecState.resize(eAniMon_COUNT);
 	m_vecState[eAniMon_Death] = new ChrStateDeath(this);
@@ -38,6 +40,9 @@ void ComSmallderonAI::Awake()
 	m_pTimerAttack->Start();
 
 	//static bool bOnce = false;
+
+	m_pAttackHandler = new AttackHandler();
+	m_pAnimation->pCallbackHandler = m_pAttackHandler;
 
 	//if (bOnce == false)
 	{
