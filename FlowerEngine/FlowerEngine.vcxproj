@@ -394,6 +394,7 @@
     <ClInclude Include="Application\ComAircraftControl.h" />
     <ClInclude Include="Application\ComAircraftEnermyAI.h" />
     <ClInclude Include="Application\ComCharacter.h" />
+    <ClInclude Include="Application\ComCharacterUI.h" />
     <ClInclude Include="Application\ComChrControl.h" />
     <ClInclude Include="Application\ComChrEquipment.h" />
     <ClInclude Include="Application\ComFollowTarget.h" />
@@ -432,6 +433,7 @@
     <ClCompile Include="Application\ComAircraftControl.cpp" />
     <ClCompile Include="Application\ComAircraftEnermyAI.cpp" />
     <ClCompile Include="Application\ComCharacter.cpp" />
+    <ClCompile Include="Application\ComCharacterUI.cpp" />
     <ClCompile Include="Application\ComChrControl.cpp" />
     <ClCompile Include="Application\ComChrEquipment.cpp" />
     <ClCompile Include="Application\ComFollowTarget.cpp" />

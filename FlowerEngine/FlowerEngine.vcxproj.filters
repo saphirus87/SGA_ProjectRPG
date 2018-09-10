@@ -465,6 +465,7 @@
     <ClCompile Include="Application\UIBtnInvenIcon.cpp">
       <Filter>Application\Components\ComUI</Filter>
     </ClCompile>
+    <ClCompile Include="Application\ComCharacterUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FlowerEngine.fx">
@@ -734,6 +735,7 @@
     <ClInclude Include="Application\UIBtnInvenIcon.h">
       <Filter>Application\Components\ComUI</Filter>
     </ClInclude>
+    <ClInclude Include="Application\ComCharacterUI.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="game-controller.ico">
