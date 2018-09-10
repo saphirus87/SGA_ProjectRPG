@@ -194,10 +194,7 @@ void ComCharacter::CheckMonDeath()
 	if (pAttackTarget && pAttackTarget->IsDeath() == true)
 	{
 		// 몬스터 죽음 처리
-		/*ComChrControl* pControl = (ComChrControl*)(pAttackTarget->gameObject->GetComponent("ComChrControl"));
-		pControl->Death();*/
-
-		dynamic_cast<ComSmallderonAI*>(pAttackTarget)->Death();
+		pAttackTarget->Death();
 
 		// 캐릭터 레벨업 처리
 		if (Status.GetEXPAndCheckLevelUp())

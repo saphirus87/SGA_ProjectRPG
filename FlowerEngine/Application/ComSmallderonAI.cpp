@@ -158,6 +158,8 @@ void ComSmallderonAI::Attack1()
 
 void ComSmallderonAI::Death()
 {
+	m_pComUIDamage->Enable = false;
+
 	// 현재 상태에서 Death로
 	m_pCurrentState->Death(eAniMon_Death);
 
