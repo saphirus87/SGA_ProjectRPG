@@ -36,5 +36,7 @@ public:
 	void SetScale(Vector3 scale) { m_Scale = scale; }
 	void SetParent(ComDialog* parent) { m_pParent = parent; }
 	void SetIsVisible(bool IsVisible) { m_IsVisible = IsVisible; }
+
+	Vector2 GetSize() { return m_Size; }
 };
 

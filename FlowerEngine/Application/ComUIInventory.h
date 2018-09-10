@@ -3,6 +3,7 @@
 
 const UINT ItemMaxNum = 99;
 class UIBtnInvenIcon;
+class ComUIItemInfo;
 
 class ComUIInventory : public Component, public UIButtonDelegate
 {
@@ -49,11 +50,12 @@ private:
 	UINT m_InvenSize;
 
 	pair<ItemInfo*, UINT> m_PickedItem;
+	ComUIItemInfo* m_pComUIItemInfo;
 
 
 	// HELP ¼ÛÇö±¹
 	ComDialog* uiDialog;
-	
+
 	map<CString, UIBtnInvenIcon*> m_mapButtons;
 	UIBtnInvenIcon* m_pBtnPicked;
 };

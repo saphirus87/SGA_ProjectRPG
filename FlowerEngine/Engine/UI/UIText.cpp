@@ -46,19 +46,11 @@ void UIText::SetText(LPD3DXFONT font, CString szText)
 
 	D3DXFONT_DESCW fontDesc;
 
+	// 폰트의 크기를 얻어와서 글자수에 맞게 크기 지정
 	m_pFont->GetDescW(&fontDesc);
-	SetSize(Vector2(fontDesc.Width * m_Text.GetLength() * 2, fontDesc.Height));
+	// 한글의 경우 문자의 크기가 크기 때문에 문자열 내에 한글 갯수 만큼 크기를 늘림
+	SetSize(Vector2(fontDesc.Width * (m_Text.GetLength() + GetHangulNum() + 2), fontDesc.Height));
 }
-
-//void UIText::SetText(CString szText)
-//{
-//	m_Text = szText;
-//
-//	D3DXFONT_DESCW fontDesc;
-//
-//	m_pFont->GetDescW(&fontDesc);
-//	SetSize(Vector2(fontDesc.Width * m_Text.GetLength() * 2, fontDesc.Height));
-//}
 
 void UIText::SetFont(LPD3DXFONT font)
 {
@@ -68,4 +60,19 @@ void UIText::SetFont(LPD3DXFONT font)
 
 	m_pFont->GetDescW(&fontDesc);
 	SetSize(Vector2(fontDesc.Width * m_Text.GetLength() * 2, fontDesc.Height));
+}
+
+int UIText::GetHangulNum()
+{
+	int HangulNum = 0;
+
+	// 텍스트 내에 한글이 몇 글자 있는지 판별
+	for (int i = 0; i < m_Text.GetLength(); i++)
+	{
+		// i번째 문자가 한글인 조건
+		if (0x80 == (m_Text.GetAt(i) & 0x80))
+			++HangulNum;
+	}
+
+	return HangulNum;
 }

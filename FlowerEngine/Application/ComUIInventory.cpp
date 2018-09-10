@@ -1,8 +1,10 @@
 #include "stdafx.h"
 #include "ComUIInventory.h"
 #include "ItemInfo.h"
+#include "ComUIItemInfo.h"
 #include "UIBtnInvenIcon.h"
 #include "ComChrEquipment.h"
+
 
 ComUIInventory::ComUIInventory(CString szName)
 	: Component(szName), m_InvenSize(4), m_Money(0),
@@ -20,15 +22,23 @@ void ComUIInventory::Awake()
 	SetInvenSize(m_InvenSize);
 
 	uiDialog = (ComDialog*)gameObject->GetComponent("ComDialog");
+	m_pComUIItemInfo = (ComUIItemInfo*)GameObject::Find("ItemInfoUI")->GetComponent("ComUIItemInfo");
 
-	// Inventory Size에 맞게 버튼 생성(아이템 칸 마다)
+	// 인벤토리 이미지와 닫기 버튼 추가
+	uiDialog->AddImage(0, "Resources/ui/ui-backpackbackground.png");
+	uiDialog->AddButton(2, "Resources/ui/ui-panel-minimizebutton-up.png", "Resources/ui/ui-panel-minimizebutton-up.png",
+		"Resources/ui/ui-panel-minimizebutton-down.png", this, "InvenClose");
+	//uiDialog->GetButton(2)->SetScale(Vector3(2.5f, 2.5f, 1.0f));
+	uiDialog->GetButton(2)->SetPosition(Vector3(230, 8, 0));
+
+	// 인벤토리 크기에 맞게 버튼 생성(아이템 칸 마다)
 	for (int i = 0; i < m_InvenSize; ++i)
 	{
 		CString btnName;
 		btnName.Format(L"InvenSlot%d", i + 1);
 		uiDialog->AddBtnInvenIcon(eInvenUI_Slot1Btn + i,
 			"Resources/ui/icon_sword_1.png", "Resources/ui/icon_sword_1.png", "Resources/ui/icon_sword_1.png", this, btnName);
-		
+
 		// 맵 자료구조에 버튼 넣어둠
 		UIBtnInvenIcon* pBtn = (UIBtnInvenIcon*)uiDialog->GetButton(eInvenUI_Slot1Btn + i);
 		m_mapButtons.insert(map<CString, UIBtnInvenIcon*>::value_type(btnName, pBtn));
@@ -99,7 +109,7 @@ void ComUIInventory::Update()
 	uiDialog->GetText(eInvenUI_PickedItemNumText)->SetPosition(Vector3(mousePos.x - 16 - gameObject->transform->GetPosition().x, mousePos.y + 4 - gameObject->transform->GetPosition().y, 0));
 */
 
-	// 선택된 아이템이 있을 때 위치 이동
+// 선택된 아이템이 있을 때 위치 이동
 	if (m_pBtnPicked && m_pBtnPicked->pItem)
 	{
 		Vector2 mousePos = Input::GetMousePosition();
@@ -147,7 +157,7 @@ void ComUIInventory::OnClick(UIButton* pSender)
 	//}
 
 	// 송현국
-	
+
 	// 이동중인 아이템이 있으면 처리
 	if (m_pBtnPicked)
 	{
@@ -160,11 +170,15 @@ void ComUIInventory::OnClick(UIButton* pSender)
 		return;
 	}
 
+	UIBtnInvenIcon* pBtn = m_mapButtons[pSender->GetButtonName()];
 
+	m_pComUIItemInfo->SetPosition(Vector3(gameObject->transform->GetPosition().x + 300.0f, gameObject->transform->GetPosition().y, 0.0f));
+	m_pComUIItemInfo->SetIsVisible(true);
+	m_pComUIItemInfo->SetItemInfo(pBtn->pItem);
 
 
 	// 아이템 장착 부분
-	UIBtnInvenIcon* pBtn = m_mapButtons[pSender->GetButtonName()];
+	/*UIBtnInvenIcon* pBtn = m_mapButtons[pSender->GetButtonName()];
 	if (pBtn->pItem == NULL)
 		return;
 
@@ -181,7 +195,7 @@ void ComUIInventory::OnClick(UIButton* pSender)
 		// 해당 버튼은 아이템 없음
 		pBtn->pItem = NULL;
 		break;
-	}
+	}*/
 }
 
 void ComUIInventory::OnPress(UIButton * pSender)
@@ -255,7 +269,7 @@ bool ComUIInventory::AddItem(ItemInfo* Item, UINT ItemNum)
 	//return make_pair(Item, ItemNum);
 
 
-	
+
 	if (m_mapButtons.size() > m_InvenSize)
 	{
 		// UI Message : 인벤토리가 꽉 찼습니다.
@@ -337,9 +351,9 @@ bool ComUIInventory::FindItem(unsigned int ItemID, int& StartIndex)
 {
 	/*for (; StartIndex < m_vecItem.size(); ++StartIndex)
 	{
-		if (m_vecItem[StartIndex].first == NULL) 
+		if (m_vecItem[StartIndex].first == NULL)
 			continue;
-		if (m_vecItem[StartIndex].first->UID == ItemID) 
+		if (m_vecItem[StartIndex].first->UID == ItemID)
 			return true;
 	}
 	*/
