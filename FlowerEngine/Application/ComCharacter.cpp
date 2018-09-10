@@ -79,9 +79,15 @@ void ComCharacter::OnTriggerEnter(ComCollider & collider)
 			// 장착 타입이 같으면 인벤토리에 넣기
 			if (pEquip->pItemInfo && m_eType == pEquip->pItemInfo->ChrType)
 			{
-				// 캐릭터 타입별로 인벤토리 가지고 있음
+				// 현재 언데드만 인벤토리 가지고 있음 -> 캐릭터 타입별로 인벤토리 가지고 있음로 수정 필요
 				switch (m_eType)
 				{
+				case eChrType_Human:
+					// 휴먼이면 바로 장착
+					m_pChrEquipment->Equip(pEquip->pItemInfo);
+					collider.gameObject->SetActive(false);
+					break;
+
 				case eChrType_Undead:
 					ComUIInventory * pInven = (ComUIInventory*)GameObject::Find("InvenUI_Undead")->GetComponent("ComUIInventory");
 					pInven->AddItem(pEquip->pItemInfo, 1);

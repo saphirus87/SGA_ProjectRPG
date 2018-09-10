@@ -71,6 +71,8 @@ void ComUICharacterInfo::OnPress(UIButton * pSender)
 
 void ComUICharacterInfo::UpdateIcons()
 {
+	return;
+
 	ComDialog* uiDialog = (ComDialog*)gameObject->GetComponent("ComDialog");
 
 	if (m_pChrEquip)
@@ -87,7 +89,9 @@ void ComUICharacterInfo::UpdateIcons()
 				else if (equip->Type == eItem_WeaponR) equipBtnNum = eEquipUI_MainHandBtn;
 				else if (equip->Type == eItem_WeaponL) equipBtnNum = eEquipUI_SecondaryHandBtn;
 
-				uiDialog->GetButton(equipBtnNum)->SetTexture("Resources/ui/" + equip->IconName, "Resources/ui/" + equip->IconName, "Resources/ui/" + equip->IconName);
+				UIButton* pBtn = uiDialog->GetButton(equipBtnNum);
+				if (pBtn)
+					pBtn->SetTexture("Resources/ui/" + equip->IconName, "Resources/ui/" + equip->IconName, "Resources/ui/" + equip->IconName);
 			}
 		}
 	}
