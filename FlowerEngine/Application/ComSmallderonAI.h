@@ -28,6 +28,8 @@ public:
 
 	// 공격할 대상을 찾습니다.
 	void FindAttackTarget();
+	// 캐릭터가 죽었는지 확인하고 처리합니다.
+	void CheckPlayerDeath();
 
 	/// ComCharacter에서 상속받으면 지울 것들
 	// 초기 캐릭터 셋팅시 땅 위에 있는지 여부

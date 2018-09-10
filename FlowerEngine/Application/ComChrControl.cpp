@@ -105,7 +105,7 @@ void ComChrControl::Update()
 		Attack1();
 
 	MoveToPoint();
-	CheckAttackTargetDeath();
+	CheckMonDeath();
 
 	m_pCurrentState->Update();
 }
@@ -122,23 +122,19 @@ void ComChrControl::CancleAttackTarget()
 	m_pFollow->pTarget = NULL;
 }
 
-void ComChrControl::CheckAttackTargetDeath()
+void ComChrControl::CheckMonDeath()
 {
 	// 공격 상대가 죽었으면
 	if (pAttackTarget && pAttackTarget->IsDeath() == true)
 	{
-		// 캐릭터 죽음 처리
-		if (pAttackTarget->gameObject->Tag == eTag_Chracter)
-			pAttackTarget->gameObject->SetActive(false);
-		else // 몬스터 죽음 처리
-		{
-			ComChrControl* pControl = (ComChrControl*)(pAttackTarget->gameObject->GetComponent("ComChrControl"));
-			pControl->Death();
+		// 몬스터 죽음 처리
+		ComChrControl* pControl = (ComChrControl*)(pAttackTarget->gameObject->GetComponent("ComChrControl"));
+		pControl->Death();
 
-			// 캐릭터 레벨업 처리
-			if (m_pCharacter->Status.GetEXPAndCheckLevelUp())
-				m_pCharacter->LevelUp();
-		}
+		// 캐릭터 레벨업 처리
+		if (m_pCharacter->Status.GetEXPAndCheckLevelUp())
+			m_pCharacter->LevelUp();
+
 		CancleAttackTarget();
 		Stand();
 	}

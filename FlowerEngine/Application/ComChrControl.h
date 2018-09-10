@@ -36,7 +36,7 @@ public:
 	// 공격대상을 취소합니다.
 	void CancleAttackTarget();
 	// 공격대상이 죽었을 때 처리를 합니다.
-	void CheckAttackTargetDeath();
+	void CheckMonDeath();
 
 protected:
 	// 맵을 클릭하면 해당 위치로 이동합니다.

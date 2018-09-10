@@ -102,7 +102,7 @@ void ComSmallderonAI::Update()
 	else
 		Stand();
 
-	CheckAttackTargetDeath();
+	CheckPlayerDeath();
 
 	if (IsGroud == false)
 		GetHeight();
@@ -192,4 +192,23 @@ void ComSmallderonAI::FindAttackTarget()
 	// 캐릭터 모두 사망시 게임 종료
 	if (deathCnt >= chrCnt)
 		sceneRPG->IsGameEnd = true;
+}
+
+void ComSmallderonAI::CheckPlayerDeath()
+{
+	// 공격 상대가 죽었으면
+	if (pAttackTarget && pAttackTarget->IsDeath() == true)
+	{
+		// 캐릭터 죽음 처리
+		if (pAttackTarget->gameObject->Tag == eTag_Chracter)
+			pAttackTarget->gameObject->SetActive(false);
+	
+		// m_pFollow 변수가 나누어 졌으므로 여기에서 처리
+		pAttackTarget = NULL;
+		m_pFollow->IsFollowing = false;
+		m_pFollow->AbleAttack = false;
+		m_pFollow->pTarget = NULL;
+
+		Stand();
+	}
 }
