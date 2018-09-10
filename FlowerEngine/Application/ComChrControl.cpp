@@ -123,7 +123,7 @@ void ComChrControl::MoveToPoint()
 			gameObject->transform->SetRotation(0.0f, angleY, 0.0f);
 
 			// 이동 속도
-			vDir *= m_pCharacter->Status.MOVE_SPEED;
+			vDir *= m_pCharacter->Status->MOVE_SPEED;
 
 			// 속도벡터 곱하는 방법
 			gameObject->transform->Translate(vDir);

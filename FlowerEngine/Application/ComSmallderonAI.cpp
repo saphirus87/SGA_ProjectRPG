@@ -91,7 +91,7 @@ void ComSmallderonAI::Update()
 
 	if (m_pFollow->pTarget && m_pFollow->IsFollowing)
 	{
-		m_pFollow->fMoveSpeed = m_pCharacter->Status.MOVE_SPEED;
+		m_pFollow->fMoveSpeed = m_pCharacter->Status->MOVE_SPEED;
 		GetHeight();
 		Walk(1);
 	}

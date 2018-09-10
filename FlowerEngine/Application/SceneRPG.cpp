@@ -209,27 +209,26 @@ void SceneRPG::CreateTroll()
 
 void SceneRPG::CreateMonster()
 {
-	StatusInfo monStatus;
-	monStatus.HP = 50;
-	monStatus.HPMAX = 50;
-	monStatus.ATK_PHY = 5;
-
 	// ¸ó½ºÅÍ »ý¼º (smallderon_orange)
+	StatusInfo* monStatus = new StatusInfo(); monStatus->HP = 50; monStatus->HPMAX = 50; monStatus->ATK_PHY = 5;
 	GameObject* pGOMonX = factory.CreateMonster("Æø¿°¸ó", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-243, 7.7184200, -240),
 		new ComSmallderonAI("ComCharacter"), monStatus);
+
+	monStatus = new StatusInfo(); monStatus->HP = 50; monStatus->HPMAX = 50; monStatus->ATK_PHY = 5;
 	pGOMonX = factory.CreateMonster("Æø¿°¸ó", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-243, 10.7184200, -243),
 		new ComSmallderonAI("ComCharacter"), monStatus);
+	
+	monStatus = new StatusInfo(); monStatus->HP = 50; monStatus->HPMAX = 50; monStatus->ATK_PHY = 5;
 	pGOMonX = factory.CreateMonster("Æø¿°¸ó", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-246, 9.7184200, -246),
 		new ComSmallderonAI("ComCharacter"), monStatus);
 
-	monStatus.HP = 60;
-	monStatus.HPMAX = 60;
-	monStatus.ATK_PHY = 6;
-
+	monStatus = new StatusInfo(); monStatus->HP = 60; monStatus->HPMAX = 60; monStatus->ATK_PHY = 6;
 	pGOMonX = factory.CreateMonster("Æø¿°¸ó", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-220, 10.7184200, -220),
 		new ComSmallderonAI("ComCharacter"), monStatus);
+	monStatus = new StatusInfo(); monStatus->HP = 60; monStatus->HPMAX = 60; monStatus->ATK_PHY = 6;
 	pGOMonX = factory.CreateMonster("Æø¿°¸ó", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-223, 10.7184200, -223),
 		new ComSmallderonAI("ComCharacter"), monStatus);
+	monStatus = new StatusInfo(); monStatus->HP = 60; monStatus->HPMAX = 60; monStatus->ATK_PHY = 6;
 	pGOMonX = factory.CreateMonster("Æø¿°¸ó", "Resources/monster/smallderon/", "smallderon_orange.X", Vector3(-226, 10.7184200, -226),
 		new ComSmallderonAI("ComCharacter"), monStatus);
 }

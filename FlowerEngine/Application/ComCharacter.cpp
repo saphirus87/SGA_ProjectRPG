@@ -34,12 +34,15 @@ ComCharacter::ComCharacter(CString szName) :
 	m_eType(eChrType_COUNT), // 초기화 값으로 사용
 	m_pAttackHandler(NULL),
 	m_pSkill1Handler(NULL),
+	Status(NULL),
 	IsGroud(false)
 {
 }
 
 ComCharacter::~ComCharacter()
 {
+	SAFE_DELETE(Status);
+
 	for (size_t i = 0; i < m_vecState.size(); ++i)
 		SAFE_DELETE(m_vecState[i]);
 
@@ -88,6 +91,8 @@ void ComCharacter::Init()
 	m_vecState[eAni_Skill_2] = new ChrStateSkill2(this);
 
 	m_pCurrentState = m_vecState[eAni_Stand];
+
+	Status = new StatusInfo();
 }
 
 void ComCharacter::GetHeight()
@@ -158,7 +163,7 @@ void ComCharacter::AttackTarget(ComCharacter * pTarget)
 	if (m_pChrEquipment)
 		equipmentDmg = m_pChrEquipment->GetTotalATK_MIN();
 
-	int dmg = Status.ATK_PHY + equipmentDmg;
+	int dmg = Status->ATK_PHY + equipmentDmg;
 
 	pTarget->Defence(dmg);
 
@@ -197,8 +202,8 @@ void ComCharacter::CheckMonDeath()
 		pAttackTarget->Death();
 
 		// 캐릭터 레벨업 처리
-		if (Status.GetEXPAndCheckLevelUp())
-			Status.LevelUP(0.05f);
+		if (Status->GetEXPAndCheckLevelUp())
+			Status->LevelUP(0.05f);
 
 		CancleAttackTarget();
 		Stand();
@@ -235,7 +240,7 @@ bool ComCharacter::CheckPickingMon()
 			{
 				// 몬스터를 따라간다.
 				m_pFollow->pTarget = o;
-				m_pFollow->fMoveSpeed = Status.MOVE_SPEED;
+				m_pFollow->fMoveSpeed = Status->MOVE_SPEED;
 				pAttackTarget = (ComSmallderonAI*)o->GetComponent("ComCharacter");
 				return true;
 			}
@@ -252,12 +257,12 @@ void ComCharacter::Defence(int dmg)
 	if (m_pChrEquipment)
 		equipmentDef = m_pChrEquipment->GetTotalDEF_PHY();
 
-	int def = Status.DEF_PHY + equipmentDef;
+	int def = Status->DEF_PHY + equipmentDef;
 
 	dmg -= (def / 2);
 
 	// HP 차감
-	Status.HP -= dmg;
+	Status->HP -= dmg;
 
 	// UI 데미지 표시
 	CString szDmg;
@@ -275,7 +280,7 @@ void ComCharacter::Defence(int dmg)
 
 bool ComCharacter::IsDeath()
 {
-	if (Status.HP <= 0)
+	if (Status->HP <= 0)
 		return true;
 
 	return false;
@@ -284,18 +289,18 @@ bool ComCharacter::IsDeath()
 void ComCharacter::HPMPRecovery()
 {
 	// N초마다 회복
-	if (m_pTimerHPRec->GetTime() >= Status.REVTime_HP)
+	if (m_pTimerHPRec->GetTime() >= Status->REVTime_HP)
 	{
-		if (Status.RecoveryHP(Status.REV_HP))
+		if (Status->RecoveryHP(Status->REV_HP))
 		{
 			UpdateUI();
 			m_pTimerHPRec->Reset();
 		}
 	}
 	// N초마다 회복
-	if (m_pTimerMPRec->GetTime() >= Status.REVTime_MP)
+	if (m_pTimerMPRec->GetTime() >= Status->REVTime_MP)
 	{
-		if (Status.RecoveryMP(Status.REV_MP))
+		if (Status->RecoveryMP(Status->REV_MP))
 		{
 			UpdateUI();
 			m_pTimerMPRec->Reset();
@@ -322,7 +327,7 @@ void ComCharacter::Walk(float fDeltaZ)
 
 	Vector3 vecForward;
 	gameObject->transform->GetForward(vecForward);
-	Vector3 forward = fDeltaZ * vecForward * Status.MOVE_SPEED;
+	Vector3 forward = fDeltaZ * vecForward * Status->MOVE_SPEED;
 	gameObject->transform->Translate(forward);
 }
 
@@ -340,28 +345,28 @@ void ComCharacter::UpdateUI()
 {
 	if (m_pHPBar)
 	{
-		if (Status.HP < 0)
-			Status.HP = 0;
+		if (Status->HP < 0)
+			Status->HP = 0;
 
-		m_pHPBar->SetCurValue(Status.HP);
+		m_pHPBar->SetCurValue(Status->HP);
 	}
 
 	if (m_pMPBar)
 	{
-		if (Status.MP < 0)
-			Status.MP = 0;
+		if (Status->MP < 0)
+			Status->MP = 0;
 
-		m_pMPBar->SetCurValue(Status.MP);
+		m_pMPBar->SetCurValue(Status->MP);
 	}
 
 	if (m_pUILevel && m_pUIEXP)
 	{
 		CString szLevel;
-		szLevel.Format(L"LV:%d\r\n%d/%d", Status.LEVEL, Status.EXP, Status.NextEXP());
+		szLevel.Format(L"LV:%d\r\n%d/%d", Status->LEVEL, Status->EXP, Status->NextEXP());
 		m_pUILevel->SetText(szLevel);
 
 		CString szEXP;
-		szEXP.Format(L"EXP:%d/%d", Status.EXP, Status.NextEXP());
+		szEXP.Format(L"EXP:%d/%d", Status->EXP, Status->NextEXP());
 		m_pUIEXP->SetText(szEXP);
 	}
 }

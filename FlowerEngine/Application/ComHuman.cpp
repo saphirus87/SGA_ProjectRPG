@@ -111,7 +111,7 @@ void ComHuman::SetUI()
 
 		// LEVEL 텍스트
 		CString szLevel;
-		szLevel.Format(L"LV:%d", Status.LEVEL);
+		szLevel.Format(L"LV:%d", Status->LEVEL);
 		uiDialog->AddText(eUI_Human_Text_LV, Assets::GetFont(Assets::FontType_NORMAL), szLevel);
 		m_pUILevel = uiDialog->GetText(eUI_Human_Text_LV);
 		if (m_pUILevel)
@@ -122,7 +122,7 @@ void ComHuman::SetUI()
 
 		//EXP 텍스트
 		CString szEXP;
-		szEXP.Format(L"EXP:%d/%d", Status.EXP, Status.NextEXP());
+		szEXP.Format(L"EXP:%d/%d", Status->EXP, Status->NextEXP());
 		uiDialog->AddText(eUI_Human_Text_EXP, Assets::GetFont(Assets::FontType_NORMAL), szEXP);
 		m_pUIEXP = uiDialog->GetText(eUI_Human_Text_EXP);
 		if (m_pUIEXP)
@@ -136,7 +136,7 @@ void ComHuman::SetUI()
 
 		m_pHPBar = uiDialog->GetProgressBar(eUI_HPBar_Human);
 		m_pHPBar->SetPosition(Vector3(100, 0, 0));
-		m_pHPBar->SetMaxValue(Status.HPMAX);
+		m_pHPBar->SetMaxValue(Status->HPMAX);
 		UpdateUI();
 
 		// MP바
@@ -144,7 +144,7 @@ void ComHuman::SetUI()
 
 		m_pMPBar = uiDialog->GetProgressBar(eUI_MPBar_Human);
 		m_pMPBar->SetPosition(Vector3(100, 50, 0));
-		m_pMPBar->SetMaxValue(Status.MPMAX);
+		m_pMPBar->SetMaxValue(Status->MPMAX);
 		m_pMPBar->SetMaxColor(Color(0, 0, 1, 1));
 		UpdateUI();
 
@@ -265,7 +265,7 @@ void ComHuman::Skill1()
 
 	int useMP = m_vecSkillInfo[0]->iUseMP;
 
-	if (Status.MP < useMP)
+	if (Status->MP < useMP)
 	{
 		// UI Message : MP가 부족합니다.
 		return;
@@ -275,7 +275,7 @@ void ComHuman::Skill1()
 	m_pCurrentState->Skill1(eAni_Skill_1);
 
 	// MP 사용
-	Status.MP -= m_vecSkillInfo[0]->iUseMP;
+	Status->MP -= m_vecSkillInfo[0]->iUseMP;
 
 	// UI 갱신
 	UpdateUI();
@@ -309,7 +309,7 @@ void ComHuman::AttackSkill1(ComCharacter * pTarget)
 		equipmentDmg = m_pChrEquipment->GetTotalATK_MIN();
 
 	// 스킬1 데미지 공식 = (캐릭터 기본 공격력 + 장비 공격력) * 1.5배 + 스킬 추가 데미지
-	int dmg = (Status.ATK_PHY + equipmentDmg) * 1.5f + pSkill1->iAddSkillDmg;
+	int dmg = (Status->ATK_PHY + equipmentDmg) * 1.5f + pSkill1->iAddSkillDmg;
 
 	pTarget->Defence(dmg);
 }

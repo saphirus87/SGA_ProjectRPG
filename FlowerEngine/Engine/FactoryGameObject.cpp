@@ -362,7 +362,7 @@ GameObject * FactoryGameObject::CreateCharacter(CString szName, CString szFolder
 	return pGOChr;
 }
 
-GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPath, CString szFileName, Vector3 & pos, Component* pComAI, StatusInfo& status)
+GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPath, CString szFileName, Vector3 & pos, Component* pComAI, StatusInfo* status)
 {
 	// 몬스터 생성 (smallderon_orange)
 	GameObject* pGOMonX = CreateFromXFile(szName, szFolderPath, szFileName, pos);

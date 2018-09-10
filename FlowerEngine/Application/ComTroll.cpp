@@ -25,7 +25,7 @@ void ComTroll::Awake()
 
 	m_pHPBar = uiDialog->GetProgressBar(eUI_HPBar_Troll);
 	m_pHPBar->SetPosition(Vector3(800, 0, 0));
-	m_pHPBar->SetMaxValue(Status.HPMAX);
+	m_pHPBar->SetMaxValue(Status->HPMAX);
 
 	float fScreenHeight = DXUTGetWindowHeight();
 	float fOffsetX = 700;

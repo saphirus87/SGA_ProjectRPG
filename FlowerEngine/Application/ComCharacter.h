@@ -88,7 +88,7 @@ protected:
 
 public:
 	// ´É·ÂÄ¡
-	StatusInfo Status;
+	StatusInfo* Status;
 
 	ComRenderSkinnedMesh* m_pAnimation;
 	AttackHandler* m_pAttackHandler;
