@@ -248,7 +248,7 @@ void ComHuman::Skill1()
 	ComChrControl* pChrControl = (ComChrControl*)gameObject->GetComponent("ComChrControl");
 
 	// 공격 대상이 지정되어 있지 않으면
-	if (pChrControl->pAttackTarget == NULL)
+	if (pAttackTarget == NULL)
 	{
 		// UI Message: 공격 대상이 지정되어 있지 않습니다.
 		return;

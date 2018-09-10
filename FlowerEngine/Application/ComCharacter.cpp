@@ -361,17 +361,17 @@ HRESULT Skill1Handler::HandleCallback(UINT Track, LPVOID pCallbackData)
 {
 	// 특정 프레임에서 공격
 	ComCharacter* pChr = (ComCharacter*)pCallbackData;
-	ComChrControl* pControl = (ComChrControl*)pChr->gameObject->GetComponent("ComChrControl");
+	//ComChrControl* pControl = (ComChrControl*)pChr->gameObject->GetComponent("ComChrControl");
 
 	CString szDebug;
 	szDebug.Format(L"Skill1Handler Track : %d %s\r\n", Track, pChr->gameObject->Name());
 	OutputDebugString(szDebug);
 
 	// 죽어서 없으면
-	if (pControl->pAttackTarget == NULL)
+	if (pChr->pAttackTarget == NULL)
 		return S_OK;
 
-	pChr->AttackSkill1(pControl->pAttackTarget);
+	pChr->AttackSkill1(pChr->pAttackTarget);
 
 	return S_OK;
 }
