@@ -292,8 +292,7 @@ void ComHuman::Skill3()
 void ComHuman::AttackSkill1(ComCharacter * pTarget)
 {
 	m_pAttackTarget = pTarget;
-	ComChrControl* pControl = (ComChrControl*)(gameObject->GetComponent("ComChrControl"));
-	pControl->LookatTarget();
+	LookatTarget();
 
 	HumanSkill1* pSkill1 = ((HumanSkill1*)m_vecSkillInfo[0]);
 

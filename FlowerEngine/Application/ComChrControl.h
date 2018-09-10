@@ -35,8 +35,6 @@ public:
 
 	// 공격대상을 취소합니다.
 	void CancleAttackTarget();
-	// 대상을 바라봅니다.
-	void LookatTarget();
 	// 공격대상이 죽었을 때 처리를 합니다.
 	void CheckAttackTargetDeath();
 

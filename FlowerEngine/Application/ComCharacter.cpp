@@ -129,8 +129,7 @@ void ComCharacter::OnTriggerEnter(ComCollider & collider)
 void ComCharacter::AttackTarget(ComCharacter * pTarget)
 {
 	m_pAttackTarget = pTarget;
-	ComChrControl* pControl = (ComChrControl*)(gameObject->GetComponent("ComChrControl"));
-	pControl->LookatTarget();
+	LookatTarget();
 
 	// 총 공격력 계산 (내 공격력 + 장비 공격력)
 	int equipmentDmg = 0;
@@ -143,6 +142,20 @@ void ComCharacter::AttackTarget(ComCharacter * pTarget)
 
 	// 다시 기본 핸들러로
 	m_pAnimation->pCallbackHandler = m_pAttackHandler;
+}
+
+void ComCharacter::LookatTarget()
+{
+	if (m_pAttackTarget == NULL)
+		return;
+
+	// 플레이어를 바라보는 방향 벡터
+	Vector3 vDir = m_pAttackTarget->gameObject->transform->GetPosition() - gameObject->transform->GetPosition();
+	D3DXVec3Normalize(&vDir, &vDir);
+
+	// 일단은 Y축으로만 회전하자
+	float angleY = Vector::GetAngleY(&vDir);
+	gameObject->transform->SetRotation(0.0f, angleY, 0.0f);
 }
 
 void ComCharacter::Defence(int dmg)

@@ -122,20 +122,6 @@ void ComChrControl::CancleAttackTarget()
 	m_pFollow->pTarget = NULL;
 }
 
-void ComChrControl::LookatTarget()
-{
-	if (pAttackTarget == NULL)
-		return;
-
-	// 플레이어를 바라보는 방향 벡터
-	Vector3 vDir = pAttackTarget->gameObject->transform->GetPosition() - gameObject->transform->GetPosition();
-	D3DXVec3Normalize(&vDir, &vDir);
-
-	// 일단은 Y축으로만 회전하자
-	float angleY = Vector::GetAngleY(&vDir);
-	gameObject->transform->SetRotation(0.0f, angleY, 0.0f);
-}
-
 void ComChrControl::CheckAttackTargetDeath()
 {
 	// 공격 상대가 죽었으면
