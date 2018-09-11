@@ -57,8 +57,7 @@ void ComSmallderonAI::Awake()
 
 	// 키 이벤트 콜백
 	D3DXKEY_CALLBACK attackKey;
-	m_pCharacter = (ComCharacter*)gameObject->GetComponent("ComCharacter");
-	attackKey.pCallbackData = m_pCharacter;
+	attackKey.pCallbackData = this;
 	attackKey.Time = x;
 
 	// eAni 순서데로 추가한다.
@@ -73,12 +72,12 @@ void ComSmallderonAI::Awake()
 void ComSmallderonAI::Update()
 {
 	// 몬스터가 죽지 않았고 공격 대상이 없으면 공격 대상을 찾는다.
-	if (m_pCharacter->IsDeath() == false && m_pFollow->pTarget == NULL)
+	if (IsDeath() == false && m_pFollow->pTarget == NULL)
 		FindAttackTarget();
 
 	if (m_pFollow->pTarget && m_pFollow->IsFollowing)
 	{
-		m_pFollow->fMoveSpeed = m_pCharacter->Status->MOVE_SPEED;
+		m_pFollow->fMoveSpeed = Status->MOVE_SPEED;
 		GetHeight();
 		Walk(1);
 	}
@@ -99,26 +98,6 @@ void ComSmallderonAI::Update()
 
 	if (IsGroud == false)
 		GetHeight();
-}
-
-void ComSmallderonAI::GetHeight()
-{
-	GameObject* pObjMap = GameObject::Find("ObjMap");
-	ComObjMap* m_pMap = NULL;
-	if (pObjMap != NULL)
-		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
-
-	if (m_pMap == NULL)
-		return;
-
-	Vector3 pos = gameObject->transform->GetPosition();
-	float fHeight = 0.f;
-	if (m_pMap->GetHeight(fHeight, pos) == true)
-	{
-		pos.y = fHeight;
-		gameObject->transform->SetPosition(pos);
-		IsGroud = true;
-	}
 }
 
 void ComSmallderonAI::Render()
@@ -178,7 +157,7 @@ void ComSmallderonAI::FindAttackTarget()
 
 	int rA = 0, rB = 0;
 	GameObject* pTemp = NULL;
-	for (int i = 0; i < 10; ++i) // 셔플로 10번 섞음
+	for (int i = 0; i < 20; ++i) // 셔플로 10번 섞음
 	{
 		rA = rand() & 2;
 		rB = rand() & 2;
