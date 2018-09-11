@@ -75,6 +75,12 @@ LPD3DXFONT Assets::GetFont(FontType type)
 				OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, FF_DONTCARE, _T("umberto"), &m_pFontList[type])))
 				assert(false && "FAILED(D3DXCreateFont)");
 		}
+		else if (type == FontType_UseItem)
+		{
+			if (FAILED(D3DXCreateFont(pDevice9, 16, 8, FW_NORMAL, 1, false, DEFAULT_CHARSET,
+				OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, FF_DONTCARE, _T("umberto"), &m_pFontList[type])))
+				assert(false && "FAILED(D3DXCreateFont)");
+		}
 	}
 
 	return m_pFontList[type];

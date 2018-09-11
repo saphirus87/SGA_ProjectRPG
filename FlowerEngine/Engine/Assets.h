@@ -7,7 +7,8 @@ public:
 	{
 		FontType_NORMAL,
 		FontType_QUEST,
-		FontType_Coin
+		FontType_Coin,
+		FontType_UseItem,
 	};
 
 	static void	Delete();

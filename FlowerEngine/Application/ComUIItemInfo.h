@@ -16,8 +16,9 @@ public:
 	virtual void OnClick(UIButton * pSender) override;
 	virtual void OnPress(UIButton * pSender) override;
 
+	void UpdateDialog(Vector2 BorderSize);
+
 	void SetItemInfo(ItemInfo* pItemInfo);
-	void SetBorderSize(Vector2 BorderSize);
 	void SetPosition(Vector3 pos) { gameObject->transform->SetPosition(pos); }
 	void SetIsVisible(bool IsVisible) { m_pDialog->SetIsVisible(IsVisible); }
 

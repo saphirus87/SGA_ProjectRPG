@@ -20,9 +20,11 @@ public:
 
 	//
 	void UpdateIcons();
+	void ClearEquipIcons();
 	void SetChrEquip(ComChrEquipment* pChrEquip) { m_pChrEquip = pChrEquip; }
 
 private:
 	ComChrEquipment* m_pChrEquip;
+	ComDialog* m_pDialog;
 };
 

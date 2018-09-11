@@ -263,6 +263,7 @@ enum eEquipUI
 	eEquipUI_MainHandBtn,
 	eEquipUI_SecondaryHandBtn,
 	eEquipUI_RelicBtn,
+	eEquipUI_Count = 19,
 };
 
 enum eItemInfoUI
@@ -277,7 +278,11 @@ enum eItemInfoUI
 	eItemInfoUI_BorderBottom,
 	eItemInfoUI_BorderBottomRight,
 	eItemInfoUI_ItemNameText,
+	eItemInfoUI_CloseBtn,
+	eItemInfoUI_UseItemBtn,
+	eItemInfoUI_UseItemText,
 };
+
 
 struct KEYBOARD_STATE
 {

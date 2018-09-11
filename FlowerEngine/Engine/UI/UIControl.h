@@ -37,6 +37,8 @@ public:
 	void SetParent(ComDialog* parent) { m_pParent = parent; }
 	void SetIsVisible(bool IsVisible) { m_IsVisible = IsVisible; }
 
-	Vector2 GetSize() { return m_Size; }
+	Vector3 GetPosition() { return m_Position; }
+	Vector2 GetSize() { return Vector2(m_Size.x * m_Scale.x, m_Size.y * m_Scale.y); }
+	Vector2 GetOriginalSize() { return m_Size; }
 };
 
