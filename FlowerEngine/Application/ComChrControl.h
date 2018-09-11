@@ -33,6 +33,4 @@ private:
 	Vector3 vMoveToPoint;
 	// 특정 좌표로 이동 여부
 	bool IsMoveToPoint;
-	// 타겟으로 따라감
-	ComFollowTarget* m_pFollow;
 };

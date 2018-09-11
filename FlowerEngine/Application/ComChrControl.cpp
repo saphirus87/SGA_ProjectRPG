@@ -12,7 +12,6 @@
 ComChrControl::ComChrControl(CString szName)
 	:Component(szName), m_pMap(NULL),
 	IsPicking(false),
-	m_pFollow(NULL),
 	IsMoveToPoint(false),
 	vMoveToPoint(0, 0, 0)
 {
@@ -28,7 +27,6 @@ void ComChrControl::Awake()
 	if (pObjMap != NULL)
 		m_pMap = (ComObjMap*)pObjMap->GetComponent("ComObjMap");
 
-	m_pFollow = (ComFollowTarget*)gameObject->GetComponent("ComFollowTarget");
 	m_pCharacter = (ComCharacter*)gameObject->GetComponent("ComCharacter");
 }
 
@@ -59,7 +57,6 @@ void ComChrControl::Update()
 		{
 			m_pCharacter->CancleAttackTarget();
 			m_pCharacter->Walk(-1);
-			// 걸어갈 때는 마우스 이동 하지 않음 (마우스 이동시 키보드 이동하면 속도 2배되는 버그 방지)
 			IsMoveToPoint = false;
 		}
 		else if (Input::KeyUp('S') || Input::KeyUp(VK_DOWN))
@@ -80,17 +77,7 @@ void ComChrControl::Update()
 			CheckPickingMap();
 	}
 
-	if (m_pFollow != NULL && m_pFollow->IsFollowing)
-	{
-		m_pCharacter->m_pCurrentState->Walk(eAni_Walk);
-		m_pCharacter->GetHeight();
-	}
-	else if (m_pFollow != NULL && m_pFollow->AbleAttack)
-		m_pCharacter->Attack1();
-
 	MoveToPoint();
-	m_pCharacter->CheckMonDeath();
-	m_pCharacter->m_pCurrentState->Update();
 }
 
 void ComChrControl::Render()

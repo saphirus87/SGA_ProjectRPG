@@ -114,6 +114,17 @@ void ComCharacter::GetHeight()
 
 void ComCharacter::Update()
 {
+	if (m_pFollow != NULL && m_pFollow->IsFollowing)
+	{
+		m_pCurrentState->Walk(eAni_Walk);
+		GetHeight();
+	}
+	else if (m_pFollow != NULL && m_pFollow->AbleAttack)
+		Attack1();
+
+	CheckMonDeath();
+	m_pCurrentState->Update();
+
 	HPMPRecovery();
 
 	if (m_pTimerDamage->GetTime() > 1.f)
