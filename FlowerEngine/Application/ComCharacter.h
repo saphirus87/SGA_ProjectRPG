@@ -21,11 +21,11 @@ class IChrState;
 class Damage
 {
 public:
-	Damage(int value, bool isCritical);
+	Damage(int value, float fCritical_PER);
 	~Damage() {}
 
 	int Value;
-	bool IsCritial;
+	bool IsCritical;
 };
 
 // 캐릭터의 공통요소입니다.
@@ -35,7 +35,9 @@ public:
 	ComCharacter(CString szName);
 	virtual ~ComCharacter();
 
-protected: void Init();
+protected: 
+	void Init();
+	void InitPlayer();
 
 public:
 	// Component을(를) 통해 상속됨
@@ -47,9 +49,10 @@ public:
 	virtual void OnTriggerEnter(ComCollider &collider) override;
 
 	/// 전투 관련
-	/// 공격 관련
 	// 타겟을 공격합니다.
 	void AttackTarget(ComCharacter* pTarget);
+	// 방어를 합니다.
+	void Defence(int Damage, bool bCritical);
 	// 스킬을 사용하여 타겟을 공격합니다.
 	virtual void AttackSkill1(ComCharacter* pTarget) {}
 	virtual void AttackSkill2(ComCharacter* pTarget) {}
@@ -58,9 +61,6 @@ public:
 	void LookatTarget();
 	// 공격 대상을 취소합니다.
 	void CancleAttackTarget();
-	/// 방어 관련
-	// 방어를 합니다.
-	void Defence(Damage& dmg);
 	/// 죽음 관련
 	// 죽었는지 여부를 반환합니다.
 	bool IsDeath();
@@ -86,9 +86,9 @@ protected:
 	// 공격할 타겟
 public: ComCharacter* pAttackTarget;
 
-	// 타겟으로 따라감
-private: ComFollowTarget * m_pFollow;
 protected:
+	// 타겟으로 따라감
+	ComFollowTarget * m_pFollow;
 
 	// 장비 장착
 	ComChrEquipment* m_pChrEquipment;
@@ -130,8 +130,10 @@ protected:
 	/// 데미지 표시
 	// 머리위에 데미지 표시
 	ComText3D* m_pComUIDamage;
+	ComText3D* m_pComUICritical;
 	// 데미지 표시 시간
 	CTimer* m_pTimerDamage;
+	CTimer* m_pTimerCritical;
 	/// HP/MP 관련
 	// HP/MP바
 	UIProgressBar* m_pHPBar;

@@ -17,6 +17,7 @@ ComUndead::~ComUndead()
 void ComUndead::Awake()
 {
 	Init();
+	InitPlayer();
 	{
 		GameObject* pUIBar = GameObject::Find("testUI");
 		ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");

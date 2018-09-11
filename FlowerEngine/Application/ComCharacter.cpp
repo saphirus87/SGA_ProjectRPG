@@ -28,6 +28,7 @@ ComCharacter::ComCharacter(CString szName) :
 	m_pHPBar(NULL),
 	m_pMPBar(NULL),
 	m_pComUIDamage(NULL),
+	m_pComUICritical(NULL),
 	m_pTimerDamage(NULL),
 	m_pTimerHPRec(NULL),
 	m_pTimerMPRec(NULL),
@@ -52,9 +53,6 @@ ComCharacter::~ComCharacter()
 
 void ComCharacter::Awake()
 {
-	Init();
-
-	Stand();
 }
 
 void ComCharacter::Init()
@@ -75,13 +73,17 @@ void ComCharacter::Init()
 	m_pTimerHPRec = new CTimer(CClock::GetInstance()); m_pTimerHPRec->Start();
 	m_pTimerMPRec = new CTimer(CClock::GetInstance()); m_pTimerMPRec->Start();
 	m_pTimerDamage = new CTimer(CClock::GetInstance()); m_pTimerDamage->Start();
-
-	m_pAttackHandler = new AttackHandler();
-	m_pAnimation->pCallbackHandler = m_pAttackHandler;
-
-	m_pSkill1Handler = new Skill1Handler();
+	m_pTimerCritical = new CTimer(CClock::GetInstance()); m_pTimerCritical->Start();
 
 	m_pComUIDamage = (ComText3D*)gameObject->GetComponent("ComText3D_Damage");
+	m_pComUICritical = (ComText3D*)gameObject->GetComponent("ComText3D_Critical");
+}
+
+void ComCharacter::InitPlayer()
+{
+	m_pAttackHandler = new AttackHandler();
+	m_pSkill1Handler = new Skill1Handler();
+	m_pAnimation->pCallbackHandler = m_pAttackHandler;
 
 	m_vecState.resize(eAni_COUNT);
 	m_vecState[eAni_Stand] = new ChrStateStand(this);
@@ -116,6 +118,9 @@ void ComCharacter::Update()
 
 	if (m_pTimerDamage->GetTime() > 1.f)
 		m_pComUIDamage->Enable = false;
+
+	if (m_pTimerCritical->GetTime() > 1.f)
+		m_pComUICritical->Enable = false;
 }
 
 void ComCharacter::Render()
@@ -163,19 +168,50 @@ void ComCharacter::AttackTarget(ComCharacter * pTarget)
 	if (m_pChrEquipment)
 		equipmentDmg = m_pChrEquipment->GetTotalATK_MIN();
 
-	bool IsCritical = false;
-	srand((unsigned int)time(NULL));
-	int iRandom = rand() % 100;
-	if (iRandom < 20) // 크리티컬 확률 20%
-	{
-		IsCritical = true;
-	}
-	Damage dmg (Status->ATK_PHY + equipmentDmg, IsCritical);
-	
-	pTarget->Defence(dmg);
+	int dmg = Status->ATK_PHY + equipmentDmg;
+		
+	pTarget->Defence(dmg, Status->IsCritical());
 
 	// 다시 기본 핸들러로
 	m_pAnimation->pCallbackHandler = m_pAttackHandler;
+}
+
+void ComCharacter::Defence(int Damage, bool bCritical)
+{
+	// 총 방어력 계산 (내 방어력 + 장비 방어력)
+	int equipmentDef = 0;
+	if (m_pChrEquipment)
+		equipmentDef = m_pChrEquipment->GetTotalDEF_PHY();
+
+	int def = Status->DEF_PHY + equipmentDef;
+
+	Damage -= (def / 2);
+	if (bCritical)
+		Damage *= 2.0f; // 크리티컬시 2배 데미지
+
+	// HP 차감
+	Status->HP -= Damage;
+
+	CString szDmg;
+	szDmg.Format(L"%d", Damage);
+
+	if (bCritical)
+	{
+		// 크리티컬시 노란색 데미지 표시
+		m_pComUICritical->SetText(szDmg, Color(1, 1, 0, 1), 0.6f, true);
+		m_pComUICritical->Enable = true;
+		m_pTimerCritical->Reset();
+	}
+	else
+	{
+		// UI 데미지 표시
+		m_pComUIDamage->SetText(szDmg, Color(1, 0, 0, 1), 0.4f, true);
+		m_pComUIDamage->Enable = true;
+		m_pTimerDamage->Reset();
+	}
+
+	// UI 갱신
+	UpdateUI();
 }
 
 void ComCharacter::LookatTarget()
@@ -255,46 +291,6 @@ bool ComCharacter::CheckPickingMon()
 	}
 
 	return false;
-}
-
-void ComCharacter::Defence(Damage& dmg)
-{
-	// 총 방어력 계산 (내 방어력 + 장비 방어력)
-	int equipmentDef = 0;
-	if (m_pChrEquipment)
-		equipmentDef = m_pChrEquipment->GetTotalDEF_PHY();
-
-	int def = Status->DEF_PHY + equipmentDef;
-
-	dmg.Value -= (def / 2);
-
-	// HP 차감
-	if (dmg.IsCritial) // 크리티컬시 2배 데미지
-		Status->HP -= dmg.Value * 2.0f;
-	else
-		Status->HP -= dmg.Value;
-
-	// UI 데미지 표시
-	if (m_pComUIDamage)
-	{
-		if (dmg.IsCritial) // 크리티컬시 노란색 데미지 표시
-		{
-			CString szDmg;
-			szDmg.Format(L"%d", (int)(dmg.Value * 2.0f));
-			m_pComUIDamage->SetText(szDmg, Color(1, 1, 0, 1), 0.6f, true);
-		}
-		else
-		{
-			CString szDmg;
-			szDmg.Format(L"%d", dmg.Value);
-			m_pComUIDamage->SetText(szDmg, Color(1, 0, 0, 1), 0.4f, true);
-		}
-		m_pComUIDamage->Enable = true;
-		m_pTimerDamage->Reset();
-	}
-	
-	// UI 갱신
-	UpdateUI();
 }
 
 bool ComCharacter::IsDeath()
@@ -425,8 +421,14 @@ HRESULT Skill1Handler::HandleCallback(UINT Track, LPVOID pCallbackData)
 	return S_OK;
 }
 
-Damage::Damage(int value, bool isCritical) :
+Damage::Damage(int value, float fCritical_PER) :
 	Value(value),
-	IsCritial(isCritical)
+	IsCritical(false)
 {
+	srand((unsigned int)time(NULL));
+	int iRandom = rand() % 100;
+	if (iRandom < fCritical_PER) // 크리티컬 확률 20%
+	{
+		IsCritical = true;
+	}
 }

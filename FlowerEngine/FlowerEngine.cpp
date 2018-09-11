@@ -103,6 +103,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	DXUTCreateWindow(L"FlowerEngine");
 	DXUTCreateDevice(true, 1600, 900);
 	
+	srand((unsigned int)time(NULL));
+
 	Camera::GetInstance()->Init();
 	SceneManager::GetInstance()->AddScene(new SceneLoading("SceneLoading"));
 	/*SceneManager::GetInstance()->AddScene(new SceneAircraft("SceneAircraft"));

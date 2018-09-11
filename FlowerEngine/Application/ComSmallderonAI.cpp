@@ -10,9 +10,7 @@
 
 ComSmallderonAI::ComSmallderonAI(CString szName)
 	:ComCharacter(szName),
-	m_pTimerAttack(NULL),
-	m_pFollow(NULL)/*,
-	pAttackTarget(NULL)*/
+	m_pTimerAttack(NULL)
 {
 }
 
@@ -22,12 +20,8 @@ ComSmallderonAI::~ComSmallderonAI()
 
 void ComSmallderonAI::Awake()
 {
-	m_pAnimation = (ComRenderSkinnedMesh*)gameObject->GetComponent("ComRenderSkinnedMesh");
-	m_pFollow = (ComFollowTarget*)gameObject->GetComponent("ComFollowTarget");
-	m_pFollow->pTarget = NULL;
-	m_pComUIDamage = (ComText3D*)gameObject->GetComponent("ComText3D_Damage");
-	m_pTimerDamage = new CTimer(CClock::GetInstance()); m_pTimerDamage->Start();
-
+	Init();
+	
 	m_vecState.resize(eAniMon_COUNT);
 	m_vecState[eAniMon_Death] = new ChrStateDeath(this);
 	m_vecState[eAniMon_Attack_1] = new ChrStateAttack1(this);
@@ -39,48 +33,41 @@ void ComSmallderonAI::Awake()
 	m_pTimerAttack = new CTimer(CClock::GetInstance());
 	m_pTimerAttack->Start();
 
-	//static bool bOnce = false;
-
 	m_pAttackHandler = new AttackHandler();
 	m_pAnimation->pCallbackHandler = m_pAttackHandler;
 
-	//if (bOnce == false)
-	{
-		vector<LPD3DXKEYFRAMEDANIMATIONSET> vecKeyFrameAnimSet;
-		vecKeyFrameAnimSet.resize(eAniMon_COUNT);
+	vector<LPD3DXKEYFRAMEDANIMATIONSET> vecKeyFrameAnimSet;
+	vecKeyFrameAnimSet.resize(eAniMon_COUNT);
 
-		for (int i = eAniMon_Death; i < eAniMon_COUNT; ++i)
-			m_pAnimation->m_pAniControl->GetAnimationSet(i, (LPD3DXANIMATIONSET*)&vecKeyFrameAnimSet[i]);
+	for (int i = eAniMon_Death; i < eAniMon_COUNT; ++i)
+		m_pAnimation->m_pAniControl->GetAnimationSet(i, (LPD3DXANIMATIONSET*)&vecKeyFrameAnimSet[i]);
 
-		// Register 하는 순서데로 Animation Index가 설정되기 때문에 미리 모두 Unregister 한다.
-		for (int i = eAniMon_Death; i < eAniMon_COUNT; ++i)
-			m_pAnimation->m_pAniControl->UnregisterAnimationSet(vecKeyFrameAnimSet[i]);
+	// Register 하는 순서데로 Animation Index가 설정되기 때문에 미리 모두 Unregister 한다.
+	for (int i = eAniMon_Death; i < eAniMon_COUNT; ++i)
+		m_pAnimation->m_pAniControl->UnregisterAnimationSet(vecKeyFrameAnimSet[i]);
 
-		float fPeriod = vecKeyFrameAnimSet[eAniMon_Attack_1]->GetPeriod();
-		// 초당 발생하는 애니메이션 키 프레임 틱의 수를 가져옵니다.
-		float fSrcTime = vecKeyFrameAnimSet[eAniMon_Attack_1]->GetSourceTicksPerSecond();
+	float fPeriod = vecKeyFrameAnimSet[eAniMon_Attack_1]->GetPeriod();
+	// 초당 발생하는 애니메이션 키 프레임 틱의 수를 가져옵니다.
+	float fSrcTime = vecKeyFrameAnimSet[eAniMon_Attack_1]->GetSourceTicksPerSecond();
 
-		// eAni_Attack_1 총 프레임 수 : 29
-		// eAni_Attack_1 때릴때 애니 프레임 Number : 12
-		// 비례식 12 : 29 = x : SrcTime
-		float x = fSrcTime * 12 / 29;
+	// eAni_Attack_1 총 프레임 수 : 29
+	// eAni_Attack_1 때릴때 애니 프레임 Number : 12
+	// 비례식 12 : 29 = x : SrcTime
+	float x = fSrcTime * 12 / 29;
 
-		// 키 이벤트 콜백
-		D3DXKEY_CALLBACK attackKey;
-		m_pCharacter = (ComCharacter*)gameObject->GetComponent("ComCharacter");
-		attackKey.pCallbackData = m_pCharacter;
-		attackKey.Time = x;
+	// 키 이벤트 콜백
+	D3DXKEY_CALLBACK attackKey;
+	m_pCharacter = (ComCharacter*)gameObject->GetComponent("ComCharacter");
+	attackKey.pCallbackData = m_pCharacter;
+	attackKey.Time = x;
 
-		// eAni 순서데로 추가한다.
-		m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAniMon_Death], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f, D3DXPLAY_ONCE);
-		m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAniMon_Attack_1], 1, &attackKey, D3DXCOMPRESS_DEFAULT, 1.0f);
-		m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAniMon_Walk], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
-		m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAniMon_Stand], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
+	// eAni 순서데로 추가한다.
+	m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAniMon_Death], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f, D3DXPLAY_ONCE);
+	m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAniMon_Attack_1], 1, &attackKey, D3DXCOMPRESS_DEFAULT, 1.0f);
+	m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAniMon_Walk], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
+	m_pAnimation->AddCallbackKeysAndCompress(vecKeyFrameAnimSet[eAniMon_Stand], 0, NULL, D3DXCOMPRESS_DEFAULT, 1.0f);
 
-		vecKeyFrameAnimSet.clear();
-
-		//bOnce = true;
-	}
+	vecKeyFrameAnimSet.clear();
 }
 
 void ComSmallderonAI::Update()
@@ -159,6 +146,7 @@ void ComSmallderonAI::Attack1()
 void ComSmallderonAI::Death()
 {
 	m_pComUIDamage->Enable = false;
+	m_pComUICritical->Enable = false;
 
 	// 현재 상태에서 Death로
 	m_pCurrentState->Death(eAniMon_Death);
@@ -180,10 +168,27 @@ void ComSmallderonAI::FindAttackTarget()
 		return;
 
 	list<GameObject*> listGO = GameObject::FindAll(eTag_Chracter);
-
 	size_t chrCnt = listGO.size();
-	int deathCnt = 0;
+
+	vector<GameObject*> vecChr;
+	vecChr.resize(chrCnt);
+	int i = 0;
 	for (auto & chr : listGO)
+		vecChr[i++] = chr;
+
+	int rA = 0, rB = 0;
+	GameObject* pTemp = NULL;
+	for (int i = 0; i < 10; ++i) // 셔플로 10번 섞음
+	{
+		rA = rand() & 2;
+		rB = rand() & 2;
+		pTemp = vecChr[rA];
+		vecChr[rA] = vecChr[rB];
+		vecChr[rB] = pTemp;
+	}
+
+	int deathCnt = 0;
+	for (auto & chr : vecChr)
 	{
 		ComCharacter* comChr = (ComCharacter*)chr->GetComponent("ComCharacter");
 
@@ -212,10 +217,17 @@ void ComSmallderonAI::CheckPlayerDeath()
 			pAttackTarget->gameObject->SetActive(false);
 	
 		// m_pFollow 변수가 나누어 졌으므로 여기에서 처리
-		pAttackTarget = NULL;
-		m_pFollow->IsFollowing = false;
-		m_pFollow->AbleAttack = false;
-		m_pFollow->pTarget = NULL;
+		CancleAttackTarget();
+
+		// 카메라 다시 셋팅
+		list<GameObject*> listChr = GameObject::FindAll(eTag_Chracter);
+		for (auto & chr : listChr)
+		{
+			ComCharacter* pComChr = (ComCharacter*)chr->GetComponent("ComCharacter");
+
+			if (pComChr->IsDeath() == false)
+				Camera::GetInstance()->SetTarget(&pComChr->gameObject->transform->GetPosition());
+		}
 
 		Stand();
 	}

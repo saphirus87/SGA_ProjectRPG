@@ -13,7 +13,7 @@ DEF_PHY(1),
 DEF_MGR(1),
 MOVE_SPEED(0.02f),
 ATK_SPEED(0),
-CRI_PER(0),
+CRI_PER(50),
 REVTime_HP(3),
 REV_HP(1),
 REVTime_MP(3),
@@ -30,6 +30,16 @@ EXP(0)
 
 StatusInfo::~StatusInfo()
 {
+}
+
+bool StatusInfo::IsCritical()
+{
+	int iRandom = rand() % 100;
+	if (iRandom < CRI_PER) // 크리티컬 확률
+	{
+		return true;
+	}
+	return false;
 }
 
 bool StatusInfo::RecoveryHP(int iValue)

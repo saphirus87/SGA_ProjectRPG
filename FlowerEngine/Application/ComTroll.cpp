@@ -17,6 +17,7 @@ ComTroll::~ComTroll()
 void ComTroll::Awake()
 {
 	Init();
+	InitPlayer();
 
 	GameObject* pUIBar = GameObject::Find("testUI");
 	ComDialog* uiDialog = (ComDialog*)pUIBar->GetComponent("ComDialog");

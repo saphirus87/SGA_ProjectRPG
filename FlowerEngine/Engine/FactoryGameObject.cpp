@@ -339,6 +339,10 @@ GameObject * FactoryGameObject::CreateCharacter(CString szName, CString szFolder
 	pUIDamage->SetText("", Color(1, 0, 0, 1), 0.4f);
 	pUIDamage->fOffsetPosY = 1.5f;
 	pGOChr->AddComponent(pUIDamage);
+	ComText3D* pUICritical = new ComText3D("ComText3D_Critical");
+	pUICritical->SetText("", Color(1, 1, 0, 1), 0.6f);
+	pUICritical->fOffsetPosY = 1.5f;
+	pGOChr->AddComponent(pUICritical);
 	// 이 게임 오브젝트는 장비 장착 가능
 	pGOChr->AddComponent(new ComChrEquipment("ComChrEquipment"));
 	// 이 게임 오브젝트는 대상을 따라다님
@@ -377,6 +381,10 @@ GameObject * FactoryGameObject::CreateMonster(CString szName, CString szFolderPa
 	pUIDamage->SetText("", Color(1, 0, 0, 1), 0.4f);
 	pUIDamage->fOffsetPosY = 2.2f;
 	pGOMonX->AddComponent(pUIDamage);
+	ComText3D* pUICritical = new ComText3D("ComText3D_Critical");
+	pUICritical->SetText("", Color(1, 1, 0, 1), 0.6f);
+	pUICritical->fOffsetPosY = 2.2f;
+	pGOMonX->AddComponent(pUICritical);
 	
 	ComCharacter* pChrMon = (ComCharacter*)pComAI;
 	pChrMon->Status = status;

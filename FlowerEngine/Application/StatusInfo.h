@@ -31,6 +31,8 @@ public:
 	int DEF_MGR;
 	// 치명타(Critical) 확률
 	float CRI_PER;
+	// 치명타인지 여부
+	bool IsCritical();
 	
 	/// HP/MP 회복 관련
 	// HP 회복 시간
