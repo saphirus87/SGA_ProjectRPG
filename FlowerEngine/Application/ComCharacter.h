@@ -18,16 +18,6 @@ class ComObjMap;
 class ComFollowTarget;
 class IChrState;
 
-class Damage
-{
-public:
-	Damage(int value, float fCritical_PER);
-	~Damage() {}
-
-	int Value;
-	bool IsCritical;
-};
-
 // 캐릭터의 공통요소입니다.
 class ComCharacter : public Component
 {

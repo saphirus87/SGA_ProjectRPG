@@ -431,15 +431,3 @@ HRESULT Skill1Handler::HandleCallback(UINT Track, LPVOID pCallbackData)
 
 	return S_OK;
 }
-
-Damage::Damage(int value, float fCritical_PER) :
-	Value(value),
-	IsCritical(false)
-{
-	srand((unsigned int)time(NULL));
-	int iRandom = rand() % 100;
-	if (iRandom < fCritical_PER) // 크리티컬 확률 20%
-	{
-		IsCritical = true;
-	}
-}
